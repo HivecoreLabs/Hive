@@ -56,7 +56,7 @@ ROOT_URLCONF = 'backend.urls'
 
 REST_FRAMEWORK = {'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.AllowAny']}
 
-CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_ALL_ORIGINS = True
 
 TEMPLATES = [
     {
