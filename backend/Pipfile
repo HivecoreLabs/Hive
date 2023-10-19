@@ -8,8 +8,6 @@ django = "*"
 djangorestframework = "*"
 
 [dev-packages]
-pytest = "*"
 
 [requires]
 python_version = "3.9"
-python_full_version = "3.9.4"
