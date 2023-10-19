@@ -1,6 +1,12 @@
 -i https://pypi.org/simple
+altgraph==0.17.4
 asgiref==3.7.2; python_version >= '3.7'
 django==4.2.6; python_version >= '3.8'
+django-cors-headers==4.3.0; python_version >= '3.8'
 djangorestframework==3.14.0; python_version >= '3.6'
+packaging==23.2; python_version >= '3.7'
+pyinstaller==6.1.0; python_version < '3.13' and python_version >= '3.8'
+pyinstaller-hooks-contrib==2023.10; python_version >= '3.7'
 pytz==2023.3.post1
+setuptools==68.2.2; python_version >= '3.8'
 sqlparse==0.4.4; python_version >= '3.5'
