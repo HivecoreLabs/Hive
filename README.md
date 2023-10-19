@@ -13,7 +13,7 @@
 
 * Employee
 
-    * Add employees with roles (admin)
+    * Add employees with roles (admin/server/buser)
     
     * Read list of all employees and their roles
 
