@@ -2,68 +2,90 @@
 
 ## Project Description
 
-
 ## Technologies/Frameworks Used
 
-* [Electron](https://www.electronjs.org/)
+- [Electron](https://www.electronjs.org/)
 
-* [React](https://reactjs.org/)
+- [React](https://reactjs.org/)
 
 ## MVP Core Features
 
-* Employee
+- Employee
 
-    * Add employees with roles (admin/server/buser)
-    
-    * Read list of all employees and their roles
+  - Add employees with roles (admin/server/buser)
 
-    * Edit employee details
+  - Read list of all employees and their roles
 
-    * Delete employee from system
+  - Edit employee details
 
-* Checkouts
+  - Delete employee from system
 
-    * Log net sales and cash owed for specific day, shift, and server
+- Checkouts
 
-    * View a list of all daily checkouts for specific day or shift
+  - Log net sales and cash owed for specific day, shift, and server
 
-    * View list of all checkouts in a given pay period, organized by day and shift
+  - View a list of all daily checkouts for specific day or shift
 
-    * Edit net sales and cash owed for a specific day, shift, and server
+  - View list of all checkouts in a given pay period, organized by day and shift
 
-    * Delete a daily checkout for a specific day, shift, and server
+  - Edit net sales and cash owed for a specific day, shift, and server
 
-* Tip Out Formulas
+  - Delete a daily checkout for a specific day, shift, and server
 
-    * Define a new tip out formula for a specific role
+- Tip Out Formulas
 
-    * View a list of all tip out formulas and their associated roles
+  - Define a new tip out formula for a specific role
 
-    * Edit an existing tip out formula for a specific role
+  - View a list of all tip out formulas and their associated roles
 
-    * Delete a tip out formula for a specific role
+  - Edit an existing tip out formula for a specific role
 
-* Daily Support Staff Time In/Out
+  - Delete a tip out formula for a specific role
 
-    * Log the clock-in time for a support staff member for a specific day and shift
+- Daily Support Staff Time In/Out
 
-    * Log the clock-out time for a support staff for a specific day and shift
+  - Log the clock-in time for a support staff member for a specific day and shift
 
-    * Edit the clock-in and clock-out times for a support staff member ofr a specific day and shift
+  - Log the clock-out time for a support staff for a specific day and shift
 
-    * Delete the clock-in and clock-out times for a support staff member for a specific day and shift
+  - Edit the clock-in and clock-out times for a support staff member ofr a specific day and shift
 
-* Toggle View by Day/Shift
+  - Delete the clock-in and clock-out times for a support staff member for a specific day and shift
 
-    * Toggle the view to display support staff for a specific day
+- Toggle View by Day/Shift
 
-    * Toggle the view to display support staff for a specific shift 
+  - Toggle the view to display support staff for a specific day
+
+  - Toggle the view to display support staff for a specific shift
 
 ## Screenshots
 
 ## Future Implementation Goals
 
 ## Getting Started
+
+### Run Django API Locally
+
+- Ensure you have Python version 3.9
+- cd into the backend directory from the root of the application
+- Install the required dependecies from requirements.txt
+- Example using pipenv Python virtual environment management tool, learn more [here](https://pipenv.pypa.io/en/latest/)
+
+```
+pipenv install -r requirements.txt
+```
+
+- Run the following to initialize a local SQLite3 database:
+
+```
+python manage.py migrate
+```
+
+- To start the Django server, run the following command from within /backend/
+
+```
+python manage.py runserver
+```
 
 ## Contributing
 
