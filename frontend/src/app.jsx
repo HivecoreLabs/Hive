@@ -20,7 +20,7 @@ function App() {
     return (
         <>
         {isLoaded ? (
-            <h1>Hello {name}</h1>
+            <h1>Goodbye {name}</h1>
             ) : (
             <h1>Loading...</h1>
             )}
