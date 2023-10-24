@@ -3,11 +3,32 @@ name: Django Tests
 on:
   pull_request:
     branches: "*"
-      paths: ["/backend/**", ".github/workflows"]
 
 jobs:
+  filter-backend:
+    runs-on: ubuntu-latest
+    name: Filter Backend
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Get changed files in the backend directory
+        id: changed-files-specific
+        uses: tj-actions/changed-files@v34
+        with:
+          files: backend/**
+
+      - name: Run step if any file(s) in the backend directory change
+        if: steps.changed-files-specific.outputs.any_changed == 'true'
+        run: echo Backend is affected
+
+      - name: Prevent from running
+        if: steps.changed-files-specific.outputs.any_changed != 'true'
+
   build:
     runs-on: [ubuntu-latest]
+    needs: [filter-backend]
     strategy:
       max-parallel: 4
       matrix:
