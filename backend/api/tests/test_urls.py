@@ -6,6 +6,6 @@ class TestURLs(TestCase):
         assert 1 == 1
 
     def test_number_3(self):
-        assert 3 == 3
+        assert 1 == 1
 
 # Create your tests here.
