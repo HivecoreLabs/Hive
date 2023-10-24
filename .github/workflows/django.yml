@@ -17,7 +17,7 @@ jobs:
         id: changed-files-specific
         uses: tj-actions/changed-files@v34
         with:
-          files: [backend/**, .github/workflows/**]
+          files: backend/**
 
       - name: Run step if any file(s) in the backend directory change
         if: steps.changed-files-specific.outputs.any_changed == 'true'
