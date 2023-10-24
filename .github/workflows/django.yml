@@ -2,7 +2,7 @@ name: Django Tests
 
 on:
   pull_request:
-    paths: ["backend/**", ".github/workflows/**"]
+    paths: ["backend/**"]
 
 jobs:
   build:
