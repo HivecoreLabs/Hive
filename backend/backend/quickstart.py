@@ -16,12 +16,13 @@ SAMPLE_SPREADSHEET_ID = '1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms'
 SAMPLE_RANGE_NAME = 'Class Data!A2:E'
 
 schema = {
-    "employees": ["id", "first_name", "last_name", "restaurant_employee_id", "created_at"],
-    "employee_roles": ["id", "role", "employee_id"],
-    "checkouts": ["id", "net_sales", "cash_owed", "employee_id", "total_tipout", "is_am_shift", "is_patio", "created_at", "tipout_day"],
-    "employee_clock_ins": ["id", "employee_id", "time_in", "time_out", "tipout_received", "active_role"],
-    "tipout_formulas": ["id", "is_am_formula", "formula_name", "formula", "role"],
-    "tipout_variables": ["id", "tipout_formula_id", "table_name", "column_name", "variable"]
+    "Employee": ["id", "first_name", "last_name", "restaurant_employee_id", "food_permit_exp", "alcohol_permit_exp","created_at", "updated_at"],
+    "Role": ["id", "role", "description", "created_at", "updated_at"],
+    "Employee_Role": ["id", "role_id", "employee_id", "created_at", "updated_at"],
+    "Checkout": ["id", "net_sales", "cash_owed", "employee_id", "total_tipout", "is_am_shift", "is_patio", "is_bar", "tipout_day", "created_at",  "updated_at"],
+    "Employee_Clock_In": ["id", "employee_id", "time_in", "time_out", "active_role_id", "tipout_received", "created_at", "updated_at"],
+    "Tipout_Formula": ["id", "formula_name", "formula", "role_id", "is_am_formula", "created_at", "updated_at"],
+    "Tipout_Variable": ["id", "variable", "tipout_formula_id", "table_name", "column_name", "created_at", "updated_at"]
 }
 
 def main():
@@ -67,7 +68,7 @@ def main():
         print(err)
 
 def generate(file_name):
-    """Generate a file using the sheets API based on the passed in file name
+    """Generate a file using the sheets API based on the passed in file name, this file will serve as the cloud "database"
     """
     creds = None
     # The file token.json stores the user's access and refresh tokens, and is
