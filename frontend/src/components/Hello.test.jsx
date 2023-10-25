@@ -6,6 +6,7 @@ describe("test Hello Component", () => {
   it('should have the text "Hello World!"', () => {
     render(<Hello />);
     const myElement = screen.getByText(/Hello World!/);
+    debugger;
     expect(myElement).toBeInTheDocument();
   });
 });
