@@ -5,6 +5,7 @@ import Hello from "./Hello";
 describe("test Hello Component", () => {
   it('should have the text "Hello World!"', () => {
     render(<Hello />);
+
     debugger;
     const myElement = screen.getByText(/Hello World!/);
     expect(myElement).toBeInTheDocument();
