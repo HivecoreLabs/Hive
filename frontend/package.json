@@ -12,7 +12,8 @@
     "lint": "eslint src/**/*.js src/**/*.jsx",
     "test": "jest --config=jest.config.js",
     "test:ci": "jest --coverage --silent --ci",
-    "prepare": "cd .. && husky install frontend/.husky"
+    "prepare": "cd .. && husky install frontend/.husky",
+    "pre-push": "npm run lint && npm run test"
   },
   "keywords": [],
   "author": {
