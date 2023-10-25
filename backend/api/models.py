@@ -48,7 +48,7 @@ class Employee_Clock_In(models.Model):
     employee_id = models.ForeignKey(Employee, on_delete=models.PROTECT)
     time_in = models.DateTimeField(null=True)
     time_out = models.DateTimeField(null=True)
-    active_role_id = models.ForeignKey(Role)
+    active_role_id = models.ForeignKey(Role, on_delete=models.PROTECT)
     tipout_received = models.DecimalField(decimal_places=2)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
