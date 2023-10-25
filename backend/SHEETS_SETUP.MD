@@ -14,7 +14,7 @@ This guide will walk you through the process of creating a Google Developer Proj
 
 ## Step 2: Enable the Google Sheets API
 
-1. In the Google Cloud Console, click on the **Menu** and navigate to **APIs & Services > Dashboard**.
+1. In the Google Cloud Console, click on the **Menu** and navigate to **APIs & Services**.
 
 2. Click **+ ENABLE APIS AND SERVICES** at the top of the page.
 
@@ -36,6 +36,7 @@ This guide will walk you through the process of creating a Google Developer Proj
 
    - Under **Test users**, click **Add users**.
    - Enter your email address and any other authorized test users, then click **Save and Continue**.
+   - You **MUST** add your own email to access this.
 
 5. Review your app registration summary. To make changes, click **Edit**. If everything looks good, click **Back to Dashboard**.
 
@@ -49,7 +50,7 @@ To authenticate as an end user and access user data in your app, you need to cre
 
 3. Select **Application type > Desktop app**.
 
-4. In the **Name** field, provide a name for the credential (for your reference).
+4. In the **Name** field, provide a name for the credential (for your reference ex: **"Taylor PC"**).
 
 5. Click **Create**. The OAuth client created screen will show your new Client ID and Client secret.
 

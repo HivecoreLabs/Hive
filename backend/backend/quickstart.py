@@ -15,6 +15,14 @@ SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 SAMPLE_SPREADSHEET_ID = '1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms'
 SAMPLE_RANGE_NAME = 'Class Data!A2:E'
 
+schema = {
+    "employees": ["id", "first_name", "last_name", "restaurant_employee_id", "created_at"],
+    "employee_roles": ["id", "role", "employee_id"],
+    "checkouts": ["id", "net_sales", "cash_owed", "employee_id", "total_tipout", "is_am_shift", "is_patio", "created_at", "tipout_day"],
+    "employee_clock_ins": ["id", "employee_id", "time_in", "time_out", "tipout_received", "active_role"],
+    "tipout_formulas": ["id", "is_am_formula", "formula_name", "formula", "role"],
+    "tipout_variables": ["id", "tipout_formula_id", "table_name", "column_name", "variable"]
+}
 
 def main():
     """Shows basic usage of the Sheets API.
@@ -89,22 +97,24 @@ def generate(file_name):
         spreadsheet_id = spreadsheet['spreadsheetId']
         print(f"Created new spreadsheet with ID: {spreadsheet_id}")
 
-        body = {
-            "requests": [
-                {
-                    "addSheet": {
-                        "properties": {
-                            "title": 'testing'
-                        }
+        for table_name, columns in schema.items():
+            add_worksheet_request = {
+                'addSheet': {
+                    'properties': {
+                        'title': table_name
                     }
-                },
-            ]
-        }
+                }
+            }
+            service.spreadsheets().batchUpdate(spreadsheetId=spreadsheet_id, body={'requests': [add_worksheet_request]}).execute()
 
-        # Execute the request to create a new worksheet
-        response = service.spreadsheets().batchUpdate(
-        spreadsheetId=spreadsheet_id, body=body).execute()
-        return spreadsheet_id
+            # Add headers in the first row
+            update_cells_request = {
+                'range': f'{table_name}!A1',
+                'values': [columns]
+            }
+            service.spreadsheets().values().update(spreadsheetId=spreadsheet_id, range=f'{table_name}!A1', body=update_cells_request, valueInputOption="RAW").execute()
+
+        print("Google Sheets file 'database' created with worksheets and headers.")
 
     except HttpError as err:
         print(err)
