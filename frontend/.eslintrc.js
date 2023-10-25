@@ -9,6 +9,8 @@ module.exports = {
     "plugin:jest/recommended",
     "plugin:jest/style",
     "plugin:testing-library/react",
+    "airbnb",
+    "airbnb/hooks",
   ],
   overrides: [
     {
