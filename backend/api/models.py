@@ -17,10 +17,14 @@ class Employee(models.Model):
 class Role(models.Model):
     role = models.CharField(max_length = 50)
     description = models.TextField(max_length = 500, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    sheet_cell = models.CharField(default=None, null=True)
+    is_uploaded = models.BooleanField(default=False)
 
 class Employee_Role(models.Model):
     role_id = models.ForeignKey(Role, on_delete=models.PROTECT)
-    employee_id = models.ForeignKey(Employee)
+    employee_id = models.ForeignKey(Employee, on_delete=models.PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     sheet_cell = models.CharField(default=None, null=True)

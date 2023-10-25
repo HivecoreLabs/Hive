@@ -17,7 +17,7 @@ SAMPLE_RANGE_NAME = 'Class Data!A2:E'
 
 schema = {
     "Employee": ["id", "first_name", "last_name", "restaurant_employee_id", "food_permit_exp", "alcohol_permit_exp","created_at", "updated_at"],
-    "Role": ["id", "role", "description"],
+    "Role": ["id", "role", "description", "created_at", "updated_at"],
     "Employee_Role": ["id", "role_id", "employee_id", "created_at", "updated_at"],
     "Checkout": ["id", "net_sales", "cash_owed", "employee_id", "total_tipout", "is_am_shift", "is_patio", "is_bar", "tipout_day", "created_at",  "updated_at"],
     "Employee_Clock_In": ["id", "employee_id", "time_in", "time_out", "active_role_id", "tipout_received", "created_at", "updated_at"],
