@@ -19,7 +19,7 @@ class Role(models.Model):
     description = models.TextField(max_length = 500, null=True)
 
 class Employee_Role(models.Model):
-    role_id = models.ForeignKey(Role)
+    role_id = models.ForeignKey(Role, on_delete=models.PROTECT)
     employee_id = models.ForeignKey(Employee)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -29,7 +29,7 @@ class Employee_Role(models.Model):
 class Checkout(models.Model):
     net_sales = models.DecimalField(decimal_places=2)
     cash_owed = models.DecimalField(decimal_places=2)
-    employee_id = models.ForeignKey(Employee)
+    employee_id = models.ForeignKey(Employee, on_delete=models.PROTECT)
     total_tipout = models.DecimalField(decimal_places=2)
     is_am_shift = models.BooleanField(default=True)
     is_patio = models.BooleanField(default=False)
@@ -41,7 +41,7 @@ class Checkout(models.Model):
     is_uploaded = models.BooleanField(default=False)
 
 class Employee_Clock_In(models.Model):
-    employee_id = models.ForeignKey(Employee)
+    employee_id = models.ForeignKey(Employee, on_delete=models.PROTECT)
     time_in = models.DateTimeField(null=True)
     time_out = models.DateTimeField(null=True)
     active_role_id = models.ForeignKey(Role)
@@ -54,7 +54,7 @@ class Employee_Clock_In(models.Model):
 class Tipout_Formula(models.Model):
     formula_name = models.CharField(max_length=50)
     formula = models.CharField()
-    role_id = models.ForeignKey(Role)
+    role_id = models.ForeignKey(Role, on_delete=models.CASCADE)
     is_am_formula = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
