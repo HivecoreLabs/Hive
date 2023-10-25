@@ -59,7 +59,7 @@
     "react-dom": "^18.2.0"
   },
   "lint-staged": {
-    "*(jsx|js)": "eslint --cache --fix",
+    "*{jsx|js}": "eslint --cache --fix",
     "*": "prettier --write --ignore-unknown"
   },
   "proxy": "http://localhost:8000"
