@@ -1,0 +1,30 @@
+name: Node.js Tests
+
+on:
+  pull_request:
+    paths: ["frontend/**", ".github/workflows/**"]
+
+jobs:
+  build:
+    runs-on: [ubuntu-latest]
+    name: Node.js Tests
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+      - name: Install Dependencies
+      - run: |
+        cd frontend
+        npm install
+      - name: Run Tests
+      - run: |
+        cd frontend
+        npm run lint && npm run test:ci
