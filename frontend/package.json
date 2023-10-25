@@ -11,6 +11,7 @@
     "publish": "electron-forge publish",
     "lint": "eslint src/**/*.js src/**/*.jsx",
     "test": "jest --config=jest.config.js",
+    "test:ci": "jest --coverage --silent --ci",
     "prepare": "cd .. && husky install frontend/.husky",
     "lint-staged": "lint-staged"
   },
