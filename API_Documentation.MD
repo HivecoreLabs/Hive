@@ -8,7 +8,7 @@ Certainly, here's the complete API documentation in Markdown format:
 
 ### 1. Signup New User
 
-- **Route**: `POST /api/users/signup`
+- **Route**: `POST /api/auth/signup`
 - **Headers**:
   - Content-Type: application/json
 - **Request Body (Required Information)**:
@@ -46,7 +46,7 @@ Certainly, here's the complete API documentation in Markdown format:
 
 ### 2. Login User
 
-- **Route**: `POST /api/users/login`
+- **Route**: `POST /api/auth/login`
 - **Headers**:
   - Content-Type: application/json
 - **Request Body (Required Information)**:
