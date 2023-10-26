@@ -7,8 +7,8 @@ from rest_framework.authtoken.models import Token
 
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
-from .models import Role
-from .serializers import UserSerializer, RoleSerializer
+from .models import Role, Employee
+from .serializers import UserSerializer, RoleSerializer, EmployeeSerializer
 
 
 @api_view(['POST'])
@@ -92,6 +92,28 @@ def role_detail(request, role_id):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-@api_view(['GET'])
-def get_employee(request, pk):
+@api_view(['GET', 'POST'])
+def employee_list(request):
+    """
+    List all employees or create a new employee.
+    """
+    if request.method == 'GET':
+        employees = Employee.objects.all()
+        serializer = EmployeeSerializer(employees, many=True)
+        return Response(serializer.data)
     pass
+
+
+@api_view(['GET'])
+def employee_detail(request, employee_id):
+    """
+    Retrieve employee.
+    """
+    try:
+        employee = Employee.objects.get(id=employee_id)
+    except Employee.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = EmployeeSerializer(employee)
+        return Response(serializer.data)

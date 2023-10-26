@@ -20,7 +20,7 @@ class EmployeeSerializer(serializers.ModelSerializer):
 
 
 class RoleSerializer(serializers.ModelSerializer):
-    employees = EmployeeSerializer(many=True)
+    employees = EmployeeSerializer(many=True, required=False)
 
     class Meta:
         model = Role
