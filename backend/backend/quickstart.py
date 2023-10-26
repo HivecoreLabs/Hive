@@ -116,6 +116,7 @@ def generate(file_name):
             service.spreadsheets().values().update(spreadsheetId=spreadsheet_id, range=f'{table_name}!A1', body=update_cells_request, valueInputOption="RAW").execute()
 
         print("Google Sheets file 'database' created with worksheets and headers.")
+        return spreadsheet_id
 
     except HttpError as err:
         print(err)
