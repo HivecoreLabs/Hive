@@ -90,3 +90,8 @@ def role_detail(request, role_id):
     elif request.method == 'DELETE':
         role.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@api_view(['GET'])
+def get_employee(request, pk):
+    pass

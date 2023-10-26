@@ -25,7 +25,8 @@ class Employee(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     restaurant_employee_id = models.CharField(max_length=10, null=True)
-    roles = models.ManyToManyField(Role, through='Employee_Role')
+    roles = models.ManyToManyField(
+        Role, related_name='employees', through='Employee_Role')
     food_permit_exp = models.DateField(null=True)
     alcohol_permit_exp = models.DateField(null=True)
     is_former_employee = models.BooleanField(default=False)

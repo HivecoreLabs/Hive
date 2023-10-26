@@ -9,20 +9,20 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ['id', 'username', 'password']
 
 
-class RoleSerializer(serializers.ModelSerializer):
-    employees = serializers.PrimaryKeyRelatedField(
-        queryset=Employee.objects.all(), many=True)
-
-    class Meta:
-        model = Role
-        fields = ['id', 'role', 'description', 'created_at',
-                  'updated_at', 'sheet_cell', 'is_uploaded']
-
-
 class EmployeeSerializer(serializers.ModelSerializer):
-    roles = RoleSerializer(many=True)
+    roles = serializers.PrimaryKeyRelatedField(
+        queryset=Role.objects.all(), many=True)
 
     class Meta:
         model = Employee
         fields = ['first_name', 'last_name', 'restaurant_employee_id', 'roles', 'food_permit_exp',
                   'alcohol_permit_exp', 'is_former_employee', 'created_at', 'updated_at', 'sheet_cell', 'is_uploaded']
+
+
+class RoleSerializer(serializers.ModelSerializer):
+    employees = EmployeeSerializer(many=True)
+
+    class Meta:
+        model = Role
+        fields = ['role', 'description', 'employees', 'created_at',
+                  'updated_at', 'sheet_cell', 'is_uploaded']
