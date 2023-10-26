@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { styled, useTheme } from '@mui/material/styles';
+import { styled, useTheme, alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
 import MuiAppBar from '@mui/material/AppBar';
@@ -21,6 +21,8 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import GroupsIcon from '@mui/icons-material/Groups';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import SettingsIcon from '@mui/icons-material/Settings';
+import SearchIcon from '@mui/icons-material/Search';
+import InputBase from '@mui/material/InputBase';
 import { Link, NavLink } from 'react-router-dom';
 
 const drawerWidth = 240;
@@ -95,6 +97,49 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     }),
 );
 
+
+const Search = styled('div')(({ theme }) => ({
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: alpha(theme.palette.common.white, 0.15),
+    '&:hover': {
+        backgroundColor: alpha(theme.palette.common.white, 0.25),
+    },
+    marginLeft: 0,
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+        marginLeft: theme.spacing(1),
+        width: 'auto',
+    },
+}));
+
+const SearchIconWrapper = styled('div')(({ theme }) => ({
+    padding: theme.spacing(0, 2),
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+    color: 'inherit',
+    '& .MuiInputBase-input': {
+        padding: theme.spacing(1, 1, 1, 0),
+        // vertical padding + font size from searchIcon
+        paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+        transition: theme.transitions.create('width'),
+        width: '100%',
+        [theme.breakpoints.up('sm')]: {
+            width: '12ch',
+            '&:focus': {
+                width: '20ch',
+            },
+        },
+    },
+}));
+
 export default function MiniDrawer() {
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
@@ -109,7 +154,6 @@ export default function MiniDrawer() {
 
     return (
         <Box sx={{ display: 'flex' }}>
-            {/* <CssBaseline /> */}
             <AppBar position="fixed" open={open}>
                 <Toolbar>
                     <IconButton
@@ -124,9 +168,20 @@ export default function MiniDrawer() {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="h6" noWrap component="div">
-                        Dashboard
-                    </Typography>
+                    <Box width={1} m={0} p={0} sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <Typography variant="h6" noWrap component="div" alignSelf='center'>
+                            Dashboard
+                        </Typography>
+                        <Search alignSelf='center' >
+                            <SearchIconWrapper>
+                                <SearchIcon />
+                            </SearchIconWrapper>
+                            <StyledInputBase
+                                placeholder="Search…"
+                                inputProps={{ 'aria-label': 'search' }}
+                            />
+                        </Search>
+                    </Box>
                 </Toolbar>
             </AppBar>
             <Drawer variant="permanent" open={open} >

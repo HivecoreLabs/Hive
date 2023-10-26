@@ -29,7 +29,7 @@ const Home = () => {
         <Box>
             <Box display="flex" flexDirection="column" alignItems="center" mt={40} ml={5} theme={theme}>
 
-                <HiveRoundedIcon sx={{ fontSize: '70px', marginBottom: '10px', color: theme.palette.primary.dark }} />
+                <HiveRoundedIcon sx={{ fontSize: '70px', marginBottom: '10px', color: 'primary.dark' }} />
 
                 <TextField
                     label="Enter PIN"
@@ -38,14 +38,16 @@ const Home = () => {
                     margin="normal"
                     value={pin}
                     onChange={handlePinChange}
+                    required='true'
                 />
 
-                <Button variant="contained" color="primary" sx={{ fontWeight: 'medium' }} onClick={handleSignIn}>
+                <Button variant="contained" sx={{ fontWeight: 'medium', color: 'primary.darker' }} onClick={handleSignIn}>
                     Sign In
                 </Button>
 
                 <Button color="secondary" onClick={handleModalOpen} sx={{
                     marginTop: '10px',
+                    display: 'inline',
                     '&:hover': {
                         textDecoration: 'underline'
                     }
