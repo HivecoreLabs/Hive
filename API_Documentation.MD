@@ -4,6 +4,70 @@ Certainly, here's the complete API documentation in Markdown format:
 
 ## Employee/Admin Management
 
+## User Authentication
+
+### 1. Signup New User
+
+- **Route**: `POST /api/users/signup`
+- **Headers**:
+  - Content-Type: application/json
+- **Request Body (Required Information)**:
+
+```json
+{
+  "username": "username",
+  "password": "password"
+}
+```
+
+- **Expected Response (201 Created)**:
+
+```json
+{
+  "token": "authentication token",
+  "user": {
+    "id": 1,
+    "username": "username"
+  }
+}
+```
+
+- **Error Response (e.g., if all errors were triggered, 400 Bad Request)**:
+
+```json
+{
+  "username": [
+    "This field is required.",
+    "A user with that username already exists."
+  ],
+  "password": ["This field is required."]
+}
+```
+
+### 2. Login User
+
+- **Route**: `POST /api/users/login`
+- **Headers**:
+  - Content-Type: application/json
+- **Request Body (Required Information)**:
+
+```json
+{
+  "username": "username",
+  "password": "password"
+}
+```
+
+- **Error Response (404 Not Found)**:
+
+```json
+{
+  "detail": "Not found."
+}
+```
+
+## Sheets
+
 ### 1. Add a New Employee with Their Role
 
 - **Route**: `POST /employees`
@@ -37,10 +101,16 @@ Certainly, here's the complete API documentation in Markdown format:
 ```json
 {
   "errors": [
-    {"error": "Missing Field", "details": "First name is required."},
-    {"error": "Missing Field", "details": "Last name is required."},
-    {"error": "Missing Field", "details": "Restaurant employee ID is required."},
-    {"error": "Missing Field", "details": "At least one role must be selected."}
+    { "error": "Missing Field", "details": "First name is required." },
+    { "error": "Missing Field", "details": "Last name is required." },
+    {
+      "error": "Missing Field",
+      "details": "Restaurant employee ID is required."
+    },
+    {
+      "error": "Missing Field",
+      "details": "At least one role must be selected."
+    }
   ]
 }
 ```
@@ -60,7 +130,7 @@ Certainly, here's the complete API documentation in Markdown format:
     "created_at": "timestamp",
     "is_uploaded": false,
     "roles": ["server", "host", "busser"]
-  },
+  }
   // Other employee objects
 ]
 ```
@@ -107,7 +177,7 @@ Certainly, here's the complete API documentation in Markdown format:
 
 ```json
 {
-  "net_sales": 100.50,
+  "net_sales": 100.5,
   "cash_owed": 50.25,
   "employee_id": 1,
   "is_am_shift": true,
@@ -121,7 +191,7 @@ Certainly, here's the complete API documentation in Markdown format:
 ```json
 {
   "id": 1,
-  "net_sales": 100.50,
+  "net_sales": 100.5,
   "cash_owed": 50.25,
   "employee_id": 1,
   "is_am_shift": true,
@@ -137,10 +207,10 @@ Certainly, here's the complete API documentation in Markdown format:
 ```json
 {
   "errors": [
-    {"error": "Missing Field", "details": "Net sales amount is required."},
-    {"error": "Missing Field", "details": "Cash owed amount is required."},
-    {"error": "Missing Field", "details": "Employee ID is required."},
-    {"error": "Missing Field", "details": "Tipout day is required."}
+    { "error": "Missing Field", "details": "Net sales amount is required." },
+    { "error": "Missing Field", "details": "Cash owed amount is required." },
+    { "error": "Missing Field", "details": "Employee ID is required." },
+    { "error": "Missing Field", "details": "Tipout day is required." }
   ]
 }
 ```
@@ -154,7 +224,7 @@ Certainly, here's the complete API documentation in Markdown format:
 [
   {
     "id": 1,
-    "net_sales": 100.50,
+    "net_sales": 100.5,
     "cash_owed": 50.25,
     "employee_id": 1,
     "is_am_shift": true,
@@ -162,7 +232,7 @@ Certainly, here's the complete API documentation in Markdown format:
     "created_at": "timestamp",
     "tipout_day": "2023-10-18",
     "is_uploaded": false
-  },
+  }
   // Other checkout objects
 ]
 ```
@@ -212,7 +282,7 @@ Certainly, here's the complete API documentation in Markdown format:
     "formula": "Formula Expression",
     "role": "server",
     "is_uploaded": false
-  },
+  }
   // Other formula objects
 ]
 ```
@@ -251,7 +321,7 @@ Certainly, here's the complete API documentation in Markdown format:
 
 ### 11. Log the Clock-In Time for a Support Staff Member for a Specific
 
- Day and Shift
+Day and Shift
 
 - **Route**: `POST /support-clock-ins`
 - **Request Body (Required Information)**:
@@ -339,7 +409,6 @@ Certainly, here's the complete API documentation in Markdown format:
 - **Route**: `DELETE /support-clock-ins/{id}`
 - **Expected Response (204 No Content)**
 
-
 - **Error Response (e.g., if clock in not found) 404**:
 
 ```json
@@ -365,7 +434,7 @@ Certainly, here's the complete API documentation in Markdown format:
     "time_out": "timestamp",
     "active_role": "server",
     "is_uploaded": false
-  },
+  }
   // Other support staff time entries
 ]
 ```

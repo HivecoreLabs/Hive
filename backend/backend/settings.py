@@ -31,13 +31,13 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'api',
     'rest_framework',
+    'rest_framework.authtoken',
     'corsheaders',
 ]
 
@@ -54,9 +54,11 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'backend.urls'
 
-REST_FRAMEWORK = {'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.AllowAny']}
+REST_FRAMEWORK = {'DEFAULT_PERMISSION_CLASSES': [
+    'rest_framework.permissions.AllowAny']}
 
-CORS_ALLOW_ALL_ORIGINS = True # WE SHOULD PROBABLY IDENTIFY WHICH ORIGINS WE WANT TO WHITELIST VS ALL
+# WE SHOULD PROBABLY IDENTIFY WHICH ORIGINS WE WANT TO WHITELIST VS ALL
+CORS_ALLOW_ALL_ORIGINS = True
 
 TEMPLATES = [
     {
