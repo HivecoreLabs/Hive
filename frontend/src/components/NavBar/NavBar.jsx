@@ -25,7 +25,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
 import { Link, NavLink } from 'react-router-dom';
 
-const drawerWidth = 240;
+const drawerWidth = 200;
 
 const openedMixin = (theme) => ({
     width: drawerWidth,
@@ -194,8 +194,10 @@ export default function MiniDrawer() {
                 <List>
                     {['Dashboard', 'Employees', 'Reports', 'Settings'].map((text, index) => {
                         let icon;
+                        let path;
                         if (index === 0) {
-                            icon = <NavLink to='/dashboard'><DashboardIcon color='quaternary' /></NavLink>;
+                            icon = <DashboardIcon color='quaternary' />;
+                            path = '/dashboard';
                         } else if (index === 1) {
                             icon = <GroupsIcon color='quaternary' />;
                         } else if (index === 2) {
@@ -205,25 +207,30 @@ export default function MiniDrawer() {
                         }
 
                         return (
+
                             <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-                                <ListItemButton
-                                    sx={{
-                                        minHeight: 48,
-                                        justifyContent: open ? 'initial' : 'center',
-                                        px: 2.5,
-                                    }}
+                                <NavLink style={{ textDecoration: 'none', color: 'black', margin: 'none' }}
+                                    to={path}
                                 >
-                                    <ListItemIcon
+                                    <ListItemButton
                                         sx={{
-                                            minWidth: 0,
-                                            mr: open ? 3 : 'auto',
-                                            justifyContent: 'center',
+                                            minHeight: 48,
+                                            justifyContent: open ? 'initial' : 'center',
+                                            px: 2.5,
                                         }}
                                     >
-                                        {icon}
-                                    </ListItemIcon>
-                                    <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-                                </ListItemButton>
+                                        <ListItemIcon
+                                            sx={{
+                                                minWidth: 0,
+                                                mr: open ? 3 : 'auto',
+                                                justifyContent: 'center',
+                                            }}
+                                        >
+                                            {icon}
+                                        </ListItemIcon>
+                                        <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                                    </ListItemButton>
+                                </NavLink>
                             </ListItem>
                         );
                     })}

@@ -41,7 +41,7 @@ const Home = () => {
                     required='true'
                 />
 
-                <Button variant="contained" sx={{ fontWeight: 'medium', color: 'primary.darker' }} onClick={handleSignIn}>
+                <Button variant="contained" sx={{ fontWeight: 'medium', color: 'primary.darker', marginTop: '10px' }} onClick={handleSignIn}>
                     Sign In
                 </Button>
 
