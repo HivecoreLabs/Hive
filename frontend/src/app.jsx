@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import EmployeeForm from './components/EmployeeForm/index.jsx';
 
 function App() {
     const [isLoaded, setIsLoaded] = React.useState(false);
@@ -24,6 +25,7 @@ function App() {
             ) : (
             <h1>Loading...</h1>
             )}
+        <EmployeeForm />
         </>
     )
 };
