@@ -1,18 +1,20 @@
 import { createTheme } from '@mui/material';
+import { indigo } from '@mui/material/colors';
 
 const dayTheme = createTheme({
   palette: {
+    // in order from brightest to darkest
     primary: {
-      main: '#1E96FC', // light blue
+      main: '#FFD07B',
     },
     secondary: {
-      main: '#296EB4', // ocean blue
+      main: '#FDB833',
     },
     tertiary: {
-      main: '#FDB833', // vibrant yellow
+      main: '#1E96FC',
     },
     quaternary: {
-      main: '#FFD07B', // warm, pale yellow
+      main: '#296EB4',
     },
     white: 'white',
     canvas: '#EDEDED', // off white
@@ -23,16 +25,16 @@ const nightTheme = createTheme({
   palette: {
     // in order from darkest to brightest
     primary: {
-      main: '#02010A',
+      main: indigo[200],
     },
     secondary: {
-      main: '#04052E',
+      main: indigo[400],
     },
     tertiary: {
       main: '#140152',
     },
     quaternary: {
-      main: '#22007C',
+      main: '#02010A',
     },
     white: 'white',
     canvas: '#EDEDED', // off white

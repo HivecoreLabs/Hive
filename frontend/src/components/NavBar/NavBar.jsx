@@ -103,7 +103,6 @@ export default function MiniDrawer({ toggleTheme }) {
         setOpen(false);
     };
 
-
     return (
         <Box sx={{ display: 'flex' }}>
             {/* <CssBaseline /> */}
@@ -172,9 +171,6 @@ export default function MiniDrawer({ toggleTheme }) {
                     })}
                 </List>
                 <Divider />
-                <Button variant='contained' onClick={toggleTheme}>
-                    Toggle
-                </Button>
             </Drawer>
         </Box>
     );

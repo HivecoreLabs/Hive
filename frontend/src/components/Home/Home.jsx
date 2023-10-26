@@ -14,10 +14,6 @@ export default function Home() {
         setPin(e.target.value);
     };
 
-    const handleEnter = () => {
-
-    };
-
     return (
         <>
             <div className='home'>
