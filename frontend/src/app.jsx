@@ -4,6 +4,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import Home from './components/Home';
 import NavBar from './components/NavBar';
 import { dayTheme, nightTheme } from './styles/theme';
+import Dashboard from './components/Dashboard';
 
 export default function App() {
     // const [darkMode, setDarkMode] = useState(false);
@@ -25,6 +26,7 @@ export default function App() {
             <NavBar />
             <Routes>
                 <Route exact path="/" element={<Home />} />
+                <Route exact path="/dashboard" element={<Dashboard />} />
             </Routes>
         </ThemeProvider>
     );

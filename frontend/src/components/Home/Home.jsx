@@ -1,31 +1,79 @@
-import './Home.css';
 import React, { useState } from 'react';
-import Button from '@mui/material/Button';
-import { NavLink } from 'react-router-dom';
-import { useTheme } from '@emotion/react';
+import { Box, Typography, Button, Modal, TextField } from '@mui/material';
+import HiveRoundedIcon from '@mui/icons-material/HiveRounded';
 
-
-export default function Home() {
-
-    const theme = useTheme();
+const Home = () => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [pin, setPin] = useState('');
 
-    const handlePin = (e) => {
+    const handleModalOpen = () => {
+        setIsModalOpen(true);
+    };
+
+    const handleModalClose = () => {
+        setIsModalOpen(false);
+    };
+
+    const handlePinChange = (e) => {
         setPin(e.target.value);
     };
 
+    const handleSignIn = () => {
+        // Add logic for handling the PIN/password and sign-in here
+        console.log('Sign-in with PIN:', pin);
+    };
+
     return (
-        <>
-            <div className='home'>
-                <h2>Enter Your PIN</h2>
-                <input
+        <Box>
+            <Box display="flex" flexDirection="column" alignItems="center" mt={30}>
+
+                <HiveRoundedIcon sx={{ fontSize: '70px', marginBottom: '20px' }} />
+
+                <TextField
+                    label="Enter PIN"
                     type="password"
+                    variant="outlined"
+                    margin="normal"
                     value={pin}
-                    onChange={handlePin}
-                    placeholder="Enter PIN"
-                    maxLength="4"
+                    onChange={handlePinChange}
                 />
-            </div>
-        </>
+
+                <Button variant="contained" color="primary" sx={{ fontWeight: 'medium' }} onClick={handleSignIn}>
+                    Sign In
+                </Button>
+
+                <Button color="primary" onClick={handleModalOpen} sx={{
+                    marginTop: '10px',
+                    '&:hover': {
+                        textDecoration: 'underline'
+                    }
+                }}>
+                    NEW USER?
+                </Button>
+            </Box>
+
+            {/* Modal Dialog for New User Registration */}
+            <Modal open={isModalOpen} onClose={handleModalClose}>
+                <Box
+                    sx={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        width: 400,
+                        bgcolor: 'background.paper',
+                        boxShadow: 24,
+                        p: 4,
+                    }}
+                >
+                    {/* Add your registration form or content here */}
+                    <Typography variant="h6">New User Registration</Typography>
+                    {/* Registration form fields go here */}
+                    <Button onClick={handleModalClose}>Close</Button>
+                </Box>
+            </Modal>
+        </Box >
     );
 };
+
+export default Home;

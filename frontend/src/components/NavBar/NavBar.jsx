@@ -16,13 +16,12 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Button } from '@mui/material';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import GroupsIcon from '@mui/icons-material/Groups';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import SettingsIcon from '@mui/icons-material/Settings';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 const drawerWidth = 240;
 
@@ -33,6 +32,7 @@ const openedMixin = (theme) => ({
         duration: theme.transitions.duration.enteringScreen,
     }),
     overflowX: 'hidden',
+    backgroundColor: theme.palette.primary.light
 });
 
 const closedMixin = (theme) => ({
@@ -45,6 +45,8 @@ const closedMixin = (theme) => ({
     [theme.breakpoints.up('sm')]: {
         width: `calc(${theme.spacing(8)} + 1px)`,
     },
+    backgroundColor: theme.palette.primary.main
+
 });
 
 const DrawerHeader = styled('div')(({ theme }) => ({
@@ -82,7 +84,9 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
         boxSizing: 'border-box',
         ...(open && {
             ...openedMixin(theme),
-            '& .MuiDrawer-paper': openedMixin(theme),
+            '& .MuiDrawer-paper': {
+                ...openedMixin(theme),
+            }
         }),
         ...(!open && {
             ...closedMixin(theme),
@@ -91,7 +95,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     }),
 );
 
-export default function MiniDrawer({ toggleTheme }) {
+export default function MiniDrawer() {
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
 
@@ -109,14 +113,13 @@ export default function MiniDrawer({ toggleTheme }) {
             <AppBar position="fixed" open={open}>
                 <Toolbar>
                     <IconButton
-                        color='secondary'
                         aria-label="open drawer"
                         onClick={handleDrawerOpen}
                         edge="start"
                         sx={{
                             marginRight: 5,
                             ...(open && { display: 'none' }),
-                            color: 'white'
+                            color: theme.palette.quaternary.main
                         }}
                     >
                         <MenuIcon />
@@ -126,9 +129,9 @@ export default function MiniDrawer({ toggleTheme }) {
                     </Typography>
                 </Toolbar>
             </AppBar>
-            <Drawer variant="permanent" open={open}>
+            <Drawer variant="permanent" open={open} >
                 <DrawerHeader>
-                    <IconButton onClick={handleDrawerClose}>
+                    <IconButton onClick={handleDrawerClose} sx={{ color: theme.palette.quaternary.main }}>
                         {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
                     </IconButton>
                 </DrawerHeader>
@@ -137,11 +140,11 @@ export default function MiniDrawer({ toggleTheme }) {
                     {['Dashboard', 'Employees', 'Reports', 'Settings'].map((text, index) => {
                         let icon;
                         if (index === 0) {
-                            icon = <NavLink to='/'><DashboardIcon color='primary' /></NavLink>;
+                            icon = <NavLink to='/dashboard'><DashboardIcon color='quaternary' /></NavLink>;
                         } else if (index === 1) {
-                            icon = <GroupsIcon color='secondary' />;
+                            icon = <GroupsIcon color='quaternary' />;
                         } else if (index === 2) {
-                            icon = <AssessmentIcon color='tertiary' />;
+                            icon = <AssessmentIcon color='quaternary' />;
                         } else if (index === 3) {
                             icon = <SettingsIcon color='quaternary' />;
                         }
