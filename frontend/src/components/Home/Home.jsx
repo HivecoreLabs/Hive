@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Box, Typography, Button, Modal, TextField } from '@mui/material';
 import HiveRoundedIcon from '@mui/icons-material/HiveRounded';
+import { useTheme } from '@emotion/react';
 
 const Home = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [pin, setPin] = useState('');
+    const theme = useTheme();
 
     const handleModalOpen = () => {
         setIsModalOpen(true);
@@ -25,9 +27,9 @@ const Home = () => {
 
     return (
         <Box>
-            <Box display="flex" flexDirection="column" alignItems="center" mt={30}>
+            <Box display="flex" flexDirection="column" alignItems="center" mt={40} ml={5} theme={theme}>
 
-                <HiveRoundedIcon sx={{ fontSize: '70px', marginBottom: '20px' }} />
+                <HiveRoundedIcon sx={{ fontSize: '70px', marginBottom: '10px', color: theme.palette.primary.dark }} />
 
                 <TextField
                     label="Enter PIN"
@@ -42,7 +44,7 @@ const Home = () => {
                     Sign In
                 </Button>
 
-                <Button color="primary" onClick={handleModalOpen} sx={{
+                <Button color="secondary" onClick={handleModalOpen} sx={{
                     marginTop: '10px',
                     '&:hover': {
                         textDecoration: 'underline'
