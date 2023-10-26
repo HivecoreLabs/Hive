@@ -25,7 +25,7 @@ class Employee(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     restaurant_employee_id = models.CharField(max_length=10, null=True)
-    role = models.ManyToManyField(Role)
+    roles = models.ManyToManyField(Role, through='Employee_Role')
     food_permit_exp = models.DateField(null=True)
     alcohol_permit_exp = models.DateField(null=True)
     is_former_employee = models.BooleanField(default=False)
@@ -36,6 +36,15 @@ class Employee(models.Model):
 
     def __str__(self) -> str:
         return f'{self.first_name} {self.last_name}'
+
+
+class Employee_Role(models.Model):
+    role_id = models.ForeignKey(Role, on_delete=models.PROTECT)
+    employee_id = models.ForeignKey(Employee, on_delete=models.PROTECT)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    sheet_cell = models.CharField(default=None, null=True, max_length=10)
+    is_uploaded = models.BooleanField(default=False)
 
 
 class Checkout(models.Model):
