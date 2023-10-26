@@ -1,0 +1,152 @@
+[
+    {
+        "model": "api.employee_clock_in",
+        "pk": 1,
+        "fields": {
+            "employee_id": 1,
+            "time_in": "2023-10-25T12:00:00Z",
+            "time_out": "2023-10-25T16:00:00Z",
+            "active_role_id": 1,
+            "tipout_received": 20.5,
+            "created_at": "2023-10-26T00:00:00Z",
+            "updated_at": "2023-10-26T00:00:00Z",
+            "sheet_cell": null,
+            "is_uploaded": false
+        }
+    },
+    {
+        "model": "api.employee_clock_in",
+        "pk": 2,
+        "fields": {
+            "employee_id": 2,
+            "time_in": "2023-10-25T11:00:00Z",
+            "time_out": "2023-10-25T15:00:00Z",
+            "active_role_id": 3,
+            "tipout_received": 18.75,
+            "created_at": "2023-10-26T00:00:00Z",
+            "updated_at": "2023-10-26T00:00:00Z",
+            "sheet_cell": null,
+            "is_uploaded": false
+        }
+    },
+    {
+        "model": "api.employee_clock_in",
+        "pk": 3,
+        "fields": {
+            "employee_id": 3,
+            "time_in": "2023-10-25T10:00:00Z",
+            "time_out": "2023-10-25T14:00:00Z",
+            "active_role_id": 5,
+            "tipout_received": 16.25,
+            "created_at": "2023-10-26T00:00:00Z",
+            "updated_at": "2023-10-26T00:00:00Z",
+            "sheet_cell": null,
+            "is_uploaded": false
+        }
+    },
+    {
+        "model": "api.employee_clock_in",
+        "pk": 4,
+        "fields": {
+            "employee_id": 4,
+            "time_in": "2023-10-25T09:00:00Z",
+            "time_out": "2023-10-25T13:00:00Z",
+            "active_role_id": 7,
+            "tipout_received": 13.75,
+            "created_at": "2023-10-26T00:00:00Z",
+            "updated_at": "2023-10-26T00:00:00Z",
+            "sheet_cell": null,
+            "is_uploaded": false
+        }
+    },
+    {
+        "model": "api.employee_clock_in",
+        "pk": 5,
+        "fields": {
+            "employee_id": 5,
+            "time_in": "2023-10-25T08:00:00Z",
+            "time_out": "2023-10-25T12:00:00Z",
+            "active_role_id": 9,
+            "tipout_received": 11.25,
+            "created_at": "2023-10-26T00:00:00Z",
+            "updated_at": "2023-10-26T00:00:00Z",
+            "sheet_cell": null,
+            "is_uploaded": false
+        }
+    },
+    {
+        "model": "api.employee_clock_in",
+        "pk": 6,
+        "fields": {
+            "employee_id": 6,
+            "time_in": "2023-10-25T07:00:00Z",
+            "time_out": "2023-10-25T11:00:00Z",
+            "active_role_id": 1,
+            "tipout_received": 8.75,
+            "created_at": "2023-10-26T00:00:00Z",
+            "updated_at": "2023-10-26T00:00:00Z",
+            "sheet_cell": null,
+            "is_uploaded": false
+        }
+    },
+    {
+        "model": "api.employee_clock_in",
+        "pk": 7,
+        "fields": {
+            "employee_id": 7,
+            "time_in": "2023-10-25T06:00:00Z",
+            "time_out": "2023-10-25T10:00:00Z",
+            "active_role_id": 3,
+            "tipout_received": 6.25,
+            "created_at": "2023-10-26T00:00:00Z",
+            "updated_at": "2023-10-26T00:00:00Z",
+            "sheet_cell": null,
+            "is_uploaded": false
+        }
+    },
+    {
+        "model": "api.employee_clock_in",
+        "pk": 8,
+        "fields": {
+            "employee_id": 8,
+            "time_in": "2023-10-25T05:00:00Z",
+            "time_out": "2023-10-25T09:00:00Z",
+            "active_role_id": 5,
+            "tipout_received": 3.75,
+            "created_at": "2023-10-26T00:00:00Z",
+            "updated_at": "2023-10-26T00:00:00Z",
+            "sheet_cell": null,
+            "is_uploaded": false
+        }
+    },
+    {
+        "model": "api.employee_clock_in",
+        "pk": 9,
+        "fields": {
+            "employee_id": 9,
+            "time_in": "2023-10-25T04:00:00Z",
+            "time_out": "2023-10-25T08:00:00Z",
+            "active_role_id": 7,
+            "tipout_received": 1.25,
+            "created_at": "2023-10-26T00:00:00Z",
+            "updated_at": "2023-10-26T00:00:00Z",
+            "sheet_cell": null,
+            "is_uploaded": false
+        }
+    },
+    {
+        "model": "api.employee_clock_in",
+        "pk": 10,
+        "fields": {
+            "employee_id": 10,
+            "time_in": "2023-10-25T03:00:00Z",
+            "time_out": "2023-10-25T07:00:00Z",
+            "active_role_id": 9,
+            "tipout_received": 0.5,
+            "created_at": "2023-10-26T00:00:00Z",
+            "updated_at": "2023-10-26T00:00:00Z",
+            "sheet_cell": null,
+            "is_uploaded": false
+        }
+    }
+]

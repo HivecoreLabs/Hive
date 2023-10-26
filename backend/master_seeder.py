@@ -1,3 +1,5 @@
+import os
+import sys
 from random import randint, choice, random
 from datetime import datetime, timedelta
 from api.models import SpreadSheet, Employee, Role, Employee_Role, Checkout, Employee_Clock_In, Tipout_Formula, Tipout_Variable
@@ -130,4 +132,3 @@ seed_checkout_data()
 seed_employee_clock_in_data()
 seed_tipout_formula_data()
 seed_tipout_variable_data()
-
