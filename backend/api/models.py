@@ -1,12 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 
-# Create your models here.
-
-
-class UserManger(BaseUserManager):
-    use_in_migrations = True
-
 
 class SpreadSheet(models.Model):
     database_google_id = models.CharField(max_length=250)
