@@ -1,31 +1,25 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import { ThemeProvider } from '@mui/material/styles';
+import Home from './components/Home';
+import NavBar from './components/NavBar';
+import { dayTheme, nightTheme } from './styles/theme';
 
-function App() {
-    const [isLoaded, setIsLoaded] = React.useState(false);
-    const [name, setName] = React.useState("World");
+export default function App() {
+    const [darkMode, setDarkMode] = useState(false);
 
-    useEffect(() => {
-        fetch("http://localhost:8000/api/")
-            .then((res) => {
-                return res.json();
-            }).then((data) => {
-                console.log(data);
-                setName(data.name);
-                setIsLoaded(true);
-            }).catch(() => {
-                setIsLoaded(true);
-        })
-    }, [])
+    const toggleTheme = () => {
+        setDarkMode((prevDarkMode) => !prevDarkMode);
+    };
+
+    const theme = darkMode ? nightTheme : dayTheme;
 
     return (
-        <>
-        {isLoaded ? (
-            <h1>Hello {name}</h1>
-            ) : (
-            <h1>Loading...</h1>
-            )}
-        </>
-    )
-};
-
-export default App;
+        <ThemeProvider theme={theme}>
+            <NavBar toggleTheme={toggleTheme} />
+            <Routes>
+                <Route exact path="/" element={<Home />} />
+            </Routes>
+        </ThemeProvider>
+    );
+}
