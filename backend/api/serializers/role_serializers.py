@@ -3,17 +3,10 @@ from api.models import Role
 from api.serializers import ReadLimitedEmployeeSerializer
 
 
-class WriteRoleSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Role
-        fields = ('role', 'description', 'created_at',
-                  'updated_at', 'sheet_cell', 'is_uploaded')
-
-
-class ReadRoleWithEmployeeSerializer(serializers.ModelSerializer):
+class RoleSerializer(serializers.ModelSerializer):
     employees = ReadLimitedEmployeeSerializer(many=True, read_only=True)
 
     class Meta:
         model = Role
-        fields = ('role', 'description', 'employees', 'created_at',
+        fields = ('id', 'role', 'description', 'employees', 'created_at',
                   'updated_at', 'sheet_cell', 'is_uploaded')

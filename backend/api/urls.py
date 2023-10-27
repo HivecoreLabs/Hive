@@ -1,11 +1,13 @@
-from django.urls import path
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
 from . import views
+
+router = DefaultRouter()
+router.register('employees', views.EmployeeViewSet)
+router.register('roles', views.RoleViewSet)
 
 urlpatterns = [
     path("auth/login/", views.login),
     path("auth/signup/", views.signup),
-    path("roles/", views.role_list, name='role_list'),
-    path('roles/<int:role_id>', views.role_detail),
-    path('employees/', views.employee_list),
-    path('employees/<int:employee_id>', views.employee_detail)
+    path('', include(router.urls))
 ]
