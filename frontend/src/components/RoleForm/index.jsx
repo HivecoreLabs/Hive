@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button } from '@mui/material';
+import { Button, TextareaAutosize, TextField } from '@mui/material';
 
 
 export default function RoleForm({ selRole, formType }) {
@@ -47,7 +47,7 @@ export default function RoleForm({ selRole, formType }) {
             >
                 <div className="role-form-prompts">
                     <div className="role-form-role">
-                        <label>
+                        {/* <label>
                             Role
                         </label>
                         <input 
@@ -56,9 +56,19 @@ export default function RoleForm({ selRole, formType }) {
                             value={role}
                             onChange={e => setRole(e.target.value)}
                         />
-                        { attempt && validationErrors.role && (<div id="error">{validationErrors.role}</div>) }
+                        { attempt && validationErrors.role && (<div id="error">{validationErrors.role}</div>) } */}
+                        <TextField 
+                            label='Role'
+                            type='text'
+                            variant='outlined'
+                            margin='normal'
+                            value={role}
+                            onChange={e => setRole(e.target.value)}
+                            required
+                        />
                     </div>
                     <div className="role-form-description">
+                        {/* Need a material ui component for text area */}
                         <label>
                             Description
                         </label>
@@ -70,6 +80,9 @@ export default function RoleForm({ selRole, formType }) {
 
                         </textarea>
                         { attempt && validationErrors.description && (<div id="error">{validationErrors.description}</div>) }
+                        <TextareaAutosize 
+                            lab
+                        />
                     </div>
                 </div>
                 <div className="role-form-actions">
