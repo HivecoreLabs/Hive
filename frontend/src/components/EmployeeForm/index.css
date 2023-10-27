@@ -1,0 +1,26 @@
+div#root {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.employee-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 90%;
+    padding: 10px;
+
+    border: 1px solid red;
+}
+
+.employee-form-header {
+
+    width: 70%;
+    text-align: center;
+
+    background-color: orange;
+    border-radius: 20px;
+    
+}
