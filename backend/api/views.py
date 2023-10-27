@@ -121,7 +121,7 @@ def employee_list(request):
 @api_view(['GET', 'PUT', 'DELETE'])
 def employee_detail(request, employee_id):
     """
-    Retrieve employee.
+    Retrieve, update, or delete employee
     """
     try:
         employee = Employee.objects.get(id=employee_id)
