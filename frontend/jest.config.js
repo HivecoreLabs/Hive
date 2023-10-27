@@ -5,3 +5,9 @@ module.exports = {
   },
   testEnvironment: "jsdom",
 };
+
+// export const setupFilesAfterEnv = ["./src/jest.setup.js"];
+// export const transform = {
+//   "^.+\\.[t|j]sx?$": "babel-jest",
+// };
+// export const testEnvironment = "jsdom";
