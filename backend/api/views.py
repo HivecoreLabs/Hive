@@ -5,8 +5,8 @@ from rest_framework.authtoken.models import Token
 
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
-from .models import Role
-from .serializers import UserSerializer, ReadRoleSerializer, ReadRoleWithEmployeeSerializer, WriteRoleSerializer
+from .models import Role, Employee
+from .serializers import UserSerializer, ReadRoleWithEmployeeSerializer, WriteRoleSerializer, ReadEmployeeWithRoleSerializer, WriteEmployeeSerializer
 
 
 @api_view(['POST'])
@@ -51,7 +51,7 @@ def role_list(request):
     """
     if request.method == 'GET':
         roles = Role.objects.all()
-        serializer = ReadRoleSerializer(roles, many=True)
+        serializer = ReadRoleWithEmployeeSerializer(roles, many=True)
         return Response(serializer.data)
 
     elif request.method == 'POST':
@@ -90,42 +90,42 @@ def role_detail(request, role_id):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-# @api_view(['GET', 'POST'])
-# def employee_list(request):
-#     """
-#     List all employees or create a new employee.
-#     """
-#     if request.method == 'GET':
-#         employees = Employee.objects.all()
-#         serializer = EmployeeSerializer(employees, many=True)
-#         return Response(serializer.data)
+@api_view(['GET', 'POST'])
+def employee_list(request):
+    """
+    List all employees or create a new employee.
+    """
+    if request.method == 'GET':
+        employees = Employee.objects.all()
+        serializer = ReadEmployeeWithRoleSerializer(employees, many=True)
+        return Response(serializer.data)
 
-#     elif request.method == 'POST':
-#         employee_serializer = EmployeeSerializer(data=request.data)
-#         if employee_serializer.is_valid():
-#             employee = employee_serializer.save()
+    elif request.method == 'POST':
+        employee_serializer = WriteEmployeeSerializer(data=request.data)
+        if employee_serializer.is_valid():
+            employee = employee_serializer.save()
 
-#             if 'roles' in request.data:
-#                 employee_roles = []
-#                 for employee_role in request.data['roles']:
-#                     role = get_object_or_404(Role, role=employee_role['role'])
-#                     employee_roles.append(role)
-#                 employee.roles.set(employee_roles)
-#             return Response(employee_serializer.data, status=status.HTTP_201_CREATED)
-#         else:
-#             return Response(employee_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            if 'roles' in request.data:
+                employee_roles = []
+                for employee_role in request.data['roles']:
+                    role = get_object_or_404(Role, role=employee_role['role'])
+                    employee_roles.append(role)
+                employee.roles.set(employee_roles)
+            return Response(employee_serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(employee_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-# @api_view(['GET', 'PUT', 'DELETE'])
-# def employee_detail(request, employee_id):
-#     """
-#     Retrieve, update, or delete employee
-#     """
-#     try:
-#         employee = Employee.objects.get(id=employee_id)
-#     except Employee.DoesNotExist:
-#         return Response(status=status.HTTP_404_NOT_FOUND)
+@api_view(['GET', 'PUT', 'DELETE'])
+def employee_detail(request, employee_id):
+    """
+    Retrieve, update, or delete employee
+    """
+    try:
+        employee = Employee.objects.get(id=employee_id)
+    except Employee.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
-#     if request.method == 'GET':
-#         serializer = EmployeeSerializer(employee)
-#         return Response(serializer.data)
+    if request.method == 'GET':
+        serializer = ReadEmployeeWithRoleSerializer(employee)
+        return Response(serializer.data)
