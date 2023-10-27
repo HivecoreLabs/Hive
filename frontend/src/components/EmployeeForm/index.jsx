@@ -3,78 +3,51 @@ import './index.css';
 
 export default function EmployeeForm({ employee, formType }) {
 
-    // const testUsers = [
-    //     {
-    //         id: 1,
-    //         firstName: 'John',
-    //         lastName: 'Doe',
-    //         restaurantEmployeeId: 'EmpID22',
-    //         isUploaded: false,
-    //         foodPermitExp: 'Thur Oct 26 2023',
-    //         alcoholPermitExp: 'Thur Oct 26 2023',
-    //         roles: [
-    //             {
-    //                 role: 'Server'
-    //             }
-    //         ]
-    //     },
-    //     {
-    //         id: 2,
-    //         firstName: 'Jane',
-    //         lastName: 'Moore',
-    //         restaurantEmployeeId: 'EmpID10',
-    //         isUploaded: false,
-    //         foodPermitExp: 'Thur Oct 26 2023',
-    //         alcoholPermitExp: 'Thur Oct 26 2023',
-    //         roles: [
-    //             {
-    //                 role: 'Busser'
-    //             }
-    //         ]
-    //     },
-    //     {
-    //         id: 3,
-    //         firstName: 'Lenore',
-    //         lastName: 'Meyer',
-    //         restaurantEmployeeId: 'EmpID23',
-    //         isUploaded: false,
-    //         foodPermitExp: 'Thur Oct 26 2023',
-    //         alcoholPermitExp: 'Thur Oct 26 2023',
-    //         roles: [
-    //             {
-    //                 role: 'Chef'
-    //             },
-    //             {
-    //                 role: 'Carter'
-    //             }
-    //         ]
-    //     }
-    // ];
-
-    formType = 'create';
-
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [restaurantId, setRestaurantId] = useState('');
-    const [role, setRole] = useState([]);
-    const [foodPermitExp, setFoodPermitExp] = useState('');
-    const [alcoholPermitExp, setAlcoholPermitExp] = useState('');
+    const [firstName, setFirstName] = useState(employee.firstName);
+    const [lastName, setLastName] = useState(employee.lastName);
+    const [restaurantId, setRestaurantId] = useState(employee.restaurantId);
+    const [role, setRole] = useState([[...employee.role]]);
+    const [foodPermitExp, setFoodPermitExp] = useState(employee.foodPermitExp);
+    const [alcoholPermitExp, setAlcoholPermitExp] = useState(employee.alcoholPermitExp);
 
     const [validationErrors, setValidationErrors] = useState({
-
+        firstName: '',
+        lastName: '',
+        restaurantId: '',
+        role: '',
+        foodPermitExp: '',
+        alcoholPermitExp: ''
     });
     const [attempt, setAttempt] = useState(false);
 
     const handleSubmit = async (e) => {
 
+        e.preventDefault();
+        setAttempt(true);
 
+        const errors = {};
+
+        if (firstName.length > 50) errors.firstName = "First Name can be no more than 50 characters."
+        if (lastName.length > 50) errors.lastName = "Last Name can be no more than 50 characters."
+        if (restaurantId.length > 10) errors.restaurantId = "Restaurant ID can be no more than 10 characters."
+
+        if (Object.values(errors)[0]) {
+            setValidationErrors(errors);
+            return alert('Can not submit.');
+        }
+
+        setAttempt(false);
+
+        // FIX: dispatch method
 
     };
 
     return (
         <div className='employee-form-container'>
             <div className='employee-form-header'>
-                {`${formType === 'create' ? 'Create': 'Edit'} Employee Form`}
+                <h1>
+                    {`${formType} Employee Form`}
+                </h1>
             </div>
             <form 
             className='employee-form'
@@ -91,6 +64,7 @@ export default function EmployeeForm({ employee, formType }) {
                         value={firstName}
                         onChange={e => setFirstName(e.target.value)}
                     />
+                    { attempt && validationErrors.firstName && (<div id='error'>{validationErrors.firstName}</div>) }
                 </div>
                 <div className='employee-form-last-name'>
                     <label>
@@ -103,6 +77,7 @@ export default function EmployeeForm({ employee, formType }) {
                         value={lastName}
                         onChange={e => setLastName(e.target.value)}
                     />
+                    { attempt && validationErrors.lastName && (<div id='error'>{validationErrors.lastName}</div>) }
                 </div>
                 <div className='employee-form-restaurant-id'>
                     <label>
@@ -115,7 +90,7 @@ export default function EmployeeForm({ employee, formType }) {
                         value={restaurantId}
                         onChange={e => setRestaurantId(e.target.value)}
                     />
-                    
+                    { attempt && validationErrors.restaurantId && (<div id='error'>{validationErrors.restaurantId}</div>) }
                 </div>
                 <div className='employee-form-role'>
                     <label>
@@ -142,6 +117,13 @@ export default function EmployeeForm({ employee, formType }) {
                         id='alcohol-permit-exp'
                         value={alcoholPermitExp}
                         onChange={e => setAlcoholPermitExp(e.target.value)}
+                    />
+                </div>
+                <div className='employee-form-action'>
+                    <input 
+                        className='employee-form-submit-button'
+                        type='submit'
+                        value = {`${formType} Employee`}
                     />
                 </div>
             </form>

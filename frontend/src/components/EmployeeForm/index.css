@@ -4,6 +4,11 @@ div#root {
     width: 100vw;
 }
 
+#error {
+    color: red;
+    font-weight: bold;
+}
+
 .employee-form-container {
     display: flex;
     flex-direction: column;
@@ -12,17 +17,35 @@ div#root {
     align-items: center;
 }
 
+.employee-form-header {
+    background-color: orange;
+    
+    padding: 5px;
+    margin: 5px 0;
+
+    border-radius: 5px;
+}
+
 .employee-form {
     display: flex;
     flex-direction: row;
     align-items: center;
 
-    width: 95%;
     padding: 10px;
-
-    border: 1px solid red;
 }
 
 .employee-form > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
     margin: 0px 5px;
+}
+
+.employee-form > div > label {
+    text-align: center;
+}
+
+.employee-form-action{
+    display: none;
 }
