@@ -66,6 +66,119 @@ Certainly, here's the complete API documentation in Markdown format:
 }
 ```
 
+## Roles
+
+### 1. Get List of All Roles
+
+- **Route**: `GET /api/roles/`
+- **Request Body** (None)
+- **Expected Response(200)**:
+
+```json
+[
+  {
+    "id": 1,
+    "role": "name of role",
+    "employees": [
+      {
+        "id": "employee id",
+        "first_name": "first name",
+        "last_name": "last name",
+        "restaurant_employee_id": "restaurant employee id"
+      }
+    ]
+  },
+  ...
+]
+```
+
+### 2. Add Role
+
+- **Route**: `POST /api/roles/`
+- **Request Body (Required Information)**:
+
+```json
+{
+  "role": "name of role",
+  "description": "optional description"
+}
+```
+
+- **Expected Response (201 Created)**:
+
+```json
+{
+  "id": "role id",
+  "role": "role name",
+  "description": "optional description",
+  "employees": [],
+  "created_at": "date created",
+  "updated_at": "date last updated",
+  "sheet_cell": "sheet cell this record corresponds to on Google Sheet",
+  "is_uploaded": "boolean indicating if has been uploaded to Google Sheet"
+}
+```
+
+- **Error Response (400 Bad Request)**:
+
+```json
+{
+  "role": ["This field is required.", "role with this role already exists."]
+}
+```
+
+### 3. Update Role
+
+- **Route**: `PUT /roles/<int:roleId>/`
+- **Request Body (Required Information)**:
+
+```json
+{
+  "role": "name of role",
+  "description": "optional description"
+}
+```
+
+- **Expected Response (201 Created)**:
+
+```json
+{
+  "id": "role id",
+  "role": "role name",
+  "description": "optional description",
+  "employees": [],
+  "created_at": "date created",
+  "updated_at": "date last updated",
+  "sheet_cell": "sheet cell this record corresponds to on Google Sheet",
+  "is_uploaded": "boolean indicating if has been uploaded to Google Sheet"
+}
+```
+
+- **Error Response (400 Bad Request)**:
+
+```json
+{
+  "role": ["This field is required.", "role with this role already exists."]
+}
+```
+
+### 4. Delete Role
+
+- **Route**: `DELETE /roles/<int:roleId`
+- ## **Headers**:
+  -
+- **Request Body (Required Information)**:
+
+```json
+
+```
+
+- **Expected Response (204)**:
+
+```json
+
+```
+
 ## Sheets
 
 ### 1. Add a New Employee with Their Role
