@@ -73,11 +73,11 @@ export default function RoleForm({ selRole, formType }) {
                     </div>
                 </div>
                 <div className="role-form-actions">
-                    <input 
+                    {/* <input 
                         className="role-form-submit-button"
                         type="submit"
                         value={`${formType} Role`}
-                    />
+                    /> */}
                     <Button
                     variant='contained'
                     onClick={handleSubmit}

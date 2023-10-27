@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button } from '@mui/material';
+import { Button, Input, TextField } from '@mui/material';
 import './index.css';
 
 export default function EmployeeForm({ employee, formType }) {
@@ -57,7 +57,7 @@ export default function EmployeeForm({ employee, formType }) {
             >
                 <div className='employee-form-prompts'>
                     <div className='employee-form-first-name'>
-                        <label>
+                        {/* <label>
                             First Name
                         </label>
                         <input 
@@ -67,10 +67,19 @@ export default function EmployeeForm({ employee, formType }) {
                             value={firstName}
                             onChange={e => setFirstName(e.target.value)}
                         />
-                        { attempt && validationErrors.firstName && (<div id='error'>{validationErrors.firstName}</div>) }
+                        { attempt && validationErrors.firstName && (<div id='error'>{validationErrors.firstName}</div>) } */}
+                        <TextField 
+                            label='First Name'
+                            type='text'
+                            variant='outlined'
+                            margin='normal'
+                            value={firstName}
+                            onChange={e => setFirstName(e.target.value)}
+                            required
+                        />
                     </div>
                     <div className='employee-form-last-name'>
-                        <label>
+                        {/* <label>
                             Last Name
                         </label>
                         <input 
@@ -80,10 +89,19 @@ export default function EmployeeForm({ employee, formType }) {
                             value={lastName}
                             onChange={e => setLastName(e.target.value)}
                         />
-                        { attempt && validationErrors.lastName && (<div id='error'>{validationErrors.lastName}</div>) }
+                        { attempt && validationErrors.lastName && (<div id='error'>{validationErrors.lastName}</div>) } */}
+                        <TextField 
+                            label='Last Name'
+                            type='text'
+                            variant='outlined'
+                            margin='normal'
+                            value={lastName}
+                            onChange={e => setLastName(e.target.value)}
+                            required
+                        />
                     </div>
                     <div className='employee-form-restaurant-id'>
-                        <label>
+                        {/* <label>
                             Restaurant ID
                         </label>
                         <input 
@@ -93,7 +111,16 @@ export default function EmployeeForm({ employee, formType }) {
                             value={restaurantId}
                             onChange={e => setRestaurantId(e.target.value)}
                         />
-                        { attempt && validationErrors.restaurantId && (<div id='error'>{validationErrors.restaurantId}</div>) }
+                        { attempt && validationErrors.restaurantId && (<div id='error'>{validationErrors.restaurantId}</div>) } */}
+                        <TextField 
+                            label='Restaurant ID'
+                            type='text'
+                            variant='outline'
+                            margin='normal'
+                            value={restaurantId}
+                            onChange={e => setRestaurantId(e.target.value)}
+                            required
+                        />
                     </div>
                     <div className='employee-form-role'>
                         <label>
@@ -101,7 +128,7 @@ export default function EmployeeForm({ employee, formType }) {
                         </label>
                     </div>
                     <div className='employee-form-food-permit-exp'>
-                        <label>
+                        {/* <label>
                             Food Permit Expiration
                         </label>
                         <input
@@ -109,15 +136,29 @@ export default function EmployeeForm({ employee, formType }) {
                             id='food-permit-exp'
                             value={foodPermitExp}
                             onChange={e => setFoodPermitExp(e.target.value)}
+                        /> */}
+                        <Input 
+                            label='Food Permit Expiration'
+                            type='date'
+                            margin='normal'
+                            value={foodPermitExp}
+                            onChange={e => setFoodPermitExp(e.target.value)}
                         />
                     </div>
                     <div className='employee-form-alcohol-permit-exp'>
-                        <label>
+                        {/* <label>
                             Alcohol Permit Exipration
                         </label>
                         <input
                             type='date'
                             id='alcohol-permit-exp'
+                            value={alcoholPermitExp}
+                            onChange={e => setAlcoholPermitExp(e.target.value)}
+                        /> */}
+                        <Input 
+                            label='Alcohol Permit Expiration'
+                            type='date'
+                            margin='normal'
                             value={alcoholPermitExp}
                             onChange={e => setAlcoholPermitExp(e.target.value)}
                         />
