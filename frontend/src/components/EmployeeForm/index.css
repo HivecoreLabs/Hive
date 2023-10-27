@@ -1,12 +1,20 @@
 div#root {
     display: flex;
     flex-direction: column;
+    width: 100vw;
+}
+
+.employee-form-container {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
     align-items: center;
 }
 
 .employee-form {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
 
     width: 95%;
@@ -15,29 +23,6 @@ div#root {
     border: 1px solid red;
 }
 
-.employee-form-header {
-
-    width: 70%;
-    text-align: center;
-
-    background-color: orange;
-    border-radius: 20px;
-    
-}
-
-.employee-form-table-headers {
-    display: flex;
-}
-
-.employee-form-employee {
-    display: flex;
-}
-
-.employee-form-employee > div {
-    margin: 0 5px;
-}
-
-.employee-form-actions {
-    display: flex;
-    /* flex-direction: row; */
+.employee-form > div {
+    margin: 0px 5px;
 }
