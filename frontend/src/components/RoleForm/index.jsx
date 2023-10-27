@@ -40,6 +40,45 @@ export default function RoleForm({ selRole, formType }) {
                     {`${formType} Role Form`}
                 </h1>
             </div>
+            <form
+            className="role-form"
+            onSubmit={handleSubmit}
+            >
+                <div className="role-form-prompts">
+                    <div className="role-form-role">
+                        <label>
+                            Role
+                        </label>
+                        <input 
+                            type="text"
+                            id="role"
+                            value={role}
+                            onChange={e => setRole(e.target.value)}
+                        />
+                        { attempt && validationErrors.role && (<div id="error">{validationErrors.role}</div>) }
+                    </div>
+                    <div className="role-form-description">
+                        <label>
+                            Description
+                        </label>
+                        <textarea
+                        id="description"
+                        value={description}
+                        onChange={e => setDescription(e.target.value)}
+                        >
+
+                        </textarea>
+                        { attempt && validationErrors.description && (<div id="error">{validationErrors.description}</div>) }
+                    </div>
+                </div>
+                <div className="role-form-actions">
+                    <input 
+                        className="role-form-submit-button"
+                        type="submit"
+                        value={`${formType} Role`}
+                    />
+                </div>
+            </form>
         </div>
     );
 
