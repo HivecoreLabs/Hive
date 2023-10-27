@@ -101,10 +101,22 @@ def employee_list(request):
         employees = Employee.objects.all()
         serializer = EmployeeSerializer(employees, many=True)
         return Response(serializer.data)
-    pass
+
+    elif request.method == 'POST':
+        employee_serializer = EmployeeSerializer(data=request.data)
+        if employee_serializer.is_valid():
+            employee = employee_serializer.save()
+            employee_roles = []
+            for employee_role in request.data['roles']:
+                role = get_object_or_404(Role, role=employee_role['role'])
+                employee_roles.append(role)
+            employee.roles.set(employee_roles)
+            return Response(employee_serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(employee_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(['GET'])
+@api_view(['GET', 'PUT', 'DELETE'])
 def employee_detail(request, employee_id):
     """
     Retrieve employee.
