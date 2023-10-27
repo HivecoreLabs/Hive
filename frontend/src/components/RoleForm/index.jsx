@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Button } from '@mui/material';
 
 
 export default function RoleForm({ selRole, formType }) {
@@ -77,6 +78,12 @@ export default function RoleForm({ selRole, formType }) {
                         type="submit"
                         value={`${formType} Role`}
                     />
+                    <Button
+                    variant='contained'
+                    onClick={handleSubmit}
+                    >
+                        {`${formType} Role`}
+                    </Button>
                 </div>
             </form>
         </div>

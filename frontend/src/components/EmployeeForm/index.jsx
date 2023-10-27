@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Button } from '@mui/material';
 import './index.css';
 
 export default function EmployeeForm({ employee, formType }) {
@@ -27,9 +28,10 @@ export default function EmployeeForm({ employee, formType }) {
 
         const errors = {};
 
-        if (firstName.length > 50) errors.firstName = "First Name can be no more than 50 characters."
-        if (lastName.length > 50) errors.lastName = "Last Name can be no more than 50 characters."
-        if (restaurantId.length > 10) errors.restaurantId = "Restaurant ID can be no more than 10 characters."
+        if (firstName.length > 50) errors.firstName = 'First Name can be no more than 50 characters.';
+        if (lastName.length > 50) errors.lastName = 'Last Name can be no more than 50 characters.';
+        if (restaurantId.length > 10) errors.restaurantId = 'Restaurant ID can be no more than 10 characters.';
+        if (!role[0]) errors.role = 'Employee must have at least one role.';
 
         if (Object.values(errors)[0]) {
             setValidationErrors(errors);
@@ -53,78 +55,86 @@ export default function EmployeeForm({ employee, formType }) {
             className='employee-form'
             onSubmit={handleSubmit}
             >
-                <div className='employee-form-first-name'>
-                    <label>
-                        First Name
-                    </label>
-                    <input 
-                        type='text'
-                        id='first-name'
-                        // placeholder='First Name'
-                        value={firstName}
-                        onChange={e => setFirstName(e.target.value)}
-                    />
-                    { attempt && validationErrors.firstName && (<div id='error'>{validationErrors.firstName}</div>) }
-                </div>
-                <div className='employee-form-last-name'>
-                    <label>
-                        Last Name
-                    </label>
-                    <input 
-                        type='text'
-                        id='last-name'
-                        // placeholder='Last Name'
-                        value={lastName}
-                        onChange={e => setLastName(e.target.value)}
-                    />
-                    { attempt && validationErrors.lastName && (<div id='error'>{validationErrors.lastName}</div>) }
-                </div>
-                <div className='employee-form-restaurant-id'>
-                    <label>
-                        Restaurant ID
-                    </label>
-                    <input 
-                        type='text'
-                        id='restaurant-id'
-                        // placeholder='Restaurant ID'
-                        value={restaurantId}
-                        onChange={e => setRestaurantId(e.target.value)}
-                    />
-                    { attempt && validationErrors.restaurantId && (<div id='error'>{validationErrors.restaurantId}</div>) }
-                </div>
-                <div className='employee-form-role'>
-                    <label>
-                        Role (select all that apply)
-                    </label>
-                </div>
-                <div className='employee-form-food-permit-exp'>
-                    <label>
-                        Food Permit Expiration
-                    </label>
-                    <input
-                        type='date'
-                        id='food-permit-exp'
-                        value={foodPermitExp}
-                        onChange={e => setFoodPermitExp(e.target.value)}
-                    />
-                </div>
-                <div className='employee-form-alcohol-permit-exp'>
-                    <label>
-                        Alcohol Permit Exipration
-                    </label>
-                    <input
-                        type='date'
-                        id='alcohol-permit-exp'
-                        value={alcoholPermitExp}
-                        onChange={e => setAlcoholPermitExp(e.target.value)}
-                    />
+                <div className='employee-form-prompts'>
+                    <div className='employee-form-first-name'>
+                        <label>
+                            First Name
+                        </label>
+                        <input 
+                            type='text'
+                            id='first-name'
+                            // placeholder='First Name'
+                            value={firstName}
+                            onChange={e => setFirstName(e.target.value)}
+                        />
+                        { attempt && validationErrors.firstName && (<div id='error'>{validationErrors.firstName}</div>) }
+                    </div>
+                    <div className='employee-form-last-name'>
+                        <label>
+                            Last Name
+                        </label>
+                        <input 
+                            type='text'
+                            id='last-name'
+                            // placeholder='Last Name'
+                            value={lastName}
+                            onChange={e => setLastName(e.target.value)}
+                        />
+                        { attempt && validationErrors.lastName && (<div id='error'>{validationErrors.lastName}</div>) }
+                    </div>
+                    <div className='employee-form-restaurant-id'>
+                        <label>
+                            Restaurant ID
+                        </label>
+                        <input 
+                            type='text'
+                            id='restaurant-id'
+                            // placeholder='Restaurant ID'
+                            value={restaurantId}
+                            onChange={e => setRestaurantId(e.target.value)}
+                        />
+                        { attempt && validationErrors.restaurantId && (<div id='error'>{validationErrors.restaurantId}</div>) }
+                    </div>
+                    <div className='employee-form-role'>
+                        <label>
+                            Role (select all that apply)
+                        </label>
+                    </div>
+                    <div className='employee-form-food-permit-exp'>
+                        <label>
+                            Food Permit Expiration
+                        </label>
+                        <input
+                            type='date'
+                            id='food-permit-exp'
+                            value={foodPermitExp}
+                            onChange={e => setFoodPermitExp(e.target.value)}
+                        />
+                    </div>
+                    <div className='employee-form-alcohol-permit-exp'>
+                        <label>
+                            Alcohol Permit Exipration
+                        </label>
+                        <input
+                            type='date'
+                            id='alcohol-permit-exp'
+                            value={alcoholPermitExp}
+                            onChange={e => setAlcoholPermitExp(e.target.value)}
+                        />
+                    </div>
                 </div>
                 <div className='employee-form-action'>
-                    <input 
+                    {/* <input 
                         className='employee-form-submit-button'
                         type='submit'
                         value = {`${formType} Employee`}
-                    />
+                    /> */}
+                    <Button
+                    variant='contained'
+                    onClick={handleSubmit}
+                    >
+                        {`${formType} Employee`}
+                    </Button>
                 </div>
             </form>
         </div>
