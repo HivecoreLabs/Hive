@@ -61,7 +61,7 @@ class EmployeeViewSet(viewsets.ModelViewSet):
                 employee_roles = []
                 for employee_role in request.data['roles']:
                     try:
-                        role = Role.objects.get(role=employee_role['role'])
+                        role = Role.objects.get(role=employee_role)
                         employee_roles.append(role)
                     except Role.DoesNotExist:
                         pass
@@ -88,7 +88,7 @@ class EmployeeViewSet(viewsets.ModelViewSet):
             employee_roles = []
             for employee_role in data['roles']:
                 try:
-                    role = Role.objects.get(role=employee_role['role'])
+                    role = Role.objects.get(role=employee_role)
                     employee_roles.append(role)
                 except Role.DoesNotExist:
                     pass
