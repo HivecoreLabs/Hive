@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import Home from './components/Home';
 import NavBar from './components/NavBar';
 import { dayTheme, nightTheme } from './styles/theme';
 import Dashboard from './components/Dashboard';
+import EmployeeForm from './components/EmployeeForm/index.jsx';
+
 
 export default function App() {
     // const [darkMode, setDarkMode] = useState(false);
