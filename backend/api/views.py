@@ -72,29 +72,32 @@ class EmployeeViewSet(viewsets.ModelViewSet):
 
     def update(self, request, *args, **kwargs):
         employee_instance = self.get_object()
-
         data = request.data
-        employee_instance.first_name = data["first_name"]
-        employee_instance.last_name = data["last_name"]
-        employee_instance.restaurant_employee_id = data[
-            "restaurant_employee_id"] if "restaurant_employee_id" in data else employee_instance.restaurant_employee_id
-        employee_instance.food_permit_exp = data[
-            "food_permit_exp"] if "food_permit_exp" in data else employee_instance.food_permit_exp
-        employee_instance.alcohol_permit_exp = data[
-            "alcohol_permit_exp"] if "alcohol_permit_exp" in data else employee_instance.alcohol_permit_exp
-        employee_instance.is_uploaded = False
+        serializer = EmployeeSerializer(data=data)
+        if serializer.is_valid():
+            employee_instance.first_name = data["first_name"]
+            employee_instance.last_name = data["last_name"]
+            employee_instance.restaurant_employee_id = data[
+                "restaurant_employee_id"] if "restaurant_employee_id" in data else employee_instance.restaurant_employee_id
+            employee_instance.food_permit_exp = data[
+                "food_permit_exp"] if "food_permit_exp" in data else employee_instance.food_permit_exp
+            employee_instance.alcohol_permit_exp = data[
+                "alcohol_permit_exp"] if "alcohol_permit_exp" in data else employee_instance.alcohol_permit_exp
+            employee_instance.is_uploaded = False
 
-        if 'roles' in data:
-            employee_roles = []
-            for employee_role in data['roles']:
-                try:
-                    role = Role.objects.get(role=employee_role)
-                    employee_roles.append(role)
-                except Role.DoesNotExist:
-                    pass
-            employee_instance.roles.set(employee_roles)
+            if 'roles' in data:
+                employee_roles = []
+                for employee_role in data['roles']:
+                    try:
+                        role = Role.objects.get(role=employee_role)
+                        employee_roles.append(role)
+                    except Role.DoesNotExist:
+                        pass
+                employee_instance.roles.set(employee_roles)
 
-        employee_instance.save()
+            employee_instance.save()
 
-        serializer = EmployeeSerializer(employee_instance)
-        return Response(serializer.data)
+            serializer = EmployeeSerializer(employee_instance)
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

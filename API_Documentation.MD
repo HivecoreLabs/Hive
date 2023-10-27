@@ -72,7 +72,7 @@ Certainly, here's the complete API documentation in Markdown format:
 
 - **Route**: `GET /api/roles/`
 - **Request Body** (None)
-- **Expected Response(200)**:
+- **Expected Response(200 OK)**:
 
 ```json
 [
@@ -92,7 +92,28 @@ Certainly, here's the complete API documentation in Markdown format:
 ]
 ```
 
-### 2. Add Role
+### 2. Get Details of Role
+
+- **Route**: `GET /api/roles/<int:RoleId>`
+- **Request Body** (None)
+- **Expected Response(200 OK)**:
+
+```json
+{
+  "id": 1,
+  "role": "name of role",
+  "employees": [
+    {
+      "id": "employee id",
+      "first_name": "first name",
+      "last_name": "last name",
+      "restaurant_employee_id": "restaurant employee id"
+    }
+  ]
+}
+```
+
+### 3. Add Role
 
 - **Route**: `POST /api/roles/`
 - **Request Body (Required Information)**:
@@ -127,9 +148,9 @@ Certainly, here's the complete API documentation in Markdown format:
 }
 ```
 
-### 3. Update Role
+### 4. Update Role
 
-- **Route**: `PUT /roles/<int:roleId>/`
+- **Route**: `PUT api/roles/<int:roleId>/`
 - **Request Body (Required Information)**:
 
 ```json
@@ -162,11 +183,177 @@ Certainly, here's the complete API documentation in Markdown format:
 }
 ```
 
-### 4. Delete Role
+### 5. Delete Role
 
-- **Route**: `DELETE /roles/<int:roleId`
-- ## **Headers**:
-  -
+- **Route**: `DELETE api/roles/<int:roleId>/`
+- **Headers**:
+- **Request Body (Required Information)**:
+
+```json
+
+```
+
+- **Expected Response (204)**:
+
+```json
+
+```
+
+## Employees
+
+### 1. Get List of All Employees
+
+- **Route**: `GET /api/employees/`
+- **Request Body (None)**:
+- **Expected Response (200 OK)**:
+
+```json
+[
+  {
+    "first_name": "first name",
+    "last_name": "last name",
+    "roles": [
+      {
+        "id": "role id",
+        "role": "role name"
+      }
+    ],
+    "food_permit_exp": "date food permit expires",
+    "alcohol_permit_exp": "date alcohol permit expires",
+    "is_former_employee": "boolean indicating if still working at restaurant",
+    "created_at": "date instance was created",
+    "updated_at": "most recent date instance was updated",
+    "sheet_cell": "corresponding Google Sheet cell for instance",
+    "is_uploaded": "boolean indicating if instace has been uploaded to Google Sheet"
+  },
+  ...
+]
+```
+
+### 2. Get Details of Employee
+
+- **Route**: `GET /api/employees/<int:employeeId>`
+- **Request Body (None)**:
+- **Expected Response (200 OK)**:
+
+```json
+{
+  "first_name": "first name",
+  "last_name": "last name",
+  "roles": [
+    {
+      "id": "role id",
+      "role": "role name"
+    }
+  ],
+  "food_permit_exp": "date food permit expires",
+  "alcohol_permit_exp": "date alcohol permit expires",
+  "is_former_employee": "boolean indicating if still working at restaurant",
+  "created_at": "date instance was created",
+  "updated_at": "most recent date instance was updated",
+  "sheet_cell": "corresponding Google Sheet cell for instance",
+  "is_uploaded": "boolean indicating if instace has been uploaded to Google Sheet"
+}
+```
+
+### 3. Add Employee
+
+- **Route**: `POST /api/employees/`
+- **Request Body (Required Information)**:
+
+```json
+{
+  "first_name": "required first name",
+  "last_name": "required last name",
+  "restaurant_employee_id": "optional restaurant employee id",
+  "roles": [
+    "optional list of roles names, if role has not been created yet it will be omitted when adding to db"
+  ],
+  "food_permit_exp": "optional date",
+  "alcohol_permit_exp": "optional date"
+}
+```
+
+- **Expected Response (201 Created)**
+
+```json
+{
+  "first_name": "first name",
+  "last_name": "last name",
+  "roles": [
+    {
+      "id": "role id",
+      "role": "role name"
+    }
+  ],
+  "food_permit_exp": "date food permit expires",
+  "alcohol_permit_exp": "date alcohol permit expires",
+  "is_former_employee": "boolean indicating if still working at restaurant",
+  "created_at": "date instance was created",
+  "updated_at": "most recent date instance was updated",
+  "sheet_cell": "corresponding Google Sheet cell for instance",
+  "is_uploaded": "boolean indicating if instace has been uploaded to Google Sheet"
+}
+```
+
+- **Error Response (400 Bad Data)**:
+
+```json
+{
+  "first_name": ["This field is required."],
+  "last_name": ["This field is required."]
+}
+```
+
+### 4. Update Employee Information
+
+- **Route**: `PUT api/employees/<int:employeeId>/`
+- **Request Body (Required Information)**:
+
+```json
+{
+  "role": "name of role",
+  "description": "optional description"
+}
+```
+
+- **Expected Response (200 OK)**:
+
+```json
+{
+  "first_name": "required first name",
+  "last_name": "required last name",
+  "restaurant_employee_id": "optional restaurant employee id",
+  "roles": [
+    "optional list of roles names, if role has not been created yet it will be omitted when adding to db"
+  ],
+  "food_permit_exp": "optional date",
+  "alcohol_permit_exp": "optional date",
+  "is_former_employee": "optional boolean"
+}
+```
+
+- **Error Response (404 Not Found)**:
+
+```json
+{
+  "detail": "Not found."
+}
+```
+
+- **Error Response (400 Bad Request)**:
+
+```json
+{
+  "first_name": ["This field is required."],
+  "last_name": ["This field is required."]
+}
+```
+
+### 5. Delete Employee
+
+- **Route**: `DELETE api/employees/<int:roleId>/`
+- **Headers**:
 - **Request Body (Required Information)**:
 
 ```json
@@ -180,106 +367,6 @@ Certainly, here's the complete API documentation in Markdown format:
 ```
 
 ## Sheets
-
-### 1. Add a New Employee with Their Role
-
-- **Route**: `POST /employees`
-- **Request Body (Required Information)**:
-
-```json
-{
-  "first_name": "employee_first_name",
-  "last_name": "employee_last_name",
-  "restaurant_employee_id": "employee_id",
-  "roles": ["server", "host", "busser"]
-}
-```
-
-- **Expected Response (201 Created)**:
-
-```json
-{
-  "id": 1,
-  "first_name": "employee_first_name",
-  "last_name": "employee_last_name",
-  "restaurant_employee_id": "employee_id",
-  "created_at": "timestamp",
-  "is_uploaded": false,
-  "roles": ["server", "host", "busser"]
-}
-```
-
-- **Error Response (e.g., if all errors were triggered)**:
-
-```json
-{
-  "errors": [
-    { "error": "Missing Field", "details": "First name is required." },
-    { "error": "Missing Field", "details": "Last name is required." },
-    {
-      "error": "Missing Field",
-      "details": "Restaurant employee ID is required."
-    },
-    {
-      "error": "Missing Field",
-      "details": "At least one role must be selected."
-    }
-  ]
-}
-```
-
-### 2. View a List of All Employees and Their Roles
-
-- **Route**: `GET /employees`
-- **Expected Response (200 OK)**:
-
-```json
-[
-  {
-    "id": 1,
-    "first_name": "employee_first_name",
-    "last_name": "employee_last_name",
-    "restaurant_employee_id": "employee_id",
-    "created_at": "timestamp",
-    "is_uploaded": false,
-    "roles": ["server", "host", "busser"]
-  }
-  // Other employee objects
-]
-```
-
-### 3. Edit Employee Details, Including Their Role
-
-- **Route**: `PUT /employees/{id}`
-- **Request Body (Required Information)**:
-
-```json
-{
-  "first_name": "new_first_name",
-  "last_name": "new_last_name",
-  "restaurant_employee_id": "new_employee_id",
-  "roles": ["server", "busser"]
-}
-```
-
-- **Expected Response (200 OK)**:
-
-```json
-{
-  "id": 1,
-  "first_name": "new_first_name",
-  "last_name": "new_last_name",
-  "restaurant_employee_id": "new_employee_id",
-  "created_at": "timestamp",
-  "is_uploaded": false,
-  "roles": ["server", "busser"]
-}
-```
-
-### 4. Delete an Employee from the System
-
-- **Route**: `DELETE /employees/{id}`
-- **Expected Response (204 No Content)**
 
 ## Daily Checkouts
 
