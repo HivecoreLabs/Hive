@@ -1,8 +1,10 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser, BaseUserManager
 
-# Create your models here.
+
 class SpreadSheet(models.Model):
     database_google_id = models.CharField(max_length=250)
+
 
 class Employee(models.Model):
     first_name = models.CharField(max_length=50)
@@ -16,13 +18,15 @@ class Employee(models.Model):
     sheet_cell = models.CharField(default=None, null=True, max_length=10)
     is_uploaded = models.BooleanField(default=False)
 
+
 class Role(models.Model):
-    role = models.CharField(max_length = 50)
-    description = models.TextField(max_length = 500, null=True)
+    role = models.CharField(max_length=50)
+    description = models.TextField(max_length=500, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     sheet_cell = models.CharField(default=None, null=True, max_length=10)
     is_uploaded = models.BooleanField(default=False)
+
 
 class Employee_Role(models.Model):
     role_id = models.ForeignKey(Role, on_delete=models.PROTECT)
@@ -31,6 +35,7 @@ class Employee_Role(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     sheet_cell = models.CharField(default=None, null=True, max_length=10)
     is_uploaded = models.BooleanField(default=False)
+
 
 class Checkout(models.Model):
     net_sales = models.DecimalField(decimal_places=2, max_digits=8)
@@ -46,6 +51,7 @@ class Checkout(models.Model):
     sheet_cell = models.CharField(default=None, null=True, max_length=10)
     is_uploaded = models.BooleanField(default=False)
 
+
 class Employee_Clock_In(models.Model):
     employee_id = models.ForeignKey(Employee, on_delete=models.PROTECT)
     time_in = models.DateTimeField(null=True)
@@ -57,6 +63,7 @@ class Employee_Clock_In(models.Model):
     sheet_cell = models.CharField(default=None, null=True, max_length=10)
     is_uploaded = models.BooleanField(default=False)
 
+
 class Tipout_Formula(models.Model):
     formula_name = models.CharField(max_length=50)
     formula = models.CharField(max_length=255)
@@ -67,9 +74,11 @@ class Tipout_Formula(models.Model):
     sheet_cell = models.CharField(default=None, null=True, max_length=10)
     is_uploaded = models.BooleanField(default=False)
 
+
 class Tipout_Variable(models.Model):
     variable = models.CharField(max_length=255)
-    tipout_formula_id = models.ForeignKey(Tipout_Formula, on_delete=models.CASCADE)
+    tipout_formula_id = models.ForeignKey(
+        Tipout_Formula, on_delete=models.CASCADE)
     table_name = models.CharField(max_length=255)
     column_name = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
