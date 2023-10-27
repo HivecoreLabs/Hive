@@ -10,7 +10,7 @@ class SpreadSheet(models.Model):
 
 
 class Role(models.Model):
-    role = models.CharField(max_length=50)
+    role = models.CharField(max_length=50, unique=True)
     description = models.TextField(max_length=500, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
