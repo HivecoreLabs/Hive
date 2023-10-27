@@ -9,7 +9,7 @@ div#root {
     flex-direction: column;
     align-items: center;
 
-    width: 90%;
+    width: 95%;
     padding: 10px;
 
     border: 1px solid red;
@@ -23,4 +23,21 @@ div#root {
     background-color: orange;
     border-radius: 20px;
     
+}
+
+.employee-form-table-headers {
+    display: flex;
+}
+
+.employee-form-employee {
+    display: flex;
+}
+
+.employee-form-employee > div {
+    margin: 0 5px;
+}
+
+.employee-form-actions {
+    display: flex;
+    /* flex-direction: row; */
 }
