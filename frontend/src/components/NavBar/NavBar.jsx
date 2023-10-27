@@ -25,7 +25,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
 import { Link, NavLink } from 'react-router-dom';
 
-const drawerWidth = 200;
+const drawerWidth = 180;
 
 const openedMixin = (theme) => ({
     width: drawerWidth,
@@ -160,10 +160,10 @@ export default function MiniDrawer() {
                         aria-label="open drawer"
                         onClick={handleDrawerOpen}
                         edge="start"
+                        color='quaternary'
                         sx={{
                             marginRight: 5,
                             ...(open && { display: 'none' }),
-                            color: theme.palette.quaternary.main
                         }}
                     >
                         <MenuIcon />

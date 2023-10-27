@@ -1,12 +1,21 @@
+import './Home.css';
 import React, { useState } from 'react';
 import { Box, Typography, Button, Modal, TextField } from '@mui/material';
 import HiveRoundedIcon from '@mui/icons-material/HiveRounded';
-import { useTheme } from '@emotion/react';
+import { useTheme } from '@mui/material';
+import { css } from '@emotion/react'
 
-const Home = () => {
+function Home() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [pin, setPin] = useState('');
     const theme = useTheme();
+
+    const style = css({
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        marginBottom: '10px'
+    })
 
     const handleModalOpen = () => {
         setIsModalOpen(true);
@@ -21,13 +30,14 @@ const Home = () => {
     };
 
     const handleSignIn = () => {
-        // Add logic for handling the PIN/password and sign-in here
+        // Add logic for handling the PIN/password and sign-in
         console.log('Sign-in with PIN:', pin);
     };
 
+
     return (
-        <Box>
-            <Box display="flex" flexDirection="column" alignItems="center" mt={40} ml={5} theme={theme}>
+        <div className='home-container'>
+            <Box sx={style}>
 
                 <HiveRoundedIcon sx={{ fontSize: '70px', marginBottom: '10px', color: 'primary.dark' }} />
 
@@ -76,7 +86,7 @@ const Home = () => {
                     <Button onClick={handleModalClose}>Close</Button>
                 </Box>
             </Modal>
-        </Box >
+        </div >
     );
 };
 

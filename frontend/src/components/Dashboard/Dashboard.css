@@ -1,3 +1,5 @@
-.dashboard {
-    margin-left: 35px
+.dashboard-container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
 }
