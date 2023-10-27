@@ -4,6 +4,7 @@ import { Box, Typography, Button, Modal, TextField } from '@mui/material';
 import HiveRoundedIcon from '@mui/icons-material/HiveRounded';
 import { useTheme } from '@mui/material';
 import { css } from '@emotion/react'
+import SignupModal from '../Modals/SignupModal.jsx';
 
 function Home() {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -65,27 +66,7 @@ function Home() {
                     NEW USER?
                 </Button>
             </Box>
-
-            {/* Modal Dialog for New User Registration */}
-            <Modal open={isModalOpen} onClose={handleModalClose}>
-                <Box
-                    sx={{
-                        position: 'absolute',
-                        top: '50%',
-                        left: '50%',
-                        transform: 'translate(-50%, -50%)',
-                        width: 400,
-                        bgcolor: 'background.paper',
-                        boxShadow: 24,
-                        p: 4,
-                    }}
-                >
-                    {/* Add your registration form or content here */}
-                    <Typography variant="h6">New User Registration</Typography>
-                    {/* Registration form fields go here */}
-                    <Button onClick={handleModalClose}>Close</Button>
-                </Box>
-            </Modal>
+            <SignupModal open={isModalOpen} closeModal={handleModalClose} />
         </div >
     );
 };
