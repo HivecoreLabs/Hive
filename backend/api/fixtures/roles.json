@@ -1,0 +1,122 @@
+[
+    {
+        "model": "api.role",
+        "pk": 1,
+        "fields": {
+            "role": "Server",
+            "description": "Description for role 0",
+            "created_at": "2023-10-26T00:00:00Z",
+            "updated_at": "2023-10-26T00:00:00Z",
+            "sheet_cell": null,
+            "is_uploaded": false
+        }
+    },
+    {
+        "model": "api.role",
+        "pk": 2,
+        "fields": {
+            "role": "Bartender",
+            "description": "Description for role 1",
+            "created_at": "2023-10-26T00:00:00Z",
+            "updated_at": "2023-10-26T00:00:00Z",
+            "sheet_cell": null,
+            "is_uploaded": false
+        }
+    },
+    {
+        "model": "api.role",
+        "pk": 3,
+        "fields": {
+            "role": "Chef",
+            "description": "Description for role 2",
+            "created_at": "2023-10-26T00:00:00Z",
+            "updated_at": "2023-10-26T00:00:00Z",
+            "sheet_cell": null,
+            "is_uploaded": true
+        }
+    },
+    {
+        "model": "api.role",
+        "pk": 4,
+        "fields": {
+            "role": "Hostess",
+            "description": "Description for role 3",
+            "created_at": "2023-10-26T00:00:00Z",
+            "updated_at": "2023-10-26T00:00:00Z",
+            "sheet_cell": null,
+            "is_uploaded": false
+        }
+    },
+    {
+        "model": "api.role",
+        "pk": 5,
+        "fields": {
+            "role": "Manager",
+            "description": "Description for role 4",
+            "created_at": "2023-10-26T00:00:00Z",
+            "updated_at": "2023-10-26T00:00:00Z",
+            "sheet_cell": null,
+            "is_uploaded": false
+        }
+    },
+    {
+        "model": "api.role",
+        "pk": 6,
+        "fields": {
+            "role": "Busser",
+            "description": "Description for role 5",
+            "created_at": "2023-10-26T00:00:00Z",
+            "updated_at": "2023-10-26T00:00:00Z",
+            "sheet_cell": null,
+            "is_uploaded": false
+        }
+    },
+    {
+        "model": "api.role",
+        "pk": 7,
+        "fields": {
+            "role": "Waiter",
+            "description": "Description for role 6",
+            "created_at": "2023-10-26T00:00:00Z",
+            "updated_at": "2023-10-26T00:00:00Z",
+            "sheet_cell": null,
+            "is_uploaded": false
+        }
+    },
+    {
+        "model": "api.role",
+        "pk": 8,
+        "fields": {
+            "role": "Dishwasher",
+            "description": "Description for role 7",
+            "created_at": "2023-10-26T00:00:00Z",
+            "updated_at": "2023-10-26T00:00:00Z",
+            "sheet_cell": null,
+            "is_uploaded": false
+        }
+    },
+    {
+        "model": "api.role",
+        "pk": 9,
+        "fields": {
+            "role": "Caterer",
+            "description": "Description for role 8",
+            "created_at": "2023-10-26T00:00:00Z",
+            "updated_at": "2023-10-26T00:00:00Z",
+            "sheet_cell": null,
+            "is_uploaded": false
+        }
+    },
+    {
+        "model": "api.role",
+        "pk": 10,
+        "fields": {
+            "role": "Busser",
+            "description": "Description for role 9",
+            "created_at": "2023-10-26T00:00:00Z",
+            "updated_at": "2023-10-26T00:00:00Z",
+            "sheet_cell": null,
+            "is_uploaded": false
+        }
+    }
+]
