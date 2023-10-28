@@ -16,14 +16,15 @@ SAMPLE_SPREADSHEET_ID = '1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms'
 SAMPLE_RANGE_NAME = 'Class Data!A2:E'
 
 schema = {
-    "Employee": ["id", "first_name", "last_name", "restaurant_employee_id", "food_permit_exp", "alcohol_permit_exp","created_at", "updated_at"],
+    "Employee": ["id", "first_name", "last_name", "restaurant_employee_id", "food_permit_exp", "alcohol_permit_exp", "created_at", "updated_at"],
     "Role": ["id", "role", "description", "created_at", "updated_at"],
-    "Employee_Role": ["id", "role_id", "employee_id", "created_at", "updated_at"],
+    "Employee_Role": ["id", "roles", "employee_id", "created_at", "updated_at"],
     "Checkout": ["id", "net_sales", "cash_owed", "employee_id", "total_tipout", "is_am_shift", "is_patio", "is_bar", "tipout_day", "created_at",  "updated_at"],
     "Employee_Clock_In": ["id", "employee_id", "time_in", "time_out", "active_role_id", "tipout_received", "created_at", "updated_at"],
     "Tipout_Formula": ["id", "formula_name", "formula", "role_id", "is_am_formula", "created_at", "updated_at"],
     "Tipout_Variable": ["id", "variable", "tipout_formula_id", "table_name", "column_name", "created_at", "updated_at"]
 }
+
 
 def main():
     """Shows basic usage of the Sheets API.
@@ -67,6 +68,7 @@ def main():
     except HttpError as err:
         print(err)
 
+
 def generate(file_name):
     """Generate a file using the sheets API based on the passed in file name, this file will serve as the cloud "database"
     """
@@ -92,7 +94,8 @@ def generate(file_name):
         service = build('sheets', 'v4', credentials=creds)
 
         # Call the Sheets API
-        spreadsheet = service.spreadsheets().create(body={'properties': {'title': file_name}}).execute()
+        spreadsheet = service.spreadsheets().create(
+            body={'properties': {'title': file_name}}).execute()
 
         # Log the spreadsheet ID
         spreadsheet_id = spreadsheet['spreadsheetId']
@@ -106,14 +109,16 @@ def generate(file_name):
                     }
                 }
             }
-            service.spreadsheets().batchUpdate(spreadsheetId=spreadsheet_id, body={'requests': [add_worksheet_request]}).execute()
+            service.spreadsheets().batchUpdate(spreadsheetId=spreadsheet_id, body={
+                'requests': [add_worksheet_request]}).execute()
 
             # Add headers in the first row
             update_cells_request = {
                 'range': f'{table_name}!A1',
                 'values': [columns]
             }
-            service.spreadsheets().values().update(spreadsheetId=spreadsheet_id, range=f'{table_name}!A1', body=update_cells_request, valueInputOption="RAW").execute()
+            service.spreadsheets().values().update(spreadsheetId=spreadsheet_id,
+                                                   range=f'{table_name}!A1', body=update_cells_request, valueInputOption="RAW").execute()
 
         print("Google Sheets file 'database' created with worksheets and headers.")
         return spreadsheet_id
