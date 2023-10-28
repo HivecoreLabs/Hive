@@ -5,6 +5,7 @@ import HiveRoundedIcon from '@mui/icons-material/HiveRounded';
 import { useTheme } from '@mui/material';
 import { css } from '@emotion/react'
 import SignupModal from '../Modals/SignupModal.jsx';
+import CreateEmployeeForm from '../EmployeeForm/CreateEmployee.jsx';
 
 function Home() {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -67,6 +68,7 @@ function Home() {
                 </Button>
             </Box>
             <SignupModal open={isModalOpen} closeModal={handleModalClose} />
+            {/* <CreateEmployeeForm /> */}
         </div >
     );
 };
