@@ -1,16 +1,17 @@
 import './Home.css';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Box, Typography, Button, Modal, TextField } from '@mui/material';
 import HiveRoundedIcon from '@mui/icons-material/HiveRounded';
 import { useTheme } from '@mui/material';
 import { css } from '@emotion/react'
 import SignupModal from '../Modals/SignupModal.jsx';
-import CreateEmployeeForm from '../EmployeeForm/CreateEmployee.jsx';
+import { useAuth } from '../../contexts/AuthenticationContext';
 
 function Home() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [pin, setPin] = useState('');
     const theme = useTheme();
+    const { isAuthenticated, login, logout } = useAuth();
 
     const style = css({
         display: 'flex',
@@ -31,12 +32,13 @@ function Home() {
         setPin(e.target.value);
     };
 
-    const handleSignIn = () => {
-        // Add logic for handling the PIN/password and sign-in
-        console.log('Sign-in with PIN:', pin);
-    };
-
-
+    const handleLogin = () => {
+        login();
+    }
+    const handleLogout = () => {
+        logout();
+    }
+    console.log(isAuthenticated);
     return (
         <div className='home-container'>
             <Box sx={style}>
@@ -53,8 +55,11 @@ function Home() {
                     required='true'
                 />
 
-                <Button variant="contained" sx={{ fontWeight: 'medium', color: 'primary.darker', marginTop: '10px' }} onClick={handleSignIn}>
-                    Sign In
+                <Button variant="contained" sx={{ fontWeight: 'medium', color: 'primary.darker', marginTop: '10px' }} onClick={handleLogin}>
+                    LOG IN
+                </Button>
+                <Button variant="contained" sx={{ fontWeight: 'medium', color: 'primary.darker', marginTop: '10px' }} onClick={handleLogout}>
+                    LOG OUT
                 </Button>
 
                 <Button color="secondary" onClick={handleModalOpen} sx={{

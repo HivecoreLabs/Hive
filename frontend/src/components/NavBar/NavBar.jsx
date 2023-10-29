@@ -141,6 +141,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function MiniDrawer() {
+    console.log('in the nav bar');
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
 

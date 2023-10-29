@@ -71,9 +71,9 @@ function Dashboard() {
                         <Paper elevation={2}><DashboardItem9></DashboardItem9></Paper>
                     </Grid>
                 </Grid>
-                {/* <NavLink to='/' style={{ width: '100px', margin: 'auto' }}>
+                <NavLink to='/' style={{ width: '100px', margin: 'auto' }}>
                     <Button variant="contained">Home</Button>
-                </NavLink> */}
+                </NavLink>
             </Box >
         </div>
     )

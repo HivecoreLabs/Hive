@@ -5,7 +5,7 @@ const customFetch = async (url, options = {}) => {
         if (!options.headers["Content-Type"] && !(options.body instanceof FormData)) {
             options.headers["Content-Type"] = "application/json";
         }
-        options.headers['X-CSRF-Token'] = sessionStorage.getItem('X-CSRF-Token');
+        options.headers['token'] = localStorage.getItem('token');
     }
 
     const res = await fetch(url, options);
