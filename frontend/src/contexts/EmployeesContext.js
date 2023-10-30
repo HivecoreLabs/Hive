@@ -31,7 +31,13 @@ function employeesReducer(employees, action) {
     switch (action.type) {
         case 'create':
             return [ ...employees, {
-
+                id: action.id,
+                firstName: action.firstName,
+                lastName: action.lastName,
+                restaurantEmployeeId: action.restaurantEmployeeId,
+                foodPermitExp: action.foodPermitExp,
+                alcoholPermitExp: action.alcoholPermitExp,
+                roles: action.roles
             }];
         case 'update':
             return employees.map(e => e.id === action.employee.id ? action.employee : e);

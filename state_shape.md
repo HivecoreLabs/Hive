@@ -23,6 +23,15 @@ state = {
     ...
   ],
 
+  roles: [
+    {
+      'id': 1,
+      'role': 'server',
+      'description': 'Brings food to tables'
+    },
+    ...
+  ],
+
   checkouts: [
     {
       'id': 1,
