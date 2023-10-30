@@ -54,7 +54,7 @@ class EmployeeViewSet(viewsets.ModelViewSet):
     serializer_class = EmployeeSerializer
 
     def create(self, request):
-        serializer = EmployeeSerializer(data=request.data)
+        serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
             employee = serializer.save()
             if 'roles' in request.data:
@@ -73,7 +73,7 @@ class EmployeeViewSet(viewsets.ModelViewSet):
     def update(self, request, *args, **kwargs):
         employee_instance = self.get_object()
         data = request.data
-        serializer = EmployeeSerializer(data=data)
+        serializer = self.serializer_class(data=data)
         if serializer.is_valid():
             employee_instance.first_name = data["first_name"]
             employee_instance.last_name = data["last_name"]
