@@ -22,11 +22,12 @@ class Test_Create_Role(TestCase):
         test_employee2 = Employee.objects.create(first_name="Brandon", last_name="Choi")
         test_employee3 = Employee.objects.create(first_name="Taylor", last_name="Cornwall")
         test_employee4 = Employee.objects.create(first_name="Nick", last_name="Arakaki")
+        test_employee4.roles.set([test_role1, test_role2])
 
-        test_checkout1 = Checkout.objects.create(net_sales=1_234.56, cash_owed=789.57, employee_id=test_employee1, total_tipout=44.49, is_am_shift=True, is_patio=False, is_bar=False, tipout_day=datetime.datetime(2023,10,27))
-        test_checkout2 = Checkout.objects.create(net_sales=500, cash_owed=50, employee_id=test_employee2, total_tipout=25, is_am_shift=True, is_patio=False, is_bar=False, tipout_day=datetime.datetime(2023,10,28))
-        test_checkout3 = Checkout.objects.create(net_sales=750, cash_owed=75, employee_id=test_employee3, total_tipout=37.5, is_am_shift=True, is_patio=True, is_bar=False, tipout_day=datetime.datetime(2023,10,29))
-        test_checkout4 = Checkout.objects.create(net_sales=600, cash_owed=60, employee_id=test_employee4, total_tipout=30, is_am_shift=True, is_patio=False, is_bar=False, tipout_day=datetime.datetime(2023,10,30))
+        test_checkout1 = Checkout.objects.create(net_sales=1_234.56, cash_owed=789.57, employee_id=test_employee1, total_tipout=44.49, is_am_shift=True, is_patio=False, is_bar=False, tipout_day=datetime.datetime(2023,10,27,tzinfo=None))
+        test_checkout2 = Checkout.objects.create(net_sales=500, cash_owed=50, employee_id=test_employee2, total_tipout=25, is_am_shift=True, is_patio=False, is_bar=False, tipout_day=datetime.datetime(2023,10,28,tzinfo=None))
+        test_checkout3 = Checkout.objects.create(net_sales=750, cash_owed=75, employee_id=test_employee3, total_tipout=37.5, is_am_shift=True, is_patio=True, is_bar=False, tipout_day=datetime.datetime(2023,10,29,tzinfo=None))
+        test_checkout4 = Checkout.objects.create(net_sales=600, cash_owed=60, employee_id=test_employee4, total_tipout=30, is_am_shift=True, is_patio=False, is_bar=False, tipout_day=datetime.datetime(2023,10,30,tzinfo=None))
 
     def test_spreadsheet_content(self):
         spreadsheet = SpreadSheet.objects.latest('pk')
@@ -36,16 +37,16 @@ class Test_Create_Role(TestCase):
 
     def test_role_content(self):
         role = Role.objects.latest('created_at')
-        self.assertEqual(role.role, 'Dishwasher')
-        self.assertEqual(role.description, 'Washes the dishes.')
-        self.assertEqual(str(role), 'Dishwasher')
+        self.assertEqual(role.role, 'Doorman')
+        self.assertEqual(role.description, 'Opens the door for patrons.')
+        self.assertEqual(str(role), 'Doorman')
 
     def test_employee_content(self):
         employee = Employee.objects.latest('created_at')
         self.assertEqual(employee.first_name, 'Nick')
         self.assertEqual(employee.last_name, 'Arakaki')
         self.assertEqual(str(employee), 'Nick Arakaki')
-        self.assertEqual(employee.roles.count(), 0)
+        self.assertEqual(employee.roles.count(), 2)
         role = Role.objects.latest('created_at')
         employee.roles.set([role])
         self.assertEqual(employee.roles.count(), 1)
