@@ -31,7 +31,6 @@ function rolesReducer(roles, action) {
     switch (action.type) {
         case 'create':
             return [...roles, {
-                id: action.id,
                 role: action.role,
                 description: action.description
             }];

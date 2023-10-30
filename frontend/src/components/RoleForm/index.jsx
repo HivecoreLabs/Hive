@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Button, TextareaAutosize, TextField } from '@mui/material';
+import { useRolesDispatch } from "../../contexts/RolesContext";
 
 
 export default function RoleForm({ selRole, formType }) {
 
+    const dispatch = useRolesDispatch();
     const [role, setRole] = useState(selRole.role);
     const [description, setDescription] = useState(selRole.description);
     
@@ -30,7 +32,19 @@ export default function RoleForm({ selRole, formType }) {
 
         setAttempt(false);
 
-        // FIX: dispatch method
+        if (formType === 'Create') {
+            dispatch({
+                type: 'create',
+                role,
+                description
+            })
+        } else {
+            dispatch({
+                type: 'update',
+                role,
+                description
+            })
+        }
 
     };
 
