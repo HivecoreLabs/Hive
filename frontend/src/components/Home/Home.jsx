@@ -9,7 +9,8 @@ import { useAuth } from '../../contexts/AuthenticationContext';
 
 function Home() {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [pin, setPin] = useState('');
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
     const theme = useTheme();
     const { isAuthenticated, login, logout } = useAuth();
 
@@ -28,42 +29,61 @@ function Home() {
         setIsModalOpen(false);
     };
 
-    const handlePinChange = (e) => {
-        setPin(e.target.value);
-    };
+    const handleUsername = (e) => {
+        setUsername(e.target.value);
+    }
 
-    const handleLogin = () => {
-        login();
+    const handlePassword = (e) => {
+        setPassword(e.target.value);
+    }
+
+    const handleLogin = (e) => {
+        e.preventDefault();
+        login(username, password);
     }
     const handleLogout = () => {
         logout();
     }
-    console.log(isAuthenticated);
+    debugger
     return (
         <div className='home-container'>
+            {isAuthenticated ? <div>logged in</div> : null}
             <Box sx={style}>
 
                 <HiveRoundedIcon sx={{ fontSize: '70px', marginBottom: '10px', color: 'primary.dark' }} />
+                <form onSubmit={handleLogin} className='login-form'>
+                    <TextField
+                        label="username"
+                        type="text"
+                        variant="outlined"
+                        margin="normal"
+                        value={username}
+                        required={true}
+                        onChange={handleUsername}
+                    />
+                    <TextField
+                        label="PIN"
+                        type="password"
+                        variant="outlined"
+                        margin="normal"
+                        value={password}
+                        required={true}
+                        onChange={handlePassword}
+                    />
+                    <Button
+                        variant="contained"
+                        sx={{ fontWeight: 'medium', color: 'primary.darker', marginTop: '10px' }}
+                        type='submit'>
+                        LOG IN
+                    </Button>
+                </form>
 
-                <TextField
-                    label="Enter PIN"
-                    type="password"
-                    variant="outlined"
-                    margin="normal"
-                    value={pin}
-                    onChange={handlePinChange}
-                    required='true'
-                />
-
-                <Button variant="contained" sx={{ fontWeight: 'medium', color: 'primary.darker', marginTop: '10px' }} onClick={handleLogin}>
-                    LOG IN
-                </Button>
                 <Button variant="contained" sx={{ fontWeight: 'medium', color: 'primary.darker', marginTop: '10px' }} onClick={handleLogout}>
                     LOG OUT
                 </Button>
 
                 <Button color="secondary" onClick={handleModalOpen} sx={{
-                    marginTop: '10px',
+                    marginTop: '20px',
                     display: 'inline',
                     '&:hover': {
                         textDecoration: 'underline'

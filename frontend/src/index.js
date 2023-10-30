@@ -5,15 +5,20 @@ import App from './app.jsx';
 import './index.css';
 import { CssBaseline } from '@mui/material';
 import { AuthenticationProvider } from './contexts/AuthenticationContext.js';
+import { ThemeProvider } from '@mui/material/styles';
+import { theme } from './contexts/ThemeContext';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <HashRouter>
         <React.StrictMode>
             <CssBaseline>
-                <AuthenticationProvider>
-                    <App />
-                </AuthenticationProvider>
+                <ThemeProvider theme={theme}>
+                    <AuthenticationProvider>
+                        <App />
+                    </AuthenticationProvider>
+                </ThemeProvider>
             </CssBaseline>
         </React.StrictMode>
     </HashRouter>
