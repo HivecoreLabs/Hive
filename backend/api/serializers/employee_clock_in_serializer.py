@@ -3,6 +3,9 @@ from api.models import Employee_Clock_In, Employee, Role
 from .limited_serializers import ReadLimitedEmployeeSerializer, ReadLimitedRoleSerializer
 
 class Read_Employee_Clock_In_Serializer(serializers.ModelSerializer):
+    parent_lookup_kwargs = {
+        'employee_pk': 'employee_pk'
+    }
     employee = ReadLimitedEmployeeSerializer(source='employee_id', read_only=True)
     active_role = ReadLimitedRoleSerializer(source='active_role_id', read_only=True)
 
@@ -12,6 +15,9 @@ class Read_Employee_Clock_In_Serializer(serializers.ModelSerializer):
 
 
 class Write_Employee_Clock_In_Serializer(serializers.ModelSerializer):
+    parent_lookup_kwargs = {
+        'employee_pk': 'employee_pk'
+    }
     class Meta:
         model=Employee_Clock_In
         fields='__all__'
