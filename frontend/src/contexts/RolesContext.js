@@ -43,6 +43,15 @@ export const createRole = (role) => async dispatch => {
     }
 }
 
+export const readSingleRole = (id) => async dispatch => {
+    const response = await fetch(`http://localhost:8000/api/roles/${id}/`);
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(loadRole(data));
+        return data;
+    }
+}
+
 export const readAllRoles = () => async dispatch => {
     const response = await fetch(`http://localhost:8000/api/roles/`);
     if (response.ok) {
@@ -71,6 +80,7 @@ export const deleteRole = (id) => async dispatch => {
         method: 'DELETE',
         headers: { "Content-Type": "application/json" }
     });
+
     if (response.ok) {
         const data = await response.json();
         dispatch(removeRole(id));
@@ -101,8 +111,13 @@ export function useRolesDispatch() {
     return useContext(RolesDispatchContext);
 }
 
-function rolesReducer(roles, action) {
-    let newState = {...roles}
+const initialRoles = {
+    role: {},
+    roles: {}
+}
+
+function rolesReducer(roles = initialRoles, action) {
+    let newState = {...roles};
     switch (action.type) {
         case ADD_ROLE:
             newState.roles[action.payload.id] = action.payload;
@@ -114,6 +129,7 @@ function rolesReducer(roles, action) {
             newState.roles = action.payload;
             return newState;
         case REMOVE_ROLE:
-            return
+            delete newState[action.payload];
+            return newState;
     }
 }
