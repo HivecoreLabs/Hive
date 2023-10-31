@@ -38,20 +38,20 @@ class TestRoleViewSet(APITestCase):
 
 
     def test_get_single_role_details(self):
+        url = reverse('roles-detail', args=[3])
         role = Role.objects.get(pk=3)
         serializer_data = RoleSerializer(role).data
-        url = reverse('roles-detail', args=[3])
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(json.loads(response.content), serializer_data)
 
 
     def test_create_role_valid_data(self):
+        url = reverse('roles-list')
         new_role = {
             'role': 'Test Role',
             'description': 'Description for test role.'
         }
-        url = reverse('roles-list')
         response = self.client.post(url, new_role)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
@@ -61,11 +61,11 @@ class TestRoleViewSet(APITestCase):
 
 
     def test_create_role_invalid_data(self):
+        url = reverse('roles-list')
         existing_role = {
             'role': 'Bartender',
             'description': 'Description for bartender.'
         }
-        url = reverse('roles-list')
         response = self.client.post(url, existing_role)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
@@ -74,8 +74,7 @@ class TestRoleViewSet(APITestCase):
         }
         response = self.client.post(url, missing_required_role)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        data = json.loads(response.content)
-        self.assertEqual(data, {'role': ['This field is required.']})
+        self.assertEqual(json.loads(response.content), {'role': ['This field is required.']})
 
         incomplete_required_role = {
             'role': '',
@@ -83,5 +82,46 @@ class TestRoleViewSet(APITestCase):
         }
         response = self.client.post(url, incomplete_required_role)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        data = json.loads(response.content)
-        self.assertEqual(data, {'role': ['This field may not be blank.']})
+        self.assertEqual(json.loads(response.content), {'role': ['This field may not be blank.']})
+
+
+    def update_role_valid_data(self):
+        url = reverse('roles-detail', args=[1])
+        new_role = {
+            'role': 'New Test Role',
+            'description': 'Description for new test role.'
+        }
+
+        response = self.client.put(url, new_role)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        role = Role.objects.all().latest('updated_at')
+        serializer_data = RoleSerializer(role).data
+        self.assertEqual(json.loads(response.content), serializer_data)
+
+        new_role_without_description = {
+            'role': 'New Test Role 2'
+        }
+        response = self.client.put(url, new_role_without_description)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        role = Role.objects.all().latest('updated_at')
+        serializer_data = RoleSerializer(role).data
+        self.assertEqual(json.loads(response.content), serializer_data)
+
+
+    def update_role_invalid_data(self):
+        url = reverse('role-detail', args=[1])
+        missing_role = {
+            'description': 'Missing role name.'
+        }
+
+        response = self.client.put(url, missing_role)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(json.loads(response.content), {'role': ['This field is required.']})
+
+        blank_role = {
+            'role': '',
+            'description': 'Description for blank role.'
+        }
+        response = self.client.put(url, blank_role)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(json.loads(response.content), {'role': ['This field may not be blank.']})
