@@ -12,7 +12,7 @@ employee_router = routers.NestedDefaultRouter(router, r'employees', lookup='empl
 employee_router.register(r'clock-ins', views.EmployeeClockInViewSet, basename='employee-clock-ins')
 
 role_router = routers.NestedDefaultRouter(router, r'roles', lookup='role')
-role_router.register(r'clock-ins', views.EmployeeClockInViewSet, basename='role-clock-ins')
+role_router.register(r'clock-ins', views.RoleClockInViewSet, basename='role-clock-ins')
 
 
 urlpatterns = [
