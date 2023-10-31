@@ -26,6 +26,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
 import { Link, NavLink } from 'react-router-dom';
 import AccountMenu from './AccountMenu.jsx';
+import { useAuth } from '../../contexts/AuthenticationContext.js';
 
 const drawerWidth = 180;
 
@@ -143,6 +144,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function MiniDrawer() {
     const theme = useTheme();
+    const { user } = useAuth();
+    console.log(user);
     const [open, setOpen] = useState(false);
     const ref = useRef(null);
 
@@ -176,7 +179,7 @@ export default function MiniDrawer() {
                     </IconButton>
                     <Box width={1} m={0} p={0} sx={{ display: 'flex', justifyContent: 'space-between' }}>
                         <Typography variant="h6" noWrap component="div" alignSelf='center'>
-                            Dashboard
+                            {`${user.username}'s Dashboard`}
                         </Typography>
                         {/* <Search alignSelf='center' >
                             <SearchIconWrapper>
