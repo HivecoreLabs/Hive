@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, useReducer } from 'react';
 import customFetch from '../utils/customFetch';
+import { useNavigate } from 'react-router-dom';
 
 export const useAuth = () => useContext(AuthenticationContext);
 const AuthenticationContext = createContext();
@@ -27,7 +28,7 @@ const authReducer = (state = initialState, action) => {
 };
 
 export const AuthenticationProvider = ({ children }) => {
-
+    const navigate = useNavigate();
     const [state, dispatch] = useReducer(authReducer, initialState);
 
     const login = async (username, password) => {
@@ -45,6 +46,7 @@ export const AuthenticationProvider = ({ children }) => {
                 };
                 sessionStorage.setItem('authData', JSON.stringify(authData));
                 dispatch({ type: 'LOGIN', payload: data.user });
+                navigate('/dashboard');
             } else {
                 console.error('Login failed:', response.statusText);
             };
@@ -81,6 +83,7 @@ export const AuthenticationProvider = ({ children }) => {
     const logout = () => {
         sessionStorage.clear();
         dispatch({ type: 'LOGOUT' });
+        navigate('/');
     };
 
     const value = {

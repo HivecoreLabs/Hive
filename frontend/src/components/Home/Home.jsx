@@ -10,11 +10,12 @@ import { useNavigate } from 'react-router-dom';
 
 function Home() {
     const navigate = useNavigate()
+    const theme = useTheme();
+    const { isAuthenticated, user, login, logout } = useAuth();
+
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const theme = useTheme();
-    const { isAuthenticated, user, login, logout } = useAuth();
 
     const style = css({
         display: 'flex',
@@ -32,7 +33,6 @@ function Home() {
     const handleLogin = (e) => {
         e.preventDefault();
         login(username, password);
-        navigate('/dashboard');
     }
     const handleLogout = () => {
         logout();
@@ -40,7 +40,6 @@ function Home() {
 
     return (
         <div className='home-container'>
-            {isAuthenticated ? <div>logged in</div> : null}
             <Box sx={style}>
 
                 <HiveRoundedIcon sx={{ fontSize: '70px', marginBottom: '10px', color: 'primary.dark' }} />
@@ -52,6 +51,7 @@ function Home() {
                         margin="normal"
                         value={username}
                         required={true}
+                        style={{ marginBottom: '-5px' }}
                         onChange={handleUsername}
                     />
                     <TextField
@@ -65,18 +65,18 @@ function Home() {
                     />
                     <Button
                         variant="contained"
-                        sx={{ fontWeight: 'medium', color: 'primary.darker', marginTop: '10px' }}
+                        sx={{ fontWeight: 'medium', color: 'primary.darker', marginTop: '15px' }}
                         type='submit'>
                         LOG IN
                     </Button>
                 </form>
 
-                <Button variant="contained" sx={{ fontWeight: 'medium', color: 'primary.darker', marginTop: '10px' }} onClick={handleLogout}>
+                {/* <Button variant="contained" sx={{ fontWeight: 'medium', color: 'primary.darker', marginTop: '10px' }} onClick={handleLogout}>
                     LOG OUT
-                </Button>
+                </Button> */}
 
                 <Button color="secondary" onClick={handleModalOpen} sx={{
-                    marginTop: '20px',
+                    marginTop: '10px',
                     display: 'inline',
                     '&:hover': {
                         textDecoration: 'underline'
