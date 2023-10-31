@@ -78,7 +78,19 @@ class TestRoleViewSet(APITestCase):
 
 
     def test_create_employee_invalid_data(self):
-        pass
+        url = reverse('employees-list')
+
+        response = self.client.post(url)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(json.loads(response.content), {'first_name': ['This field is required.'], 'last_name': ['This field is required.']})
+
+        blank_fields = {
+            'first_name': '',
+            'last_name': ''
+        }
+        response = self.client.post(url, blank_fields)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(json.loads(response.content), {'first_name': ['This field may not be blank.'], 'last_name': ['This field may not be blank.']})
 
 
     def update_employee_valid_data(self):
