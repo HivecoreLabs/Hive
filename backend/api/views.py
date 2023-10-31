@@ -5,9 +5,26 @@ from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 
 from django.contrib.auth.models import User
-from .models import Role, Employee
-from .serializers import UserSerializer, RoleSerializer, EmployeeSerializer
+from .models import Role, Employee, SpreadSheet
+from .serializers import UserSerializer, RoleSerializer, EmployeeSerializer, SpreadSheetSerializer
+from backend.quickstart import generate
 
+@api_view(['POST'])
+def generate_sheet_database(request):
+    generated_id = generate("Sheets Database")
+
+    if generated_id:
+        spreadsheet = SpreadSheet(database_google_id=generated_id)
+        spreadsheet.save()
+
+        serializer = SpreadSheetSerializer(spreadsheet)
+        return Response(serializer.data, status=201)
+
+    else:
+        return Response(
+            {'error': 'The sheet failed to generate. Please check your credentials file and try again.'},
+            status=400
+        )
 
 @api_view(['POST'])
 def login(request):
