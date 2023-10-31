@@ -15,7 +15,7 @@ import { useAuth } from '../../contexts/AuthenticationContext';
 import { useNavigate } from 'react-router-dom';
 
 export default function AccountMenu() {
-    const { logout } = useAuth();
+    const { user, logout } = useAuth();
     const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
@@ -26,6 +26,7 @@ export default function AccountMenu() {
         debugger
         logout();
     }
+    console.log(user);
 
     return (
         <>
@@ -39,7 +40,7 @@ export default function AccountMenu() {
                         aria-haspopup="true"
                         aria-expanded={open ? 'true' : undefined}
                     >
-                        <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
+                        <Avatar sx={{ width: 32, height: 32 }}>{user.username[0].toUpperCase()}</Avatar>
                     </IconButton>
                 </Tooltip>
             </Box>
