@@ -1,6 +1,7 @@
 import { createContext, useContext, useReducer } from "react";
 
 const ADD_ROLE = 'role/ADD_ROLE';
+const LOAD_ROLE = 'role/LOAD_ROLE';
 const LOAD_ROLES = 'role/LOAD_ROLES';
 const REMOVE_ROLE = 'role/REMOVE_ROLE';
 
@@ -10,6 +11,11 @@ const RolesDispatchContext = createContext(null);
 
 const addRole = payload => ({
     type: ADD_ROLE,
+    payload
+});
+
+const loadRole = payload => ({
+    type: LOAD_ROLE,
     payload
 });
 
@@ -42,6 +48,20 @@ export const readAllRoles = () => async dispatch => {
     if (response.ok) {
         const data = await response.json();
         dispatch(loadRoles(data));
+        return data;
+    }
+}
+
+export const updateRole = (id, role) => async dispatch => {
+    const response = await fetch(`http://localhost:8000/api/roles/${id}`, {
+        method: 'PUT',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(role)
+    });
+
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(addRole(data));
         return data;
     }
 }
@@ -82,15 +102,18 @@ export function useRolesDispatch() {
 }
 
 function rolesReducer(roles, action) {
+    let newState = {...roles}
     switch (action.type) {
-        case 'create':
-            return [...roles, {
-                role: action.role,
-                description: action.description
-            }];
-        case 'update':
-            return roles.map(r => r.id === action.role.id ? action.role : r);
-        case 'delete':
-            return roles.filter(r => r.id !== action.id);
+        case ADD_ROLE:
+            newState.roles[action.payload.id] = action.payload;
+            return newState;
+        case LOAD_ROLE:
+            newState.role = action.payload;
+            return newState;
+        case LOAD_ROLES:
+            newState.roles = action.payload;
+            return newState;
+        case REMOVE_ROLE:
+            return
     }
 }
