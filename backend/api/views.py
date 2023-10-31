@@ -6,7 +6,7 @@ from rest_framework.authtoken.models import Token
 
 from django.contrib.auth.models import User
 from .models import Role, Employee, SpreadSheet, Employee_Clock_In
-from .serializers import UserSerializer, RoleSerializer, EmployeeSerializer, Read_Employee_Clock_In_Serializer, Write_Employee_Clock_In_Serializer, SpreadSheetSerializer
+from .serializers import UserSerializer, RoleSerializer, EmployeeSerializer, Read_Clock_In_Serializer, Write_Clock_In_Serializer, Read_Employee_Clock_In_Serializer, Write_Employee_Clock_In_Serializer, SpreadSheetSerializer
 from backend.quickstart import generate
 
 @api_view(['POST'])
@@ -129,10 +129,21 @@ class EmployeeViewSet(viewsets.ModelViewSet):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class EmployeeClockInViewSet(viewsets.ModelViewSet):
+class ClockInViewSet(viewsets.ModelViewSet):
     queryset = Employee_Clock_In.objects.all()
+    def get_serializer_class(self):
+        if self.action == 'list' or self.action == 'retrieve':
+            return Read_Clock_In_Serializer
+        return Write_Clock_In_Serializer
 
+
+class EmployeeClockInViewSet(viewsets.ViewSet):
     def get_serializer_class(self):
         if self.action == 'list' or self.action == 'retrieve':
             return Read_Employee_Clock_In_Serializer
         return Write_Employee_Clock_In_Serializer
+
+    def list(self, requeset, employee_pk=None, role_pk=None):
+        queryset = Employee_Clock_In.objects.filter(employee_id=employee_pk, active_role_id=role_pk)
+        serializer = Read_Employee_Clock_In_Serializer(queryset, many=True)
+        return Response(serializer.data)
