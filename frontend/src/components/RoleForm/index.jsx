@@ -94,9 +94,9 @@ export default function RoleForm({ selRole, formType }) {
 
                         </textarea>
                         { attempt && validationErrors.description && (<div id="error">{validationErrors.description}</div>) }
-                        <TextareaAutosize 
+                        {/* <TextareaAutosize 
                             lab
-                        />
+                        /> */}
                     </div>
                 </div>
                 <div className="role-form-actions">
