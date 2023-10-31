@@ -57,6 +57,7 @@ class Checkout(models.Model):
     is_patio = models.BooleanField(default=False)
     is_bar = models.BooleanField(default=False)
     tipout_day = models.DateTimeField()
+    support_roles = models.ManyToManyField(Role, related_name='checkouts', through='Checkout_Tipout_Breakdown')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     sheet_cell = models.CharField(default=None, null=True, max_length=10)
@@ -67,6 +68,12 @@ class Checkout(models.Model):
         patio = ' patio' if self.is_patio else ''
         bar = ' bar' if self.is_bar else ''
         return f'{self.tipout_day} {time}{patio}{bar}'
+
+
+class Checkout_Tipout_Breakdown(models.Model):
+    checkout_id = models.ForeignKey(Checkout, on_delete=models.PROTECT)
+    role_id = models.ForeignKey(Role, on_delete=models.PROTECT)
+    total = models.DecimalField(decimal_places=2, max_digits=8)
 
 
 class Employee_Clock_In(models.Model):
