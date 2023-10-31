@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal, Typography, Button } from '@mui/material';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
@@ -12,19 +12,64 @@ import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { useAuth } from '../../contexts/AuthenticationContext';
+import './SignupModal.css';
 
 function SignupModal({ open, closeModal }) {
+    const { signup } = useAuth();
 
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [passwordsMatch, setPasswordsMatch] = useState(true);
+    const [passwordsMatchError, setPasswordsMatchError] = useState(false);
 
-    const [showPassword, setShowPassword] = React.useState(false);
-
+    const [showPassword, setShowPassword] = useState(false);
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
     const handleMouseDownPassword = (event) => {
         event.preventDefault();
     };
+
+    const handleSignup = (e) => {
+        e.preventDefault();
+        const passwordsMatchError = passwordsEqual(); // Check if passwords match
+        if (passwordsMatchError) {
+            return;
+        }
+        signup(username, password);
+        closeModal();
+    };
+
+    const handleUsername = (e) => setUsername(e.target.value);
+    const handlePassword = (e) => setPassword(e.target.value);
+    const handleConfirmPassword = (e) => {
+        setConfirmPassword(e.target.value);
+        setPasswordsMatch(true);
+    }
+
+    const passwordsEqual = () => {
+        if (password !== confirmPassword) {
+            setPasswordsMatchError(true);
+            setPasswordsMatch(false);
+            return true; // Indicate that passwords don't match
+        } else {
+            setPasswordsMatchError(false);
+            return false; // Indicate that passwords match
+        }
+    };
+
+    const resetForm = () => {
+        setUsername('');
+        setPassword('');
+        setConfirmPassword('');
+        setPasswordsMatch(true);
+        setPasswordsMatchError(false);
+    };
+
+    useEffect(() => {
+        resetForm();
+    }, [open])
 
     return (
         <Modal open={open} onClose={closeModal}>
@@ -39,27 +84,20 @@ function SignupModal({ open, closeModal }) {
                     boxShadow: 24,
                     p: 4,
                     display: 'flex',
-                    flexDirection: 'column'
+                    flexDirection: 'column',
+                    borderRadius: '12px'
                 }}
             >
                 <Typography variant="h6">Register</Typography>
-                <div style={{ display: 'flex', marginTop: '10px' }}>
-                    <TextField
-                        // helperText="first name"
-                        id="demo-helper-text-aligned"
-                        label="first name"
-                        sx={{ marginRight: '8px' }}
-                        required
-                    />
-                    <TextField
+                <form onSubmit={handleSignup} className='signup-form'>
+                    {/* <TextField
                         // helperText="last name"
                         id="demo-helper-text-aligned-no-helper"
-                        label="last name"
+                        label="username"
                         required
+                        onChange={handleUsernameChange}
                     />
-                </div>
-                <div >
-                    <FormControl sx={{ m: 1, width: '12ch' }} variant="outlined" required >
+                    <FormControl variant="outlined" required >
                         <InputLabel htmlFor="outlined-adornment-password">PIN</InputLabel>
                         <OutlinedInput
                             id="outlined-adornment-password"
@@ -77,11 +115,54 @@ function SignupModal({ open, closeModal }) {
                                 </InputAdornment>
                             }
                             label="Password"
+                            onChange={handlePasswordChange}
                         />
                     </FormControl>
                     <FormHelperText>Create a 4-digit PIN</FormHelperText>
+                    <Button variant='contained' type='submit'>Signup</Button> */}
+                    <TextField
+                        label="username"
+                        type="text"
+                        variant="outlined"
+                        margin="normal"
+                        value={username}
+                        required={true}
+                        style={{ marginBottom: '-5px' }}
+                        onChange={handleUsername}
+                    />
+                    <TextField
+                        label="PIN"
+                        type="password"
+                        variant="outlined"
+                        margin="normal"
+                        value={password}
+                        required={true}
+                        onChange={handlePassword}
+                        placeholder='create a 4-digit PIN'
+                        style={{ marginBottom: '-5px' }}
+                    />
+                    <TextField
+                        label="Confirm PIN"
+                        type="password"
+                        variant="outlined"
+                        margin="normal"
+                        value={confirmPassword}
+                        required={true}
+                        onChange={handleConfirmPassword}
+                        error={passwordsMatchError}
+                        helperText={passwordsMatch ? "" : "PINs do not match"}
+                    />
+                    <Button
+                        variant="contained"
+                        sx={{ fontWeight: 'medium', color: 'primary.darker', marginTop: '15px', marginBottom: '10px' }}
+                        type='submit'
+                    >
+                        SIGN UP
+                    </Button>
+                </form>
+                <div>
+                    <Button onClick={closeModal}>Close</Button>
                 </div>
-                <Button onClick={closeModal}>Close</Button>
             </Box>
         </Modal>
     )

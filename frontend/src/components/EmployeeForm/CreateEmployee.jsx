@@ -1,4 +1,5 @@
-import EmployeeForm from ".";
+import EmployeeForm from "./index.jsx";
+import React from "react";
 
 export default function CreateEmployeeForm() {
 
