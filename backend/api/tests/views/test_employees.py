@@ -94,7 +94,28 @@ class TestRoleViewSet(APITestCase):
 
 
     def update_employee_valid_data(self):
-        pass
+        url = reverse('employees-detail', args=[1])
+        employee = Employee.objects.get(pk=1)
+        bartender = Role.objects.get(role='Bartender')
+        employee.roles.set([bartender])
+        serializer_data = EmployeeSerializer(employee).data
+        self.assertEqual(serializer_data['roles'], 1)
+        update_data = {
+            'first_name': 'New Test',
+            'last_name': 'New Employee',
+            'roles': ['Bartender', 'Waiter']
+        }
+
+        response = self.client.put(url, update_data)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        response_data = json.loads(response.content)
+        updated_employee = Employee.objects.all().latest('created_at')
+        serializer_data = EmployeeSerializer(updated_employee)
+        self.assertEqual(response_data, serializer_data)
+        self.assertEqual(len(response_data['roles']), 2)
+        self.assertEqual(response_data['first_name'], 'New Test')
+        self.assertEqual(response_data['last_name'], 'New Employee')
 
 
     def update_employee_invalid_data(self):
