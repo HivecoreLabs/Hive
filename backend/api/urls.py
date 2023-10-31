@@ -3,8 +3,8 @@ from rest_framework.routers import DefaultRouter
 from . import views
 
 router = DefaultRouter()
-router.register('employees', views.EmployeeViewSet)
-router.register('roles', views.RoleViewSet)
+router.register(r'employees', views.EmployeeViewSet, basename='employees')
+router.register(r'roles', views.RoleViewSet, basename='roles')
 
 urlpatterns = [
     path("auth/login/", views.login, name='login'),
