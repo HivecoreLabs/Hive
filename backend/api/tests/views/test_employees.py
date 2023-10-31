@@ -133,6 +133,7 @@ class TestRoleViewSet(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(json.loads(response.content), {'first_name': ['This field may not be blank.'], 'last_name': ['This field may not be blank.']})
 
-        url = reverse('employee-detail', args=[1000])
+        url = reverse('employees-detail', args=[1000])
+        response = self.client.put(url,{'first_name': 'Test', 'last_name': 'User'})
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
         self.assertEqual(json.loads(response.content), {'detail': 'Not found.'})
