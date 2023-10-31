@@ -52,7 +52,7 @@ class TestRoleViewSet(APITestCase):
             'role': 'Test Role',
             'description': 'Description for test role.'
         }
-        response = self.client.post(url, new_role)
+        response = self.client.post(url, new_role, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
         role = Role.objects.all().latest('pk')
@@ -66,13 +66,13 @@ class TestRoleViewSet(APITestCase):
             'role': 'Bartender',
             'description': 'Description for bartender.'
         }
-        response = self.client.post(url, existing_role)
+        response = self.client.post(url, existing_role, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
         missing_required_role = {
             'description': 'Description for'
         }
-        response = self.client.post(url, missing_required_role)
+        response = self.client.post(url, missing_required_role, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(json.loads(response.content), {'role': ['This field is required.']})
 
@@ -80,7 +80,7 @@ class TestRoleViewSet(APITestCase):
             'role': '',
             'description': 'Description for'
         }
-        response = self.client.post(url, incomplete_required_role)
+        response = self.client.post(url, incomplete_required_role, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(json.loads(response.content), {'role': ['This field may not be blank.']})
 
@@ -92,7 +92,7 @@ class TestRoleViewSet(APITestCase):
             'description': 'Description for new test role.'
         }
 
-        response = self.client.put(url, new_role)
+        response = self.client.put(url, new_role, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         role = Role.objects.all().latest('updated_at')
         serializer_data = RoleSerializer(role).data
@@ -101,7 +101,7 @@ class TestRoleViewSet(APITestCase):
         new_role_without_description = {
             'role': 'New Test Role 2'
         }
-        response = self.client.put(url, new_role_without_description)
+        response = self.client.put(url, new_role_without_description, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         role = Role.objects.all().latest('updated_at')
         serializer_data = RoleSerializer(role).data
@@ -114,7 +114,7 @@ class TestRoleViewSet(APITestCase):
             'description': 'Missing role name.'
         }
 
-        response = self.client.put(url, missing_role)
+        response = self.client.put(url, missing_role, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(json.loads(response.content), {'role': ['This field is required.']})
 
@@ -122,6 +122,6 @@ class TestRoleViewSet(APITestCase):
             'role': '',
             'description': 'Description for blank role.'
         }
-        response = self.client.put(url, blank_role)
+        response = self.client.put(url, blank_role, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(json.loads(response.content), {'role': ['This field may not be blank.']})
