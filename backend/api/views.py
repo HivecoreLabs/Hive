@@ -14,7 +14,7 @@ def generate_sheet_database(request):
     generated_id = generate("Sheets Database")
 
     if generated_id:
-        spreadsheet = SpreadSheet(google_sheet_id=generated_id)
+        spreadsheet = SpreadSheet(database_google_id=generated_id)
         spreadsheet.save()
 
         serializer = SpreadSheetSerializer(spreadsheet)
