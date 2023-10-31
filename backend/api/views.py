@@ -5,8 +5,8 @@ from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 
 from django.contrib.auth.models import User
-from .models import Role, Employee
-from .serializers import UserSerializer, RoleSerializer, EmployeeSerializer
+from .models import Role, Employee, Employee_Clock_In
+from .serializers import UserSerializer, RoleSerializer, EmployeeSerializer, Employee_Clock_In_Serializer
 
 
 @api_view(['POST'])
@@ -110,3 +110,8 @@ class EmployeeViewSet(viewsets.ModelViewSet):
             return Response(serializer.data)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class EmployeeClockInViewSet(viewsets.ModelViewSet):
+    queryset = Employee_Clock_In.objects.all()
+    serializer_class = Employee_Clock_In_Serializer
