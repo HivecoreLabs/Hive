@@ -80,7 +80,7 @@ class TestRoleViewSet(APITestCase):
     def test_create_employee_invalid_data(self):
         url = reverse('employees-list')
 
-        response = self.client.post(url)
+        response = self.client.post(url, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(json.loads(response.content), {'first_name': ['This field is required.'], 'last_name': ['This field is required.']})
 
@@ -88,35 +88,51 @@ class TestRoleViewSet(APITestCase):
             'first_name': '',
             'last_name': ''
         }
-        response = self.client.post(url, blank_fields)
+        response = self.client.post(url, blank_fields, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(json.loads(response.content), {'first_name': ['This field may not be blank.'], 'last_name': ['This field may not be blank.']})
 
 
-    def update_employee_valid_data(self):
+    def test_update_employee_valid_data(self):
         url = reverse('employees-detail', args=[1])
         employee = Employee.objects.get(pk=1)
         bartender = Role.objects.get(role='Bartender')
         employee.roles.set([bartender])
         serializer_data = EmployeeSerializer(employee).data
-        self.assertEqual(serializer_data['roles'], 1)
+        self.assertEqual(len(serializer_data['roles']), 1)
         update_data = {
             'first_name': 'New Test',
             'last_name': 'New Employee',
-            'roles': ['Bartender', 'Waiter']
+            'roles': ['Bartender', 'Dishwasher']
         }
 
-        response = self.client.put(url, update_data)
+        response = self.client.put(url, update_data, format='json')
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         response_data = json.loads(response.content)
-        updated_employee = Employee.objects.all().latest('created_at')
-        serializer_data = EmployeeSerializer(updated_employee)
+        updated_employee = Employee.objects.all().latest('updated_at')
+        serializer_data = EmployeeSerializer(updated_employee).data
         self.assertEqual(response_data, serializer_data)
         self.assertEqual(len(response_data['roles']), 2)
         self.assertEqual(response_data['first_name'], 'New Test')
         self.assertEqual(response_data['last_name'], 'New Employee')
 
 
-    def update_employee_invalid_data(self):
-        pass
+    def test_update_employee_invalid_data(self):
+        url = reverse('employees-detail', args=[1])
+        response = self.client.put(url, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(json.loads(response.content), {'first_name': ['This field is required.'], 'last_name': ['This field is required.']})
+
+        blank_inputs = {
+            'first_name': '',
+            'last_name': ''
+        }
+        response = self.client.put(url, blank_inputs)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(json.loads(response.content), {'first_name': ['This field may not be blank.'], 'last_name': ['This field may not be blank.']})
+
+        url = reverse('employee-detail', args=[1000])
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+        self.assertEqual(json.loads(response.content), {'detail': 'Not found.'})
