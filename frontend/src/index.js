@@ -13,13 +13,13 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <HashRouter>
         <React.StrictMode>
-            <CssBaseline>
-                <ThemeProvider theme={theme}>
-                    <AuthenticationProvider>
-                        <App />
-                    </AuthenticationProvider>
-                </ThemeProvider>
-            </CssBaseline>
+            {/* <CssBaseline> */}
+            <ThemeProvider theme={theme}>
+                <AuthenticationProvider>
+                    <App />
+                </AuthenticationProvider>
+            </ThemeProvider>
+            {/* </CssBaseline> */}
         </React.StrictMode>
     </HashRouter>
 );

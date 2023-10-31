@@ -21,7 +21,7 @@ function Home() {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        marginBottom: '10px'
+        marginBottom: '10px',
     })
 
     const handleModalOpen = () => setIsModalOpen(true);
