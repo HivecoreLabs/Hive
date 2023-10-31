@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useEmployeesDispatch } from '../../contexts/EmployeesContext';
+import { createEmployee, updateEmployee } from '../../contexts/EmployeesContext';
 import { Button, Input, TextField } from '@mui/material';
 import './index.css';
 
 export default function EmployeeForm({ employee, formType }) {
+
+    const dispatch = useEmployeesDispatch();
+    const { id } = useParams();
 
     const [firstName, setFirstName] = useState(employee.firstName);
     const [lastName, setLastName] = useState(employee.lastName);
@@ -10,6 +16,7 @@ export default function EmployeeForm({ employee, formType }) {
     const [role, setRole] = useState([[...employee.role]]);
     const [foodPermitExp, setFoodPermitExp] = useState(employee.foodPermitExp);
     const [alcoholPermitExp, setAlcoholPermitExp] = useState(employee.alcoholPermitExp);
+    const [formerEmployee, setFormerEmployee] = useState(employee.formerEmployee);
 
     const [validationErrors, setValidationErrors] = useState({
         firstName: '',
@@ -21,10 +28,7 @@ export default function EmployeeForm({ employee, formType }) {
     });
     const [attempt, setAttempt] = useState(false);
 
-    const handleSubmit = async (e) => {
-
-        e.preventDefault();
-        setAttempt(true);
+    useEffect(() => {
 
         const errors = {};
 
@@ -33,14 +37,41 @@ export default function EmployeeForm({ employee, formType }) {
         if (restaurantId.length > 10) errors.restaurantId = 'Restaurant ID can be no more than 10 characters.';
         if (!role[0]) errors.role = 'Employee must have at least one role.';
 
-        if (Object.values(errors)[0]) {
-            setValidationErrors(errors);
-            return alert('Can not submit.');
-        }
+        setValidationErrors(errors);
 
+    }, [firstName, lastName, restaurantId, role, foodPermitExp, alcoholPermitExp])
+
+    const handleSubmit = async (e) => {
+
+        e.preventDefault();
+        setAttempt(true);
+
+        if (Object.values(validationErrors)[0]) return alert('Can not submit.');
         setAttempt(false);
 
-        // FIX: dispatch method
+        if (formType === 'Create') {
+            dispatch(
+                createEmployee({
+                    first_name: firstName,
+                    last_name: lastName,
+                    roles: role,
+                    food_permit_exp: foodPermitExp,
+                    alcohol_permit_exp: alcoholPermitExp,
+                    is_former_employee: formerEmployee
+                })
+            );
+        } else if (formType === 'Edit') {
+            dispatch(
+                updateEmployee(id, {
+                    first_name: firstName,
+                    last_name: lastName,
+                    roles: role,
+                    food_permit_exp: foodPermitExp,
+                    alcohol_permit_exp: alcoholPermitExp,
+                    is_former_employee: formerEmployee
+                })
+            );
+        }
 
     };
 
