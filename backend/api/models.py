@@ -1,5 +1,6 @@
+from django.utils.translation import gettext
 from django.db import models
-
+import datetime
 
 class SpreadSheet(models.Model):
     database_google_id = models.CharField(max_length=250)
@@ -70,10 +71,12 @@ class Checkout(models.Model):
 
 class Employee_Clock_In(models.Model):
     employee_id = models.ForeignKey(Employee, on_delete=models.PROTECT)
+    date = models.DateField(gettext('Date'), default=datetime.date.today)
     time_in = models.DateTimeField(null=True)
     time_out = models.DateTimeField(null=True)
     active_role_id = models.ForeignKey(Role, on_delete=models.PROTECT)
-    tipout_received = models.DecimalField(decimal_places=2, max_digits=8)
+    tipout_received = models.DecimalField(decimal_places=2, max_digits=8, null=True)
+    is_am = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     sheet_cell = models.CharField(default=None, null=True, max_length=10)

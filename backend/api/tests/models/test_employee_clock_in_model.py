@@ -36,10 +36,9 @@ class EmployeeClockInModelTestCase(TestCase):
         clock_in = Employee_Clock_In.objects.create(
             employee_id=self.employee,
             active_role_id=self.role,
-            tipout_received=50.00,
         )
         self.assertIsNone(clock_in.time_in)
         self.assertIsNone(clock_in.time_out)
-        self.assertEqual(clock_in.tipout_received, 50.00)
+        self.assertEqual(clock_in.tipout_received, None)
         self.assertIsNone(clock_in.sheet_cell)
         self.assertFalse(clock_in.is_uploaded)
