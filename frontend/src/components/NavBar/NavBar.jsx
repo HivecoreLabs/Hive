@@ -24,7 +24,7 @@ import AssessmentIcon from '@mui/icons-material/Assessment';
 import SettingsIcon from '@mui/icons-material/Settings';
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import AccountMenu from './AccountMenu.jsx';
 import { useAuth } from '../../contexts/AuthenticationContext.js';
 
@@ -148,9 +148,17 @@ export default function MiniDrawer() {
     console.log(user);
     const [open, setOpen] = useState(false);
     const ref = useRef(null);
+    const location = useLocation();
 
     const handleDrawerOpen = () => setOpen(true);
     const handleDrawerClose = () => setOpen(false);
+
+    const navItems = [
+        { text: 'Dashboard', icon: <DashboardIcon color='quaternary' />, path: '/dashboard' },
+        { text: 'Employees', icon: <GroupsIcon color='quaternary' />, path: '/employees' },
+        { text: 'Reports', icon: <AssessmentIcon color='quaternary' />, path: '/reports' },
+        { text: 'Settings', icon: <SettingsIcon color='quaternary' />, path: '/settings' },
+    ];
 
     useEffect(() => {
         const handleClickOutside = (e) => {
@@ -202,6 +210,40 @@ export default function MiniDrawer() {
                 </DrawerHeader>
                 <Divider />
                 <List>
+                    {navItems.map((item) => (
+                        <ListItem
+                            key={item.text}
+                            disablePadding
+                            sx={{ display: 'block' }}
+                        >
+                            <NavLink
+                                to={item.path}
+                                style={{ textDecoration: 'none', color: 'black', margin: 'none' }}
+                            >
+                                <ListItemButton
+                                    sx={{
+                                        minHeight: 48,
+                                        justifyContent: open ? 'initial' : 'center',
+                                        px: 2.5,
+                                        backgroundColor: item.path === location.pathname ? theme.navHover : 'inherit', // Add your selected style here
+                                    }}
+                                >
+                                    <ListItemIcon
+                                        sx={{
+                                            minWidth: 0,
+                                            mr: open ? 3 : 'auto',
+                                            justifyContent: 'center',
+                                        }}
+                                    >
+                                        {item.icon}
+                                    </ListItemIcon>
+                                    <ListItemText primary={item.text} sx={{ opacity: open ? 1 : 0 }} />
+                                </ListItemButton>
+                            </NavLink>
+                        </ListItem>
+                    ))}
+                </List>
+                {/* <List>
                     {['Dashboard', 'Employees', 'Reports', 'Settings'].map((text, index) => {
                         let icon;
                         let path;
@@ -236,9 +278,9 @@ export default function MiniDrawer() {
                                                 justifyContent: 'center',
                                             }}
                                         >
-                                            {/* <Tooltip title={text}> */}
-                                            {icon}
-                                            {/* </Tooltip> */}
+                                            <Tooltip title={text}>
+                                                {icon}
+                                            </Tooltip>
                                         </ListItemIcon>
                                         <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
                                     </ListItemButton>
@@ -246,7 +288,7 @@ export default function MiniDrawer() {
                             </ListItem>
                         );
                     })}
-                </List>
+                </List> */}
                 <Divider />
             </Drawer>
         </Box>

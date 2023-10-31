@@ -20,7 +20,8 @@ const dayTheme = createTheme({
         },
         white: 'white',
         canvas: '#EDEDED', // off white
-    }
+    },
+    navHover: '#00000008'
 });
 
 const nightTheme = createTheme({
