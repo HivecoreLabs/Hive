@@ -1,9 +1,10 @@
-import * as React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { styled, useTheme, alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
+import Tooltip from '@mui/material/Tooltip';
 import List from '@mui/material/List';
 import CssBaseline from '@mui/material/CssBaseline';
 import Typography from '@mui/material/Typography';
@@ -23,7 +24,9 @@ import AssessmentIcon from '@mui/icons-material/Assessment';
 import SettingsIcon from '@mui/icons-material/Settings';
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
+import AccountMenu from './AccountMenu.jsx';
+import { useAuth } from '../../contexts/AuthenticationContext.js';
 
 const drawerWidth = 180;
 
@@ -97,31 +100,30 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     }),
 );
 
+// const Search = styled('div')(({ theme }) => ({
+//     position: 'relative',
+//     borderRadius: theme.shape.borderRadius,
+//     backgroundColor: alpha(theme.palette.common.white, 0.15),
+//     '&:hover': {
+//         backgroundColor: alpha(theme.palette.common.white, 0.25),
+//     },
+//     marginLeft: 0,
+//     width: '100%',
+//     [theme.breakpoints.up('sm')]: {
+//         marginLeft: theme.spacing(1),
+//         width: 'auto',
+//     },
+// }));
 
-const Search = styled('div')(({ theme }) => ({
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
-    '&:hover': {
-        backgroundColor: alpha(theme.palette.common.white, 0.25),
-    },
-    marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-        marginLeft: theme.spacing(1),
-        width: 'auto',
-    },
-}));
-
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-    padding: theme.spacing(0, 2),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-}));
+// const SearchIconWrapper = styled('div')(({ theme }) => ({
+//     padding: theme.spacing(0, 2),
+//     height: '100%',
+//     position: 'absolute',
+//     pointerEvents: 'none',
+//     display: 'flex',
+//     alignItems: 'center',
+//     justifyContent: 'center',
+// }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
     color: 'inherit',
@@ -142,15 +144,30 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function MiniDrawer() {
     const theme = useTheme();
-    const [open, setOpen] = React.useState(false);
+    const { user } = useAuth();
+    console.log(user);
+    const [open, setOpen] = useState(false);
+    const ref = useRef(null);
+    const location = useLocation();
 
-    const handleDrawerOpen = () => {
-        setOpen(true);
-    };
+    const handleDrawerOpen = () => setOpen(true);
+    const handleDrawerClose = () => setOpen(false);
 
-    const handleDrawerClose = () => {
-        setOpen(false);
-    };
+    const navItems = [
+        { text: 'Dashboard', icon: <DashboardIcon color='quaternary' />, path: '/dashboard' },
+        { text: 'Employees', icon: <GroupsIcon color='quaternary' />, path: '/employees' },
+        { text: 'Reports', icon: <AssessmentIcon color='quaternary' />, path: '/reports' },
+        { text: 'Settings', icon: <SettingsIcon color='quaternary' />, path: '/settings' },
+    ];
+
+    useEffect(() => {
+        const handleClickOutside = (e) => {
+            if (ref.current && !ref.current.contains(e.target)) handleDrawerClose();
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
 
     return (
         <Box sx={{ display: 'flex' }}>
@@ -170,9 +187,9 @@ export default function MiniDrawer() {
                     </IconButton>
                     <Box width={1} m={0} p={0} sx={{ display: 'flex', justifyContent: 'space-between' }}>
                         <Typography variant="h6" noWrap component="div" alignSelf='center'>
-                            Dashboard
+                            {`${user.username}'s Dashboard`}
                         </Typography>
-                        <Search alignSelf='center' >
+                        {/* <Search alignSelf='center' >
                             <SearchIconWrapper>
                                 <SearchIcon />
                             </SearchIconWrapper>
@@ -180,11 +197,12 @@ export default function MiniDrawer() {
                                 placeholder="Search…"
                                 inputProps={{ 'aria-label': 'search' }}
                             />
-                        </Search>
+                        </Search> */}
+                        <AccountMenu />
                     </Box>
                 </Toolbar>
             </AppBar>
-            <Drawer variant="permanent" open={open} >
+            <Drawer variant="permanent" open={open} ref={ref}>
                 <DrawerHeader>
                     <IconButton onClick={handleDrawerClose} sx={{ color: theme.palette.quaternary.main }}>
                         {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
@@ -192,6 +210,40 @@ export default function MiniDrawer() {
                 </DrawerHeader>
                 <Divider />
                 <List>
+                    {navItems.map((item) => (
+                        <ListItem
+                            key={item.text}
+                            disablePadding
+                            sx={{ display: 'block' }}
+                        >
+                            <NavLink
+                                to={item.path}
+                                style={{ textDecoration: 'none', color: 'black', margin: 'none' }}
+                            >
+                                <ListItemButton
+                                    sx={{
+                                        minHeight: 48,
+                                        justifyContent: open ? 'initial' : 'center',
+                                        px: 2.5,
+                                        backgroundColor: item.path === location.pathname ? theme.navHover : 'inherit', // Add your selected style here
+                                    }}
+                                >
+                                    <ListItemIcon
+                                        sx={{
+                                            minWidth: 0,
+                                            mr: open ? 3 : 'auto',
+                                            justifyContent: 'center',
+                                        }}
+                                    >
+                                        {item.icon}
+                                    </ListItemIcon>
+                                    <ListItemText primary={item.text} sx={{ opacity: open ? 1 : 0 }} />
+                                </ListItemButton>
+                            </NavLink>
+                        </ListItem>
+                    ))}
+                </List>
+                {/* <List>
                     {['Dashboard', 'Employees', 'Reports', 'Settings'].map((text, index) => {
                         let icon;
                         let path;
@@ -226,7 +278,9 @@ export default function MiniDrawer() {
                                                 justifyContent: 'center',
                                             }}
                                         >
-                                            {icon}
+                                            <Tooltip title={text}>
+                                                {icon}
+                                            </Tooltip>
                                         </ListItemIcon>
                                         <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
                                     </ListItemButton>
@@ -234,7 +288,7 @@ export default function MiniDrawer() {
                             </ListItem>
                         );
                     })}
-                </List>
+                </List> */}
                 <Divider />
             </Drawer>
         </Box>
