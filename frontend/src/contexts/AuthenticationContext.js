@@ -38,7 +38,6 @@ export const AuthenticationProvider = ({ children }) => {
                 body: { username, password }
             });
             if (response.ok) {
-                debugger
                 const data = await response.json();
                 const authData = {
                     token: data.token,
@@ -61,15 +60,17 @@ export const AuthenticationProvider = ({ children }) => {
         try {
             const response = await fetch('http://localhost:8000/api/auth/signup/', {
                 method: 'POST',
-                body: JSON.stringify({ username, password }),
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                body: { username, password }
             });
             if (response.ok) {
                 const data = await response.json();
-                localStorage.setItem('token', data.token);
+                const authData = {
+                    token: data.token,
+                    user: data.user
+                };
+                sessionStorage.setItem('authData', JSON.stringify(authData));
                 dispatch({ type: 'LOGIN', payload: data.user });
+                navigate('/dashboard');
             } else {
                 console.error('Signup failed:', response.statusText);
             };

@@ -13,23 +13,26 @@ import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import { useAuth } from '../../contexts/AuthenticationContext';
 import { useNavigate } from 'react-router-dom';
+import { useTheme } from '@emotion/react';
 
 export default function AccountMenu() {
     const { user, logout } = useAuth();
+    const theme = useTheme()
     const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
+
     const handleClick = (e) => setAnchorEl(e.currentTarget);
     const handleClose = () => setAnchorEl(null);
 
     const handleLogout = () => {
-        debugger
         logout();
     }
-    console.log(user);
 
     return (
         <>
+            <div>
+            </div>
             <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
                 <Tooltip title="Account settings">
                     <IconButton

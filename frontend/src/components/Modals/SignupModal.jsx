@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal, Typography, Button } from '@mui/material';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
@@ -58,6 +58,18 @@ function SignupModal({ open, closeModal }) {
             return false; // Indicate that passwords match
         }
     };
+
+    const resetForm = () => {
+        setUsername('');
+        setPassword('');
+        setConfirmPassword('');
+        setPasswordsMatch(true);
+        setPasswordsMatchError(false);
+    };
+
+    useEffect(() => {
+        resetForm();
+    }, [open])
 
     return (
         <Modal open={open} onClose={closeModal}>
