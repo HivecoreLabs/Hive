@@ -85,7 +85,7 @@ class TestRoleViewSet(APITestCase):
         self.assertEqual(json.loads(response.content), {'role': ['This field may not be blank.']})
 
 
-    def update_role_valid_data(self) -> None:
+    def test_update_role_valid_data(self) -> None:
         url = reverse('roles-detail', args=[1])
         new_role = {
             'role': 'New Test Role',
@@ -108,8 +108,8 @@ class TestRoleViewSet(APITestCase):
         self.assertEqual(json.loads(response.content), serializer_data)
 
 
-    def update_role_invalid_data(self) -> None:
-        url = reverse('role-detail', args=[1])
+    def test_update_role_invalid_data(self) -> None:
+        url = reverse('roles-detail', args=[1])
         missing_role = {
             'description': 'Missing role name.'
         }
