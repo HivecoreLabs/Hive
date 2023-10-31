@@ -34,9 +34,9 @@ function Home() {
         e.preventDefault();
         login(username, password);
     }
-    const handleLogout = () => {
-        logout();
-    }
+    // const handleLogout = () => {
+    //     logout();
+    // }
 
     return (
         <div className='home-container'>
