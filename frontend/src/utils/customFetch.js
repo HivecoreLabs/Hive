@@ -1,20 +1,24 @@
-// const customFetch = async (url, options = {}) => {
-//     debugger
-//     options.headers ||= {};
-//     options.method ||= 'GET';
-//     if (options.method.toUpperCase() !== 'GET') {
-//         options.headers["Content-Type"] = "application/json";
+const customFetch = async (url, options = {}) => {
+    options.headers ||= {};
+    options.method ||= 'GET';
+    if (options.method.toUpperCase() !== 'GET') {
+        if (!options.headers["Content-Type"]) {
+            options.headers["Content-Type"] = "application/json";
+        }
 
-//         const storedToken = localStorage.getItem('token');
+        if (options.body && typeof options.body === 'object') {
+            options.body = JSON.stringify(options.body);
+        }
 
-//         if (storedToken) {
-//             options.headers.Authorization = `Token ${storedToken}`;
-//         }
-//     }
+        const storedToken = localStorage.getItem('token');
+        if (storedToken) {
+            options.headers.Authorization = `Token ${storedToken}`;
+        }
+    }
 
-//     const response = await fetch(url, options);
-//     if (response.status >= 500) throw res;
-//     return response;
-// }
+    const response = await fetch(url, options);
+    if (response.status >= 500) throw res;
+    return response;
+}
 
-// export default customFetch;
+export default customFetch;

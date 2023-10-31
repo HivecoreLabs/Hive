@@ -12,8 +12,9 @@ function Home() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const theme = useTheme();
-    const { isAuthenticated, login, logout } = useAuth();
-
+    const { isAuthenticated, user, login, logout } = useAuth();
+    console.log(isAuthenticated, user);
+    console.log('after edit');
     const style = css({
         display: 'flex',
         flexDirection: 'column',
@@ -21,21 +22,11 @@ function Home() {
         marginBottom: '10px'
     })
 
-    const handleModalOpen = () => {
-        setIsModalOpen(true);
-    };
+    const handleModalOpen = () => setIsModalOpen(true);
+    const handleModalClose = () => setIsModalOpen(false);
 
-    const handleModalClose = () => {
-        setIsModalOpen(false);
-    };
-
-    const handleUsername = (e) => {
-        setUsername(e.target.value);
-    }
-
-    const handlePassword = (e) => {
-        setPassword(e.target.value);
-    }
+    const handleUsername = (e) => setUsername(e.target.value);
+    const handlePassword = (e) => setPassword(e.target.value);
 
     const handleLogin = (e) => {
         e.preventDefault();
@@ -44,7 +35,7 @@ function Home() {
     const handleLogout = () => {
         logout();
     }
-    debugger
+
     return (
         <div className='home-container'>
             {isAuthenticated ? <div>logged in</div> : null}

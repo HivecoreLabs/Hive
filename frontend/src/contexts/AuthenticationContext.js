@@ -1,28 +1,50 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect, useReducer } from 'react';
 import customFetch from '../utils/customFetch';
 
+export const useAuth = () => useContext(AuthenticationContext);
 const AuthenticationContext = createContext();
 
-export const useAuth = () => useContext(AuthenticationContext);
+const initialState = {
+    isAuthenticated: false,
+    user: null,
+};
+
+const authReducer = (state = initialState, action) => {
+    switch (action.type) {
+        case 'LOGIN':
+            return {
+                ...state,
+                isAuthenticated: true,
+                user: action.payload,
+            };
+        case 'LOGOUT':
+            return {
+                ...initialState
+            };
+        default:
+            return state;
+    }
+};
 
 export const AuthenticationProvider = ({ children }) => {
 
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [state, dispatch] = useReducer(authReducer, initialState);
 
     const login = async (username, password) => {
         try {
-            const response = await fetch('http://localhost:8000/api/auth/login/', {
+            const response = await customFetch('http://localhost:8000/api/auth/login/', {
                 method: 'POST',
-                body: JSON.stringify({ username, password }),
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                body: { username, password }
             });
             if (response.ok) {
                 debugger
                 const data = await response.json();
-                localStorage.setItem('token', data.token);
-                setIsAuthenticated(true);
+                const authData = {
+                    token: data.token,
+                    user: data.user
+                };
+                sessionStorage.setItem('authData', JSON.stringify(authData));
+                dispatch({ type: 'LOGIN', payload: data.user });
             } else {
                 console.error('Login failed:', response.statusText);
             };
@@ -30,11 +52,6 @@ export const AuthenticationProvider = ({ children }) => {
         } catch (error) {
             console.error('An error occurred during login:', error);
         }
-    };
-
-    const logout = () => {
-        if (localStorage.getItem('token')) localStorage.removeItem('token');
-        setIsAuthenticated(false);
     };
 
     const signup = async (username, password) => {
@@ -49,8 +66,8 @@ export const AuthenticationProvider = ({ children }) => {
             });
             if (response.ok) {
                 const data = await response.json();
-                // localStorage.setItem('token', data.token);
-                // setIsAuthenticated(true);
+                localStorage.setItem('token', data.token);
+                dispatch({ type: 'LOGIN', payload: data.user });
             } else {
                 console.error('Signup failed:', response.statusText);
             };
@@ -61,16 +78,27 @@ export const AuthenticationProvider = ({ children }) => {
         }
     };
 
-
-
-    const value = {
-        isAuthenticated,
-        login,
-        logout,
-        signup
+    const logout = () => {
+        sessionStorage.clear();
+        dispatch({ type: 'LOGOUT' });
     };
 
-    // Provide the context to the app
+    const value = {
+        isAuthenticated: state.isAuthenticated,
+        user: state.user,
+        login,
+        logout,
+        signup,
+    };
+
+    useEffect(() => {
+        const authDataString = sessionStorage.getItem('authData');
+        if (authDataString) {
+            const authData = JSON.parse(authDataString);
+            dispatch({ type: 'LOGIN', payload: authData.user });
+        }
+    }, [dispatch]);
+
     return (
         <AuthenticationContext.Provider value={value}>
             {children}
