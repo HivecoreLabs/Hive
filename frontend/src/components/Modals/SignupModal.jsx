@@ -84,7 +84,8 @@ function SignupModal({ open, closeModal }) {
                     boxShadow: 24,
                     p: 4,
                     display: 'flex',
-                    flexDirection: 'column'
+                    flexDirection: 'column',
+                    borderRadius: '12px'
                 }}
             >
                 <Typography variant="h6">Register</Typography>
