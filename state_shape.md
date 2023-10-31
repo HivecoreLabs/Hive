@@ -23,14 +23,22 @@ state = {
     ...
   ],
 
-  roles: [
-    {
-      'id': 1,
-      'role': 'server',
-      'description': 'Brings food to tables'
-    },
+  roles: { 
+
+    role: {
+      // single role we are viewing
+    }
+    
+    roles: {
+        1: {
+            'id': 1,
+            'role': 'server',
+            'description': 'Brings food to tables'
+        },
+        ...
+      },
     ...
-  ],
+  },
 
   checkouts: [
     {

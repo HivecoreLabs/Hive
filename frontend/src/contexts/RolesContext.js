@@ -24,7 +24,7 @@ const removeRole = payload => ({
 });
 
 export const createRole = (role) => async dispatch => {
-    const response = await fetch(``, {
+    const response = await fetch(`http://localhost:8000/api/roles/`, {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(role)
@@ -38,7 +38,7 @@ export const createRole = (role) => async dispatch => {
 }
 
 export const readAllRoles = () => async dispatch => {
-    const response = await fetch(``);
+    const response = await fetch(`http://localhost:8000/api/roles/`);
     if (response.ok) {
         const data = await response.json();
         dispatch(loadRoles(data));
@@ -47,7 +47,7 @@ export const readAllRoles = () => async dispatch => {
 }
 
 export const deleteRole = (id) => async dispatch => {
-    const response = await fetch(``, {
+    const response = await fetch(`http://localhost:8000/api/roles/${id}/`, {
         method: 'DELETE',
         headers: { "Content-Type": "application/json" }
     });
