@@ -6,15 +6,16 @@ import { useTheme } from '@mui/material';
 import { css } from '@emotion/react'
 import SignupModal from '../Modals/SignupModal.jsx';
 import { useAuth } from '../../contexts/AuthenticationContext';
+import { useNavigate } from 'react-router-dom';
 
 function Home() {
+    const navigate = useNavigate()
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const theme = useTheme();
     const { isAuthenticated, user, login, logout } = useAuth();
-    console.log(isAuthenticated, user);
-    console.log('after edit');
+
     const style = css({
         display: 'flex',
         flexDirection: 'column',
@@ -31,6 +32,7 @@ function Home() {
     const handleLogin = (e) => {
         e.preventDefault();
         login(username, password);
+        navigate('/dashboard');
     }
     const handleLogout = () => {
         logout();
