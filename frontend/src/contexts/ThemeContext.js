@@ -43,6 +43,8 @@ const nightTheme = createTheme({
         white: 'white',
         canvas: '#EDEDED', // off white
     },
+    navHover: '#00000008'
+
 });
 
 const now = new Date();
