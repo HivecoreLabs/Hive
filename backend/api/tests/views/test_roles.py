@@ -27,7 +27,7 @@ class TestRoleViewSet(APITestCase):
         ])
 
 
-    def test_get_role_list(self):
+    def test_get_role_list(self) -> None:
         url = reverse('roles-list')
         roles = Role.objects.all()
         response = self.client.get(url)
@@ -37,7 +37,7 @@ class TestRoleViewSet(APITestCase):
         self.assertEqual(data, serializer_data)
 
 
-    def test_get_single_role_details(self):
+    def test_get_single_role_details(self) -> None:
         url = reverse('roles-detail', args=[3])
         role = Role.objects.get(pk=3)
         serializer_data = RoleSerializer(role).data
@@ -46,7 +46,7 @@ class TestRoleViewSet(APITestCase):
         self.assertEqual(json.loads(response.content), serializer_data)
 
 
-    def test_create_role_valid_data(self):
+    def test_create_role_valid_data(self) -> None:
         url = reverse('roles-list')
         new_role = {
             'role': 'Test Role',
@@ -60,7 +60,7 @@ class TestRoleViewSet(APITestCase):
         self.assertEqual(json.loads(response.content), serializer_data)
 
 
-    def test_create_role_invalid_data(self):
+    def test_create_role_invalid_data(self) -> None:
         url = reverse('roles-list')
         existing_role = {
             'role': 'Bartender',
@@ -85,7 +85,7 @@ class TestRoleViewSet(APITestCase):
         self.assertEqual(json.loads(response.content), {'role': ['This field may not be blank.']})
 
 
-    def update_role_valid_data(self):
+    def update_role_valid_data(self) -> None:
         url = reverse('roles-detail', args=[1])
         new_role = {
             'role': 'New Test Role',
@@ -108,7 +108,7 @@ class TestRoleViewSet(APITestCase):
         self.assertEqual(json.loads(response.content), serializer_data)
 
 
-    def update_role_invalid_data(self):
+    def update_role_invalid_data(self) -> None:
         url = reverse('role-detail', args=[1])
         missing_role = {
             'description': 'Missing role name.'
