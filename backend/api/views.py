@@ -6,7 +6,7 @@ from rest_framework.authtoken.models import Token
 
 from django.contrib.auth.models import User
 from .models import Role, Employee, SpreadSheet, Employee_Clock_In
-from .serializers import UserSerializer, RoleSerializer, EmployeeSerializer, Employee_Clock_In_Serializer, SpreadSheetSerializer
+from .serializers import UserSerializer, RoleSerializer, EmployeeSerializer, Read_Employee_Clock_In_Serializer, Write_Employee_Clock_In_Serializer, SpreadSheetSerializer
 from backend.quickstart import generate
 
 @api_view(['POST'])
@@ -131,4 +131,8 @@ class EmployeeViewSet(viewsets.ModelViewSet):
 
 class EmployeeClockInViewSet(viewsets.ModelViewSet):
     queryset = Employee_Clock_In.objects.all()
-    serializer_class = Employee_Clock_In_Serializer
+
+    def get_serializer_class(self):
+        if self.action == 'list' or self.action == 'retrieve':
+            return Read_Employee_Clock_In_Serializer
+        return Write_Employee_Clock_In_Serializer
