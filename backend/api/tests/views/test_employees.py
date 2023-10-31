@@ -56,7 +56,20 @@ class TestRoleViewSet(APITestCase):
 
 
     def test_create_employee_valid_data(self):
-        pass
+        url = reverse('employees-list')
+        roles = ['Bartender', 'Dishwasher']
+        new_employee = {
+            'first_name': 'Test',
+            'last_name': 'Employee',
+            'roles': roles
+        }
+
+        response = self.client.post(url, new_employee, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+        newest_employee = Employee.objects.all().latest('created_at')
+        serializer_data = EmployeeSerializer(newest_employee).data
+        self.assertEqual(len(json.loads(response.content)['roles']), 2)
 
 
     def test_create_employee_invalid_data(self):
