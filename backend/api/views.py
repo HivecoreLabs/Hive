@@ -143,8 +143,8 @@ class EmployeeClockInViewSet(viewsets.ViewSet):
             return Read_Employee_Clock_In_Serializer
         return Write_Employee_Clock_In_Serializer
 
-    def list(self, requeset, employee_pk=None, role_pk=None):
-        queryset = Employee_Clock_In.objects.filter(employee_id=employee_pk, active_role_id=role_pk)
+    def list(self, requeset, employee_pk=None):
+        queryset = Employee_Clock_In.objects.filter(employee_id=employee_pk)
         serializer = Read_Employee_Clock_In_Serializer(queryset, many=True)
         return Response(serializer.data)
 
