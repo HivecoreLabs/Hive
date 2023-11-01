@@ -8,7 +8,6 @@ import { AuthenticationProvider } from './contexts/AuthenticationContext.js';
 import { ThemeProvider } from '@mui/material/styles';
 import { theme } from './contexts/ThemeContext';
 
-
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <HashRouter>
