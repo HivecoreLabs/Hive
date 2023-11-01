@@ -131,10 +131,18 @@ class EmployeeViewSet(viewsets.ModelViewSet):
 
 class ClockInViewSet(viewsets.ModelViewSet):
     queryset = Employee_Clock_In.objects.all()
-    def get_serializer_class(self):
+    def get_serializer_class(self, *args, **kwargs):
         if self.action == 'list' or self.action == 'retrieve':
             return Read_Clock_In_Serializer
         return Write_Clock_In_Serializer
+
+    def create(self, request, *args, **kwargs):
+        is_many = True if isinstance(request.data, list) else False
+        serializer = self.get_serializer(data=request.data, many=is_many)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class EmployeeClockInViewSet(viewsets.ViewSet):
