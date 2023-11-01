@@ -24,9 +24,7 @@ function Home() {
     })
 
     const handleModalOpen = () => setIsModalOpen(true);
-    const handleModalClose = () => {
-        setIsModalOpen(false);
-    }
+    const handleModalClose = () => setIsModalOpen(false);
 
     const handleUsername = (e) => setUsername(e.target.value);
     const handlePassword = (e) => setPassword(e.target.value);

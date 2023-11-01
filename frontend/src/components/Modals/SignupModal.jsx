@@ -34,7 +34,9 @@ function SignupModal({ open, closeModal }) {
             setPasswordsDontMatchError('PINs do not match')
             return;
         }
-        signup(username, password);
+        const response = signup(username, password);
+        console.log(response);
+        console.log(response.error);
         closeModal();
     };
 

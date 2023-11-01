@@ -2,8 +2,8 @@ import React, { createContext, useContext, useState, useEffect, useReducer } fro
 import customFetch from '../utils/customFetch';
 import { useNavigate } from 'react-router-dom';
 
-export const useAuth = () => useContext(AuthenticationContext);
 const AuthenticationContext = createContext();
+export const useAuth = () => useContext(AuthenticationContext);
 
 const initialState = {
     isAuthenticated: false,
@@ -74,9 +74,9 @@ export const AuthenticationProvider = ({ children }) => {
                 console.error('Signup failed:', response.statusText);
             };
             return response;
-
         } catch (error) {
-            console.error('An error occurred during signup:', error);
+            console.log('from the catch');
+            console.error('An error occured during signup', error);
         }
     };
 
