@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from api.models import Employee_Clock_In, Employee, Role
+from api.models import Employee_Clock_In
 from .limited_serializers import ReadLimitedEmployeeSerializer, ReadLimitedRoleSerializer
 
 class Read_Clock_In_Serializer(serializers.ModelSerializer):

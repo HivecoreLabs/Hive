@@ -573,6 +573,9 @@ Certainly, here's the complete API documentation in Markdown format:
     "A valid number is required.",
     "Ensure that there are no more than 8 digits in total.",
     "Ensure that there are no more than 2 decimal places."
+  ],
+  "non_field_errors": [
+    "The fields employee_id, date, is_am must make a unique set."
   ]
 }
 ```
@@ -649,6 +652,9 @@ Certainly, here's the complete API documentation in Markdown format:
       "A valid number is required.",
       "Ensure that there are no more than 8 digits in total.",
       "Ensure that there are no more than 2 decimal places."
+    ],
+    "non_field_errors": [
+      "The fields employee_id, date, is_am must make a unique set."
     ]
   },
   ...

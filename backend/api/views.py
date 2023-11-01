@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import viewsets, status
+from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
@@ -144,6 +145,12 @@ class ClockInViewSet(viewsets.ModelViewSet):
             print(data)
             return Response(Read_Clock_In_Serializer(data, many=is_many).data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def update(self, request, *args, **kwargs):
+        is_many = True if isinstance(request.data, list) else False
+        serializer = self.get_serializer(data=request.data, many=is_many)
+        if serializer.is_valid():
+            print("Valid data")
 
 
 class EmployeeClockInViewSet(viewsets.ViewSet):
