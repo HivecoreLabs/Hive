@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "06ec0e79f2c8215601b4593a1f82db1b58827454e494a37b54df8cc942f89fc9"
+            "sha256": "cdedb0ea4b9f22b765e7e09131856af98ef801536cf0742f83d7cfd38cc40244"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -234,6 +234,15 @@
             "markers": "python_version >= '3.6'",
             "version": "==3.14.0"
         },
+        "drf-nested-routers": {
+            "hashes": [
+                "sha256:01aa556b8c08608bb74fb34f6ca065a5183f2cda4dc0478192cc17a2581d71b0",
+                "sha256:996b77f3f4dfaf64569e7b8f04e3919945f90f95366838ca5b8bed9dd709d6c5"
+            ],
+            "index": "pypi",
+            "markers": "python_version >= '3.5'",
+            "version": "==0.93.4"
+        },
         "google-api-core": {
             "hashes": [
                 "sha256:c22e01b1e3c4dcd90998494879612c38d0a3411d1f7b679eb89e2abe3ce1f553",
@@ -313,14 +322,6 @@
             "index": "pypi",
             "markers": "python_version >= '3.8'",
             "version": "==6.8.0"
-        },
-        "macholib": {
-            "hashes": [
-                "sha256:07ae9e15e8e4cd9a788013d81f5908b3609aa76f9b1421bae9c4d7606ec86a30",
-                "sha256:0e315d7583d38b8c77e815b1ecbdbf504a8258d8b3e17b61165c6feb60d18f2c"
-            ],
-            "markers": "sys_platform == 'darwin'",
-            "version": "==1.16.3"
         },
         "oauthlib": {
             "hashes": [

@@ -13,15 +13,15 @@ const initialState = {
 
 const authReducer = (state = initialState, action) => {
     switch (action.type) {
-        case 'LOGIN':
+        case "LOGIN":
             return {
                 ...state,
                 isAuthenticated: true,
                 user: action.payload,
             };
-        case 'LOGOUT':
+        case "LOGOUT":
             return {
-                ...initialState
+                ...initialState,
             };
         default:
             return state;
@@ -83,8 +83,8 @@ export const AuthenticationContextProvider = ({ children }) => {
 
     const logout = () => {
         sessionStorage.clear();
-        dispatch({ type: 'LOGOUT' });
-        navigate('/');
+        dispatch({ type: "LOGOUT" });
+        navigate("/");
     };
 
     const value = {
@@ -97,10 +97,10 @@ export const AuthenticationContextProvider = ({ children }) => {
     };
 
     useEffect(() => {
-        const authDataString = sessionStorage.getItem('authData');
+        const authDataString = sessionStorage.getItem("authData");
         if (authDataString) {
             const authData = JSON.parse(authDataString);
-            dispatch({ type: 'LOGIN', payload: authData.user });
+            dispatch({ type: "LOGIN", payload: authData.user });
         }
     }, [dispatch]);
 

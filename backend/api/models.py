@@ -1,6 +1,6 @@
+from django.utils.translation import gettext
 from django.db import models
-from django.contrib.auth.models import AbstractUser, BaseUserManager
-
+import datetime
 
 class SpreadSheet(models.Model):
     database_google_id = models.CharField(max_length=250)
@@ -57,6 +57,7 @@ class Checkout(models.Model):
     is_patio = models.BooleanField(default=False)
     is_bar = models.BooleanField(default=False)
     tipout_day = models.DateTimeField()
+    support_roles = models.ManyToManyField(Role, related_name='checkouts', through='Checkout_Tipout_Breakdown')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     sheet_cell = models.CharField(default=None, null=True, max_length=10)
@@ -64,17 +65,25 @@ class Checkout(models.Model):
 
     def __str__(self) -> str:
         time = 'AM' if self.is_am_shift else 'PM'
-        patio = 'patio' if self.is_patio else ''
-        bar = 'bar' if self.is_bar else ''
-        return f'{self.tipout_day} {time} {patio} {bar}'
+        patio = ' patio' if self.is_patio else ''
+        bar = ' bar' if self.is_bar else ''
+        return f'{self.tipout_day} {time}{patio}{bar}'
+
+
+class Checkout_Tipout_Breakdown(models.Model):
+    checkout_id = models.ForeignKey(Checkout, on_delete=models.PROTECT)
+    role_id = models.ForeignKey(Role, on_delete=models.PROTECT)
+    total = models.DecimalField(decimal_places=2, max_digits=8)
 
 
 class Employee_Clock_In(models.Model):
     employee_id = models.ForeignKey(Employee, on_delete=models.PROTECT)
+    date = models.DateField(gettext('Date'), default=datetime.date.today)
     time_in = models.DateTimeField(null=True)
     time_out = models.DateTimeField(null=True)
     active_role_id = models.ForeignKey(Role, on_delete=models.PROTECT)
-    tipout_received = models.DecimalField(decimal_places=2, max_digits=8)
+    tipout_received = models.DecimalField(decimal_places=2, max_digits=8, null=True)
+    is_am = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     sheet_cell = models.CharField(default=None, null=True, max_length=10)

@@ -313,16 +313,7 @@ Certainly, here's the complete API documentation in Markdown format:
 ```json
 {
   "role": "name of role",
-  "description": "optional description"
-}
-```
-
-- **Expected Response (200 OK)**:
-
-```json
-{
-  "first_name": "required first name",
-  "last_name": "required last name",
+  "description": "optional description",
   "restaurant_employee_id": "optional restaurant employee id",
   "roles": [
     "optional list of roles names, if role has not been created yet it will be omitted when adding to db"
@@ -330,6 +321,28 @@ Certainly, here's the complete API documentation in Markdown format:
   "food_permit_exp": "optional date",
   "alcohol_permit_exp": "optional date",
   "is_former_employee": "optional boolean"
+}
+```
+
+- **Expected Response (200 OK)**:
+
+```json
+{
+  "first_name": "first name",
+  "last_name": "last name",
+  "roles": [
+    {
+      "id": "role id",
+      "role": "role name"
+    }
+  ],
+  "food_permit_exp": "date food permit expires",
+  "alcohol_permit_exp": "date alcohol permit expires",
+  "is_former_employee": "boolean indicating if still working at restaurant",
+  "created_at": "date instance was created",
+  "updated_at": "most recent date instance was updated",
+  "sheet_cell": "corresponding Google Sheet cell for instance",
+  "is_uploaded": "boolean indicating if instace has been uploaded to Google Sheet"
 }
 ```
 

@@ -5,8 +5,8 @@ from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 
 from django.contrib.auth.models import User
-from .models import Role, Employee, SpreadSheet
-from .serializers import UserSerializer, RoleSerializer, EmployeeSerializer, SpreadSheetSerializer
+from .models import Role, Employee, SpreadSheet, Employee_Clock_In
+from .serializers import UserSerializer, RoleSerializer, EmployeeSerializer, Read_Clock_In_Serializer, Write_Clock_In_Serializer, Read_Employee_Clock_In_Serializer, Write_Employee_Clock_In_Serializer, SpreadSheetSerializer
 from backend.quickstart import generate
 
 @api_view(['POST'])
@@ -28,8 +28,16 @@ def generate_sheet_database(request):
 
 @api_view(['POST'])
 def login(request):
-    user = get_object_or_404(User, username=request.data['username'])
-    if not user.check_password(request.data['password']):
+    data = request.data
+    if 'username' not in data and 'password' not in data:
+        return Response({'username': ['This field is required.'], 'password': ['This field is required.']}, status=status.HTTP_400_BAD_REQUEST)
+    elif 'username' not in data:
+        return Response({'username': ['This field is required.']}, status=status.HTTP_400_BAD_REQUEST)
+    elif 'password' not in data:
+        return Response({'password': ['This field is required.']}, status=status.HTTP_400_BAD_REQUEST)
+
+    user = get_object_or_404(User, username=data['username'])
+    if not user.check_password(data['password']):
         return Response({"detail": "Not found."}, status=status.HTTP_404_NOT_FOUND)
     token, created = Token.objects.get_or_create(user=user)
     serializer = UserSerializer(user)
@@ -44,11 +52,12 @@ def login(request):
 
 @api_view(['POST'])
 def signup(request):
-    serializer = UserSerializer(data=request.data)
+    data = request.data
+    serializer = UserSerializer(data=data)
     if serializer.is_valid():
         serializer.save()
-        user = User.objects.get(username=request.data['username'])
-        user.set_password(request.data['password'])
+        user = User.objects.get(username=data['username'])
+        user.set_password(data['password'])
         user.save()
         token = Token.objects.create(user=user)
         return Response({
@@ -71,7 +80,7 @@ class EmployeeViewSet(viewsets.ModelViewSet):
     serializer_class = EmployeeSerializer
 
     def create(self, request):
-        serializer = EmployeeSerializer(data=request.data)
+        serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
             employee = serializer.save()
             if 'roles' in request.data:
@@ -90,7 +99,7 @@ class EmployeeViewSet(viewsets.ModelViewSet):
     def update(self, request, *args, **kwargs):
         employee_instance = self.get_object()
         data = request.data
-        serializer = EmployeeSerializer(data=data)
+        serializer = self.serializer_class(data=data)
         if serializer.is_valid():
             employee_instance.first_name = data["first_name"]
             employee_instance.last_name = data["last_name"]
@@ -118,3 +127,35 @@ class EmployeeViewSet(viewsets.ModelViewSet):
             return Response(serializer.data)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ClockInViewSet(viewsets.ModelViewSet):
+    queryset = Employee_Clock_In.objects.all()
+    def get_serializer_class(self):
+        if self.action == 'list' or self.action == 'retrieve':
+            return Read_Clock_In_Serializer
+        return Write_Clock_In_Serializer
+
+
+class EmployeeClockInViewSet(viewsets.ViewSet):
+    def get_serializer_class(self):
+        if self.action == 'list' or self.action == 'retrieve':
+            return Read_Employee_Clock_In_Serializer
+        return Write_Employee_Clock_In_Serializer
+
+    def list(self, requeset, employee_pk=None, role_pk=None):
+        queryset = Employee_Clock_In.objects.filter(employee_id=employee_pk, active_role_id=role_pk)
+        serializer = Read_Employee_Clock_In_Serializer(queryset, many=True)
+        return Response(serializer.data)
+
+
+class RoleClockInViewSet(viewsets.ViewSet):
+    def get_serializer_class(self):
+        if self.action == 'list' or self.action == 'retrieve':
+            return Read_Employee_Clock_In_Serializer
+        return Write_Employee_Clock_In_Serializer
+
+    def list(self, requeset, role_pk=None):
+        queryset = Employee_Clock_In.objects.filter(active_role_id=role_pk)
+        serializer = Read_Employee_Clock_In_Serializer(queryset, many=True)
+        return Response(serializer.data)

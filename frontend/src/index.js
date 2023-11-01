@@ -9,7 +9,6 @@ import { ThemeProvider } from '@mui/material/styles';
 import { theme } from './contexts/ThemeContext';
 import { ErrorContextProvider } from './contexts/ErrorContext.js';
 
-
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <HashRouter>
