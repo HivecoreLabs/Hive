@@ -116,6 +116,8 @@ Certainly, here's the complete API documentation in Markdown format:
 ### 3. Add Role
 
 - **Route**: `POST /api/roles/`
+- **Headers**:
+  - Content-Type: application/json
 - **Request Body (Required Information)**:
 
 ```json
@@ -151,6 +153,8 @@ Certainly, here's the complete API documentation in Markdown format:
 ### 4. Update Role
 
 - **Route**: `PUT api/roles/<int:roleId>/`
+- **Headers**:
+  - Content-Type: application/json
 - **Request Body (Required Information)**:
 
 ```json
@@ -187,6 +191,7 @@ Certainly, here's the complete API documentation in Markdown format:
 
 - **Route**: `DELETE api/roles/<int:roleId>/`
 - **Headers**:
+  - Content-Type: application/json
 - **Request Body (Required Information)**:
 
 ```json
@@ -259,6 +264,8 @@ Certainly, here's the complete API documentation in Markdown format:
 ### 3. Add Employee
 
 - **Route**: `POST /api/employees/`
+- **Headers**:
+  - Content-Type: application/json
 - **Request Body (Required Information)**:
 
 ```json
@@ -308,6 +315,8 @@ Certainly, here's the complete API documentation in Markdown format:
 ### 4. Update Employee Information
 
 - **Route**: `PUT api/employees/<int:employeeId>/`
+- **Headers**:
+  - Content-Type: application/json
 - **Request Body (Required Information)**:
 
 ```json
@@ -367,6 +376,7 @@ Certainly, here's the complete API documentation in Markdown format:
 
 - **Route**: `DELETE api/employees/<int:roleId>/`
 - **Headers**:
+  - Content-Type: application/json
 - **Request Body (Required Information)**:
 
 ```json
@@ -391,6 +401,7 @@ Certainly, here's the complete API documentation in Markdown format:
 ```json
 [
     {
+        "id": "clock in id",
         "employee": {
             "id": 1,
             "first_name": "Alice",
@@ -401,6 +412,7 @@ Certainly, here's the complete API documentation in Markdown format:
             "id": 1,
             "role": "Server"
         },
+        "date": "2023-10-25",
         "tipout_received": "20.50",
         "time_in": "2023-10-25T12:00:00Z",
         "time_out": "2023-10-25T16:00:00Z"
@@ -418,6 +430,7 @@ Certainly, here's the complete API documentation in Markdown format:
 
 ```json
 {
+  "id": "clock in id",
   "employee": {
     "id": 1,
     "first_name": "Alice",
@@ -428,6 +441,7 @@ Certainly, here's the complete API documentation in Markdown format:
     "id": 1,
     "role": "Server"
   },
+  "date": "2023-10-25",
   "tipout_received": "20.50",
   "time_in": "2023-10-25T12:00:00Z",
   "time_out": "2023-10-25T16:00:00Z"
@@ -444,6 +458,7 @@ Certainly, here's the complete API documentation in Markdown format:
 ```json
 [
     {
+        "id": "clock in id",
         "employee": {
             "id": 1,
             "first_name": "Alice",
@@ -454,6 +469,7 @@ Certainly, here's the complete API documentation in Markdown format:
             "id": 1,
             "role": "Server"
         },
+        "date": "2023-10-25",
         "tipout_received": "20.50",
         "time_in": "2023-10-25T12:00:00Z",
         "time_out": "2023-10-25T16:00:00Z"
@@ -472,6 +488,7 @@ Certainly, here's the complete API documentation in Markdown format:
 ```json
 [
     {
+        "id": "clock in id",
         "employee": {
             "id": 1,
             "first_name": "Alice",
@@ -482,6 +499,7 @@ Certainly, here's the complete API documentation in Markdown format:
             "id": 1,
             "role": "Server"
         },
+        "date": "2023-10-25",
         "tipout_received": "20.50",
         "time_in": "2023-10-25T12:00:00Z",
         "time_out": "2023-10-25T16:00:00Z"
@@ -490,16 +508,225 @@ Certainly, here's the complete API documentation in Markdown format:
 ]
 ```
 
-### 1. Get List of All Clock-Ins
+### 5. Add Clock-In
 
-- **Route**: `GET /api/clock-ins/`
+- **Route**: `POST /api/clock-ins/`
 - **Headers**:
-- **Request Body (None)**:
+  - Content-Type: application/json
+- **Request Body (Rerquired Information)**:
+
+```json
+{
+  "employee_id": "required employee id",
+  "active_role_id": "required role id",
+  "date": "optional date will default to current day if not specified",
+  "tipout_received": "optional decimal limited to 2 places after decimal e.g 59.98",
+  "time_in": "optional date, defaults to null",
+  "time_out": "optional date, defaults to null"
+}
+```
+
 - **Expected Response (200 OK)**:
 
 ```json
-
+{
+  "id": "clock in id",
+  "employee": {
+    "id": 1,
+    "first_name": "Alice",
+    "last_name": "Smith",
+    "restaurant_employee_id": "EmpID1"
+  },
+  "active_role": {
+    "id": 1,
+    "role": "Server"
+  },
+  "date": "2023-10-25",
+  "tipout_received": "20.50",
+  "time_in": "2023-10-25T12:00:00Z",
+  "time_out": "2023-10-25T16:00:00Z"
+}
 ```
+
+- **Error Response (400 Bad Data)**:
+
+```json
+{
+  "employee_id": [
+    "This field is required.",
+    "Incorrect type. Expected pk value, received [insert data type]."
+  ],
+  "active_role_id": [
+    "This field is required.",
+    "Incorrect type. Expected pk value, received [insert data type]."
+  ],
+  "date": [
+    "Date has wrong format. Use one of these formats instead: YYYY-MM-DD."
+  ],
+  "time_in": [
+    "Datetime has wrong format. Use one of these formats instead: YYYY-MM-DDThh:mm[:ss[.uuuuuu]][+HH:MM|-HH:MM|Z]."
+  ],
+  "time_out": [
+    "Datetime has wrong format. Use one of these formats instead: YYYY-MM-DDThh:mm[:ss[.uuuuuu]][+HH:MM|-HH:MM|Z]."
+  ],
+  "tipout_received": [
+    "A valid number is required.",
+    "Ensure that there are no more than 8 digits in total.",
+    "Ensure that there are no more than 2 decimal places."
+  ]
+}
+```
+
+### 6. Add List of Clock-Ins
+
+- **Route**: `POST /api/clock-ins/`
+- **Headers**:
+  - Content-Type: application/json
+- **Request Body (Rerquired Information)**:
+
+```json
+[
+  {
+    "employee_id": "required employee id",
+    "active_role_id": "required role id",
+    "date": "optional date will default to current day if not specified",
+    "tipout_received": "optional decimal limited to 2 places after decimal e.g 59.98",
+    "time_in": "optional date, defaults to null",
+    "time_out": "optional date, defaults to null"
+  },
+  ...
+]
+```
+
+- **Expected Response (200 OK)**:
+
+```json
+[
+  {
+    "id": "clock in id",
+    "employee": {
+      "id": 1,
+      "first_name": "Alice",
+      "last_name": "Smith",
+      "restaurant_employee_id": "EmpID1"
+    },
+    "active_role": {
+      "id": 1,
+      "role": "Server"
+    },
+    "date": "2023-10-25",
+    "tipout_received": "20.50",
+    "time_in": "2023-10-25T12:00:00Z",
+    "time_out": "2023-10-25T16:00:00Z"
+  },
+  ...
+]
+```
+
+- **Error Response (400 Bad Data)**:
+
+```json
+[
+  {
+    "employee_id": [
+      "This field is required.",
+      "Incorrect type. Expected pk value, received [insert data type]."
+    ],
+    "active_role_id": [
+      "This field is required.",
+      "Incorrect type. Expected pk value, received [insert data type]."
+    ],
+    "date": [
+      "Date has wrong format. Use one of these formats instead: YYYY-MM-DD."
+    ],
+    "time_in": [
+      "Datetime has wrong format. Use one of these formats instead: YYYY-MM-DDThh:mm[:ss[.uuuuuu]][+HH:MM|-HH:MM|Z]."
+    ],
+    "time_out": [
+      "Datetime has wrong format. Use one of these formats instead: YYYY-MM-DDThh:mm[:ss[.uuuuuu]][+HH:MM|-HH:MM|Z]."
+    ],
+    "tipout_received": [
+      "A valid number is required.",
+      "Ensure that there are no more than 8 digits in total.",
+      "Ensure that there are no more than 2 decimal places."
+    ]
+  },
+  ...
+]
+```
+
+### 7. Update Clock In
+
+- **Route**: `PUT /api/clock-ins/<int:clockin_id>`
+- **Headers**:
+  - Content-Type: application/json
+- **Request Body (Rerquired Information)**:
+
+```json
+{
+  "employee_id": "required employee id",
+  "active_role_id": "required role id",
+  "date": "optional date will default to current day if not specified",
+  "tipout_received": "optional decimal limited to 2 places after decimal e.g 59.98",
+  "time_in": "optional date, defaults to null",
+  "time_out": "optional date, defaults to null"
+}
+```
+
+- **Expected Response (200 OK)**:
+
+```json
+{
+  "id": "clock in id",
+  "employee": {
+    "id": 1,
+    "first_name": "Alice",
+    "last_name": "Smith",
+    "restaurant_employee_id": "EmpID1"
+  },
+  "active_role": {
+    "id": 1,
+    "role": "Server"
+  },
+  "date": "2023-10-25",
+  "tipout_received": "20.50",
+  "time_in": "2023-10-25T12:00:00Z",
+  "time_out": "2023-10-25T16:00:00Z"
+}
+```
+
+- **Error Response (400 Bad Data)**:
+
+```json
+{
+  "employee_id": [
+    "This field is required.",
+    "Incorrect type. Expected pk value, received [insert data type]."
+  ],
+  "active_role_id": [
+    "This field is required.",
+    "Incorrect type. Expected pk value, received [insert data type]."
+  ],
+  "date": [
+    "Date has wrong format. Use one of these formats instead: YYYY-MM-DD."
+  ],
+  "time_in": [
+    "Datetime has wrong format. Use one of these formats instead: YYYY-MM-DDThh:mm[:ss[.uuuuuu]][+HH:MM|-HH:MM|Z]."
+  ],
+  "time_out": [
+    "Datetime has wrong format. Use one of these formats instead: YYYY-MM-DDThh:mm[:ss[.uuuuuu]][+HH:MM|-HH:MM|Z]."
+  ],
+  "tipout_received": [
+    "A valid number is required.",
+    "Ensure that there are no more than 8 digits in total.",
+    "Ensure that there are no more than 2 decimal places."
+  ]
+}
+```
+
+### 8. Update List of Clock Ins
+
+### 9. Delete Clock In
 
 ## Sheets
 
