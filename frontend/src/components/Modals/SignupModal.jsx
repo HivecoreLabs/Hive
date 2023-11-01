@@ -21,20 +21,17 @@ function SignupModal({ open, closeModal }) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [passwordsMatch, setPasswordsMatch] = useState(true);
-    const [passwordsMatchError, setPasswordsMatchError] = useState(false);
+    const [passwordsDontMatchError, setPasswordsDontMatchError] = useState('');
 
-    const [showPassword, setShowPassword] = useState(false);
-    const handleClickShowPassword = () => setShowPassword((show) => !show);
-
-    const handleMouseDownPassword = (event) => {
-        event.preventDefault();
-    };
+    const [showPassword1, setShowPassword1] = useState(false);
+    const [showPassword2, setShowPassword2] = useState(false);
+    const handleClickShowPassword1 = () => setShowPassword1(prevState => !prevState);
+    const handleClickShowPassword2 = () => setShowPassword2(prevState => !prevState);
 
     const handleSignup = (e) => {
         e.preventDefault();
-        const passwordsMatchError = passwordsEqual(); // Check if passwords match
-        if (passwordsMatchError) {
+        if (password !== confirmPassword) {
+            setPasswordsDontMatchError('PINs do not match')
             return;
         }
         signup(username, password);
@@ -42,29 +39,22 @@ function SignupModal({ open, closeModal }) {
     };
 
     const handleUsername = (e) => setUsername(e.target.value);
-    const handlePassword = (e) => setPassword(e.target.value);
-    const handleConfirmPassword = (e) => {
-        setConfirmPassword(e.target.value);
-        setPasswordsMatch(true);
-    }
 
-    const passwordsEqual = () => {
-        if (password !== confirmPassword) {
-            setPasswordsMatchError(true);
-            setPasswordsMatch(false);
-            return true; // Indicate that passwords don't match
-        } else {
-            setPasswordsMatchError(false);
-            return false; // Indicate that passwords match
-        }
-    };
+    const handlePassword = (e) => {
+        setPassword(e.target.value.replace(/\D/g, ""));
+    }
+    const handleConfirmPassword = (e) => {
+        setConfirmPassword(e.target.value.replace(/\D/g, ""));
+        setPasswordsDontMatchError('');
+    }
 
     const resetForm = () => {
         setUsername('');
         setPassword('');
         setConfirmPassword('');
-        setPasswordsMatch(true);
-        setPasswordsMatchError(false);
+        setPasswordsDontMatchError('');
+        setShowPassword1(false);
+        setShowPassword2(false);
     };
 
     useEffect(() => {
@@ -90,71 +80,73 @@ function SignupModal({ open, closeModal }) {
             >
                 <Typography variant="h6">Register</Typography>
                 <form onSubmit={handleSignup} className='signup-form'>
-                    {/* <TextField
-                        // helperText="last name"
-                        id="demo-helper-text-aligned-no-helper"
-                        label="username"
-                        required
-                        onChange={handleUsernameChange}
-                    />
-                    <FormControl variant="outlined" required >
-                        <InputLabel htmlFor="outlined-adornment-password">PIN</InputLabel>
-                        <OutlinedInput
-                            id="outlined-adornment-password"
-                            type={showPassword ? 'text' : 'password'}
-                            endAdornment={
-                                <InputAdornment position="end">
-                                    <IconButton
-                                        aria-label="toggle password visibility"
-                                        onClick={handleClickShowPassword}
-                                        onMouseDown={handleMouseDownPassword}
-                                        edge="end"
-                                    >
-                                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                                    </IconButton>
-                                </InputAdornment>
-                            }
-                            label="Password"
-                            onChange={handlePasswordChange}
-                        />
-                    </FormControl>
-                    <FormHelperText>Create a 4-digit PIN</FormHelperText>
-                    <Button variant='contained' type='submit'>Signup</Button> */}
                     <TextField
                         label="username"
                         type="text"
                         variant="outlined"
                         margin="normal"
                         value={username}
-                        required={true}
-                        style={{ marginBottom: '-5px' }}
+                        required
+                        sx={{ mb: '12px', width: '19ch' }}
                         onChange={handleUsername}
                     />
-                    <TextField
-                        label="PIN"
-                        type="password"
-                        variant="outlined"
-                        margin="normal"
-                        value={password}
-                        required={true}
-                        onChange={handlePassword}
-                        placeholder='create a 4-digit PIN'
-                        style={{ marginBottom: '-5px' }}
-                    />
-                    <TextField
-                        label="Confirm PIN"
-                        type="password"
-                        variant="outlined"
-                        margin="normal"
-                        value={confirmPassword}
-                        required={true}
-                        onChange={handleConfirmPassword}
-                        error={passwordsMatchError}
-                        helperText={passwordsMatch ? "" : "PINs do not match"}
-                    />
+                    <FormControl sx={{ mb: '12px', width: '19ch' }} required variant="outlined">
+                        <InputLabel htmlFor="outlined-adornment-password">PIN</InputLabel>
+                        <OutlinedInput
+                            id="outlined-adornment-password"
+                            type={showPassword1 ? 'text' : 'password'}
+                            value={password}
+                            required
+                            endAdornment={
+                                <InputAdornment position="end">
+                                    <IconButton
+                                        aria-label="toggle password visibility"
+                                        onClick={handleClickShowPassword1}
+                                        edge="end"
+                                    >
+                                        {showPassword1 ? <VisibilityOff /> : <Visibility />}
+                                    </IconButton>
+                                </InputAdornment>
+                            }
+                            label="PIN"
+                            error={!!passwordsDontMatchError}
+                            inputProps={{
+                                maxLength: 4,
+                            }}
+                            onChange={handlePassword}
+                            placeholder='Create a 4-digit PIN'
+                        />
+                    </FormControl>
+                    {/* <FormHelperText>Create a 4-digit PIN</FormHelperText> */}
+                    <FormControl sx={{ width: '19ch' }} variant="outlined" required>
+                        <InputLabel htmlFor="outlined-adornment-password">Confirm PIN</InputLabel>
+                        <OutlinedInput
+                            id="outlined-adornment-password"
+                            type={showPassword2 ? 'text' : 'password'}
+                            value={confirmPassword}
+                            endAdornment={
+                                <InputAdornment position="end">
+                                    <IconButton
+                                        aria-label="toggle password visibility"
+                                        onClick={handleClickShowPassword2}
+                                        edge="end"
+                                    >
+                                        {showPassword2 ? <VisibilityOff /> : <Visibility />}
+                                    </IconButton>
+                                </InputAdornment>
+                            }
+                            label="Confirm PIN"
+                            error={!!passwordsDontMatchError}
+                            inputProps={{
+                                maxLength: 4,
+                            }}
+                            onChange={handleConfirmPassword}
+                        />
+                    </FormControl>
+                    <FormHelperText>{passwordsDontMatchError}</FormHelperText>
                     <Button
                         variant="contained"
-                        sx={{ fontWeight: 'medium', color: 'primary.darker', marginTop: '15px', marginBottom: '10px' }}
+                        sx={{ fontWeight: 'medium', color: 'primary.darker', marginTop: '18px', marginBottom: '10px' }}
                         type='submit'
                     >
                         SIGN UP

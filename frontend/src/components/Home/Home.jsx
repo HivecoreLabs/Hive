@@ -1,8 +1,7 @@
 import './Home.css';
 import React, { useState, useContext } from 'react';
-import { Box, Typography, Button, Modal, TextField } from '@mui/material';
+import { useTheme, Box, Typography, Button, Modal, TextField, FormControl, Input, InputLabel, FormHelperText } from '@mui/material';
 import HiveRoundedIcon from '@mui/icons-material/HiveRounded';
-import { useTheme } from '@mui/material';
 import { css } from '@emotion/react'
 import SignupModal from '../Modals/SignupModal.jsx';
 import { useAuth } from '../../contexts/AuthenticationContext';
@@ -40,28 +39,29 @@ function Home() {
     return (
         <div className='home-container'>
             <Box sx={style}>
-
                 <HiveRoundedIcon sx={{ fontSize: '70px', marginBottom: '10px', color: 'primary.dark' }} />
                 <form onSubmit={handleLogin} className='login-form'>
-                    <TextField
-                        label="username"
-                        type="text"
-                        variant="outlined"
-                        margin="normal"
-                        value={username}
-                        required={true}
-                        style={{ marginBottom: '-5px' }}
-                        onChange={handleUsername}
-                    />
-                    <TextField
-                        label="PIN"
-                        type="password"
-                        variant="outlined"
-                        margin="normal"
-                        value={password}
-                        required={true}
-                        onChange={handlePassword}
-                    />
+                    <FormControl >
+                        <TextField
+                            label="username"
+                            type="text"
+                            variant="outlined"
+                            margin="normal"
+                            value={username}
+                            required
+                            style={{ marginBottom: '-5px' }}
+                            onChange={handleUsername}
+                        />
+                        <TextField
+                            label="PIN"
+                            type="password"
+                            variant="outlined"
+                            margin="normal"
+                            value={password}
+                            required
+                            onChange={handlePassword}
+                        />
+                    </FormControl>
                     <Button
                         variant="contained"
                         sx={{ fontWeight: 'medium', color: 'primary.darker', marginTop: '15px' }}
@@ -69,11 +69,6 @@ function Home() {
                         LOG IN
                     </Button>
                 </form>
-
-                {/* <Button variant="contained" sx={{ fontWeight: 'medium', color: 'primary.darker', marginTop: '10px' }} onClick={handleLogout}>
-                    LOG OUT
-                </Button> */}
-
                 <Button color="secondary" onClick={handleModalOpen} sx={{
                     marginTop: '10px',
                     display: 'inline',
