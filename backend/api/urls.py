@@ -15,6 +15,7 @@ role_router = routers.NestedDefaultRouter(router, r'roles', lookup='role')
 role_router.register(r'clock-ins', views.RoleClockInViewSet, basename='role-clock-ins')
 
 
+
 urlpatterns = [
     path("auth/login/", views.login, name='login'),
     path("auth/signup/", views.signup, name='signup'),
@@ -22,4 +23,3 @@ urlpatterns = [
     path(r'', include(router.urls)),
     path(r'', include(employee_router.urls)),
     path(r'', include(role_router.urls))
-]
