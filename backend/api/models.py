@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser, BaseUserManager
 
 
 class SpreadSheet(models.Model):
@@ -64,9 +63,9 @@ class Checkout(models.Model):
 
     def __str__(self) -> str:
         time = 'AM' if self.is_am_shift else 'PM'
-        patio = 'patio' if self.is_patio else ''
-        bar = 'bar' if self.is_bar else ''
-        return f'{self.tipout_day} {time} {patio} {bar}'
+        patio = ' patio' if self.is_patio else ''
+        bar = ' bar' if self.is_bar else ''
+        return f'{self.tipout_day} {time}{patio}{bar}'
 
 
 class Employee_Clock_In(models.Model):
