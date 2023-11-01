@@ -8,12 +8,14 @@ router.register(r'roles', views.RoleViewSet, basename='roles')
 router.register(r'clock-ins', views.ClockInViewSet, basename='clock-ins')
 router.register(r'employees', views.EmployeeViewSet, basename='employees')
 
-employee_router = routers.NestedDefaultRouter(router, r'employees', lookup='employee')
-employee_router.register(r'clock-ins', views.EmployeeClockInViewSet, basename='employee-clock-ins')
+employee_router = routers.NestedDefaultRouter(
+    router, r'employees', lookup='employee')
+employee_router.register(
+    r'clock-ins', views.EmployeeClockInViewSet, basename='employee-clock-ins')
 
 role_router = routers.NestedDefaultRouter(router, r'roles', lookup='role')
-role_router.register(r'clock-ins', views.RoleClockInViewSet, basename='role-clock-ins')
-
+role_router.register(r'clock-ins', views.RoleClockInViewSet,
+                     basename='role-clock-ins')
 
 
 urlpatterns = [
@@ -23,3 +25,4 @@ urlpatterns = [
     path(r'', include(router.urls)),
     path(r'', include(employee_router.urls)),
     path(r'', include(role_router.urls))
+]
