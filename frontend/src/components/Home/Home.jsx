@@ -1,60 +1,78 @@
 import './Home.css';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Box, Typography, Button, Modal, TextField } from '@mui/material';
 import HiveRoundedIcon from '@mui/icons-material/HiveRounded';
 import { useTheme } from '@mui/material';
 import { css } from '@emotion/react'
 import SignupModal from '../Modals/SignupModal.jsx';
+import { useAuth } from '../../contexts/AuthenticationContext';
+import { useNavigate } from 'react-router-dom';
 
 function Home() {
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [pin, setPin] = useState('');
+    const navigate = useNavigate()
     const theme = useTheme();
+    const { isAuthenticated, user, login, logout } = useAuth();
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
 
     const style = css({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        marginBottom: '10px'
+        marginBottom: '10px',
     })
 
-    const handleModalOpen = () => {
-        setIsModalOpen(true);
-    };
-
+    const handleModalOpen = () => setIsModalOpen(true);
     const handleModalClose = () => {
         setIsModalOpen(false);
-    };
+    }
 
-    const handlePinChange = (e) => {
-        setPin(e.target.value);
-    };
+    const handleUsername = (e) => setUsername(e.target.value);
+    const handlePassword = (e) => setPassword(e.target.value);
 
-    const handleSignIn = () => {
-        // Add logic for handling the PIN/password and sign-in
-        console.log('Sign-in with PIN:', pin);
-    };
-
+    const handleLogin = (e) => {
+        e.preventDefault();
+        login(username, password);
+    }
 
     return (
         <div className='home-container'>
             <Box sx={style}>
 
                 <HiveRoundedIcon sx={{ fontSize: '70px', marginBottom: '10px', color: 'primary.dark' }} />
+                <form onSubmit={handleLogin} className='login-form'>
+                    <TextField
+                        label="username"
+                        type="text"
+                        variant="outlined"
+                        margin="normal"
+                        value={username}
+                        required={true}
+                        style={{ marginBottom: '-5px' }}
+                        onChange={handleUsername}
+                    />
+                    <TextField
+                        label="PIN"
+                        type="password"
+                        variant="outlined"
+                        margin="normal"
+                        value={password}
+                        required={true}
+                        onChange={handlePassword}
+                    />
+                    <Button
+                        variant="contained"
+                        sx={{ fontWeight: 'medium', color: 'primary.darker', marginTop: '15px' }}
+                        type='submit'>
+                        LOG IN
+                    </Button>
+                </form>
 
-                <TextField
-                    label="Enter PIN"
-                    type="password"
-                    variant="outlined"
-                    margin="normal"
-                    value={pin}
-                    onChange={handlePinChange}
-                    required='true'
-                />
-
-                <Button variant="contained" sx={{ fontWeight: 'medium', color: 'primary.darker', marginTop: '10px' }} onClick={handleSignIn}>
-                    Sign In
-                </Button>
+                {/* <Button variant="contained" sx={{ fontWeight: 'medium', color: 'primary.darker', marginTop: '10px' }} onClick={handleLogout}>
+                    LOG OUT
+                </Button> */}
 
                 <Button color="secondary" onClick={handleModalOpen} sx={{
                     marginTop: '10px',
@@ -67,6 +85,7 @@ function Home() {
                 </Button>
             </Box>
             <SignupModal open={isModalOpen} closeModal={handleModalClose} />
+            {/* <CreateEmployeeForm /> */}
         </div >
     );
 };
