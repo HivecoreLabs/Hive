@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, useReducer } from 'react';
 import customFetch from '../utils/customFetch';
 import { useNavigate } from 'react-router-dom';
+import { useError } from './ErrorContext';
 
 const AuthenticationContext = createContext();
 export const useAuth = () => useContext(AuthenticationContext);
@@ -27,7 +28,8 @@ const authReducer = (state = initialState, action) => {
     }
 };
 
-export const AuthenticationProvider = ({ children }) => {
+export const AuthenticationContextProvider = ({ children }) => {
+    const { error, errorOccurred, clearError, errorDispatch } = useError();
     const navigate = useNavigate();
     const [state, dispatch] = useReducer(authReducer, initialState);
 
@@ -47,7 +49,10 @@ export const AuthenticationProvider = ({ children }) => {
                 dispatch({ type: 'LOGIN', payload: data.user });
                 navigate('/dashboard');
             } else {
-                console.error('Login failed:', response.statusText);
+                // console.error('Login failed:', response.statusText);
+                debugger
+                // errorDispatch(clearError);
+                errorDispatch(errorOccurred('Login failed, check your username and PIN'))
             };
             return response;
         } catch (error) {
@@ -75,7 +80,6 @@ export const AuthenticationProvider = ({ children }) => {
             };
             return response;
         } catch (error) {
-            console.log('from the catch');
             console.error('An error occured during signup', error);
         }
     };
@@ -92,6 +96,7 @@ export const AuthenticationProvider = ({ children }) => {
         login,
         logout,
         signup,
+        dispatch
     };
 
     useEffect(() => {

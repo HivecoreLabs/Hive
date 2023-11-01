@@ -5,12 +5,14 @@ import HiveRoundedIcon from '@mui/icons-material/HiveRounded';
 import { css } from '@emotion/react'
 import SignupModal from '../Modals/SignupModal.jsx';
 import { useAuth } from '../../contexts/AuthenticationContext';
+import { useError } from '../../contexts/ErrorContext';
 import { useNavigate } from 'react-router-dom';
 
 function Home() {
     const navigate = useNavigate()
     const theme = useTheme();
     const { isAuthenticated, user, login, logout } = useAuth();
+    const { error, errorMessage, clearError, errorDispatch } = useError();
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [username, setUsername] = useState('');
@@ -31,6 +33,7 @@ function Home() {
 
     const handleLogin = (e) => {
         e.preventDefault();
+        if (error) errorDispatch(clearError());
         login(username, password);
     }
 
@@ -49,6 +52,7 @@ function Home() {
                             required
                             style={{ marginBottom: '-5px' }}
                             onChange={handleUsername}
+                            error={error}
                         />
                         <TextField
                             label="PIN"
@@ -58,8 +62,11 @@ function Home() {
                             value={password}
                             required
                             onChange={handlePassword}
+                            error={error}
+                        // helperText={errorMessage}
                         />
                     </FormControl>
+                    <FormHelperText color='red'>{errorMessage}</FormHelperText>
                     <Button
                         variant="contained"
                         sx={{ fontWeight: 'medium', color: 'primary.darker', marginTop: '15px' }}
