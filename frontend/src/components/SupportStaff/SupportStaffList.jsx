@@ -6,8 +6,8 @@ function SupportStaffList({ savedMembers }) {
         <div>
             <h2>Saved Support Staff Members</h2>
             <List>
-                {savedMembers.map((member) => (
-                    <ListItem key={member.id}>
+                {savedMembers.map((member, i) => (
+                    <ListItem key={i}>
                         <ListItemText
                             primary={`${member.employee} - ${member.role}`}
                             secondary={`Time In: ${member.timeIn}, Time Out: ${member.timeOut}, Double Shift: ${member.isDoubleShift ? 'Yes' : 'No'}`}

@@ -8,10 +8,8 @@ function SupportStaffForm() {
     const [employee, setEmployee] = useState('');
     const [role, setRole] = useState('');
     const [timeIn, setTimeIn] = useState('')
-    console.log(timeIn);
     const [timeOut, setTimeOut] = useState('')
     const [isDoubleShift, setIsDoubleShift] = useState(false);
-
     const [savedMembers, setSavedMembers] = useState([]);
 
     const handleEmployee = (e) => {
@@ -27,11 +25,15 @@ function SupportStaffForm() {
         setTimeOut(e.target.value);
     }
     const handleIsDoubleShift = (e) => {
-        setIsDoubleShift(e.target.value);
+        setIsDoubleShift(prevState => !prevState);
     }
 
     const roles = ['Role 1', 'Role 2', 'Role 3'];
     const employees = ['Employee 1', 'Employee 2', 'Employee 3'];
+
+    const fetchAllEmployees = () => {
+
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -42,7 +44,7 @@ function SupportStaffForm() {
             timeOut,
             isDoubleShift,
         };
-        setSavedMembers([...savedMembers, newMember]);
+        setSavedMembers([...savedMembers, newMember])
 
         setEmployee('');
         setRole('');
