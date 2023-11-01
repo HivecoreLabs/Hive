@@ -379,6 +379,128 @@ Certainly, here's the complete API documentation in Markdown format:
 
 ```
 
+## Clock-Ins
+
+### 1. Get List of All Clock-Ins
+
+- **Route**: `GET /api/clock-ins/`
+- **Headers**:
+- **Request Body (None)**:
+- **Expected Response (200 OK)**:
+
+```json
+[
+    {
+        "employee": {
+            "id": 1,
+            "first_name": "Alice",
+            "last_name": "Smith",
+            "restaurant_employee_id": "EmpID1"
+        },
+        "active_role": {
+            "id": 1,
+            "role": "Server"
+        },
+        "tipout_received": "20.50",
+        "time_in": "2023-10-25T12:00:00Z",
+        "time_out": "2023-10-25T16:00:00Z"
+    },
+    ...
+]
+```
+
+### 2. Get Detail of Single Clock-In
+
+- **Route**: `GET /api/clock-ins/<int:clockin_id>`
+- **Headers**:
+- **Request Body (None)**:
+- **Expected Response (200 OK)**:
+
+```json
+{
+  "employee": {
+    "id": 1,
+    "first_name": "Alice",
+    "last_name": "Smith",
+    "restaurant_employee_id": "EmpID1"
+  },
+  "active_role": {
+    "id": 1,
+    "role": "Server"
+  },
+  "tipout_received": "20.50",
+  "time_in": "2023-10-25T12:00:00Z",
+  "time_out": "2023-10-25T16:00:00Z"
+}
+```
+
+### 3. Get List of Employee Clock-Ins
+
+- **Route**: `GET /api/employees/<int:employee_id>/clock-ins/`
+- **Headers**:
+- **Request Body (None)**:
+- **Expected Response (200 OK)**:
+
+```json
+[
+    {
+        "employee": {
+            "id": 1,
+            "first_name": "Alice",
+            "last_name": "Smith",
+            "restaurant_employee_id": "EmpID1"
+        },
+        "active_role": {
+            "id": 1,
+            "role": "Server"
+        },
+        "tipout_received": "20.50",
+        "time_in": "2023-10-25T12:00:00Z",
+        "time_out": "2023-10-25T16:00:00Z"
+    },
+    ...
+]
+```
+
+### 4. Get List of Role Clock-Ins
+
+- **Route**: `GET /api/roles/<int:role_id>/clock-ins/`
+- **Headers**:
+- **Request Body (None)**:
+- **Expected Response (200 OK)**:
+
+```json
+[
+    {
+        "employee": {
+            "id": 1,
+            "first_name": "Alice",
+            "last_name": "Smith",
+            "restaurant_employee_id": "EmpID1"
+        },
+        "active_role": {
+            "id": 1,
+            "role": "Server"
+        },
+        "tipout_received": "20.50",
+        "time_in": "2023-10-25T12:00:00Z",
+        "time_out": "2023-10-25T16:00:00Z"
+    },
+    ...
+]
+```
+
+### 1. Get List of All Clock-Ins
+
+- **Route**: `GET /api/clock-ins/`
+- **Headers**:
+- **Request Body (None)**:
+- **Expected Response (200 OK)**:
+
+```json
+
+```
+
 ## Sheets
 
 ## Daily Checkouts
