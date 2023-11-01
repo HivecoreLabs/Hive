@@ -56,9 +56,8 @@ export const AuthenticationProvider = ({ children }) => {
     };
 
     const signup = async (username, password) => {
-        debugger
         try {
-            const response = await fetch('http://localhost:8000/api/auth/signup/', {
+            const response = await customFetch('http://localhost:8000/api/auth/signup/', {
                 method: 'POST',
                 body: { username, password }
             });
