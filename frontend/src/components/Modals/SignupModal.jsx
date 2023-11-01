@@ -33,10 +33,11 @@ function SignupModal({ open, closeModal }) {
         if (password !== confirmPassword) {
             setPasswordsDontMatchError('PINs do not match')
             return;
+        } else if (password.length < 4) {
+            setPasswordsDontMatchError('PIN must be 4 digits')
+            return;
         }
-        const response = signup(username, password);
-        console.log(response);
-        console.log(response.error);
+        signup(username, password);
         closeModal();
     };
 
@@ -44,6 +45,7 @@ function SignupModal({ open, closeModal }) {
 
     const handlePassword = (e) => {
         setPassword(e.target.value.replace(/\D/g, ""));
+        setPasswordsDontMatchError('');
     }
     const handleConfirmPassword = (e) => {
         setConfirmPassword(e.target.value.replace(/\D/g, ""));
@@ -145,7 +147,7 @@ function SignupModal({ open, closeModal }) {
                             onChange={handleConfirmPassword}
                         />
                     </FormControl>
-                    <FormHelperText>{passwordsDontMatchError}</FormHelperText>
+                    <FormHelperText error>{passwordsDontMatchError}</FormHelperText>
                     <Button
                         variant="contained"
                         sx={{ fontWeight: 'medium', color: 'primary.darker', marginTop: '18px', marginBottom: '10px' }}

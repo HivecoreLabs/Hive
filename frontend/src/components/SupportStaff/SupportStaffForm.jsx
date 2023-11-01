@@ -1,103 +1,141 @@
 import React, { useState } from 'react';
 import { Grid, Typography, Paper, TextField, Button, FormControlLabel, Checkbox, MenuItem } from '@mui/material';
+import './SupportStaffForm.css';
+import SupportStaffList from './SupportStaffList.jsx';
 
 function SupportStaffForm() {
 
-    const [rowCount, setRowCount] = useState(1);
+    const [employee, setEmployee] = useState('');
+    const [role, setRole] = useState('');
+    const [timeIn, setTimeIn] = useState('')
+    console.log(timeIn);
+    const [timeOut, setTimeOut] = useState('')
+    const [isDoubleShift, setIsDoubleShift] = useState(false);
+
+    const [savedMembers, setSavedMembers] = useState([]);
+
+    const handleEmployee = (e) => {
+        setEmployee(e.target.value);
+    }
+    const handleRole = (e) => {
+        setRole(e.target.value);
+    }
+    const handleTimeIn = (e) => {
+        setTimeIn(e.target.value);
+    }
+    const handleTimeOut = (e) => {
+        setTimeOut(e.target.value);
+    }
+    const handleIsDoubleShift = (e) => {
+        setIsDoubleShift(e.target.value);
+    }
+
     const roles = ['Role 1', 'Role 2', 'Role 3'];
     const employees = ['Employee 1', 'Employee 2', 'Employee 3'];
-    const addRow = () => {
-        setRowCount(rowCount + 1);
-    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const newMember = {
+            employee,
+            role,
+            timeIn,
+            timeOut,
+            isDoubleShift,
+        };
+        setSavedMembers([...savedMembers, newMember]);
+
+        setEmployee('');
+        setRole('');
+        setTimeIn('');
+        setTimeOut('');
+        setIsDoubleShift(false);
+    }
 
     return (
         <div>
-            <Typography variant="h5" align="center" mb='20px'>
-                Active Support Staff
-            </Typography>
-            {[...Array(8)].map((_, index) => (
-                <Paper elevation={2} style={{ padding: '10px', marginBottom: '10px' }} key={index}>
-                    <Grid container spacing={2}>
-                        <Grid item xs={12} sm={2.5}>
-                            <TextField
-                                select
-                                fullWidth
-                                label="Employee"
-                                variant="outlined"
-                                value={employees[0]}
-                            >
-                                <MenuItem disabled value="">
-                                    <em>Employee</em>
-                                </MenuItem>
-                                {employees.map((employee) => (
-                                    <MenuItem key={employee} value={employee}>
-                                        {employee}
-                                    </MenuItem>
-                                ))}
-                            </TextField>
-                        </Grid>
-                        <Grid item xs={12} sm={2}>
-                            <TextField
-                                select
-                                fullWidth
-                                label="Current Role"
-                                variant="outlined"
-                            >
-                                <MenuItem disabled value="">
-                                    <em>Current Role</em>
-                                </MenuItem>
-                                {roles.map((role) => (
-                                    <MenuItem key={role} value={role}>
-                                        {role}
-                                    </MenuItem>
-                                ))}
-                            </TextField>
-                        </Grid>
-                        <Grid item xs={12} sm={2}>
-                            <TextField
-                                fullWidth
-                                id="time-in"
-                                type='time'
-                                variant="outlined"
-                                InputLabelProps={{ shrink: true }}
-                                label="Time In"
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={2}>
-                            <TextField
-                                fullWidth
-                                id="time-out"
-                                type='time'
-                                variant="outlined"
-                                InputLabelProps={{ shrink: true }}
-                                label="Time Out"
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={1.5}>
-                            <TextField
-                                select
-                                fullWidth
-                                label="AM/PM Shift"
-                                variant="outlined"
-                                defaultValue="AM"
-                            >
-                                <MenuItem value="AM">AM</MenuItem>
-                                <MenuItem value="PM">PM</MenuItem>
-                            </TextField>
-                        </Grid>
-                        <Grid item xs={12} sm={2}>
-                            <FormControlLabel
-                                control={<Checkbox color="primary" />}
-                                label="Is Double Shift?"
-                            />
-                        </Grid>
-                    </Grid>
-                </Paper>
-            ))}
-
-            <Button variant="contained" color="primary" onClick={addRow}>
-                Add Support Staff Member
-            </Button>
+            <div className='support-staff-form-container'>
+                <Typography variant="h5" align="center" mb='20px'>
+                    Active Support Staff
+                </Typography>
+                {[...Array(1)].map((_, index) => (
+                    <Paper elevation={2} style={{ padding: '10px', marginBottom: '10px', width: '50%' }} key={index}>
+                        <form onSubmit={handleSubmit}>
+                            <Grid container spacing={2}>
+                                <Grid item sm={12}>
+                                    <TextField
+                                        select
+                                        fullWidth
+                                        label="Employee"
+                                        variant="outlined"
+                                        value={employee}
+                                        onChange={handleEmployee}
+                                    >
+                                        <MenuItem disabled value="">
+                                            <em>Employee</em>
+                                        </MenuItem>
+                                        {employees.map((employee) => (
+                                            <MenuItem key={employee} value={employee}>
+                                                {employee}
+                                            </MenuItem>
+                                        ))}
+                                    </TextField>
+                                </Grid>
+                                <Grid item sm={12}>
+                                    <TextField
+                                        select
+                                        fullWidth
+                                        label="Current Role"
+                                        variant="outlined"
+                                        value={role}
+                                        onChange={handleRole}
+                                    >
+                                        <MenuItem disabled value="">
+                                            <em>Current Role</em>
+                                        </MenuItem>
+                                        {roles.map((role) => (
+                                            <MenuItem key={role} value={role}>
+                                                {role}
+                                            </MenuItem>
+                                        ))}
+                                    </TextField>
+                                </Grid>
+                                <Grid item sm={12}>
+                                    <TextField
+                                        fullWidth
+                                        id="time-in"
+                                        type='time'
+                                        variant="outlined"
+                                        InputLabelProps={{ shrink: true }}
+                                        label="Time In"
+                                        value={timeIn}
+                                        onChange={handleTimeIn}
+                                    />
+                                </Grid>
+                                <Grid item sm={12}>
+                                    <TextField
+                                        fullWidth
+                                        id="time-out"
+                                        type='time'
+                                        variant="outlined"
+                                        InputLabelProps={{ shrink: true }}
+                                        label="Time Out"
+                                        value={timeOut}
+                                        onChange={handleTimeOut}
+                                    />
+                                </Grid>
+                                <Grid item sm={12}>
+                                    <FormControlLabel
+                                        control={<Checkbox color="primary" value={isDoubleShift} onChange={handleIsDoubleShift} />}
+                                        label="Is Double Shift?"
+                                    />
+                                </Grid>
+                            </Grid>
+                            <Button type='submit'>Submit</Button>
+                        </form>
+                    </Paper>
+                ))}
+            </div>
+            <SupportStaffList savedMembers={savedMembers} />
         </div>
     );
 }

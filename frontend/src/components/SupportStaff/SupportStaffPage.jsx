@@ -6,7 +6,6 @@ function SupportStaffPage() {
     return (
         <div className='support-staff-page-container'>
             <SupportStaffForm />
-            {/*  */}
         </div>
     )
 }

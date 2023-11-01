@@ -28,14 +28,21 @@ function Home() {
     const handleModalOpen = () => setIsModalOpen(true);
     const handleModalClose = () => setIsModalOpen(false);
 
-    const handleUsername = (e) => setUsername(e.target.value);
-    const handlePassword = (e) => setPassword(e.target.value);
+    const handleUsername = (e) => {
+        if (error) errorDispatch(clearError());
+        setUsername(e.target.value);
+    };
+
+    const handlePassword = (e) => {
+        if (error) errorDispatch(clearError());
+        setPassword(e.target.value);
+    };
 
     const handleLogin = (e) => {
         e.preventDefault();
         if (error) errorDispatch(clearError());
         login(username, password);
-    }
+    };
 
     return (
         <div className='home-container'>
@@ -63,10 +70,12 @@ function Home() {
                             required
                             onChange={handlePassword}
                             error={error}
-                        // helperText={errorMessage}
+                            inputProps={
+                                { maxLength: 4 }
+                            }
                         />
                     </FormControl>
-                    <FormHelperText color='red'>{errorMessage}</FormHelperText>
+                    <FormHelperText error>{errorMessage}</FormHelperText>
                     <Button
                         variant="contained"
                         sx={{ fontWeight: 'medium', color: 'primary.darker', marginTop: '15px' }}

@@ -49,10 +49,7 @@ export const AuthenticationContextProvider = ({ children }) => {
                 dispatch({ type: 'LOGIN', payload: data.user });
                 navigate('/dashboard');
             } else {
-                // console.error('Login failed:', response.statusText);
-                debugger
-                // errorDispatch(clearError);
-                errorDispatch(errorOccurred('Login failed, check your username and PIN'))
+                errorDispatch(errorOccurred('Login failed. Check your username and PIN.'))
             };
             return response;
         } catch (error) {
