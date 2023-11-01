@@ -56,7 +56,7 @@ const removeEmployee = payload => ({
 
 export function EmployeesProvider({ children }) {
     
-    const [employees, dispatch] = useReducer(
+    const [state, dispatch] = useReducer(
         employeesReducer,
         initialState
     );
@@ -77,6 +77,7 @@ export function EmployeesProvider({ children }) {
 
     const readSingleEmployee = async id => {
         const response = await fetch(`http://localhost:8000/api/employees/${id}/`);
+
         if (response.ok) {
             const data = await response.json();
             dispatch(loadEmployee(data));
@@ -86,6 +87,7 @@ export function EmployeesProvider({ children }) {
 
     const readAllEmployees = async () => {
         const response = await fetch(`http://localhost:8000/api/employees/`);
+
         if (response.ok) {
             const data = await response.json();
             dispatch(loadEmployees(data));
@@ -120,8 +122,18 @@ export function EmployeesProvider({ children }) {
         }
     }
 
+    const value = {
+        employee: state.employee,
+        employees: state.employees,
+        createEmployee,
+        readSingleEmployee,
+        readAllEmployees,
+        updateEmployee,
+        deleteEmployee
+    }
+
     return (
-        <EmployeesContext.Provider value={employees}>
+        <EmployeesContext.Provider value={value}>
                 {children}
         </EmployeesContext.Provider>
     );
