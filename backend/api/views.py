@@ -140,8 +140,8 @@ class ClockInViewSet(viewsets.ModelViewSet):
         is_many = True if isinstance(request.data, list) else False
         serializer = self.get_serializer(data=request.data, many=is_many)
         if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            data = serializer.save()
+            return Response(Read_Clock_In_Serializer(data).data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
