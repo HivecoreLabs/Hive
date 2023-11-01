@@ -141,7 +141,8 @@ class ClockInViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(data=request.data, many=is_many)
         if serializer.is_valid():
             data = serializer.save()
-            return Response(Read_Clock_In_Serializer(data).data, status=status.HTTP_201_CREATED)
+            print(data)
+            return Response(Read_Clock_In_Serializer(data, many=is_many).data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
