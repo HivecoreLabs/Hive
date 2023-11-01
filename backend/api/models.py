@@ -89,6 +89,9 @@ class Employee_Clock_In(models.Model):
     sheet_cell = models.CharField(default=None, null=True, max_length=10)
     is_uploaded = models.BooleanField(default=False)
 
+    class Meta:
+        unique_together=('employee_id', 'date', 'is_am')
+
     def __str__(self) -> str:
         return f'{self.active_role_id.role} {self.employee_id.first_name} {self.employee_id.last_name}'
 
