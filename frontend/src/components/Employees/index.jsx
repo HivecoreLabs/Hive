@@ -20,7 +20,7 @@ function Employee() {
                 <Grid container rowSpacing={1} columnSpacing={2} sx={gridStyle}>
                     <Grid item sx={{width: '300px'}}>
                         <NavLink
-                        to="employees/all"
+                        to="/employees/all"
                         >
                             <Paper 
                             elevation={2} 

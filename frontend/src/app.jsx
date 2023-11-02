@@ -5,6 +5,7 @@ import NavBar from './components/NavBar';
 import Dashboard from './components/Dashboard';
 import Employee from './components/Employees/index.jsx';
 import CreateEmployeeForm from './components/EmployeeForm/CreateEmployee.jsx'
+import ViewAllEmployees from './components/ViewAllEmployees/index.jsx';
 import { useAuth } from './contexts/AuthenticationContext';
 import { theme } from './contexts/ThemeContext';
 
@@ -22,6 +23,7 @@ export default function App() {
                 <Route exact path="/dashboard" element={<Dashboard />} />
                 <Route exact path="/employees" element={<Employee />} />
                 <Route path="/employees/new" element={<CreateEmployeeForm />} />
+                <Route path="/employees/all" element={<ViewAllEmployees />} />
             </Routes>
         </>
     );
