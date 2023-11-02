@@ -1,13 +1,38 @@
-import { createContext, useContext, useReducer } from "react";
+import React, { createContext, useContext, useReducer } from "react";
+import { useNavigate } from "react-router-dom";
 
 const ADD_EMPLOYEE = 'employee/ADD_EMPLOYEE';
 const LOAD_EMPLOYEE = 'employee/LOAD_EMPLOYEE';
 const LOAD_EMPLOYEES = 'employee/LOAD_EMPLOYEES';
 const REMOVE_EMPLOYEE = 'employee/REMOVE_EMPLOYEE';
 
-const EmployeesContext = createContext(null);
+export const useEmployees = () => useContext(EmployeesContext);
+const EmployeesContext = createContext();
 
-const EmployeesDispatchContext = createContext(null);
+const initialState = {
+    employee: {},
+    employees: {}
+};
+
+function employeesReducer(state = initialState, action) {
+    let newState = {...state};
+    switch (action.type) {
+        case ADD_EMPLOYEE:
+            newState.employees[action.payload.id] = action.payload;
+            return newState;
+        case LOAD_EMPLOYEE:
+            newState.employee = action.payload;
+            return newState;
+        case LOAD_EMPLOYEES:
+            newState.employees = action.payload;
+            return newState;
+        case REMOVE_EMPLOYEE:
+            delete newState[action.payload];
+            return newState;
+        default:
+            return state;
+    }
+}
 
 const addEmployee = payload => ({
     type: ADD_EMPLOYEE,
@@ -29,107 +54,94 @@ const removeEmployee = payload => ({
     payload
 });
 
-export const createEmployee = (employee) => async dispatch => {
-    const response = await fetch(`http://localhost:8000/api/employees`, {
-        method: 'POST',
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(employee)
-    });
-
-    if (response.ok) {
-        const data = await response.json();
-        dispatch(addEmployee(data));
-        return data;
-    }
-}
-
-export const readSingleEmployee = (id) => async dispatch => {
-    const response = await fetch(`http://localhost:8000/api/employees/${id}/`);
-    if (response.ok) {
-        const data = await response.json();
-        dispatch(loadEmployee(data));
-        return data;
-    }
-}
-
-export const readAllEmployees = () => async dispatch => {
-    const response = await fetch(`http://localhost:8000/api/employees/`);
-    if (response.ok) {
-        const data = await response.json();
-        dispatch(loadEmployees(data));
-        return data;
-    }
-}
-
-export const updateEmployee = (id, employee) => async dispatch => {
-    const response = await fetch(`http://localhost:8000/api/employees/${id}/`, {
-        method: 'PUT',
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(employee)
-    });
-
-    if (response.ok) {
-        const data = await response.json();
-        dispatch(addEmployee(data));
-        return data;
-    }
-}
-
-export const deleteEmployee = (id) => async dispatch => {
-    const response = await fetch(`http://localhost:8000/api/employees/${id}/`, {
-        method: 'DELETE',
-        headers: { "Content-Type": "application/json" }
-    });
-
-    if (response.ok) {
-        const data = await response.json();
-        dispatch(removeEmployee(id));
-        return data;
-    }
-}
-
-export function EmployeesProvider({ children }) {
-    const [employees, dispatch] = useReducer(
+export const EmployeesProvider = ({ children }) => {
+    
+    const [state, dispatch] = useReducer(
         employeesReducer,
-        initialEmployees
+        initialState
     );
 
+    const createEmployee = async employee => {
+        const response = await fetch(`http://localhost:8000/api/employees/`, {
+            method: 'POST',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(employee)
+        });
+    
+        if (response.ok) {
+            const data = await response.json();
+            dispatch(addEmployee(data));
+            return data;
+        }
+    }
+
+    const readSingleEmployee = async id => {
+        const response = await fetch(`http://localhost:8000/api/employees/${id}/`);
+
+        if (response.ok) {
+            const data = await response.json();
+            dispatch(loadEmployee(data));
+            return data;
+        }
+    }
+
+    const readAllEmployees = async () => {
+        const response = await fetch(`http://localhost:8000/api/employees/`);
+
+        if (response.ok) {
+            const data = await response.json();
+            dispatch(loadEmployees(data));
+            return data;
+        }
+    }
+
+    const updateEmployee = async (id, employee) => {
+        const response = await fetch(`http://localhost:8000/api/employees/${id}/`, {
+            method: 'PUT',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(employee)
+        });
+    
+        if (response.ok) {
+            const data = await response.json();
+            dispatch(addEmployee(data));
+            return data;
+        }
+    }
+
+    // This function is extra, there is no delete method for employees
+    const deleteEmployee = async id => {
+        const response = await fetch(`http://localhost:8000/api/employees/${id}/`, {
+            method: 'DELETE',
+            headers: { "Content-Type": "application/json" }
+        });
+    
+        if (response.ok) {
+            const data = await response.json();
+            dispatch(removeEmployee(id));
+            return data;
+        }
+    }
+
+    const value = {
+        employee: state.employee,
+        employees: state.employees,
+        createEmployee,
+        readSingleEmployee,
+        readAllEmployees,
+        updateEmployee
+    };
+
     return (
-        <EmployeesContext.Provider value={employees}>
-            <EmployeesDispatchContext.Provider value={dispatch}>
+        <EmployeesContext.Provider value={value}>
                 {children}
-            </EmployeesDispatchContext.Provider>
         </EmployeesContext.Provider>
     );
 }
 
-export function useEmployees() {
-    return useContext(EmployeesContext);
-}
 
-export function useEmployeesDispatch() {
-    return useContext(EmployeesDispatchContext);
-}
 
-const initialEmployees = {
-    employee: {},
-    employees: {}
-}
 
-function employeesReducer(employees = initialEmployees, action) {
-    let newState = {...employees};
-    switch (action.type) {
-        case ADD_EMPLOYEE:
-            newState.employees[action.payload.id] = action.payload;
-            return newState;
-        case LOAD_EMPLOYEE:
-            newState.employee = action.payload;
-            return newState;
-        case LOAD_EMPLOYEES:
-            newState.employees = action.payload;
-            return newState;
-        case REMOVE_EMPLOYEE:
-            delete newState[action.payload];
-            return newState;
-    }
-}
+
+
+

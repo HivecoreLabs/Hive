@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useEmployeesDispatch } from '../../contexts/EmployeesContext';
+// import { useEmployeesDispatch } from '../../contexts/EmployeesContext';
 import { createEmployee, updateEmployee } from '../../contexts/EmployeesContext';
 import { Button, Input, TextField } from '@mui/material';
 import './index.css';
 
 export default function EmployeeForm({ employee, formType }) {
 
-    const dispatch = useEmployeesDispatch();
+    // const dispatch = useEmployeesDispatch();
     const { id } = useParams();
 
     const [firstName, setFirstName] = useState(employee.firstName);
@@ -49,29 +49,29 @@ export default function EmployeeForm({ employee, formType }) {
         if (Object.values(validationErrors)[0]) return alert('Can not submit.');
         setAttempt(false);
 
-        if (formType === 'Create') {
-            dispatch(
-                createEmployee({
-                    first_name: firstName,
-                    last_name: lastName,
-                    roles: role,
-                    food_permit_exp: foodPermitExp,
-                    alcohol_permit_exp: alcoholPermitExp,
-                    is_former_employee: formerEmployee
-                })
-            );
-        } else if (formType === 'Edit') {
-            dispatch(
-                updateEmployee(id, {
-                    first_name: firstName,
-                    last_name: lastName,
-                    roles: role,
-                    food_permit_exp: foodPermitExp,
-                    alcohol_permit_exp: alcoholPermitExp,
-                    is_former_employee: formerEmployee
-                })
-            );
-        }
+        // if (formType === 'Create') {
+        //     dispatch(
+        //         createEmployee({
+        //             first_name: firstName,
+        //             last_name: lastName,
+        //             roles: role,
+        //             food_permit_exp: foodPermitExp,
+        //             alcohol_permit_exp: alcoholPermitExp,
+        //             is_former_employee: formerEmployee
+        //         })
+        //     );
+        // } else if (formType === 'Edit') {
+        //     dispatch(
+        //         updateEmployee(id, {
+        //             first_name: firstName,
+        //             last_name: lastName,
+        //             roles: role,
+        //             food_permit_exp: foodPermitExp,
+        //             alcohol_permit_exp: alcoholPermitExp,
+        //             is_former_employee: formerEmployee
+        //         })
+        //     );
+        // }
 
     };
 

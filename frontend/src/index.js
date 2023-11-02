@@ -6,6 +6,8 @@ import './index.css';
 import { CssBaseline } from '@mui/material';
 import { AuthenticationContextProvider } from './contexts/AuthenticationContext.js';
 import { ThemeProvider } from '@mui/material/styles';
+import { EmployeesProvider } from './contexts/EmployeesContext.js';
+import { RolesProvider } from './contexts/RolesContext.js';
 import { theme } from './contexts/ThemeContext';
 import { ErrorContextProvider } from './contexts/ErrorContext.js';
 
@@ -16,9 +18,13 @@ root.render(
             {/* <CssBaseline> */}
             <ThemeProvider theme={theme}>
                 <ErrorContextProvider>
+                    <RolesProvider>
+                    <EmployeesProvider>
                     <AuthenticationContextProvider>
                         <App />
                     </AuthenticationContextProvider>
+                    </EmployeesProvider>
+                    </RolesProvider>
                 </ErrorContextProvider>
             </ThemeProvider>
             {/* </CssBaseline> */}
