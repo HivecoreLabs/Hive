@@ -24,6 +24,7 @@ import AssessmentIcon from '@mui/icons-material/Assessment';
 import SettingsIcon from '@mui/icons-material/Settings';
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import AccountMenu from './AccountMenu.jsx';
 import { useAuth } from '../../contexts/AuthenticationContext.js';
@@ -145,7 +146,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function MiniDrawer() {
     const theme = useTheme();
     const { user } = useAuth();
-    console.log(user);
     const [open, setOpen] = useState(false);
     const ref = useRef(null);
     const location = useLocation();
@@ -155,14 +155,15 @@ export default function MiniDrawer() {
 
     const navItems = [
         { text: 'Dashboard', icon: <DashboardIcon color='quaternary' />, path: '/dashboard' },
-        { text: 'Employees', icon: <GroupsIcon color='quaternary' />, path: '/employees' },
+        { text: 'Employees', icon: <AccountBoxIcon color='quaternary' />, path: '/employees' },
+        { text: 'Support Staff', icon: <GroupsIcon color='quaternary' />, path: '/support' },
         { text: 'Reports', icon: <AssessmentIcon color='quaternary' />, path: '/reports' },
         { text: 'Settings', icon: <SettingsIcon color='quaternary' />, path: '/settings' },
     ];
 
     useEffect(() => {
         const handleClickOutside = (e) => {
-            if (ref.current && !ref.current.contains(e.target)) handleDrawerClose();
+            if (ref.current) handleDrawerClose();
         };
 
         document.addEventListener('mousedown', handleClickOutside);

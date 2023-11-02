@@ -17,7 +17,7 @@ const customFetch = async (url, options = {}) => {
     }
 
     const response = await fetch(url, options);
-    if (response.status >= 500) throw res;
+    if (response.status >= 500) throw response;
     return response;
 }
 
