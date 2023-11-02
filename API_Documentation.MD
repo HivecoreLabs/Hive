@@ -520,7 +520,7 @@ Certainly, here's the complete API documentation in Markdown format:
   "employee_id": "required employee id",
   "active_role_id": "required role id",
   "date": "optional date will default to current day if not specified",
-  "tipout_received": "optional decimal limited to 2 places after decimal e.g 59.98",
+  "tipout_received": "optional decimal limited to 2 places after decimal and 8 digits total e.g 59.98",
   "time_in": "optional date, defaults to null",
   "time_out": "optional date, defaults to null"
 }
@@ -573,9 +573,6 @@ Certainly, here's the complete API documentation in Markdown format:
     "A valid number is required.",
     "Ensure that there are no more than 8 digits in total.",
     "Ensure that there are no more than 2 decimal places."
-  ],
-  "non_field_errors": [
-    "The fields employee_id, date, is_am must make a unique set."
   ]
 }
 ```
@@ -653,9 +650,6 @@ Certainly, here's the complete API documentation in Markdown format:
       "Ensure that there are no more than 8 digits in total.",
       "Ensure that there are no more than 2 decimal places."
     ],
-    "non_field_errors": [
-      "The fields employee_id, date, is_am must make a unique set."
-    ]
   },
   ...
 ]
@@ -663,7 +657,7 @@ Certainly, here's the complete API documentation in Markdown format:
 
 ### 7. Update Clock In
 
-- **Route**: `PUT /api/clock-ins/<int:clockin_id>`
+- **Route**: `PUT /api/clock-ins/<int:clockin_id>/`
 - **Headers**:
   - Content-Type: application/json
 - **Request Body (Rerquired Information)**:
@@ -723,16 +717,28 @@ Certainly, here's the complete API documentation in Markdown format:
     "Datetime has wrong format. Use one of these formats instead: YYYY-MM-DDThh:mm[:ss[.uuuuuu]][+HH:MM|-HH:MM|Z]."
   ],
   "tipout_received": [
-    "A valid number is required.",
+    "A valid number is required.", // i.e. not a string, list, etc.
     "Ensure that there are no more than 8 digits in total.",
     "Ensure that there are no more than 2 decimal places."
   ]
 }
 ```
 
-### 8. Update List of Clock Ins
-
 ### 9. Delete Clock In
+
+**TODO: Implement Protections to Check for Checkouts Including Deleted Clock In**
+
+- **Route**: `DELETE api/clock-ins/<int:clockin_id>/`
+- **Headers**:
+- **Request Body (None)**:
+- **Expected Response (204 No Content)**:
+- **Error Response (404 Not Found)**:
+
+```json
+{
+  "detail": "Not found."
+}
+```
 
 ## Sheets
 
