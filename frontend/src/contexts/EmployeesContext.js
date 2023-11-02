@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer } from "react";
+import React, { createContext, useContext, useReducer } from "react";
 import { useNavigate } from "react-router-dom";
 
 const ADD_EMPLOYEE = 'employee/ADD_EMPLOYEE';
@@ -12,7 +12,7 @@ const EmployeesContext = createContext();
 const initialState = {
     employee: {},
     employees: {}
-}
+};
 
 function employeesReducer(state = initialState, action) {
     let newState = {...state};
@@ -54,7 +54,7 @@ const removeEmployee = payload => ({
     payload
 });
 
-export function EmployeesProvider({ children }) {
+export const EmployeesProvider = ({ children }) => {
     
     const [state, dispatch] = useReducer(
         employeesReducer,
@@ -62,7 +62,7 @@ export function EmployeesProvider({ children }) {
     );
 
     const createEmployee = async employee => {
-        const response = await fetch(`http://localhost:8000/api/employees`, {
+        const response = await fetch(`http://localhost:8000/api/employees/`, {
             method: 'POST',
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(employee)
@@ -110,6 +110,7 @@ export function EmployeesProvider({ children }) {
     }
 
     const deleteEmployee = async id => {
+        // This function is extra, there is no delete method for employees
         const response = await fetch(`http://localhost:8000/api/employees/${id}/`, {
             method: 'DELETE',
             headers: { "Content-Type": "application/json" }
@@ -128,9 +129,8 @@ export function EmployeesProvider({ children }) {
         createEmployee,
         readSingleEmployee,
         readAllEmployees,
-        updateEmployee,
-        deleteEmployee
-    }
+        updateEmployee
+    };
 
     return (
         <EmployeesContext.Provider value={value}>
