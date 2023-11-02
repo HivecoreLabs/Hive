@@ -4,11 +4,6 @@ div#root {
     width: 100vw;
 }
 
-#error {
-    color: red;
-    font-weight: bold;
-}
-
 .employee-form-container {
     display: flex;
     flex-direction: column;
@@ -28,24 +23,18 @@ div#root {
 
 .employee-form {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
 
     padding: 10px;
 }
 
-.employee-form > div {
+.employee-form-prompts {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    
-    margin: 0px 5px;
+    flex-direction: row;
 }
 
-.employee-form > div > label {
-    text-align: center;
-}
-
-.employee-form-action{
-    display: none;
+.employee-form-action {
+    display: flex;
+    align-self: flex-end;
 }

@@ -4,7 +4,6 @@ import { useEmployees } from "../../contexts/EmployeesContext";
 function ViewAllEmployees() {
 
     const {
-        employee,
         employees,
         readAllEmployees
     } = useEmployees();
