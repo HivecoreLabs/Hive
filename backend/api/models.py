@@ -90,7 +90,8 @@ class Employee_Clock_In(models.Model):
     is_uploaded = models.BooleanField(default=False)
 
     def __str__(self) -> str:
-        return f'{self.active_role_id.role} {self.employee_id.first_name} {self.employee_id.last_name}'
+        AM_PM = 'AM' if self.is_am else 'PM'
+        return f'{self.date} {AM_PM} {self.active_role_id.role} {self.employee_id.first_name} {self.employee_id.last_name}'
 
 
 class Tipout_Formula(models.Model):

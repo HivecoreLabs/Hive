@@ -45,7 +45,7 @@ class TestRoleViewSet(APITestCase):
 
 
 
-    def test_get_single_employee_details(self):
+    def test_get_single_employee_details(self) -> None:
         url = reverse('employees-detail', args=[1])
         employee = Employee.objects.get(pk=1)
         serializer_data = EmployeeSerializer(employee).data
@@ -55,7 +55,7 @@ class TestRoleViewSet(APITestCase):
         self.assertEqual(json.loads(response.content), serializer_data)
 
 
-    def test_create_employee_valid_data(self):
+    def test_create_employee_valid_data(self) -> None:
         url = reverse('employees-list')
         roles = ['Bartender', 'Dishwasher', 'Not Existing Role']
         new_employee = {
@@ -77,7 +77,7 @@ class TestRoleViewSet(APITestCase):
         self.assertEqual(data['last_name'], 'Employee')
 
 
-    def test_create_employee_invalid_data(self):
+    def test_create_employee_invalid_data(self) -> None:
         url = reverse('employees-list')
 
         response = self.client.post(url, format='json')
@@ -93,7 +93,7 @@ class TestRoleViewSet(APITestCase):
         self.assertEqual(json.loads(response.content), {'first_name': ['This field may not be blank.'], 'last_name': ['This field may not be blank.']})
 
 
-    def test_update_employee_valid_data(self):
+    def test_update_employee_valid_data(self) -> None:
         url = reverse('employees-detail', args=[1])
         employee = Employee.objects.get(pk=1)
         bartender = Role.objects.get(role='Bartender')
@@ -118,7 +118,7 @@ class TestRoleViewSet(APITestCase):
         self.assertEqual(response_data['last_name'], 'New Employee')
 
 
-    def test_update_employee_invalid_data(self):
+    def test_update_employee_invalid_data(self) -> None:
         url = reverse('employees-detail', args=[1])
         response = self.client.put(url, format='json')
 
