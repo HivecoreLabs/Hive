@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from api.models import Employee
 from .limited_serializers import ReadLimitedRoleSerializer
-from .role_serializers import RoleSerializer
 
 
 class EmployeeSerializer(serializers.ModelSerializer):

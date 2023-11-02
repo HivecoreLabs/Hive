@@ -65,7 +65,6 @@ export const theme = isDaytime ? dayTheme : nightTheme;
 //     const [theme, setTheme] = useState(isDaytime ? dayTheme : nightTheme);
 
 //     const toggleTheme = () => {
-//         debugger
 //         setTheme((prevTheme) => (prevTheme === dayTheme ? nightTheme : dayTheme));
 //     };
 

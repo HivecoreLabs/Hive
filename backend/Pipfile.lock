@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "06ec0e79f2c8215601b4593a1f82db1b58827454e494a37b54df8cc942f89fc9"
+            "sha256": "c5b238a05c15df268b48132b5625a81dedde968b14229e92cb05d1a22fe23820"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -233,6 +233,15 @@
             "index": "pypi",
             "markers": "python_version >= '3.6'",
             "version": "==3.14.0"
+        },
+        "drf-nested-routers": {
+            "hashes": [
+                "sha256:01aa556b8c08608bb74fb34f6ca065a5183f2cda4dc0478192cc17a2581d71b0",
+                "sha256:996b77f3f4dfaf64569e7b8f04e3919945f90f95366838ca5b8bed9dd709d6c5"
+            ],
+            "index": "pypi",
+            "markers": "python_version >= '3.5'",
+            "version": "==0.93.4"
         },
         "google-api-core": {
             "hashes": [

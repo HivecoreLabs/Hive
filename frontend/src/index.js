@@ -4,10 +4,12 @@ import { HashRouter } from 'react-router-dom';
 import App from './app.jsx';
 import './index.css';
 import { CssBaseline } from '@mui/material';
-import { AuthenticationProvider } from './contexts/AuthenticationContext.js';
+import { AuthenticationContextProvider } from './contexts/AuthenticationContext.js';
 import { ThemeProvider } from '@mui/material/styles';
+import { EmployeesProvider } from './contexts/EmployeesContext.js';
+import { RolesProvider } from './contexts/RolesContext.js';
 import { theme } from './contexts/ThemeContext';
-
+import { ErrorContextProvider } from './contexts/ErrorContext.js';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -15,9 +17,15 @@ root.render(
         <React.StrictMode>
             {/* <CssBaseline> */}
             <ThemeProvider theme={theme}>
-                <AuthenticationProvider>
-                    <App />
-                </AuthenticationProvider>
+                <ErrorContextProvider>
+                    <RolesProvider>
+                    <EmployeesProvider>
+                    <AuthenticationContextProvider>
+                        <App />
+                    </AuthenticationContextProvider>
+                    </EmployeesProvider>
+                    </RolesProvider>
+                </ErrorContextProvider>
             </ThemeProvider>
             {/* </CssBaseline> */}
         </React.StrictMode>
