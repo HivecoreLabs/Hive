@@ -1,12 +1,13 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import viewsets, status
+from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 
 from django.contrib.auth.models import User
 from .models import Role, Employee, SpreadSheet, Employee_Clock_In
-from .serializers import UserSerializer, RoleSerializer, EmployeeSerializer, Read_Clock_In_Serializer, Write_Clock_In_Serializer, Read_Employee_Clock_In_Serializer, Write_Employee_Clock_In_Serializer, SpreadSheetSerializer
+from .serializers import UserSerializer, RoleSerializer, EmployeeSerializer, Read_Clock_In_Serializer, Write_Clock_In_Serializer, SpreadSheetSerializer
 from backend.quickstart import generate
 
 @api_view(['POST'])
@@ -131,31 +132,44 @@ class EmployeeViewSet(viewsets.ModelViewSet):
 
 class ClockInViewSet(viewsets.ModelViewSet):
     queryset = Employee_Clock_In.objects.all()
-    def get_serializer_class(self):
+    def get_serializer_class(self, *args, **kwargs):
         if self.action == 'list' or self.action == 'retrieve':
             return Read_Clock_In_Serializer
         return Write_Clock_In_Serializer
 
+    def create(self, request, *args, **kwargs):
+        is_many = isinstance(request.data, list)
+        serializer = self.get_serializer(data=request.data, many=is_many)
+        if serializer.is_valid():
+            data = serializer.save()
+            return Response(Read_Clock_In_Serializer(data, many=is_many).data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data)
+        if serializer.is_valid():
+            data = serializer.save()
+            return Response(Read_Clock_In_Serializer(data).data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    # TODO: Config DELETE to check if a checkout has already been created using clockin instance
+            # If it has we need to figure out a way to update the checkout and alert user that changes were made
+
 
 class EmployeeClockInViewSet(viewsets.ViewSet):
-    def get_serializer_class(self):
-        if self.action == 'list' or self.action == 'retrieve':
-            return Read_Employee_Clock_In_Serializer
-        return Write_Employee_Clock_In_Serializer
+    serializer_class = Read_Clock_In_Serializer
 
-    def list(self, requeset, employee_pk=None, role_pk=None):
-        queryset = Employee_Clock_In.objects.filter(employee_id=employee_pk, active_role_id=role_pk)
-        serializer = Read_Employee_Clock_In_Serializer(queryset, many=True)
+    def list(self, requeset, employee_pk=None):
+        queryset = Employee_Clock_In.objects.filter(employee_id=employee_pk)
+        serializer = Read_Clock_In_Serializer(queryset, many=True)
         return Response(serializer.data)
 
 
 class RoleClockInViewSet(viewsets.ViewSet):
-    def get_serializer_class(self):
-        if self.action == 'list' or self.action == 'retrieve':
-            return Read_Employee_Clock_In_Serializer
-        return Write_Employee_Clock_In_Serializer
+    serializer_class = Read_Clock_In_Serializer
 
     def list(self, requeset, role_pk=None):
         queryset = Employee_Clock_In.objects.filter(active_role_id=role_pk)
-        serializer = Read_Employee_Clock_In_Serializer(queryset, many=True)
+        serializer = Read_Clock_In_Serializer(queryset, many=True)
         return Response(serializer.data)
