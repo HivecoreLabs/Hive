@@ -138,13 +138,23 @@ class ClockInViewSet(viewsets.ModelViewSet):
         return Write_Clock_In_Serializer
 
     def create(self, request, *args, **kwargs):
-        is_many = True if isinstance(request.data, list) else False
+        is_many = isinstance(request.data, list)
         serializer = self.get_serializer(data=request.data, many=is_many)
         if serializer.is_valid():
             data = serializer.save()
-            print(data)
             return Response(Read_Clock_In_Serializer(data, many=is_many).data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data)
+        if serializer.is_valid():
+            data = serializer.save()
+            return Response(Read_Clock_In_Serializer(data).data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    # TODO: Config DELETE to check if a checkout has already been created using clockin instance
+            # If it has we need to figure out a way to update the checkout and alert user that changes were made
 
 
 class EmployeeClockInViewSet(viewsets.ViewSet):
