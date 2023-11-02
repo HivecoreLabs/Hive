@@ -7,6 +7,7 @@ import { CssBaseline } from '@mui/material';
 import { AuthenticationProvider } from './contexts/AuthenticationContext.js';
 import { ThemeProvider } from '@mui/material/styles';
 import { EmployeesProvider } from './contexts/EmployeesContext.js';
+import { RolesProvider } from './contexts/RolesContext.js';
 import { theme } from './contexts/ThemeContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -15,11 +16,13 @@ root.render(
         <React.StrictMode>
             {/* <CssBaseline> */}
             <ThemeProvider theme={theme}>
+                <RolesProvider>
                 <EmployeesProvider>
                 <AuthenticationProvider>
                     <App />
                 </AuthenticationProvider>
                 </EmployeesProvider>
+                </RolesProvider>
             </ThemeProvider>
             {/* </CssBaseline> */}
         </React.StrictMode>

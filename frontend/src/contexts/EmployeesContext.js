@@ -109,8 +109,8 @@ export const EmployeesProvider = ({ children }) => {
         }
     }
 
+    // This function is extra, there is no delete method for employees
     const deleteEmployee = async id => {
-        // This function is extra, there is no delete method for employees
         const response = await fetch(`http://localhost:8000/api/employees/${id}/`, {
             method: 'DELETE',
             headers: { "Content-Type": "application/json" }

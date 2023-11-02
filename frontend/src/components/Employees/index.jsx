@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "@mui/material";
 import { useEmployees } from "../../contexts/EmployeesContext";
+import { useRoles } from "../../contexts/RolesContext";
 
 function Employee() {
 
@@ -10,15 +11,23 @@ function Employee() {
         createEmployee,
         readSingleEmployee,
         readAllEmployees,
-        updateEmployee,
-        deleteEmployee
+        updateEmployee
      } = useEmployees();
+
+     const {
+        role,
+        roles,
+        createRole,
+        readSingleRole,
+        readAllRoles,
+        updateRole
+     } = useRoles();
 
     const test = (e) => {
 
         e.preventDefault();
 
-        const res = deleteEmployee(11);
+        const res = readSingleEmployee(1);
 
         console.log(res);
 
