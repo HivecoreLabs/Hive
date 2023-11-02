@@ -5,10 +5,21 @@ from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 
 from django.contrib.auth.models import User
-from .models import Role, Employee, SpreadSheet
-from .serializers import UserSerializer, RoleSerializer, EmployeeSerializer, SpreadSheetSerializer
+from .models import Role, Employee, SpreadSheet, Tipout_Formula, Tipout_Variable
+from .serializers import UserSerializer, RoleSerializer, EmployeeSerializer, SpreadSheetSerializer, FormulaSerializer, FormulaVariableSerializer
 from backend.quickstart import generate
 
+@api_view(['GET'])
+def get_tables_columns(request):
+    # table_name = MyModel._meta.db_table
+    tables_dictionary = {}
+    tables_dictionary[Role._meta.db_table] = [field.name for field in Role._meta.get_fields()]
+    tables_dictionary[Employee._meta.db_table] = [field.name for field in Employee._meta.get_fields()]
+    tables_dictionary[SpreadSheet._meta.db_table] = [field.name for field in SpreadSheet._meta.get_fields()]
+    tables_dictionary[Tipout_Formula._meta.db_table] = [field.name for field in Tipout_Formula._meta.get_fields()]
+    tables_dictionary[Tipout_Variable._meta.db_table] = [field.name for field in Tipout_Variable._meta.get_fields()]
+
+    return Response(tables_dictionary, status=200)
 @api_view(['POST'])
 def generate_sheet_database(request):
     generated_id = generate("Sheets Database")
@@ -69,6 +80,13 @@ def signup(request):
         }, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class FormulaViewSet(viewsets.ModelViewSet):
+    queryset = Tipout_Formula.objects.all()
+    serializer_class = FormulaSerializer
+
+class VariablesViewSet(viewsets.ModelViewSet):
+    queryset = Tipout_Variable.objects.all()
+    serializer_class = FormulaVariableSerializer
 
 class RoleViewSet(viewsets.ModelViewSet):
     queryset = Role.objects.all()
