@@ -13,5 +13,6 @@ urlpatterns = [
     path("auth/signup/", views.signup, name='signup'),
     path("spreadsheets/", views.generate_sheet_database, name='spreadsheets'),
     path("tables/", views.get_tables_columns,name='tables'),
+    path('formulas/<int:pk>/variables/', views.FormulaViewSet.as_view({'post': 'create_formula_variables'}), name='create_formula_variables'),
     path('', include(router.urls))
 ]

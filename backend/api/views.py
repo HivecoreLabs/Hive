@@ -84,6 +84,22 @@ class FormulaViewSet(viewsets.ModelViewSet):
     queryset = Tipout_Formula.objects.all()
     serializer_class = FormulaSerializer
 
+    def create_formula_variables(self, request, pk=None):
+        formula = self.get_object()
+        serializer = FormulaVariableSerializer(data=request.data, many=True)
+        formula_id = int(pk)
+        if serializer.is_valid():
+            # Create formula variables and associate them with the formula
+            formula_variables = []
+            for data in serializer.validated_data:
+                formula_variable = Tipout_Variable.objects.create(**data)
+                formula_variables.append(formula_variable)
+
+            return Response({'message': f'{len(formula_variables)} formula variables created successfully'}, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 class VariablesViewSet(viewsets.ModelViewSet):
     queryset = Tipout_Variable.objects.all()
     serializer_class = FormulaVariableSerializer
