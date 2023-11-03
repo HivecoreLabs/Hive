@@ -38,7 +38,7 @@ function SupportStaffForm() {
     const handleTimeIn = (value) => {
         setTimeIn(value);
     }
-    const handleTimeOut = (e) => {
+    const handleTimeOut = (value) => {
         setTimeOut(value);
     }
 
