@@ -215,6 +215,7 @@ Certainly, here's the complete API documentation in Markdown format:
 ```json
 [
   {
+    "id": "employee id",
     "first_name": "first name",
     "last_name": "last name",
     "roles": [
@@ -243,6 +244,7 @@ Certainly, here's the complete API documentation in Markdown format:
 
 ```json
 {
+  "id": "employee id",
   "first_name": "first name",
   "last_name": "last name",
   "roles": [
@@ -285,6 +287,7 @@ Certainly, here's the complete API documentation in Markdown format:
 
 ```json
 {
+  "id": "employee id",
   "first_name": "first name",
   "last_name": "last name",
   "roles": [
@@ -337,6 +340,7 @@ Certainly, here's the complete API documentation in Markdown format:
 
 ```json
 {
+  "id": "employee id",
   "first_name": "first name",
   "last_name": "last name",
   "roles": [
