@@ -8,5 +8,5 @@ class EmployeeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Employee
-        fields = ('first_name', 'last_name', 'restaurant_employee_id', 'roles', 'food_permit_exp',
+        fields = ('id', 'first_name', 'last_name', 'restaurant_employee_id', 'roles', 'food_permit_exp',
                   'alcohol_permit_exp', 'is_former_employee', 'created_at', 'updated_at', 'sheet_cell', 'is_uploaded')
