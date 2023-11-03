@@ -830,6 +830,7 @@ Certainly, here's the complete API documentation in Markdown format:
   "formula": "required formula",
   "role_id": "required role id",
   "tipout_variables": [
+    // optional
     {
       "variable": "variable name, required if including list of variables",
       "table_name": "table name, required if including list of variables",
@@ -900,6 +901,15 @@ Certainly, here's the complete API documentation in Markdown format:
   "formula": "required formula",
   "role_id": "required role id",
   "tipout_variables": [
+    // optional
+    {
+      // if no id or tipout_formula_id != fomula_id then a new variable instace will be created
+      "id": "existing variable id",
+      "variable": "variable name, required if including list of variables",
+      "table_name": "table name, required if including list of variables",
+      "column_name": "column name, required if including list of variables",
+      "tipout_formula_id": "formula id"
+    },
     {
       "variable": "variable name, required if including list of variables",
       "table_name": "table name, required if including list of variables",
@@ -910,32 +920,84 @@ Certainly, here's the complete API documentation in Markdown format:
 }
 ```
 
-- **Expected Response ()**:
-- **Error Response ()**:
+- **Expected Response (200 OK)**:
 
-### 1. Get List of Spreadsheet Formulas
+```json
+{
+  "message": "Formula successfully updated, 1 variable(s) updated, 0 new variable(s) created",
+  "formula": {
+    "id": 14,
+    "tipout_variables": [
+      {
+        "id": 14,
+        "variable": "Variable_1",
+        "table_name": "Table_1",
+        "column_name": "Column_1",
+        "created_at": "2023-11-03T16:07:33.668308Z",
+        "updated_at": "2023-11-03T16:07:33.668330Z",
+        "sheet_cell": null,
+        "is_uploaded": false,
+        "tipout_formula_id": 14
+      },
+      {
+        "id": 15,
+        "variable": "Variable_2",
+        "table_name": "Table_1",
+        "column_name": "Column_1",
+        "created_at": "2023-11-03T16:08:04.670749Z",
+        "updated_at": "2023-11-03T16:18:33.301684Z",
+        "sheet_cell": null,
+        "is_uploaded": false,
+        "tipout_formula_id": 14
+      }
+    ],
+    "formula_name": "Formula_1",
+    "formula": "Formula expression asdfasdfasdfasdf1",
+    "is_am_formula": true,
+    "created_at": "2023-11-03T16:07:33.659426Z",
+    "updated_at": "2023-11-03T16:18:33.291483Z",
+    "sheet_cell": null,
+    "is_uploaded": false,
+    "role_id": 2
+  }
+}
+```
 
-- **Route**: `GET /api/formulas/`
+- **Error Response (400 Bad Data)**:
+
+```json
+{
+  "formula_name": ["This field is required."],
+  "formula": ["This field is required."],
+  "role_id": ["This field is required."],
+  // if including tipout_variables to be created or updated
+  "variable": ["This field is required."],
+  "table_name": ["This field is required."],
+  "column_name": ["This field is required."]
+}
+```
+
+- **Error Response (404 Not Found)**:
+
+```json
+{
+  "detail": "Not found."
+}
+```
+
+### 5. Delete Spreadsheet Formula
+
+- **Route**: `DELETE /api/formulas/<int:formulaId>`
 - **Headers**:
 - **Request Body (None)**:
-- **Expected Response ()**:
-- **Error Response ()**:
+- **Expected Response (204 No Content)**:
+- **Error Response (404 Not Found)**:
 
-### 1. Get List of Spreadsheet Formulas
-
-- **Route**: `GET /api/formulas/`
-- **Headers**:
-- **Request Body (None)**:
-- **Expected Response ()**:
-- **Error Response ()**:
-
-### 1. Get List of Spreadsheet Formulas
-
-- **Route**: `GET /api/formulas/`
-- **Headers**:
-- **Request Body (None)**:
-- **Expected Response ()**:
-- **Error Response ()**:
+```json
+{
+  "detail": "Not found."
+}
+```
 
 ## Daily Checkouts
 
