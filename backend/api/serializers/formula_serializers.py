@@ -2,6 +2,9 @@ from rest_framework import serializers
 from api.models import Tipout_Formula, Tipout_Variable
 
 class FormulaVariableSerializer(serializers.ModelSerializer):
+    parent_lookup_kwargs = {
+        'formula_pk': 'formula_pk'
+    }
 
     class Meta:
         model = Tipout_Variable

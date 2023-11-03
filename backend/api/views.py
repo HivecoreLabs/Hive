@@ -171,6 +171,14 @@ class VariablesViewSet(viewsets.ModelViewSet):
     queryset = Tipout_Variable.objects.all()
     serializer_class = FormulaVariableSerializer
 
+    def list(self, request, formula_pk=None):
+        if formula_pk:
+            queryset = Tipout_Variable.objects.filter(tipout_formula_id=formula_pk)
+        else:
+            queryset = Tipout_Variable.objects.all()
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
 
 class RoleViewSet(viewsets.ModelViewSet):
     queryset = Role.objects.all()
