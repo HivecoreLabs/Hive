@@ -6,12 +6,14 @@ import './SupportStaffForm.css';
 import SupportStaffList from './SupportStaffList.jsx';
 import { useEmployees } from '../../contexts/EmployeesContext';
 import { useRoles } from '../../contexts/RolesContext';
+import { useSupportStaffContext } from '../../contexts/SupportStaffContext';
 import { useTheme } from '@mui/material';
 
 function SupportStaffForm() {
     const theme = useTheme();
     const { employees, readAllEmployees } = useEmployees();
     const { roles, readAllRoles } = useRoles();
+    const { createSupportStaffClockIn } = useSupportStaffContext();
 
     const [employee, setEmployee] = useState('');
     const [employeeSelected, setEmployeeSelected] = useState(false);
@@ -20,18 +22,15 @@ function SupportStaffForm() {
     const [date, setDate] = useState(dayjs());
     const [timeIn, setTimeIn] = useState(null);
     const [timeOut, setTimeOut] = useState(null);
-    console.log(employees);
-
 
     // we need this when formatting times in the request body 
     const convertTimeFromFrontend = (frontendTime) => {
-        const date = newDate(frontendTime);
+        const date = new Date(frontendTime);
         const dateString = date.toISOString();
         return dateString;
     }
 
     const handleEmployee = (e) => {
-        debugger
         const employee = e.target.value;
         setEmployee(employee);
         setEmployeeSelected(true);
@@ -80,20 +79,18 @@ function SupportStaffForm() {
     //     ))
     // ) : null;
 
-    // const specificRolesList = 
-
-    const rolesList = roles.length > 0 ? (
-        roles.map((role, idx) => (
-            <MenuItem key={idx} value={role}>
-                {role.role}
-            </MenuItem>
-        ))
-    ) : null;
+    // const rolesList = roles.length > 0 ? (
+    //     roles.map((role, idx) => (
+    //         <MenuItem key={idx} value={role}>
+    //             {role.role}
+    //         </MenuItem>
+    //     ))
+    // ) : null;
 
     const handleSubmit = (e) => {
+        debugger
         e.preventDefault();
         const newClockIn = {
-            // we don't have employee_id yet
             employee_id: employee.id,
             active_role_id: role.id,
             date: date.format('YYYY-MM-DD'),
@@ -101,6 +98,8 @@ function SupportStaffForm() {
             time_out: timeOut ? convertTimeFromFrontend(timeOut) : null,
             is_am: theme.isAMShift
         };
+
+        createSupportStaffClockIn(newClockIn);
 
         setEmployee('');
         setRole('');
@@ -143,6 +142,7 @@ function SupportStaffForm() {
                                         variant="outlined"
                                         value={employee}
                                         onChange={handleEmployee}
+                                        required
                                     >
                                         <div></div>
                                         {employeesList}
@@ -156,6 +156,8 @@ function SupportStaffForm() {
                                         variant="outlined"
                                         value={role}
                                         onChange={handleRole}
+                                        disabled={employeeSelected ? false : true}
+                                        required
                                     >
                                         <div></div>
                                         {employeeRoleList}

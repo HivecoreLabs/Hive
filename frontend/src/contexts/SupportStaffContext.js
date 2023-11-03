@@ -81,12 +81,24 @@ export const SupportStaffContextProvider = ({ children }) => {
         return response;
     };
 
-    const updateSupportStaffClockIn = async (updatedObject, id) => {
+    const createSupportStaffClockIn = async (newClockIn) => {
+        const response = await customFetch(`http://localhost:8000/api/clock-ins/`, {
+            method: 'POST',
+            body: newClockIn
+        });
+        if (response.ok) {
+            const data = await response.json();
+            dispatch(receiveOneSupportStaff(data));
+        } else {
+            console.error('Could not create clock-in', error);
+        };
+        return response;
+    };
+
+    const updateSupportStaffClockIn = async (updatedClockIn, id) => {
         const response = await customFetch(`http://localhost:8000/api/clock-ins/${id}`, {
             method: 'PUT',
-            body: {
-
-            }
+            body: updatedClockIn
         });
         if (response.ok) {
             const data = await response.json();
@@ -100,6 +112,8 @@ export const SupportStaffContextProvider = ({ children }) => {
     const value = {
         supportStaff: state.supportStaff,
         fetchAllSupportStaffClockIns,
+        createSupportStaffClockIn,
+        updateSupportStaffClockIn
     };
 
     return (
