@@ -1166,6 +1166,8 @@ Certainly, here's the complete API documentation in Markdown format:
 }
 ```
 
+# TODO:
+
 ## Daily Checkouts
 
 ### 5. Log Net Sales and Cash Owed for a Specific Day, Shift, and Server
@@ -1236,8 +1238,6 @@ Certainly, here's the complete API documentation in Markdown format:
 ```
 
 (Note: Update the query parameters `{day}` and `{shift}` as needed.)
-
-## Tip Out Formulas
 
 ### 7. Define a New Tip Out Formula for a Specific Role
 
@@ -1314,107 +1314,6 @@ Certainly, here's the complete API documentation in Markdown format:
 
 - **Route**: `DELETE /tipout-formulas/{id}`
 - **Expected Response (204 No Content)**
-
-## Daily Support Staff Time In/Out
-
-### 11. Log the Clock-In Time for a Support Staff Member for a Specific
-
-Day and Shift
-
-- **Route**: `POST /support-clock-ins`
-- **Request Body (Required Information)**:
-
-```json
-{
-  "employee_id": 1,
-  "time_in": "timestamp",
-  "active_role": "server"
-}
-```
-
-- **Expected Response (201 Created)**:
-
-```json
-{
-  "id": 1,
-  "employee_id": 1,
-  "time_in": "timestamp",
-  "active_role": "server",
-  "is_uploaded": false
-}
-```
-
-### 12. Log the Clock-Out Time for a Support Staff Member for a Specific Day and Shift
-
-- **Route**: `PUT /support-clock-ins/{id}`
-- **Request Body (Required Information)**:
-
-```json
-{
-  "time_out": "timestamp"
-}
-```
-
-- **Expected Response (200 OK)**:
-
-```json
-{
-  "id": 1,
-  "employee_id": 1,
-  "time_in": "timestamp",
-  "time_out": "timestamp",
-  "active_role": "server",
-  "is_uploaded": false
-}
-```
-
-### 13. Edit the Clock-In and Clock-Out Times for a Support Staff Member for a Specific Day and Shift
-
-- **Route**: `PUT /support-clock-ins/{id}`
-- **Request Body (Required Information)**:
-
-```json
-{
-  "time_in": "new_timestamp",
-  "time_out": "new_timestamp"
-}
-```
-
-- **Expected Response (200 OK)**:
-
-```json
-{
-  "id": 1,
-  "employee_id": 1,
-  "time_in": "new_timestamp",
-  "time_out": "new_timestamp",
-  "active_role": "server",
-  "is_uploaded": false
-}
-```
-
-- **Error Response (if time in is before time out)**:
-
-```json
-{
-  "error": "Invalid Time Range",
-  "details": "The clock-in time cannot be after the clock-out time."
-}
-```
-
-### 14. Delete the Clock-In and Clock-Out Times for a Support Staff Member for a Specific Day and Shift
-
-- **Route**: `DELETE /support-clock-ins/{id}`
-- **Expected Response (204 No Content)**
-
-- **Error Response (e.g., if clock in not found) 404**:
-
-```json
-{
-  "error": "clock in not found",
-  "details": "The requested clock in does not exist."
-}
-```
 
 ## Toggle for View by Day/Shift
 
