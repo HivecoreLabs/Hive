@@ -19,12 +19,7 @@ function SupportStaffForm() {
     const [timeIn, setTimeIn] = useState(null);
     const [timeOut, setTimeOut] = useState(null);
 
-    const convertTimeFromBackend = (backendTime) => {
-        // remove the last 3 characters (the timezone information) and the colon
-        const formattedTime = backendTime.slice(0, -4);
-        return formattedTime;
-    }
-
+    // we need this when formatting times in the request body 
     const convertTimeFromFrontend = (frontendTime) => {
         const date = newDate(frontendTime);
         const dateString = date.toISOString();
@@ -46,9 +41,6 @@ function SupportStaffForm() {
     const handleTimeOut = (e) => {
         setTimeOut(value);
     }
-    // const handleIsDoubleShift = (e) => {
-    //     setIsDoubleShift(prevState => !prevState);
-    // }
 
     const employeesList = employees.length > 0 ? (
         employees.map((employee, idx) => (
@@ -70,10 +62,11 @@ function SupportStaffForm() {
         const newClockIn = {
             // we don't have employee_id yet
             employee_id: employee.id,
-            active_role_id: role,
+            active_role_id: role.id,
             date: date.format('YYYY-MM-DD'),
-            time_in: convertTimeFromFrontend(timeIn),
-            time_out: convertTimeFromFrontend(timeOut),
+            time_in: timeIn ? convertTimeFromFrontend(timeIn) : null,
+            time_out: timeOut ? convertTimeFromFrontend(timeOut) : null,
+            is_am: theme.isAMShift
         };
 
         setEmployee('');
@@ -103,7 +96,7 @@ function SupportStaffForm() {
                     Add Support Staff Clock-In
                 </Typography>
                 {[...Array(1)].map((_, index) => (
-                    <Paper elevation={2} style={{ padding: '20px', marginBottom: '10px', width: '580px', borderRadius: '8px' }} key={index}>
+                    <Paper elevation={2} style={{ padding: '20px', marginBottom: '10px', width: '600px', borderRadius: '8px' }} key={index}>
                         <form onSubmit={handleSubmit}>
                             <Grid container spacing={2}>
                                 <Grid item sm={6}>

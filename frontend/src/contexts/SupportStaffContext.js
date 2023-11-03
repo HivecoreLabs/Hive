@@ -51,11 +51,17 @@ const supportStaffReducer = (state = initialState, action) => {
                 supportStaff: action.payload
             };
         case UPDATE_SUPPORT_STAFF:
+            const updatedSupportStaffList = state.supportStaff.map((staff) => {
+                if (staff.id === action.supportStaffId) {
+                    return { ...staff, ...action.payload };
+                }
+                return staff;
+            });
+
             return {
                 ...state,
-                supportStaff: [...state.supportStaff],
-
-            }
+                supportStaff: updatedSupportStaffList
+            };
         default:
             return state;
     };
@@ -64,8 +70,20 @@ const supportStaffReducer = (state = initialState, action) => {
 export const SupportStaffContextProvider = ({ children }) => {
     const [state, dispatch] = useReducer(supportStaffReducer, initialState);
 
+    const fetchAllSupportStaffClockIns = async () => {
+        const response = await customFetch('http://localhost:8000/api/clock-ins/');
+        if (response.ok) {
+            const data = await response.json();
+            dispatch(receiveAllSupportStaff(data));
+        } else {
+            console.error('Could not fetch all clock-ins', error);
+        };
+        return response;
+    };
+
     const value = {
         supportStaff: state.supportStaff,
+        fetchAllSupportStaffClockIns,
     };
 
     return (
