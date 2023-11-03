@@ -9,7 +9,7 @@ import { useRoles } from '../../contexts/RolesContext';
 import { useSupportStaffContext } from '../../contexts/SupportStaffContext';
 import { useTheme } from '@mui/material';
 
-function SupportStaffForm() {
+const SupportStaffForm = () => {
     const theme = useTheme();
     const { employees, readAllEmployees } = useEmployees();
     const { roles, readAllRoles } = useRoles();

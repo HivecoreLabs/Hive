@@ -1,4 +1,5 @@
 const customFetch = async (url, options = {}) => {
+    debugger
     options.headers ||= {};
     options.method ||= 'GET';
     if (options.method.toUpperCase() !== 'GET') {

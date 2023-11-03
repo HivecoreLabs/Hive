@@ -19,14 +19,14 @@ import { useRoles } from '../../contexts/RolesContext';
 import { useSupportStaffContext } from '../../contexts/SupportStaffContext';
 
 const SupportStaffListItem = ({ supportEntry }) => {
+    const { id, employee, active_role } = supportEntry;
     debugger
-    const id = supportEntry.id;
-    const { roles } = useRoles();
+    // const { roles } = useRoles();
     const { updateSupportStaffClockIn } = useSupportStaffContext();
 
     // we need this when formatting times in the request body 
     const convertTimeFromFrontend = (frontendTime) => {
-        const date = newDate(frontendTime);
+        const date = new Date(frontendTime);
         const dateString = date.toISOString();
         return dateString;
     }
@@ -39,17 +39,18 @@ const SupportStaffListItem = ({ supportEntry }) => {
 
     // const [employee, setEmployee] = useState('');
 
-    const transformRolesForSelect = (roles) => {
-        return roles.map((role) => ({
-            id: role.id,
-            role: role.role,
-        }));
-    }
-    const transformedRoles = transformRolesForSelect(roles);
+    // const transformRolesForSelect = (roles) => {
+    //     return roles.map((role) => ({
+    //         id: role.id,
+    //         role: role.role,
+    //     }));
+    // }
+    // const transformedRoles = transformRolesForSelect(roles);
 
-    const [role, setRole] = useState(
-        transformedRoles.find((role) => supportEntry.active_role.id === role.id)
-    );
+    // const [role, setRole] = useState(
+    //     transformedRoles.find((role) => supportEntry.active_role.id === role.id)
+    // );
+    const [role, setRole] = useState(active_role);
     const [date, setDate] = useState(dayjs(supportEntry.date));
     const [timeIn, setTimeIn] = useState(dayjs(supportEntry.time_in));
     const [timeOut, setTimeOut] = useState(dayjs(supportEntry.time_out));
@@ -84,77 +85,81 @@ const SupportStaffListItem = ({ supportEntry }) => {
     //         </MenuItem>
     //     ))
     // ) : null;
-    debugger
+
     // console.log(transformedRoles);
     // console.log(role);
 
-    const rolesList = isEditing ? (
-        <TextField
-            select
-            fullWidth
-            label="Role"
-            variant="outlined"
-            value={role}
-            onChange={handleRole}
-        >
-            {transformedRoles.map((role) => (
-                <MenuItem key={role.id} value={role.id}>
-                    {role.role}
-                </MenuItem>
-            ))}
-        </TextField>
-    ) : (
-        <TextField
-            select
-            fullWidth
-            label="Role"
-            variant="outlined"
-            value={role}
-            onChange={handleRole}
-            disabled
-        >
-            {transformedRoles.map((role) => (
-                <MenuItem key={role.id} value={role.id}>
-                    {role.role}
-                </MenuItem>
-            ))}
-        </TextField>
-    );
-
-
+    // const rolesList = isEditing ? (
+    //     <TextField
+    //         select
+    //         fullWidth
+    //         label="Role"
+    //         variant="outlined"
+    //         value={role}
+    //         onChange={handleRole}
+    //     >
+    //         {transformedRoles.map((role) => (
+    //             <MenuItem key={role.id} value={role.id}>
+    //                 {role.role}
+    //             </MenuItem>
+    //         ))}
+    //     </TextField>
+    // ) : (
+    //     <TextField
+    //         select
+    //         fullWidth
+    //         label="Role"
+    //         variant="outlined"
+    //         value={role}
+    //         onChange={handleRole}
+    //         disabled
+    //     >
+    //         {transformedRoles.map((role) => (
+    //             <MenuItem key={role.id} value={role.id}>
+    //                 {role.role}
+    //             </MenuItem>
+    //         ))}
+    //     </TextField>
+    // );
 
     // creating a map for roles to their id's for handleUpdate
-    const roleMap = {};
-    roles.forEach((role) => {
-        roleMap[role.role] = role.id;
-    });
+    // const roleMap = {};
+    // roles.forEach((role) => {
+    //     roleMap[role.role] = role.id;
+    // });
 
-    const handleEditButton = () => {
+    const handleEditToggle = () => {
         setIsEditing(prevState => !prevState);
     };
 
-    const handleCancelButton = () => {
+    const handleCancel = () => {
         setIsEditing(prevState => !prevState);
         // needs to reset values to previous
-        setRole(supportEntry.active_role.role);
+        // setRole(supportEntry.active_role.role);
         setDate(dayjs(supportEntry.date));
         setTimeIn(dayjs(supportEntry.time_in));
         setTimeOut(dayjs(supportEntry.time_out));
     };
 
+    const handleDelete = () => {
+
+    }
+
     const handleUpdate = (e) => {
+        debugger
         e.preventDefault();
 
-        const updatedObject = {
-            employee_id,
-            active_role_id: roleMap[role],
+        const updatedClockIn = {
+            // ...supportEntry,
+            employee_id: employee.id,
+            active_role_id: role.id,
             date: date.format('YYYY-MM-DD'),
-            tipout_received,
-            time_in: convertTimeFromFrontend(timeIn),
-            time_out: convertTimeFromFrontend(timeOut),
+            // time_in: convertTimeFromFrontend(timeIn),
+            // time_out: convertTimeFromFrontend(timeOut),
+            // tipout_received,
         }
 
-        updateSupportStaffClockIn(updatedObject, id);
+        updateSupportStaffClockIn(updatedClockIn, id);
     }
 
 
@@ -163,10 +168,13 @@ const SupportStaffListItem = ({ supportEntry }) => {
             <TableRow key={supportEntry.id}>
                 <TableCell >
                     <Typography variant='h7'>
-                        {supportEntry.employee.first_name} {supportEntry.employee.last_name}
+                        {employee.first_name} {employee.last_name}
                     </Typography>
                 </TableCell>
                 <TableCell>
+                    <Typography variant='h7'>
+                        {role.role}
+                    </Typography>
                     {/* {isEditing ? (
                         <TextField
                             select
@@ -192,7 +200,7 @@ const SupportStaffListItem = ({ supportEntry }) => {
                             {rolesList}
                         </TextField>
                     )} */}
-                    {rolesList}
+                    {/* {rolesList} */}
                 </TableCell>
                 <TableCell>
                     {isEditing ? (
@@ -246,11 +254,14 @@ const SupportStaffListItem = ({ supportEntry }) => {
                     <div>
                         {isEditing ? (
                             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                <Button variant="outlined" color='warning' onClick={handleCancelButton}>Cancel</Button>
                                 <Button variant="contained" onClick={handleUpdate}>Update</Button>
+                                <Button variant="outlined" color='warning' onClick={handleCancel}>Cancel</Button>
                             </div>
                         ) : (
-                            <Button variant="contained" onClick={handleEditButton}>Edit</Button>
+                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                <Button variant="outlined" onClick={handleEditToggle}>Edit</Button>
+                                <Button variant="outlined" color='warning' onClick={handleDelete}>Delete</Button>
+                            </div>
                         )}
                     </div>
                 </TableCell>
