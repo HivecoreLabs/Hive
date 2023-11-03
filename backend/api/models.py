@@ -52,7 +52,7 @@ class Checkout(models.Model):
     net_sales = models.DecimalField(decimal_places=2, max_digits=8)
     cash_owed = models.DecimalField(decimal_places=2, max_digits=8)
     employee_id = models.ForeignKey(Employee, on_delete=models.PROTECT)
-    total_tipout = models.DecimalField(decimal_places=2, max_digits=8)
+    total_tipout = models.DecimalField(decimal_places=2, max_digits=8, null=True)
     is_am_shift = models.BooleanField(default=True)
     is_patio = models.BooleanField(default=False)
     is_bar = models.BooleanField(default=False)

@@ -15,6 +15,10 @@ class Read_Clock_In_Serializer(serializers.ModelSerializer):
         model=Employee_Clock_In
         fields=('id', 'employee', 'active_role', 'date', 'is_am', 'tipout_received', 'time_in', 'time_out')
 
+class Read_Clock_In_Serializer_No_Role(serializers.ModelSerializer):
+    class Meta:
+        model=Employee_Clock_In
+        fields =  ('__all__')
 
 class Write_Clock_In_Serializer(serializers.ModelSerializer):
     parent_lookup_kwargs = {
