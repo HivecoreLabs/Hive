@@ -28,12 +28,8 @@ urlpatterns = [
     path("auth/login/", views.login, name='login'),
     path("auth/signup/", views.signup, name='signup'),
     path("spreadsheets/", views.generate_sheet_database, name='spreadsheets'),
+    path("end-of-day/", views.end_of_day, name='end-of-day'),
     path("tables/", views.get_tables_columns,name='tables'),
-<<<<<<< HEAD
-    path('formulas/<int:pk>/variables/', views.FormulaViewSet.as_view({'post': 'create_formula_variables'}), name='create_formula_variables'),
-    path('checkouts/', views.CheckOutViewSet.as_view({'post': 'post_checkout_and_generate_breakdown'})),
-=======
->>>>>>> 337f82b9ffe6f6df019dc61ee16227620d77ba1a
     path(r'', include(router.urls)),
     path(r'', include(employee_router.urls)),
     path(r'', include(role_router.urls)),

@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from django.db.models import Subquery, OuterRef
 from decimal import Decimal
+from datetime import datetime
 
 
 from django.contrib.auth.models import User
@@ -15,7 +16,9 @@ from .models import (
     SpreadSheet,
     Tipout_Formula,
     Tipout_Variable,
-    Employee_Clock_In
+    Employee_Clock_In,
+    Checkout_Tipout_Breakdown,
+    Checkout
 )
 from .serializers import (
     UserSerializer,
@@ -26,7 +29,9 @@ from .serializers import (
     WriteFormulaSerializer,
     Read_Clock_In_Serializer,
     Write_Clock_In_Serializer,
-    FormulaVariableSerializer
+    FormulaVariableSerializer,
+    CheckoutSerializer,
+    TipoutBreakdownSerializer
 )
 from backend.quickstart import generate
 from datetime import date
@@ -354,3 +359,87 @@ class CheckOutViewSet(viewsets.ViewSet):
             return Response(response_data, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
+def end_of_day(request):
+    def _calculate_totals(checkouts):
+        role_totals = {}
+        for checkout in checkouts:
+            role_id = checkout['checkout_tipout_breakdown__role_id']
+            total = checkout['checkout_tipout_breakdown__total']
+            if role_id and total:
+                role_totals[role_id] = role_totals.get(role_id, 0) + total
+        return role_totals
+    def _calculate_total_role_hours(support_staff):
+        role_hour_totals = {}
+        for staff in support_staff:
+            role_id = staff.active_role_id.id
+            time_in = staff.time_in
+            time_out = staff.time_out
+
+            if time_in and time_out:
+                role_hour_totals[role_id] = role_hour_totals.get(role_id,0) + (time_out-time_in).total_seconds()
+        return role_hour_totals
+    def _get_formula_and_determine_percent_worked(total_time_dictionary, staff_list, totals_dictionary):
+
+        res = []
+        # get formulas here, maybe chane later and change func name
+        # print(totals_dictionary['1'])
+        print("totals_dictionary: ", totals_dictionary)
+        print("staff_list: ", staff_list)
+        print("total_time_dictionary: ", total_time_dictionary)
+        for staff in staff_list:
+            time_in = staff.time_in
+            time_out = staff.time_out
+            if time_in and time_out:
+                total_time_worked = (time_out - time_in).total_seconds()
+                role_id = staff.active_role_id.id
+                percent_worked = total_time_worked/total_time_dictionary[role_id]
+                print(staff)
+                print(role_id)
+                print(role_id)
+                print(role_id)
+                print(totals_dictionary)
+                tipout_received = totals_dictionary[role_id] * percent_worked
+            # if the formula is time dependant, then we do it like below:
+                res.append({
+                    "employee_id": staff.id,
+                    "tipout_received": tipout_received
+                })
+            # if the formula IS NOT time dependant, then we just divide total for role by role count
+
+        return res
+        # create a new array
+        # [{
+                # role_id: 1
+                # total: total
+                # employees:[{
+                #   emp_id = 1
+                #   percent_tipout = (clockout-clockin).total_seconds() / role_total_time
+                # },...
+            # }
+        # ]
+        # return that dictionary
+    # query the database for all active support members on the current day
+    am_support_staff = Employee_Clock_In.objects.filter(date=request.data["date"], is_am=True)
+    pm_support_staff = Employee_Clock_In.objects.filter(date=request.data["date"], is_am=False)
+    print(am_support_staff)
+    # query the database for all tipout breakdowns on the current day
+    # tipout_breakdowns = Checkout_Tipout_Breakdown.objects.filter(date=request.data["date"])
+    am_checkouts = Checkout.objects.filter(date=request.data["date"], is_am_shift=True).values("checkout_tipout_breakdown__role_id", "checkout_tipout_breakdown__total", "checkout_tipout_breakdown__id")
+    # pm_checkouts = Checkout.objects.filter(date=request.data["date"], is_am_shift=False).values("checkout_tipout_breakdown__role_id", "checkout_tipout_breakdown__total", "checkout_tipout_breakdown__id")
+    am_totals = _calculate_totals(am_checkouts)
+    # pm_totals = _calculate_totals(pm_checkouts)
+    print("am_totals: ", am_totals)
+    # print("pm_totals: ", pm_totals)
+    am_hour_totals = _calculate_total_role_hours(am_support_staff)
+    # pm_hour_totals = _calculate_total_role_hours(pm_support_staff)
+    print("pm_totals: ", am_hour_totals)
+    list_of_employee_tipouts_received = _get_formula_and_determine_percent_worked(am_hour_totals, am_support_staff, am_totals)
+    print(list_of_employee_tipouts_received)
+    # print(am_hour_totals)
+    # print(pm_hour_totals)
+
+    # divide the relative role totals among the support staff who worked that role based on time or equal   division depending on formula property
+
+    return Response({"testing":123}, status = status.HTTP_200_OK)

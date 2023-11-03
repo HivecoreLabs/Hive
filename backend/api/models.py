@@ -49,6 +49,7 @@ class Employee_Role(models.Model):
 
 
 class Checkout(models.Model):
+    date = models.DateField(gettext('Date'), default=datetime.date.today)
     net_sales = models.DecimalField(decimal_places=2, max_digits=8)
     cash_owed = models.DecimalField(decimal_places=2, max_digits=8)
     employee_id = models.ForeignKey(Employee, on_delete=models.PROTECT)
@@ -99,6 +100,7 @@ class Tipout_Formula(models.Model):
     formula = models.CharField(max_length=255)
     role_id = models.ForeignKey(Role, on_delete=models.CASCADE)
     is_am_formula = models.BooleanField(default=True)
+    is_time_based = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     sheet_cell = models.CharField(default=None, null=True, max_length=10)
