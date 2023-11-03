@@ -49,6 +49,20 @@ function SupportStaffForm() {
             </MenuItem>
         ))
     ) : null;
+
+    // const transformRolesForSelect = (roles) => {
+    //     return roles.map((role) => ({
+    //         id: role.id,
+    //         role: role.role,
+    //     }));
+    // }
+    // const rolesList = roles.length > 0 ? (
+    //     transformRolesForSelect(roles).map((role, idx) => (
+    //         <MenuItem key={idx} value={role}>
+    //             {role.role}
+    //         </MenuItem>
+    //     ))
+    // ) : null;
     const rolesList = roles.length > 0 ? (
         roles.map((role, idx) => (
             <MenuItem key={idx} value={role}>
@@ -177,7 +191,7 @@ function SupportStaffForm() {
                                     />
                                 </Grid> */}
                                 <Grid item sm={6}>
-                                    <Button variant='outlined' onClick={handleResetFields}>Reset Fields</Button>
+                                    <Button variant='outlined' color='warning' onClick={handleResetFields}>Reset Fields</Button>
                                 </Grid>
                                 <Grid item sm={6} style={{ display: 'flex', justifyContent: 'flex-end' }}>
                                     <Button variant='contained' style={{ color: theme.palette.primary.contrastText }} type='submit'>Submit</Button>
@@ -187,7 +201,6 @@ function SupportStaffForm() {
                     </Paper>
                 ))}
             </div>
-            {/* <SupportStaffList savedMembers={savedMembers} /> */}
         </div>
     );
 }

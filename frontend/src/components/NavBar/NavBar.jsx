@@ -191,7 +191,7 @@ export default function MiniDrawer() {
                         <MenuIcon />
                     </IconButton>
                     <Box width={1} m={0} p={0} sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <Typography variant="h6" noWrap component="div" alignSelf='center'>
+                        <Typography variant="h5" fontWeight='bold' noWrap color={theme.palette.quaternary.main} component="div" alignSelf='center'>
                             {`${user.username}'s Dashboard`}
                         </Typography>
                         {/* <Search alignSelf='center' >
