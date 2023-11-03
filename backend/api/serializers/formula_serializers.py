@@ -7,9 +7,14 @@ class FormulaVariableSerializer(serializers.ModelSerializer):
         model = Tipout_Variable
         fields = ('__all__')
 
-class FormulaSerializer(serializers.ModelSerializer):
+class WriteFormulaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tipout_Formula
+        fields = ('__all__')
+
+class ReadFormulaSerializer(serializers.ModelSerializer):
     # variable serializer here
     tipout_variables = FormulaVariableSerializer(many=True, source='tipout_variable_set')
     class Meta:
         model = Tipout_Formula
-        fields = ('__all__')
+        fields = '__all__'
