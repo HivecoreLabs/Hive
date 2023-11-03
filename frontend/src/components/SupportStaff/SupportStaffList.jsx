@@ -10,7 +10,7 @@ function SupportStaffList({ savedMembers }) {
     return (
         <div>
             <h2>Saved Support Staff Members</h2>
-            <List>
+            {/* <List>
                 {savedMembers.map((member, i) => (
                     <ListItem key={i}>
                         <ListItemText
@@ -19,7 +19,7 @@ function SupportStaffList({ savedMembers }) {
                         />
                     </ListItem>
                 ))}
-            </List>
+            </List> */}
         </div>
     );
 }

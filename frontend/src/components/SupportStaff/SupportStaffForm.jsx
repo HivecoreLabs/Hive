@@ -16,18 +16,35 @@ function SupportStaffForm() {
     const [employee, setEmployee] = useState('');
     const [role, setRole] = useState('');
     const [date, setDate] = useState(dayjs());
-    const [timeIn, setTimeIn] = useState('')
-    const [timeOut, setTimeOut] = useState('')
+    const [timeIn, setTimeIn] = useState(null);
+    console.log(timeIn);
+    // console.log(dayjs(timeIn));
+    if (timeIn) {
+        const parsedTime = new Date(timeIn);
+        console.log(parsedTime);
+    }
+    const [timeOut, setTimeOut] = useState(null);
     // const [isDoubleShift, setIsDoubleShift] = useState(false);
 
-    // const formatTodaysDate = () => {
-    //     const today = new Date();
-    //     const MM = String(today.getMonth() + 1).padStart(2, '0');
-    //     const DD = String(today.getDate()).padStart(2, '0');
-    //     const YYYY = today.getFullYear();
-    //     const formattedDate = `${YYYY}-${MM}-${DD}`;
-    //     return formattedDate;
-    // };
+    // const convertTimeToISO = (timeString) => {
+    //     const currentDate = new Date();
+    //     const [hours, minutes] = timeString.split(":").map(Number);
+    //     currentDate.setHours(hours, minutes, 0, 0);
+    //     const formattedDatetime = currentDate.toISOString();
+    //     return formattedDatetime;
+    // }
+
+    const converTimeToISO = (time) => {
+
+    }
+
+    const convertISOtoTime = (backendTime) => {
+        const parsedTime = new Date(backendTime);
+        const hours = parsedTime.getHours();
+        const minutes = parsedTime.getMinutes();
+        const formattedTime = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
+        return formattedTime;
+    }
 
     const handleEmployee = (e) => {
         setEmployee(e.target.value);
@@ -38,11 +55,11 @@ function SupportStaffForm() {
     const handleDate = (value) => {
         setDate(value)
     }
-    const handleTimeIn = (e) => {
-        setTimeIn(e.target.value);
+    const handleTimeIn = (value) => {
+        setTimeIn(value);
     }
     const handleTimeOut = (e) => {
-        setTimeOut(e.target.value);
+        setTimeOut(value);
     }
     // const handleIsDoubleShift = (e) => {
     //     setIsDoubleShift(prevState => !prevState);
@@ -114,6 +131,7 @@ function SupportStaffForm() {
                                         value={employee}
                                         onChange={handleEmployee}
                                     >
+                                        <div></div>
                                         {employeesList}
                                     </TextField>
                                 </Grid>
@@ -126,6 +144,7 @@ function SupportStaffForm() {
                                         value={role}
                                         onChange={handleRole}
                                     >
+                                        <div></div>
                                         {rolesList}
                                     </TextField>
                                 </Grid>
@@ -138,7 +157,7 @@ function SupportStaffForm() {
                                     />
                                 </Grid>
                                 <Grid item sm={3}>
-                                    <TextField
+                                    {/* <TextField
                                         fullWidth
                                         id="time-in"
                                         type='time'
@@ -147,15 +166,25 @@ function SupportStaffForm() {
                                         label="Time In"
                                         value={timeIn}
                                         onChange={handleTimeIn}
+                                    /> */}
+                                    <TimePicker
+                                        label="Time In"
+                                        value={timeIn}
+                                        onChange={handleTimeIn}
                                     />
                                 </Grid>
                                 <Grid item sm={3}>
-                                    <TextField
+                                    {/* <TextField
                                         fullWidth
                                         id="time-out"
                                         type='time'
                                         variant="outlined"
                                         InputLabelProps={{ shrink: true }}
+                                        label="Time Out"
+                                        value={timeOut}
+                                        onChange={handleTimeOut}
+                                    /> */}
+                                    <TimePicker
                                         label="Time Out"
                                         value={timeOut}
                                         onChange={handleTimeOut}
