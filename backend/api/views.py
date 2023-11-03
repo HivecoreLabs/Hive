@@ -137,15 +137,22 @@ class FormulaViewSet(viewsets.ModelViewSet):
         updated = 0
         created = 0
         for data in variable_data:
-            data['tipout_formula_id'] = formula_instance.id
             data['is_uploaded'] = False
-            if 'id' in data:
-                variable_instance = Tipout_Variable.objects.get(id=data['id'])
-                variable_serializer = FormulaVariableSerializer(variable_instance, data=data)
-                variable_serializer.is_valid(raise_exception=True)
-                variable_serializer.save()
-                updated += 1
+            if 'id' in data and data['tipout_formula_id'] == formula_instance.id:
+                try:
+                    variable_instance = Tipout_Variable.objects.get(id=data['id'])
+                    variable_serializer = FormulaVariableSerializer(variable_instance, data=data)
+                    variable_serializer.is_valid(raise_exception=True)
+                    variable_serializer.save()
+                    updated += 1
+                except Tipout_Variable.DoesNotExist:
+                    data['tipout_formula_id'] = formula_instance.id
+                    variable_serializer = FormulaVariableSerializer(data=data)
+                    variable_serializer.is_valid(raise_exception=True)
+                    variable_serializer.save()
+                    created += 1
             else:
+                data['tipout_formula_id'] = formula_instance.id
                 variable_serializer = FormulaVariableSerializer(data=data)
                 variable_serializer.is_valid(raise_exception=True)
                 variable_serializer.save()
