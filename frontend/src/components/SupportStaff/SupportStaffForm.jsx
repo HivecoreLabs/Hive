@@ -92,11 +92,14 @@ function SupportStaffForm() {
     return (
         <div>
             <div className='support-staff-form-container'>
-                <Typography variant="h5" align="center" mb='20px'>
+                {/* <Typography variant="h5" align="center" mb='20px'>
                     Add Support Staff Clock-In
-                </Typography>
+                </Typography> */}
                 {[...Array(1)].map((_, index) => (
                     <Paper elevation={2} style={{ padding: '20px', marginBottom: '10px', width: '600px', borderRadius: '8px' }} key={index}>
+                        <Typography variant="h5" align="center" mb='20px'>
+                            Add Support Staff Clock-In
+                        </Typography>
                         <form onSubmit={handleSubmit}>
                             <Grid container spacing={2}>
                                 <Grid item sm={6}>

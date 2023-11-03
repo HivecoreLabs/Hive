@@ -12,6 +12,7 @@ import {
     Button,
     Select,
     MenuItem,
+    Typography
 } from '@mui/material';
 
 const SupportStaffListItem = ({ supportEntry }) => {
@@ -25,22 +26,25 @@ const SupportStaffListItem = ({ supportEntry }) => {
     return (
         <>
             <TableRow key={supportEntry.id}>
-                <TableCell>
-                    <Select
+                <TableCell >
+                    <Typography variant='h7'>
+                        {supportEntry.employee.first_name} {supportEntry.employee.last_name}
+                    </Typography>
+                    {/* <Select
                         fullWidth
                         label="Employee"
                         variant="outlined"
                     // value={employee}
                     // onChange={handleEmployeeChange}
                     >
-                        {/* Render employee options */}
-                    </Select>
+                    </Select> */}
                 </TableCell>
                 <TableCell>
                     <Select
                         fullWidth
                         label="Role"
                         variant="outlined"
+                        sx={{ width: '100%' }}
                     // value={role}
                     // onChange={handleRoleChange}
                     >
@@ -49,7 +53,7 @@ const SupportStaffListItem = ({ supportEntry }) => {
                 </TableCell>
                 <TableCell>
                     <DatePicker
-                        sx={{ width: '100%' }}
+                        fullWidth
                         label="Date"
                     // onChange={handleDateChange}
                     // value={date}
