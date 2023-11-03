@@ -17,33 +17,18 @@ function SupportStaffForm() {
     const [role, setRole] = useState('');
     const [date, setDate] = useState(dayjs());
     const [timeIn, setTimeIn] = useState(null);
-    console.log(timeIn);
-    // console.log(dayjs(timeIn));
-    if (timeIn) {
-        const parsedTime = new Date(timeIn);
-        console.log(parsedTime);
-    }
     const [timeOut, setTimeOut] = useState(null);
-    // const [isDoubleShift, setIsDoubleShift] = useState(false);
 
-    // const convertTimeToISO = (timeString) => {
-    //     const currentDate = new Date();
-    //     const [hours, minutes] = timeString.split(":").map(Number);
-    //     currentDate.setHours(hours, minutes, 0, 0);
-    //     const formattedDatetime = currentDate.toISOString();
-    //     return formattedDatetime;
-    // }
-
-    const converTimeToISO = (time) => {
-
+    const convertTimeFromBackend = (backendTime) => {
+        // remove the last 3 characters (the timezone information) and the colon
+        const formattedTime = backendTime.slice(0, -4);
+        return formattedTime;
     }
 
-    const convertISOtoTime = (backendTime) => {
-        const parsedTime = new Date(backendTime);
-        const hours = parsedTime.getHours();
-        const minutes = parsedTime.getMinutes();
-        const formattedTime = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
-        return formattedTime;
+    const convertTimeFromFrontend = (frontendTime) => {
+        const date = newDate(frontendTime);
+        const dateString = date.toISOString();
+        return dateString;
     }
 
     const handleEmployee = (e) => {
@@ -87,23 +72,22 @@ function SupportStaffForm() {
             employee_id: employee.id,
             active_role_id: role,
             date: date.format('YYYY-MM-DD'),
-            time_in: timeIn,
-            time_out: timeOut,
+            time_in: convertTimeFromFrontend(timeIn),
+            time_out: convertTimeFromFrontend(timeOut),
         };
 
         setEmployee('');
         setRole('');
         setDate(dayjs());
-        setTimeIn('');
-        setTimeOut('');
+        setTimeIn(null);
+        setTimeOut(null);
     }
 
     const handleResetFields = () => {
-        debugger
         setEmployee('');
         setRole('');
-        setTimeIn('');
-        setTimeOut('');
+        setTimeIn(null);
+        setTimeOut(null);
         setDate(dayjs());
     }
 
