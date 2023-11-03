@@ -119,8 +119,12 @@ class FormulaViewSet(viewsets.ModelViewSet):
         variables = variable_serializer.save()
 
         formula = Tipout_Formula.objects.get(id=formula_instance.id)
-
-        return Response({'message': f'{len([variables])} formula variables created successfully', 'formula': ReadFormulaSerializer(formula).data}, status=status.HTTP_201_CREATED)
+        return Response(
+            {
+                'message': f'{len(variables)} formula variables created successfully',
+                'formula': ReadFormulaSerializer(formula).data
+            },
+                status=status.HTTP_201_CREATED)
 
 
 class VariablesViewSet(viewsets.ModelViewSet):
