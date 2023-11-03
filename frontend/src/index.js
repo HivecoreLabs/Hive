@@ -1,11 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { HashRouter } from 'react-router-dom';
+import { CssBaseline } from '@mui/material';
+import { ThemeProvider } from '@mui/material/styles';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import App from './app.jsx';
 import './index.css';
-import { CssBaseline } from '@mui/material';
 import { AuthenticationContextProvider } from './contexts/AuthenticationContext.js';
-import { ThemeProvider } from '@mui/material/styles';
 import { EmployeesProvider } from './contexts/EmployeesContext.js';
 import { RolesProvider } from './contexts/RolesContext.js';
 import { theme } from './contexts/ThemeContext';
@@ -21,7 +23,9 @@ root.render(
                     <RolesProvider>
                         <EmployeesProvider>
                             <AuthenticationContextProvider>
-                                <App />
+                                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                    <App />
+                                </LocalizationProvider>
                             </AuthenticationContextProvider>
                         </EmployeesProvider>
                     </RolesProvider>

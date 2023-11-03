@@ -1,7 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { List, ListItem, ListItemText } from '@mui/material';
 
 function SupportStaffList({ savedMembers }) {
+    // const {}
+
+    useEffect(() => {
+
+    }, [])
     return (
         <div>
             <h2>Saved Support Staff Members</h2>

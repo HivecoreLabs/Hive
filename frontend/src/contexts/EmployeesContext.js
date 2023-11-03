@@ -15,7 +15,7 @@ const initialState = {
 };
 
 function employeesReducer(state = initialState, action) {
-    let newState = {...state};
+    let newState = { ...state };
     switch (action.type) {
         case ADD_EMPLOYEE:
             newState.employees[action.payload.id] = action.payload;
@@ -55,7 +55,7 @@ const removeEmployee = payload => ({
 });
 
 export const EmployeesProvider = ({ children }) => {
-    
+
     const [state, dispatch] = useReducer(
         employeesReducer,
         initialState
@@ -67,7 +67,7 @@ export const EmployeesProvider = ({ children }) => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(employee)
         });
-    
+
         if (response.ok) {
             const data = await response.json();
             dispatch(addEmployee(data));
@@ -86,6 +86,7 @@ export const EmployeesProvider = ({ children }) => {
     }
 
     const readAllEmployees = async () => {
+        debugger
         const response = await fetch(`http://localhost:8000/api/employees/`);
 
         if (response.ok) {
@@ -101,7 +102,7 @@ export const EmployeesProvider = ({ children }) => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(employee)
         });
-    
+
         if (response.ok) {
             const data = await response.json();
             dispatch(addEmployee(data));
@@ -115,7 +116,7 @@ export const EmployeesProvider = ({ children }) => {
             method: 'DELETE',
             headers: { "Content-Type": "application/json" }
         });
-    
+
         if (response.ok) {
             const data = await response.json();
             dispatch(removeEmployee(id));
@@ -134,7 +135,7 @@ export const EmployeesProvider = ({ children }) => {
 
     return (
         <EmployeesContext.Provider value={value}>
-                {children}
+            {children}
         </EmployeesContext.Provider>
     );
 }
