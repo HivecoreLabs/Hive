@@ -1,7 +1,9 @@
 div#root {
     display: flex;
     flex-direction: column;
-    width: 100vw;
+    width: 95vw;
+    margin-left: 65px;
+    margin-top: 65px;
 }
 
 .employee-form-container {
@@ -13,7 +15,6 @@ div#root {
 }
 
 .employee-form-header {
-    background-color: orange;
     
     padding: 5px;
     margin: 5px 0;
@@ -32,6 +33,13 @@ div#root {
 .employee-form-prompts {
     display: flex;
     flex-direction: row;
+}
+
+.employee-form-role {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom: 8px;
 }
 
 .employee-form-action {

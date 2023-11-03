@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEmployees } from '../../contexts/EmployeesContext';
 import { useRoles } from '../../contexts/RolesContext';
 import { Button, Input, TextField } from '@mui/material';
+import MultiSelect from './MultiSelect.jsx';
 import './index.css';
 
 export default function EmployeeForm({ employee, formType }) {
@@ -23,7 +24,8 @@ export default function EmployeeForm({ employee, formType }) {
         readAllRoles();
     }, [useRoles]);
 
-    console.log(roles);
+    let options;
+    if (roles && Array.isArray(roles)) options = [...roles];
 
     const [firstName, setFirstName] = useState(employee.firstName);
     const [lastName, setLastName] = useState(employee.lastName);
@@ -42,7 +44,7 @@ export default function EmployeeForm({ employee, formType }) {
             first_name: firstName,
             last_name: lastName,
             restaurant_employee_id: restaurantId,
-            roles: role,
+            roles: role.map(r => r.role),
             food_permit_exp: foodPermitExp,
             alcohol_permit_exp: alcoholPermitExp
         };
@@ -60,6 +62,10 @@ export default function EmployeeForm({ employee, formType }) {
         if (res) return navigate("/employees/all");
 
     };
+
+    useEffect(() => {
+        console.log(role);
+    }, [role])
 
     return (
         <div className='employee-form-container'>
@@ -86,6 +92,7 @@ export default function EmployeeForm({ employee, formType }) {
                             onChange={e => setFirstName(e.target.value)}
                             required
                             error={ firstName && firstName.length > 50 ? true: false }
+                            tabIndex={0}
                         />
                     </div>
                     <div className='employee-form-last-name'>
@@ -101,6 +108,7 @@ export default function EmployeeForm({ employee, formType }) {
                             onChange={e => setLastName(e.target.value)}
                             required
                             error={ lastName && lastName.length > 50 ? true : false }
+                            tabIndex={1}
                         />
                     </div>
                     <div className='employee-form-restaurant-id'>
@@ -116,12 +124,18 @@ export default function EmployeeForm({ employee, formType }) {
                             onChange={e => setRestaurantId(e.target.value)}
                             required
                             error={ restaurantId && restaurantId.length > 10 ? true : false }
+                            tabIndex={2}
                         />
                     </div>
                     <div className='employee-form-role'>
                         <label>
                             Role (select all that apply)
                         </label>
+                        <MultiSelect 
+                        options={options} 
+                        value={role}
+                        onChange={o => setRole(o)}
+                        />
                     </div>
                     <div className='employee-form-food-permit-exp'>
                         <label>
@@ -133,6 +147,7 @@ export default function EmployeeForm({ employee, formType }) {
                             margin='normal'
                             value={foodPermitExp}
                             onChange={e => setFoodPermitExp(e.target.value)}
+                            tabIndex={4}
                         />
                     </div>
                     <div className='employee-form-alcohol-permit-exp'>
@@ -145,6 +160,7 @@ export default function EmployeeForm({ employee, formType }) {
                             margin='normal'
                             value={alcoholPermitExp}
                             onChange={e => setAlcoholPermitExp(e.target.value)}
+                            tabIndex={5}
                         />
                     </div>
                     { formType === 'Edit' ? (
@@ -158,6 +174,7 @@ export default function EmployeeForm({ employee, formType }) {
                                 value={formerEmployee}
                                 onChange={e => setFormerEmployee(!formerEmployee)}
                                 checked={formerEmployee}
+                                tabIndex={6}
                             />
                         </div>
                     ) : null }
