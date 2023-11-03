@@ -4,7 +4,7 @@
       "pk": 2,
       "fields": {
         "checkout_id": 1,
-        "role_id": 2,
+        "role_id": 1,
         "total": 127.42
       }
     },
@@ -22,7 +22,7 @@
       "pk": 4,
       "fields": {
         "checkout_id": 3,
-        "role_id": 4,
+        "role_id": 5,
         "total": 178.21
       }
     },
@@ -31,7 +31,7 @@
       "pk": 5,
       "fields": {
         "checkout_id": 4,
-        "role_id": 5,
+        "role_id": 7,
         "total": 115.69
       }
     },
@@ -40,7 +40,7 @@
       "pk": 6,
       "fields": {
         "checkout_id": 5,
-        "role_id": 6,
+        "role_id": 9,
         "total": 194.54
       }
     },
@@ -49,7 +49,7 @@
       "pk": 7,
       "fields": {
         "checkout_id": 6,
-        "role_id": 7,
+        "role_id": 1,
         "total": 132.37
       }
     },
@@ -58,7 +58,7 @@
       "pk": 8,
       "fields": {
         "checkout_id": 7,
-        "role_id": 8,
+        "role_id": 3,
         "total": 189.63
       }
     },
@@ -67,7 +67,7 @@
       "pk": 9,
       "fields": {
         "checkout_id": 8,
-        "role_id": 9,
+        "role_id": 5,
         "total": 107.96
       }
     },
@@ -76,7 +76,7 @@
       "pk": 10,
       "fields": {
         "checkout_id": 9,
-        "role_id": 10,
+        "role_id": 7,
         "total": 162.84
       }
     },
