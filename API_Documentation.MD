@@ -744,7 +744,198 @@ Certainly, here's the complete API documentation in Markdown format:
 }
 ```
 
-## Sheets
+## Spreadsheet Formulas
+
+### 1. Get List of Spreadsheet Formulas
+
+- **Route**: `GET /api/formulas/`
+- **Headers**:
+- **Request Body (None)**:
+- **Expected Response (200 OK)**:
+
+```json
+[
+  {
+      "id": 1,
+      "tipout_variables": [
+          {
+              "id": 1,
+              "variable": "Variable_1",
+              "table_name": "Table_1",
+              "column_name": "Column_1",
+              "created_at": "2023-10-26T00:00:00Z",
+              "updated_at": "2023-10-26T00:00:00Z",
+              "sheet_cell": null,
+              "is_uploaded": false,
+              "tipout_formula_id": 1
+          }
+      ],
+      "formula_name": "Formula_1",
+      "formula": "Formula expression 1",
+      "is_am_formula": true,
+      "created_at": "2023-10-26T00:00:00Z",
+      "updated_at": "2023-10-26T00:00:00Z",
+      "sheet_cell": null,
+      "is_uploaded": false,
+      "role_id": 1
+  },
+  ...
+]
+```
+
+### 2. Get Details of Spreadsheet Formulas
+
+- **Route**: `GET /api/formulas/<int:formulaId>/`
+- **Headers**:
+- **Request Body (None)**:
+- **Expected Response (200 OK)**:
+
+```json
+{
+  "id": 1,
+  "tipout_variables": [
+    {
+      "id": 1,
+      "variable": "Variable_1",
+      "table_name": "Table_1",
+      "column_name": "Column_1",
+      "created_at": "2023-10-26T00:00:00Z",
+      "updated_at": "2023-10-26T00:00:00Z",
+      "sheet_cell": null,
+      "is_uploaded": false,
+      "tipout_formula_id": 1
+    }
+  ],
+  "formula_name": "Formula_1",
+  "formula": "Formula expression 1",
+  "is_am_formula": true,
+  "created_at": "2023-10-26T00:00:00Z",
+  "updated_at": "2023-10-26T00:00:00Z",
+  "sheet_cell": null,
+  "is_uploaded": false,
+  "role_id": 1
+}
+```
+
+### 3. Add a Spreadsheet Formulas
+
+- **Route**: `POST /api/formulas/`
+- **Headers**:
+  - Content-Type: application/json
+- **Request Body (Required Information)**:
+
+```json
+{
+  "formula_name": "required formula name",
+  "formula": "required formula",
+  "role_id": "required role id",
+  "tipout_variables": [
+    {
+      "variable": "variable name, required if including list of variables",
+      "table_name": "table name, required if including list of variables",
+      "column_name": "column name, required if including list of variables"
+    }
+  ],
+  "is_am_formula": "optional boolean, defaults to true"
+}
+```
+
+- **Expected Response (201 Created)**:
+
+```json
+{
+  "message": "1 formula variables created successfully",
+  "formula": {
+    "id": 17,
+    "tipout_variables": [
+      {
+        "id": 17,
+        "variable": "Busser",
+        "table_name": "some table",
+        "column_name": "column name",
+        "created_at": "2023-11-03T03:40:48.072966Z",
+        "updated_at": "2023-11-03T03:40:48.072987Z",
+        "sheet_cell": null,
+        "is_uploaded": false,
+        "tipout_formula_id": 17
+      }
+    ],
+    "formula_name": "Busser Formula",
+    "formula": "0.5xBusser",
+    "is_am_formula": true,
+    "created_at": "2023-11-03T03:40:48.065401Z",
+    "updated_at": "2023-11-03T03:40:48.065433Z",
+    "sheet_cell": null,
+    "is_uploaded": false,
+    "role_id": 6
+  }
+}
+```
+
+- **Error Response (400 Bad Reqeust)**:
+
+```json
+{
+  "tipout_variables": ["This field is required."],
+  "formula_name": ["This field is required."],
+  "formula": ["This field is required."],
+  "role_id": ["This field is required."],
+  // if including list of tipout variables
+  "variable": ["This field is required."],
+  "table_name": ["This field is required."],
+  "column_name": ["This field is required."]
+}
+```
+
+### 4. Update Spreadsheet Formulas
+
+- **Route**: `PUT /api/formulas/<int:formulaId>`
+- **Headers**:
+  - Content-Type: application/json
+- **Request Body (Required Information)**:
+
+```json
+{
+  "formula_name": "required formula name",
+  "formula": "required formula",
+  "role_id": "required role id",
+  "tipout_variables": [
+    {
+      "variable": "variable name, required if including list of variables",
+      "table_name": "table name, required if including list of variables",
+      "column_name": "column name, required if including list of variables"
+    }
+  ],
+  "is_am_formula": "optional boolean, defaults to true"
+}
+```
+
+- **Expected Response ()**:
+- **Error Response ()**:
+
+### 1. Get List of Spreadsheet Formulas
+
+- **Route**: `GET /api/formulas/`
+- **Headers**:
+- **Request Body (None)**:
+- **Expected Response ()**:
+- **Error Response ()**:
+
+### 1. Get List of Spreadsheet Formulas
+
+- **Route**: `GET /api/formulas/`
+- **Headers**:
+- **Request Body (None)**:
+- **Expected Response ()**:
+- **Error Response ()**:
+
+### 1. Get List of Spreadsheet Formulas
+
+- **Route**: `GET /api/formulas/`
+- **Headers**:
+- **Request Body (None)**:
+- **Expected Response ()**:
+- **Error Response ()**:
 
 ## Daily Checkouts
 

@@ -126,6 +126,47 @@ class FormulaViewSet(viewsets.ModelViewSet):
             },
                 status=status.HTTP_201_CREATED)
 
+    def update(self, request, *args, **kwargs):
+        formula_instance = self.get_object()
+        data = request.data
+        formula_serializer = WriteFormulaSerializer(data=data)
+        formula_serializer.is_valid(raise_exception=True)
+        formula_instance['formula_name'] = data['formula_name'] if 'formula_name' in data else formula_instance['formula_name']
+        formula_instance['formula'] = data['formula'] if 'formula' in data else formula_instance['formula']
+        formula_instance['role_id'] = data['role_id'] if 'role_id' in data else formula_instance['role_id']
+        formula_instance['is_am_formula'] = data['is_am_formula'] if 'is_am_formula' in data else formula_instance['is_am_formula']
+        formula_instance['is_uploaded'] = False
+        formula_instance.save()
+
+        variable_data = request.data.get('tipout_variables', [])
+        updated = 0
+        created = 0
+        for data in variable_data:
+            data['tipout_formula_id'] = formula_instance.id
+            if 'id' in data:
+                variable_serializer = FormulaVariableSerializer(data=data)
+                variable_serializer.is_valid(raise_exception=True)
+                Tipout_Variable.objects.filter(id=data['id']).update(**data)
+                # variable_instance.variable = data['variable'] if 'variable' in data else variable_instance.variable
+                # variable_instance.table_name = data['table_name'] if 'table_name' in data else variable_instance.table_name
+                # variable_instance.column_name = data['column_name'] if 'column_name' in data else variable_instance.column_name
+                # variable_instance.is_uploaded = False
+                # variable_instance.save()
+                updated += 1
+            else:
+                variable_serializer = FormulaVariableSerializer(data=data)
+                variable_serializer.is_valid(raise_exception=True)
+                variable_serializer.save()
+                created += 1
+
+        updated_formula = Tipout_Formula.objects.get(id=formula_instance.id)
+        return Response(
+            {
+                'message': f'Formula successfully updated, {updated} variable(s) updated, {created} new variable(s) created',
+                'formula': ReadFormulaSerializer(updated_formula).data
+            },
+            status=status.HTTP_200_OK)
+
 
 class VariablesViewSet(viewsets.ModelViewSet):
     queryset = Tipout_Variable.objects.all()
