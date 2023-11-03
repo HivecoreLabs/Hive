@@ -19,7 +19,7 @@ import { useRoles } from '../../contexts/RolesContext';
 import { useSupportStaffContext } from '../../contexts/SupportStaffContext';
 
 const SupportStaffListItem = ({ supportEntry }) => {
-
+    debugger
     const id = supportEntry.id;
     const { roles } = useRoles();
     const { updateSupportStaffClockIn } = useSupportStaffContext();
@@ -38,13 +38,23 @@ const SupportStaffListItem = ({ supportEntry }) => {
     }
 
     // const [employee, setEmployee] = useState('');
-    const [role, setRole] = useState(supportEntry.active_role.role);
+
+    const transformRolesForSelect = (roles) => {
+        return roles.map((role) => ({
+            id: role.id,
+            role: role.role,
+        }));
+    }
+    const transformedRoles = transformRolesForSelect(roles);
+
+    const [role, setRole] = useState(
+        transformedRoles.find((role) => supportEntry.active_role.id === role.id)
+    );
     const [date, setDate] = useState(dayjs(supportEntry.date));
-    const [timeIn, setTimeIn] = useState(convertTimeFromBackend(supportEntry.time_in));
-    const [timeOut, setTimeOut] = useState(supportEntry.time_out);
+    const [timeIn, setTimeIn] = useState(dayjs(supportEntry.time_in));
+    const [timeOut, setTimeOut] = useState(dayjs(supportEntry.time_out));
 
     const [isEditing, setIsEditing] = useState(false);
-
 
     // const handleEmployee = (e) => {
     //     setEmployee(e.target.value);
@@ -58,16 +68,11 @@ const SupportStaffListItem = ({ supportEntry }) => {
     const handleTimeIn = (value) => {
         setTimeIn(value);
     }
-    const handleTimeOut = (e) => {
+    const handleTimeOut = (value) => {
         setTimeOut(value);
     }
 
-    // const transformRolesForSelect = (roles) => {
-    //     return roles.map((role) => ({
-    //         id: role.id,
-    //         role: role.role,
-    //     }));
-    // }
+    // const transformedRoles = transformRolesForSelect(roles);
 
     // const newRoles = transformRolesForSelect(roles);
     // console.log(newRoles);
@@ -79,14 +84,27 @@ const SupportStaffListItem = ({ supportEntry }) => {
     //         </MenuItem>
     //     ))
     // ) : null;
+    debugger
+    // console.log(transformedRoles);
+    // console.log(role);
 
-    const rolesList = roles.length > 0 ? (
-        roles.map((role) => (
-            <MenuItem key={role.id} value={role.role}>
-                {role.role}
-            </MenuItem>
-        ))
-    ) : null;
+    const rolesList = (
+        <TextField
+            select
+            fullWidth
+            label="Role"
+            variant="outlined"
+            value={role}
+            onChange={handleRole}
+            disabled
+        >
+            {transformedRoles.map((role) => (
+                <MenuItem key={role.id} value={role}>
+                    {role.role}
+                </MenuItem>
+            ))}
+        </TextField>
+    )
 
     // creating a map for roles to their id's for handleUpdate
     const roleMap = {};
@@ -101,6 +119,10 @@ const SupportStaffListItem = ({ supportEntry }) => {
     const handleCancelButton = () => {
         setIsEditing(prevState => !prevState);
         // needs to reset values to previous
+        setRole(supportEntry.active_role.role);
+        setDate(dayjs(supportEntry.date));
+        setTimeIn(dayjs(supportEntry.time_in));
+        setTimeOut(dayjs(supportEntry.time_out));
     };
 
     const handleUpdate = (e) => {
@@ -128,13 +150,14 @@ const SupportStaffListItem = ({ supportEntry }) => {
                     </Typography>
                 </TableCell>
                 <TableCell>
-                    {isEditing ? (
+                    {/* {isEditing ? (
                         <TextField
                             select
                             fullWidth
                             label="Role"
+                            defaultValue={null}
                             variant="outlined"
-                            value={role}
+                            value={rolesList ? role : {}}
                             onChange={handleRole}
                         >
                             {rolesList}
@@ -145,12 +168,14 @@ const SupportStaffListItem = ({ supportEntry }) => {
                             fullWidth
                             label="Role"
                             variant="outlined"
-                            value={role}
+                            value={rolesList ? role : {}}
                             onChange={handleRole}
                             disabled
                         >
                             {rolesList}
-                        </TextField>)}
+                        </TextField>
+                    )} */}
+                    {rolesList}
                 </TableCell>
                 <TableCell>
                     {isEditing ? (
@@ -159,11 +184,12 @@ const SupportStaffListItem = ({ supportEntry }) => {
                             label="Date"
                             value={date}
                             onChange={handleDate}
-                        />) : (<DatePicker
+                        />) : (
+                        <DatePicker
                             sx={{ width: '100%' }}
                             label="Date"
                             value={date}
-                            onChange={handleDate}
+                            // onChange={handleDate}
                             disabled
                         />)}
                 </TableCell>
@@ -174,12 +200,12 @@ const SupportStaffListItem = ({ supportEntry }) => {
                             label="Time In"
                             value={timeIn}
                             onChange={handleTimeIn}
-                        />) : (
+                        />
+                    ) : (
                         <TimePicker
                             fullWidth
                             label="Time In"
                             value={timeIn}
-                            onChange={handleTimeIn}
                             disabled
                         />)}
                 </TableCell>
@@ -195,7 +221,7 @@ const SupportStaffListItem = ({ supportEntry }) => {
                             fullWidth
                             label="Time Out"
                             value={timeOut}
-                            onChange={handleTimeOut}
+                            // onChange={handleTimeOut}
                             disabled
                         />)}
                 </TableCell>

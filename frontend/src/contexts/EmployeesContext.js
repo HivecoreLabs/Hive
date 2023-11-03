@@ -86,7 +86,6 @@ export const EmployeesProvider = ({ children }) => {
     }
 
     const readAllEmployees = async () => {
-        debugger
         const response = await fetch(`http://localhost:8000/api/employees/`);
 
         if (response.ok) {
