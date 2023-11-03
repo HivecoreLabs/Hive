@@ -987,7 +987,174 @@ Certainly, here's the complete API documentation in Markdown format:
 
 ### 5. Delete Spreadsheet Formula
 
-- **Route**: `DELETE /api/formulas/<int:formulaId>`
+## Spreadsheet Formula Variables
+
+### 1. Get List of All Spreadsheet Formula Variables
+
+- **Route**: `GET /api/variables/`
+- **Headers**:
+- **Request Body (None)**:
+- **Expected Response (200 OK)**:
+
+```json
+[
+  {
+    "id": 1,
+    "variable": "Variable_1",
+    "table_name": "Table_1",
+    "column_name": "Column_1",
+    "created_at": "2023-10-26T00:00:00Z",
+    "updated_at": "2023-10-26T00:00:00Z",
+    "sheet_cell": null,
+    "is_uploaded": false,
+    "tipout_formula_id": 1
+  },
+  ...
+]
+```
+
+### 2. Get Details of Spreadsheet Formula Variable
+
+- **Route**: `GET /api/variables/<int:variableId>/`
+- **Headers**:
+- **Request Body (None)**:
+- **Expected Response (200 OK)**:
+
+```json
+{
+  "id": 1,
+  "variable": "Variable_1",
+  "table_name": "Table_1",
+  "column_name": "Column_1",
+  "created_at": "2023-10-26T00:00:00Z",
+  "updated_at": "2023-10-26T00:00:00Z",
+  "sheet_cell": null,
+  "is_uploaded": false,
+  "tipout_formula_id": 1
+}
+```
+
+### 3. Get List of All Spreadsheet Formula Variables for Formula
+
+- **Route**: `GET /api/formulas/<int:formulaId>/variables/`
+- **Headers**:
+- **Request Body (None)**:
+- **Expected Response (200 OK)**:
+
+```json
+[
+  {
+    "id": 1,
+    "variable": "Variable_1",
+    "table_name": "Table_1",
+    "column_name": "Column_1",
+    "created_at": "2023-10-26T00:00:00Z",
+    "updated_at": "2023-10-26T00:00:00Z",
+    "sheet_cell": null,
+    "is_uploaded": false,
+    "tipout_formula_id": 1
+  },
+  ...
+]
+```
+
+### 3. Add a Spreadsheet Formula Variable
+
+- **Route**: `POST /api/variables/`
+- **Headers**:
+  - Content-Type: application/json
+- **Request Body (Required Information)**:
+
+```json
+{
+  "variable": "required variable",
+  "table_name": "required table name",
+  "column_name": "required column name",
+  "tipout_formula_id": "required tipout formula id"
+}
+```
+
+- **Expected Response (201 Created)**:
+
+```json
+{
+  "id": 1,
+  "variable": "Variable_1",
+  "table_name": "Table_1",
+  "column_name": "Column_1",
+  "created_at": "2023-11-03T16:56:35.785079Z",
+  "updated_at": "2023-11-03T16:56:35.785105Z",
+  "sheet_cell": null,
+  "is_uploaded": false,
+  "tipout_formula_id": 1
+}
+```
+
+- **Error Response (400 Bad Reqeust)**:
+
+```json
+{
+  "variable": ["This field is required."],
+  "table_name": ["This field is required."],
+  "column_name": ["This field is required."],
+  "tipout_formula_id": ["This field is required."]
+}
+```
+
+### 4. Update Spreadsheet Formula Variable
+
+- **Route**: `PUT /api/variables/<int:variableId>/`
+- **Headers**:
+  - Content-Type: application/json
+- **Request Body (Required Information)**:
+
+```json
+{
+  "variable": "required variable",
+  "table_name": "required table name",
+  "column_name": "required column name",
+  "tipout_formula_id": "required tipout formula id"
+}
+```
+
+- **Expected Response (201 Created)**:
+
+```json
+{
+  "id": 1,
+  "variable": "updated variable",
+  "table_name": "updated table",
+  "column_name": "updated column",
+  "created_at": "2023-11-03T16:56:35.785079Z",
+  "updated_at": "2023-11-03T16:56:35.785105Z",
+  "sheet_cell": null,
+  "is_uploaded": false,
+  "tipout_formula_id": "updated formula id"
+}
+```
+
+- **Error Response (400 Bad Reqeust)**:
+
+```json
+{
+  "variable": ["This field is required."],
+  "table_name": ["This field is required."],
+  "column_name": ["This field is required."],
+  "tipout_formula_id": ["This field is required."]
+}
+```
+
+- **Error Response (404 Not Found)**:
+
+```json
+{
+  "detail": "Not found."
+}
+```
+
+### 5. Delete Spreadsheet Formula Variable
+
+- **Route**: `DELETE /api/variables/<int:formulaId>`
 - **Headers**:
 - **Request Body (None)**:
 - **Expected Response (204 No Content)**:
