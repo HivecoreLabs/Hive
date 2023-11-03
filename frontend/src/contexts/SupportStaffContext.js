@@ -81,6 +81,22 @@ export const SupportStaffContextProvider = ({ children }) => {
         return response;
     };
 
+    const updateSupportStaffClockIn = async (updatedObject, id) => {
+        const response = await customFetch(`http://localhost:8000/api/clock-ins/${id}`, {
+            method: 'PUT',
+            body: {
+
+            }
+        });
+        if (response.ok) {
+            const data = await response.json();
+            dispatch(updateSupportStaff(data));
+        } else {
+            console.error('Could not update clock-in', error);
+        };
+        return response;
+    };
+
     const value = {
         supportStaff: state.supportStaff,
         fetchAllSupportStaffClockIns,

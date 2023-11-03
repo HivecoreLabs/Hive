@@ -16,28 +16,26 @@ import {
     Typography
 } from '@mui/material';
 import { useRoles } from '../../contexts/RolesContext';
+import { useSupportStaffContext } from '../../contexts/SupportStaffContext';
 
 const SupportStaffListItem = ({ supportEntry }) => {
+
+    const id = supportEntry.id;
+    const { roles } = useRoles();
+    const { updateSupportStaffClockIn } = useSupportStaffContext();
+
+    // we need this when formatting times in the request body 
+    const convertTimeFromFrontend = (frontendTime) => {
+        const date = newDate(frontendTime);
+        const dateString = date.toISOString();
+        return dateString;
+    }
 
     const convertTimeFromBackend = (backendTime) => {
         // remove the last 3 characters (the timezone information) and the colon
         const formattedTime = backendTime.slice(0, -4);
         return formattedTime;
     }
-    const { roles } = useRoles();
-
-    const rolesList = roles.length > 0 ? (
-        roles.map((role) => (
-            <MenuItem key={role.id} value={role.role}>
-                {role.role}
-            </MenuItem>
-        ))
-    ) : null;
-
-    const roleMap = {};
-    roles.forEach((role) => {
-        roleMap[role.role] = role.id;
-    });
 
     // const [employee, setEmployee] = useState('');
     const [role, setRole] = useState(supportEntry.active_role.role);
@@ -82,14 +80,42 @@ const SupportStaffListItem = ({ supportEntry }) => {
     //     ))
     // ) : null;
 
+    const rolesList = roles.length > 0 ? (
+        roles.map((role) => (
+            <MenuItem key={role.id} value={role.role}>
+                {role.role}
+            </MenuItem>
+        ))
+    ) : null;
+
+    // creating a map for roles to their id's for handleUpdate
+    const roleMap = {};
+    roles.forEach((role) => {
+        roleMap[role.role] = role.id;
+    });
+
     const handleEditButton = () => {
         setIsEditing(prevState => !prevState);
+    };
+
+    const handleCancelButton = () => {
+        setIsEditing(prevState => !prevState);
+        // needs to reset values to previous
     };
 
     const handleUpdate = (e) => {
         e.preventDefault();
 
-        const selectedRoleId = roleMap[role];
+        const updatedObject = {
+            employee_id,
+            active_role_id: roleMap[role],
+            date: date.format('YYYY-MM-DD'),
+            tipout_received,
+            time_in: convertTimeFromFrontend(timeIn),
+            time_out: convertTimeFromFrontend(timeOut),
+        }
+
+        updateSupportStaffClockIn(updatedObject, id);
     }
 
 
@@ -177,7 +203,7 @@ const SupportStaffListItem = ({ supportEntry }) => {
                     <div>
                         {isEditing ? (
                             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                <Button variant="outlined" color='warning' onClick={handleEditButton}>Cancel</Button>
+                                <Button variant="outlined" color='warning' onClick={handleCancelButton}>Cancel</Button>
                                 <Button variant="contained" onClick={handleUpdate}>Update</Button>
                             </div>
                         ) : (
