@@ -6,9 +6,39 @@ from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 
 from django.contrib.auth.models import User
-from .models import Role, Employee, SpreadSheet, Employee_Clock_In
-from .serializers import UserSerializer, RoleSerializer, EmployeeSerializer, Read_Clock_In_Serializer, Write_Clock_In_Serializer, SpreadSheetSerializer
+from .models import (
+    Role,
+    Employee,
+    SpreadSheet,
+    Tipout_Formula,
+    Tipout_Variable,
+    Employee_Clock_In
+)
+from .serializers import (
+    UserSerializer,
+    RoleSerializer,
+    EmployeeSerializer,
+    SpreadSheetSerializer,
+    ReadFormulaSerializer,
+    WriteFormulaSerializer,
+    Read_Clock_In_Serializer,
+    Write_Clock_In_Serializer,
+    FormulaVariableSerializer
+)
 from backend.quickstart import generate
+
+@api_view(['GET'])
+def get_tables_columns(request):
+    # table_name = MyModel._meta.db_table
+    tables_dictionary = {}
+    tables_dictionary[Role._meta.db_table] = [field.name for field in Role._meta.get_fields()]
+    tables_dictionary[Employee._meta.db_table] = [field.name for field in Employee._meta.get_fields()]
+    tables_dictionary[SpreadSheet._meta.db_table] = [field.name for field in SpreadSheet._meta.get_fields()]
+    tables_dictionary[Tipout_Formula._meta.db_table] = [field.name for field in Tipout_Formula._meta.get_fields()]
+    tables_dictionary[Tipout_Variable._meta.db_table] = [field.name for field in Tipout_Variable._meta.get_fields()]
+
+    return Response(tables_dictionary, status=200)
+
 
 @api_view(['POST'])
 def generate_sheet_database(request):
@@ -26,6 +56,7 @@ def generate_sheet_database(request):
             {'error': 'The sheet failed to generate. Please check your credentials file and try again.'},
             status=400
         )
+
 
 @api_view(['POST'])
 def login(request):
@@ -69,6 +100,84 @@ def signup(request):
                  }
         }, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class FormulaViewSet(viewsets.ModelViewSet):
+    queryset = Tipout_Formula.objects.all()
+    serializer_class = ReadFormulaSerializer
+
+    def create(self, request, pk=None):
+        formula_serializer = WriteFormulaSerializer(data=request.data)
+        formula_serializer.is_valid(raise_exception=True)
+        formula_instance = formula_serializer.save()
+
+        variable_data = request.data.get('tipout_variables', [])
+        for data in variable_data:
+            data['tipout_formula_id'] = formula_instance.id
+        variable_serializer = FormulaVariableSerializer(data=variable_data, many=True)
+        variable_serializer.is_valid(raise_exception=True)
+        variables = variable_serializer.save()
+
+        formula = Tipout_Formula.objects.get(id=formula_instance.id)
+        return Response(
+            {
+                'message': f'{len(variables)} formula variables created successfully',
+                'formula': ReadFormulaSerializer(formula).data
+            },
+                status=status.HTTP_201_CREATED)
+
+    def update(self, request, *args, **kwargs):
+        formula_instance = self.get_object()
+        data = request.data
+        formula_serializer = WriteFormulaSerializer(formula_instance, data=data)
+        formula_serializer.is_valid(raise_exception=True)
+        formula_serializer.save()
+
+        variable_data = request.data.get('tipout_variables', [])
+        updated = 0
+        created = 0
+        for data in variable_data:
+            data['is_uploaded'] = False
+            if 'id' in data and data['tipout_formula_id'] == formula_instance.id:
+                try:
+                    variable_instance = Tipout_Variable.objects.get(id=data['id'])
+                    variable_serializer = FormulaVariableSerializer(variable_instance, data=data)
+                    variable_serializer.is_valid(raise_exception=True)
+                    variable_serializer.save()
+                    updated += 1
+                except Tipout_Variable.DoesNotExist:
+                    data['tipout_formula_id'] = formula_instance.id
+                    variable_serializer = FormulaVariableSerializer(data=data)
+                    variable_serializer.is_valid(raise_exception=True)
+                    variable_serializer.save()
+                    created += 1
+            else:
+                data['tipout_formula_id'] = formula_instance.id
+                variable_serializer = FormulaVariableSerializer(data=data)
+                variable_serializer.is_valid(raise_exception=True)
+                variable_serializer.save()
+                created += 1
+
+        updated_formula = Tipout_Formula.objects.get(id=formula_instance.id)
+        return Response(
+            {
+                'message': f'Formula successfully updated, {updated} variable(s) updated, {created} new variable(s) created',
+                'formula': ReadFormulaSerializer(updated_formula).data
+            },
+            status=status.HTTP_200_OK)
+
+
+class VariablesViewSet(viewsets.ModelViewSet):
+    queryset = Tipout_Variable.objects.all()
+    serializer_class = FormulaVariableSerializer
+
+    def list(self, request, formula_pk=None):
+        if formula_pk:
+            queryset = Tipout_Variable.objects.filter(tipout_formula_id=formula_pk)
+        else:
+            queryset = Tipout_Variable.objects.all()
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class RoleViewSet(viewsets.ModelViewSet):

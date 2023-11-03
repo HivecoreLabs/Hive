@@ -215,6 +215,7 @@ Certainly, here's the complete API documentation in Markdown format:
 ```json
 [
   {
+    "id": "employee id",
     "first_name": "first name",
     "last_name": "last name",
     "roles": [
@@ -243,6 +244,7 @@ Certainly, here's the complete API documentation in Markdown format:
 
 ```json
 {
+  "id": "employee id",
   "first_name": "first name",
   "last_name": "last name",
   "roles": [
@@ -285,6 +287,7 @@ Certainly, here's the complete API documentation in Markdown format:
 
 ```json
 {
+  "id": "employee id",
   "first_name": "first name",
   "last_name": "last name",
   "roles": [
@@ -337,6 +340,7 @@ Certainly, here's the complete API documentation in Markdown format:
 
 ```json
 {
+  "id": "employee id",
   "first_name": "first name",
   "last_name": "last name",
   "roles": [
@@ -740,7 +744,429 @@ Certainly, here's the complete API documentation in Markdown format:
 }
 ```
 
-## Sheets
+## Spreadsheet Formulas
+
+### 1. Get List of Spreadsheet Formulas
+
+- **Route**: `GET /api/formulas/`
+- **Headers**:
+- **Request Body (None)**:
+- **Expected Response (200 OK)**:
+
+```json
+[
+  {
+      "id": 1,
+      "tipout_variables": [
+          {
+              "id": 1,
+              "variable": "Variable_1",
+              "table_name": "Table_1",
+              "column_name": "Column_1",
+              "created_at": "2023-10-26T00:00:00Z",
+              "updated_at": "2023-10-26T00:00:00Z",
+              "sheet_cell": null,
+              "is_uploaded": false,
+              "tipout_formula_id": 1
+          }
+      ],
+      "formula_name": "Formula_1",
+      "formula": "Formula expression 1",
+      "is_am_formula": true,
+      "created_at": "2023-10-26T00:00:00Z",
+      "updated_at": "2023-10-26T00:00:00Z",
+      "sheet_cell": null,
+      "is_uploaded": false,
+      "role_id": 1
+  },
+  ...
+]
+```
+
+### 2. Get Details of Spreadsheet Formulas
+
+- **Route**: `GET /api/formulas/<int:formulaId>/`
+- **Headers**:
+- **Request Body (None)**:
+- **Expected Response (200 OK)**:
+
+```json
+{
+  "id": 1,
+  "tipout_variables": [
+    {
+      "id": 1,
+      "variable": "Variable_1",
+      "table_name": "Table_1",
+      "column_name": "Column_1",
+      "created_at": "2023-10-26T00:00:00Z",
+      "updated_at": "2023-10-26T00:00:00Z",
+      "sheet_cell": null,
+      "is_uploaded": false,
+      "tipout_formula_id": 1
+    }
+  ],
+  "formula_name": "Formula_1",
+  "formula": "Formula expression 1",
+  "is_am_formula": true,
+  "created_at": "2023-10-26T00:00:00Z",
+  "updated_at": "2023-10-26T00:00:00Z",
+  "sheet_cell": null,
+  "is_uploaded": false,
+  "role_id": 1
+}
+```
+
+### 3. Add a Spreadsheet Formulas
+
+- **Route**: `POST /api/formulas/`
+- **Headers**:
+  - Content-Type: application/json
+- **Request Body (Required Information)**:
+
+```json
+{
+  "formula_name": "required formula name",
+  "formula": "required formula",
+  "role_id": "required role id",
+  "tipout_variables": [
+    // optional
+    {
+      "variable": "variable name, required if including list of variables",
+      "table_name": "table name, required if including list of variables",
+      "column_name": "column name, required if including list of variables"
+    }
+  ],
+  "is_am_formula": "optional boolean, defaults to true"
+}
+```
+
+- **Expected Response (201 Created)**:
+
+```json
+{
+  "message": "1 formula variables created successfully",
+  "formula": {
+    "id": 17,
+    "tipout_variables": [
+      {
+        "id": 17,
+        "variable": "Busser",
+        "table_name": "some table",
+        "column_name": "column name",
+        "created_at": "2023-11-03T03:40:48.072966Z",
+        "updated_at": "2023-11-03T03:40:48.072987Z",
+        "sheet_cell": null,
+        "is_uploaded": false,
+        "tipout_formula_id": 17
+      }
+    ],
+    "formula_name": "Busser Formula",
+    "formula": "0.5xBusser",
+    "is_am_formula": true,
+    "created_at": "2023-11-03T03:40:48.065401Z",
+    "updated_at": "2023-11-03T03:40:48.065433Z",
+    "sheet_cell": null,
+    "is_uploaded": false,
+    "role_id": 6
+  }
+}
+```
+
+- **Error Response (400 Bad Reqeust)**:
+
+```json
+{
+  "tipout_variables": ["This field is required."],
+  "formula_name": ["This field is required."],
+  "formula": ["This field is required."],
+  "role_id": ["This field is required."],
+  // if including list of tipout variables
+  "variable": ["This field is required."],
+  "table_name": ["This field is required."],
+  "column_name": ["This field is required."]
+}
+```
+
+### 4. Update Spreadsheet Formulas
+
+- **Route**: `PUT /api/formulas/<int:formulaId>`
+- **Headers**:
+  - Content-Type: application/json
+- **Request Body (Required Information)**:
+
+```json
+{
+  "formula_name": "required formula name",
+  "formula": "required formula",
+  "role_id": "required role id",
+  "tipout_variables": [
+    // optional
+    {
+      // if no id or tipout_formula_id != fomula_id then a new variable instace will be created
+      "id": "existing variable id",
+      "variable": "variable name, required if including list of variables",
+      "table_name": "table name, required if including list of variables",
+      "column_name": "column name, required if including list of variables",
+      "tipout_formula_id": "formula id"
+    },
+    {
+      "variable": "variable name, required if including list of variables",
+      "table_name": "table name, required if including list of variables",
+      "column_name": "column name, required if including list of variables"
+    }
+  ],
+  "is_am_formula": "optional boolean, defaults to true"
+}
+```
+
+- **Expected Response (200 OK)**:
+
+```json
+{
+  "message": "Formula successfully updated, 1 variable(s) updated, 0 new variable(s) created",
+  "formula": {
+    "id": 14,
+    "tipout_variables": [
+      {
+        "id": 14,
+        "variable": "Variable_1",
+        "table_name": "Table_1",
+        "column_name": "Column_1",
+        "created_at": "2023-11-03T16:07:33.668308Z",
+        "updated_at": "2023-11-03T16:07:33.668330Z",
+        "sheet_cell": null,
+        "is_uploaded": false,
+        "tipout_formula_id": 14
+      },
+      {
+        "id": 15,
+        "variable": "Variable_2",
+        "table_name": "Table_1",
+        "column_name": "Column_1",
+        "created_at": "2023-11-03T16:08:04.670749Z",
+        "updated_at": "2023-11-03T16:18:33.301684Z",
+        "sheet_cell": null,
+        "is_uploaded": false,
+        "tipout_formula_id": 14
+      }
+    ],
+    "formula_name": "Formula_1",
+    "formula": "Formula expression asdfasdfasdfasdf1",
+    "is_am_formula": true,
+    "created_at": "2023-11-03T16:07:33.659426Z",
+    "updated_at": "2023-11-03T16:18:33.291483Z",
+    "sheet_cell": null,
+    "is_uploaded": false,
+    "role_id": 2
+  }
+}
+```
+
+- **Error Response (400 Bad Data)**:
+
+```json
+{
+  "formula_name": ["This field is required."],
+  "formula": ["This field is required."],
+  "role_id": ["This field is required."],
+  // if including tipout_variables to be created or updated
+  "variable": ["This field is required."],
+  "table_name": ["This field is required."],
+  "column_name": ["This field is required."]
+}
+```
+
+- **Error Response (404 Not Found)**:
+
+```json
+{
+  "detail": "Not found."
+}
+```
+
+### 5. Delete Spreadsheet Formula
+
+## Spreadsheet Formula Variables
+
+### 1. Get List of All Spreadsheet Formula Variables
+
+- **Route**: `GET /api/variables/`
+- **Headers**:
+- **Request Body (None)**:
+- **Expected Response (200 OK)**:
+
+```json
+[
+  {
+    "id": 1,
+    "variable": "Variable_1",
+    "table_name": "Table_1",
+    "column_name": "Column_1",
+    "created_at": "2023-10-26T00:00:00Z",
+    "updated_at": "2023-10-26T00:00:00Z",
+    "sheet_cell": null,
+    "is_uploaded": false,
+    "tipout_formula_id": 1
+  },
+  ...
+]
+```
+
+### 2. Get Details of Spreadsheet Formula Variable
+
+- **Route**: `GET /api/variables/<int:variableId>/`
+- **Headers**:
+- **Request Body (None)**:
+- **Expected Response (200 OK)**:
+
+```json
+{
+  "id": 1,
+  "variable": "Variable_1",
+  "table_name": "Table_1",
+  "column_name": "Column_1",
+  "created_at": "2023-10-26T00:00:00Z",
+  "updated_at": "2023-10-26T00:00:00Z",
+  "sheet_cell": null,
+  "is_uploaded": false,
+  "tipout_formula_id": 1
+}
+```
+
+### 3. Get List of All Spreadsheet Formula Variables for Formula
+
+- **Route**: `GET /api/formulas/<int:formulaId>/variables/`
+- **Headers**:
+- **Request Body (None)**:
+- **Expected Response (200 OK)**:
+
+```json
+[
+  {
+    "id": 1,
+    "variable": "Variable_1",
+    "table_name": "Table_1",
+    "column_name": "Column_1",
+    "created_at": "2023-10-26T00:00:00Z",
+    "updated_at": "2023-10-26T00:00:00Z",
+    "sheet_cell": null,
+    "is_uploaded": false,
+    "tipout_formula_id": 1
+  },
+  ...
+]
+```
+
+### 3. Add a Spreadsheet Formula Variable
+
+- **Route**: `POST /api/variables/`
+- **Headers**:
+  - Content-Type: application/json
+- **Request Body (Required Information)**:
+
+```json
+{
+  "variable": "required variable",
+  "table_name": "required table name",
+  "column_name": "required column name",
+  "tipout_formula_id": "required tipout formula id"
+}
+```
+
+- **Expected Response (201 Created)**:
+
+```json
+{
+  "id": 1,
+  "variable": "Variable_1",
+  "table_name": "Table_1",
+  "column_name": "Column_1",
+  "created_at": "2023-11-03T16:56:35.785079Z",
+  "updated_at": "2023-11-03T16:56:35.785105Z",
+  "sheet_cell": null,
+  "is_uploaded": false,
+  "tipout_formula_id": 1
+}
+```
+
+- **Error Response (400 Bad Reqeust)**:
+
+```json
+{
+  "variable": ["This field is required."],
+  "table_name": ["This field is required."],
+  "column_name": ["This field is required."],
+  "tipout_formula_id": ["This field is required."]
+}
+```
+
+### 4. Update Spreadsheet Formula Variable
+
+- **Route**: `PUT /api/variables/<int:variableId>/`
+- **Headers**:
+  - Content-Type: application/json
+- **Request Body (Required Information)**:
+
+```json
+{
+  "variable": "required variable",
+  "table_name": "required table name",
+  "column_name": "required column name",
+  "tipout_formula_id": "required tipout formula id"
+}
+```
+
+- **Expected Response (201 Created)**:
+
+```json
+{
+  "id": 1,
+  "variable": "updated variable",
+  "table_name": "updated table",
+  "column_name": "updated column",
+  "created_at": "2023-11-03T16:56:35.785079Z",
+  "updated_at": "2023-11-03T16:56:35.785105Z",
+  "sheet_cell": null,
+  "is_uploaded": false,
+  "tipout_formula_id": "updated formula id"
+}
+```
+
+- **Error Response (400 Bad Reqeust)**:
+
+```json
+{
+  "variable": ["This field is required."],
+  "table_name": ["This field is required."],
+  "column_name": ["This field is required."],
+  "tipout_formula_id": ["This field is required."]
+}
+```
+
+- **Error Response (404 Not Found)**:
+
+```json
+{
+  "detail": "Not found."
+}
+```
+
+### 5. Delete Spreadsheet Formula Variable
+
+- **Route**: `DELETE /api/variables/<int:formulaId>`
+- **Headers**:
+- **Request Body (None)**:
+- **Expected Response (204 No Content)**:
+- **Error Response (404 Not Found)**:
+
+```json
+{
+  "detail": "Not found."
+}
+```
+
+# TODO:
 
 ## Daily Checkouts
 
@@ -812,8 +1238,6 @@ Certainly, here's the complete API documentation in Markdown format:
 ```
 
 (Note: Update the query parameters `{day}` and `{shift}` as needed.)
-
-## Tip Out Formulas
 
 ### 7. Define a New Tip Out Formula for a Specific Role
 
@@ -890,107 +1314,6 @@ Certainly, here's the complete API documentation in Markdown format:
 
 - **Route**: `DELETE /tipout-formulas/{id}`
 - **Expected Response (204 No Content)**
-
-## Daily Support Staff Time In/Out
-
-### 11. Log the Clock-In Time for a Support Staff Member for a Specific
-
-Day and Shift
-
-- **Route**: `POST /support-clock-ins`
-- **Request Body (Required Information)**:
-
-```json
-{
-  "employee_id": 1,
-  "time_in": "timestamp",
-  "active_role": "server"
-}
-```
-
-- **Expected Response (201 Created)**:
-
-```json
-{
-  "id": 1,
-  "employee_id": 1,
-  "time_in": "timestamp",
-  "active_role": "server",
-  "is_uploaded": false
-}
-```
-
-### 12. Log the Clock-Out Time for a Support Staff Member for a Specific Day and Shift
-
-- **Route**: `PUT /support-clock-ins/{id}`
-- **Request Body (Required Information)**:
-
-```json
-{
-  "time_out": "timestamp"
-}
-```
-
-- **Expected Response (200 OK)**:
-
-```json
-{
-  "id": 1,
-  "employee_id": 1,
-  "time_in": "timestamp",
-  "time_out": "timestamp",
-  "active_role": "server",
-  "is_uploaded": false
-}
-```
-
-### 13. Edit the Clock-In and Clock-Out Times for a Support Staff Member for a Specific Day and Shift
-
-- **Route**: `PUT /support-clock-ins/{id}`
-- **Request Body (Required Information)**:
-
-```json
-{
-  "time_in": "new_timestamp",
-  "time_out": "new_timestamp"
-}
-```
-
-- **Expected Response (200 OK)**:
-
-```json
-{
-  "id": 1,
-  "employee_id": 1,
-  "time_in": "new_timestamp",
-  "time_out": "new_timestamp",
-  "active_role": "server",
-  "is_uploaded": false
-}
-```
-
-- **Error Response (if time in is before time out)**:
-
-```json
-{
-  "error": "Invalid Time Range",
-  "details": "The clock-in time cannot be after the clock-out time."
-}
-```
-
-### 14. Delete the Clock-In and Clock-Out Times for a Support Staff Member for a Specific Day and Shift
-
-- **Route**: `DELETE /support-clock-ins/{id}`
-- **Expected Response (204 No Content)**
-
-- **Error Response (e.g., if clock in not found) 404**:
-
-```json
-{
-  "error": "clock in not found",
-  "details": "The requested clock in does not exist."
-}
-```
 
 ## Toggle for View by Day/Shift
 
