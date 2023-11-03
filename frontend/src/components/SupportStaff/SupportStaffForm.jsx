@@ -88,7 +88,6 @@ const SupportStaffForm = () => {
     // ) : null;
 
     const handleSubmit = (e) => {
-        debugger
         e.preventDefault();
         const newClockIn = {
             employee_id: employee.id,

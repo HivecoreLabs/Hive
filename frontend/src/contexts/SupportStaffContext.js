@@ -47,7 +47,6 @@ const initialState = {
 };
 
 const supportStaffReducer = (state = initialState, action) => {
-    debugger
     switch (action.type) {
         case RECEIVE_ONE_SUPPORT_STAFF:
             return {
@@ -110,11 +109,9 @@ export const SupportStaffContextProvider = ({ children }) => {
     };
 
     const updateSupportStaffClockIn = async (updatedClockIn, id) => {
-        debugger
-        const response = await fetch(`http://localhost:8000/api/clock-ins/${id}/`, {
+        const response = await customFetch(`http://localhost:8000/api/clock-ins/${id}/`, {
             method: 'PUT',
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(updatedClockIn)
+            body: updatedClockIn
         });
 
         if (response.ok) {

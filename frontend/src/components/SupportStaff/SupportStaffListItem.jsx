@@ -20,7 +20,6 @@ import { useSupportStaffContext } from '../../contexts/SupportStaffContext';
 
 const SupportStaffListItem = React.memo(({ supportEntry }) => {
     const { id, employee, active_role } = supportEntry;
-    debugger
     // const { roles } = useRoles();
     const { updateSupportStaffClockIn, deleteSupportStaffClockIn } = useSupportStaffContext();
 
@@ -76,8 +75,6 @@ const SupportStaffListItem = React.memo(({ supportEntry }) => {
     // const transformedRoles = transformRolesForSelect(roles);
 
     // const newRoles = transformRolesForSelect(roles);
-    // console.log(newRoles);
-    // console.log(supportEntry.active_role);
     // const rolesList = roles.length > 0 ? (
     //     transformRolesForSelect(roles).map((role, idx) => (
     //         <MenuItem key={idx} value={role}>
@@ -85,9 +82,6 @@ const SupportStaffListItem = React.memo(({ supportEntry }) => {
     //         </MenuItem>
     //     ))
     // ) : null;
-
-    // console.log(transformedRoles);
-    // console.log(role);
 
     // const rolesList = isEditing ? (
     //     <TextField
@@ -142,14 +136,11 @@ const SupportStaffListItem = React.memo(({ supportEntry }) => {
     };
 
     const handleDelete = () => {
-        debugger
         deleteSupportStaffClockIn(id)
         handleEditToggle();
-        debugger
     }
 
     const handleUpdate = (e) => {
-        debugger
         e.preventDefault();
 
         const updatedClockIn = {
