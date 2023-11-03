@@ -9,8 +9,25 @@ from decimal import Decimal
 
 
 from django.contrib.auth.models import User
-from .models import Role, Employee, SpreadSheet, Tipout_Formula, Tipout_Variable, Employee_Clock_In
-from .serializers import UserSerializer, RoleSerializer, EmployeeSerializer, SpreadSheetSerializer, FormulaSerializer, Read_Clock_In_Serializer, Write_Clock_In_Serializer, FormulaVariableSerializer, CheckoutSerializer, TipoutBreakdownSerializer, Read_Clock_In_Serializer_No_Role
+from .models import (
+    Role,
+    Employee,
+    SpreadSheet,
+    Tipout_Formula,
+    Tipout_Variable,
+    Employee_Clock_In
+)
+from .serializers import (
+    UserSerializer,
+    RoleSerializer,
+    EmployeeSerializer,
+    SpreadSheetSerializer,
+    ReadFormulaSerializer,
+    WriteFormulaSerializer,
+    Read_Clock_In_Serializer,
+    Write_Clock_In_Serializer,
+    FormulaVariableSerializer
+)
 from backend.quickstart import generate
 from datetime import date
 
@@ -25,6 +42,8 @@ def get_tables_columns(request):
     tables_dictionary[Tipout_Variable._meta.db_table] = [field.name for field in Tipout_Variable._meta.get_fields()]
 
     return Response(tables_dictionary, status=200)
+
+
 @api_view(['POST'])
 def generate_sheet_database(request):
     generated_id = generate("Sheets Database")
@@ -41,6 +60,7 @@ def generate_sheet_database(request):
             {'error': 'The sheet failed to generate. Please check your credentials file and try again.'},
             status=400
         )
+
 
 @api_view(['POST'])
 def login(request):
@@ -85,30 +105,84 @@ def signup(request):
         }, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 class FormulaViewSet(viewsets.ModelViewSet):
     queryset = Tipout_Formula.objects.all()
-    serializer_class = FormulaSerializer
+    serializer_class = ReadFormulaSerializer
 
-    def create_formula_variables(self, request, pk=None):
-        formula = self.get_object()
-        serializer = FormulaVariableSerializer(data=request.data, many=True)
-        formula_id = int(pk)
+    def create(self, request, pk=None):
+        formula_serializer = WriteFormulaSerializer(data=request.data)
+        formula_serializer.is_valid(raise_exception=True)
+        formula_instance = formula_serializer.save()
 
-        if serializer.is_valid():
-            # Create formula variables and associate them with the formula
-            formula_variables = []
-            for data in serializer.validated_data:
-                formula_variable = Tipout_Variable.objects.create(**data)
-                formula_variables.append(formula_variable)
+        variable_data = request.data.get('tipout_variables', [])
+        for data in variable_data:
+            data['tipout_formula_id'] = formula_instance.id
+        variable_serializer = FormulaVariableSerializer(data=variable_data, many=True)
+        variable_serializer.is_valid(raise_exception=True)
+        variables = variable_serializer.save()
 
-            return Response({'message': f'{len(formula_variables)} formula variables created successfully', 'formula': FormulaSerializer(formula).data}, status=status.HTTP_201_CREATED)
+        formula = Tipout_Formula.objects.get(id=formula_instance.id)
+        return Response(
+            {
+                'message': f'{len(variables)} formula variables created successfully',
+                'formula': ReadFormulaSerializer(formula).data
+            },
+                status=status.HTTP_201_CREATED)
 
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def update(self, request, *args, **kwargs):
+        formula_instance = self.get_object()
+        data = request.data
+        formula_serializer = WriteFormulaSerializer(formula_instance, data=data)
+        formula_serializer.is_valid(raise_exception=True)
+        formula_serializer.save()
+
+        variable_data = request.data.get('tipout_variables', [])
+        updated = 0
+        created = 0
+        for data in variable_data:
+            data['is_uploaded'] = False
+            if 'id' in data and data['tipout_formula_id'] == formula_instance.id:
+                try:
+                    variable_instance = Tipout_Variable.objects.get(id=data['id'])
+                    variable_serializer = FormulaVariableSerializer(variable_instance, data=data)
+                    variable_serializer.is_valid(raise_exception=True)
+                    variable_serializer.save()
+                    updated += 1
+                except Tipout_Variable.DoesNotExist:
+                    data['tipout_formula_id'] = formula_instance.id
+                    variable_serializer = FormulaVariableSerializer(data=data)
+                    variable_serializer.is_valid(raise_exception=True)
+                    variable_serializer.save()
+                    created += 1
+            else:
+                data['tipout_formula_id'] = formula_instance.id
+                variable_serializer = FormulaVariableSerializer(data=data)
+                variable_serializer.is_valid(raise_exception=True)
+                variable_serializer.save()
+                created += 1
+
+        updated_formula = Tipout_Formula.objects.get(id=formula_instance.id)
+        return Response(
+            {
+                'message': f'Formula successfully updated, {updated} variable(s) updated, {created} new variable(s) created',
+                'formula': ReadFormulaSerializer(updated_formula).data
+            },
+            status=status.HTTP_200_OK)
 
 
 class VariablesViewSet(viewsets.ModelViewSet):
     queryset = Tipout_Variable.objects.all()
     serializer_class = FormulaVariableSerializer
+
+    def list(self, request, formula_pk=None):
+        if formula_pk:
+            queryset = Tipout_Variable.objects.filter(tipout_formula_id=formula_pk)
+        else:
+            queryset = Tipout_Variable.objects.all()
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
 
 class RoleViewSet(viewsets.ModelViewSet):
     queryset = Role.objects.all()
