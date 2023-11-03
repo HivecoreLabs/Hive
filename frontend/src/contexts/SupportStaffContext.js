@@ -10,6 +10,7 @@ export const useSupportStaffDispatch = () => useContext(SupportStaffDispatch);
 const RECEIVE_ONE_SUPPORT_STAFF = 'support/RECEIVE_ONE_SUPPORT_STAFF';
 const RECEIVE_ALL_SUPPORT_STAFF = 'support/RECEIVE_ALL_SUPPORT_STAFF';
 const UPDATE_SUPPORT_STAFF = 'support/UPDATE_SUPPORT_STAFF';
+const DELETE_SUPPORT_STAFF = 'support/DELETE_SUPPORT_STAFF';
 
 const receiveOneSupportStaff = (payload) => {
     return {
@@ -25,11 +26,18 @@ const receiveAllSupportStaff = (payload) => {
     };
 };
 
-const updateSupportStaff = (payload, supportStaffId) => {
+const updateSupportStaff = (payload, clockInId) => {
     return {
         type: UPDATE_SUPPORT_STAFF,
         payload,
-        supportStaffId
+        clockInId
+    };
+};
+
+const deleteSupportStaff = (clockInId) => {
+    return {
+        type: DELETE_SUPPORT_STAFF,
+        clockInId
     };
 };
 
@@ -53,15 +61,20 @@ const supportStaffReducer = (state = initialState, action) => {
             };
         case UPDATE_SUPPORT_STAFF:
             const updatedSupportStaffList = state.supportStaff.map((staff) => {
-                if (staff.id === action.supportStaffId) {
+                if (staff.id === action.clockInId) {
                     return { ...staff, ...action.payload };
                 }
                 return staff;
             });
-
             return {
                 ...state,
                 supportStaff: updatedSupportStaffList
+            };
+        case DELETE_SUPPORT_STAFF:
+            const updatedSupportStaff = state.supportStaff.filter((staff) => staff.id !== action.clockInId);
+            return {
+                ...state,
+                supportStaff: updatedSupportStaff
             };
         default:
             return state;
@@ -106,9 +119,23 @@ export const SupportStaffContextProvider = ({ children }) => {
 
         if (response.ok) {
             const data = await response.json();
-            dispatch(updateSupportStaff(data));
+            dispatch(updateSupportStaff(data, id));
         } else {
             console.error('Could not update clock-in', error);
+        };
+        return response;
+    };
+
+    const deleteSupportStaffClockIn = async (id) => {
+        const response = await fetch(`http://localhost:8000/api/clock-ins/${id}/`, {
+            method: 'DELETE',
+        });
+
+        if (response.ok) {
+            // const data = await response.json();
+            dispatch(deleteSupportStaff(id));
+        } else {
+            console.error('Could not delete clock-in', error);
         };
         return response;
     };
@@ -117,7 +144,8 @@ export const SupportStaffContextProvider = ({ children }) => {
         supportStaff: state.supportStaff,
         fetchAllSupportStaffClockIns,
         createSupportStaffClockIn,
-        updateSupportStaffClockIn
+        updateSupportStaffClockIn,
+        deleteSupportStaffClockIn
     };
 
     return (

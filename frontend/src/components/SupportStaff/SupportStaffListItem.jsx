@@ -18,11 +18,11 @@ import {
 import { useRoles } from '../../contexts/RolesContext';
 import { useSupportStaffContext } from '../../contexts/SupportStaffContext';
 
-const SupportStaffListItem = ({ supportEntry }) => {
+const SupportStaffListItem = React.memo(({ supportEntry }) => {
     const { id, employee, active_role } = supportEntry;
     debugger
     // const { roles } = useRoles();
-    const { updateSupportStaffClockIn } = useSupportStaffContext();
+    const { updateSupportStaffClockIn, deleteSupportStaffClockIn } = useSupportStaffContext();
 
     // we need this when formatting times in the request body 
     const convertTimeFromFrontend = (frontendTime) => {
@@ -142,7 +142,10 @@ const SupportStaffListItem = ({ supportEntry }) => {
     };
 
     const handleDelete = () => {
-
+        debugger
+        deleteSupportStaffClockIn(id)
+        handleEditToggle();
+        debugger
     }
 
     const handleUpdate = (e) => {
@@ -154,12 +157,13 @@ const SupportStaffListItem = ({ supportEntry }) => {
             employee_id: employee.id,
             active_role_id: role.id,
             date: date.format('YYYY-MM-DD'),
-            // time_in: convertTimeFromFrontend(timeIn),
-            // time_out: convertTimeFromFrontend(timeOut),
+            time_in: convertTimeFromFrontend(timeIn),
+            time_out: convertTimeFromFrontend(timeOut),
             // tipout_received,
         }
 
         updateSupportStaffClockIn(updatedClockIn, id);
+        handleEditToggle();
     }
 
 
@@ -268,6 +272,6 @@ const SupportStaffListItem = ({ supportEntry }) => {
             </TableRow >
         </>
     )
-};
+});
 
 export default SupportStaffListItem;
