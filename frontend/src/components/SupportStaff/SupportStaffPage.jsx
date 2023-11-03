@@ -7,7 +7,7 @@ function SupportStaffPage() {
     return (
         <div className='support-staff-page-container'>
             <SupportStaffForm />
-            <SupportStaffList />
+            {/* <SupportStaffList /> */}
         </div>
     )
 }

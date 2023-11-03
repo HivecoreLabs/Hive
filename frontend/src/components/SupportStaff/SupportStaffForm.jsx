@@ -16,10 +16,12 @@ function SupportStaffForm() {
     const [employee, setEmployee] = useState('');
     const [employeeSelected, setEmployeeSelected] = useState(false);
     const [role, setRole] = useState('');
+    const [employeeRoleList, setEmployeeRoleList] = useState(null);
     const [date, setDate] = useState(dayjs());
     const [timeIn, setTimeIn] = useState(null);
     const [timeOut, setTimeOut] = useState(null);
     console.log(employees);
+
 
     // we need this when formatting times in the request body 
     const convertTimeFromFrontend = (frontendTime) => {
@@ -29,8 +31,18 @@ function SupportStaffForm() {
     }
 
     const handleEmployee = (e) => {
-        setEmployee(e.target.value);
+        debugger
+        const employee = e.target.value;
+        setEmployee(employee);
         setEmployeeSelected(true);
+
+        const rolesList = employee.roles.map((role) => (
+            <MenuItem key={role.id} value={role}>
+                {role.role}
+            </MenuItem>
+        ));
+
+        setEmployeeRoleList(rolesList);
     }
 
     const handleRole = (e) => {
@@ -146,7 +158,7 @@ function SupportStaffForm() {
                                         onChange={handleRole}
                                     >
                                         <div></div>
-                                        {rolesList}
+                                        {employeeRoleList}
                                     </TextField>
                                 </Grid>
                                 <Grid item sm={6}>

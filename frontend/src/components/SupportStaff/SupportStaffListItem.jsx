@@ -88,7 +88,22 @@ const SupportStaffListItem = ({ supportEntry }) => {
     // console.log(transformedRoles);
     // console.log(role);
 
-    const rolesList = (
+    const rolesList = isEditing ? (
+        <TextField
+            select
+            fullWidth
+            label="Role"
+            variant="outlined"
+            value={role}
+            onChange={handleRole}
+        >
+            {transformedRoles.map((role) => (
+                <MenuItem key={role.id} value={role.id}>
+                    {role.role}
+                </MenuItem>
+            ))}
+        </TextField>
+    ) : (
         <TextField
             select
             fullWidth
@@ -99,12 +114,14 @@ const SupportStaffListItem = ({ supportEntry }) => {
             disabled
         >
             {transformedRoles.map((role) => (
-                <MenuItem key={role.id} value={role}>
+                <MenuItem key={role.id} value={role.id}>
                     {role.role}
                 </MenuItem>
             ))}
         </TextField>
-    )
+    );
+
+
 
     // creating a map for roles to their id's for handleUpdate
     const roleMap = {};
