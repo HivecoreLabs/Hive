@@ -21,7 +21,9 @@ const dayTheme = createTheme({
         white: 'white',
         canvas: '#EDEDED', // off white
     },
-    navHover: '#00000008'
+    navHover: '#00000008',
+    AM: '#FFD07B',
+    PM: '#9fa8da',
 });
 
 const nightTheme = createTheme({
@@ -43,7 +45,9 @@ const nightTheme = createTheme({
         white: 'white',
         canvas: '#EDEDED', // off white
     },
-    navHover: '#00000008'
+    navHover: '#00000008',
+    AM: '#FFD07B',
+    PM: '#9fa8da',
 });
 
 const now = new Date();

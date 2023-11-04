@@ -58,6 +58,12 @@ const SupportStaffForm = () => {
     const handleTimeOut = (value) => {
         setTimeOut(value);
     }
+    const handleAMShift = (e) => {
+        setIsAMShift(prevState => !prevState)
+    }
+    const handlePMShift = (e) => {
+        setIsAMShift(prevState => !prevState)
+    }
 
     const employeesList = employees.length > 0 ? (
         employees.map((employee, idx) => (
@@ -191,7 +197,7 @@ const SupportStaffForm = () => {
                                         control={
                                             <Checkbox
                                                 checked={isAMShift}
-                                                onChange={(e) => setIsAMShift(e.target.checked)}
+                                                onChange={handleAMShift}
                                             />
                                         }
                                         label="AM Shift"
@@ -200,7 +206,7 @@ const SupportStaffForm = () => {
                                         control={
                                             <Checkbox
                                                 checked={!isAMShift}
-                                                onChange={(e) => setIsAMShift(!e.target.checked)}
+                                                onChange={handlePMShift}
                                             />
                                         }
                                         label="PM Shift"
