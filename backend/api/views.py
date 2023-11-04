@@ -4,6 +4,10 @@ from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
+from django.db.models import Subquery, OuterRef
+from decimal import Decimal, getcontext, ROUND_05UP
+from datetime import datetime
+
 
 from django.contrib.auth.models import User
 from .models import (
@@ -12,7 +16,9 @@ from .models import (
     SpreadSheet,
     Tipout_Formula,
     Tipout_Variable,
-    Employee_Clock_In
+    Employee_Clock_In,
+    Checkout_Tipout_Breakdown,
+    Checkout
 )
 from .serializers import (
     UserSerializer,
@@ -23,9 +29,13 @@ from .serializers import (
     WriteFormulaSerializer,
     Read_Clock_In_Serializer,
     Write_Clock_In_Serializer,
-    FormulaVariableSerializer
+    FormulaVariableSerializer,
+    CheckoutSerializer,
+    TipoutBreakdownSerializer,
+    ReadLimitedClockInSerializer
 )
 from backend.quickstart import generate
+from datetime import date
 
 @api_view(['GET'])
 def get_tables_columns(request):
@@ -299,3 +309,142 @@ class RoleClockInViewSet(viewsets.ViewSet):
             queryset = Employee_Clock_In.objects.filter(active_role_id=role_pk)
         serializer = Read_Clock_In_Serializer(queryset, many=True)
         return Response(serializer.data)
+
+class CheckOutViewSet(viewsets.ViewSet):
+    serializer_class = CheckoutSerializer
+    tipout_breakdown_serializer_class = TipoutBreakdownSerializer
+    # create a new checkout instance based on the passed in data
+    # {
+    # "net_sales": 5000,
+    # "cash_owed": 100,
+    # "tipout_day": "2023-11-03",
+    # "employee_id":1
+    # }
+    # instantiate total var = 0
+    # get all unique support roles for day and shift (am/pm)
+    # get all related formulas for each role
+    # get all related variables for each formula ^
+    # substitute each variable in the formula with its literal value (table + column/ row should be determined by day)
+    # eval(formula) -> feval (packkage)
+    # save instance of tipout breakdown
+    # add to running total
+    # save total_tipped_out
+    # return checkout object with updated total, and all of the tipout breakdowns
+    # {checkout info..., breakdowns: [{breakdown obj}...,]}
+    def post_checkout_and_generate_breakdown(self, request):
+
+        serializer = CheckoutSerializer(data=request.data)
+
+        if serializer.is_valid():
+            # Create the checkout
+            checkout = serializer.save()
+            current_date = request.data['tipout_day']
+            # looks like
+            # [{'active_role_id': 1}, {'active_role_id': 3}, {'active_role_id': 4}, {'active_role_id': 5}, {'active_role_id': 7}, {'active_role_id': 9}]
+            support_staff_on_day = Employee_Clock_In.objects.filter(
+                date=current_date
+            ).values('active_role_id', 'active_role_id__tipout_formula').distinct()
+            total_tipped_out = Decimal(0)
+            for role in support_staff_on_day:
+                # {'active_role_id': 9, 'active_role_id__tipout_formula': 9}
+                # print(role)
+                formula_instance = Tipout_Formula.objects.get(id=role['active_role_id__tipout_formula'])
+                variable_instances = Tipout_Variable.objects.filter(tipout_formula_id=role['active_role_id__tipout_formula'])
+                print(variable_instances)
+                # calculate
+                # save each calc
+                # add to running total
+            # update checkout instance tipout_total to total tipped out
+            # return serialized response with all related checkout tipout bd instances
+
+
+            # get a list of unique roles clocked in for support staff -/
+            # we want to get all the formulas related to those roles -/
+            # we want to iterate over each of the formulas, and calculate them -!!
+            # at each iteration, we should create a new ckouttobd instance and save it
+            # then we update the checkout instances tipout_total with the total amount from that
+            # return response including the checkout, and all related co tipout bd instances
+
+            # clock_in_serializer = Read_Clock_In_Serializer_No_Role(support_staff_on_day, many=True)
+            response_data = {
+                # 'roles' : clock_in_serializer.data,
+                # 'formulas': None,
+                'checkout': serializer.data
+            }
+            return Response(response_data, status=status.HTTP_201_CREATED)
+            # for support_staff in support
+            # print()
+            # for breakdown_data in tipout_breakdowns:
+            #     breakdown_serializer = TipoutBreakdownSerializer(data=breakdown_data)
+            #     if breakdown_serializer.is_valid():
+            #         breakdown = breakdown_serializer.save(checkout=checkout)
+            #         tipout_breakdowns.append(breakdown)
+
+            # response_data = {
+            #     'checkout': CheckoutSerializer(checkout).data,
+            #     'tipout_breakdowns': [CheckoutTipoutBreakdownSerializer(b).data for b in tipout_breakdowns]
+            # }
+
+            return Response(response_data, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
+def end_of_day(request):
+
+    def _calculate_totals(checkouts):
+        role_totals = {}
+        for checkout in checkouts:
+            role_id = checkout['checkout_tipout_breakdown__role_id']
+            total = checkout['checkout_tipout_breakdown__total']
+            if role_id and total:
+                role_totals[role_id] = role_totals.get(role_id, 0) + total
+        return role_totals
+    def _calculate_total_role_hours(support_staff):
+        role_hour_totals = {}
+        for staff in support_staff:
+            role_id = staff.active_role_id.id
+            time_in = staff.time_in
+            time_out = staff.time_out
+
+            if time_in and time_out:
+                role_hour_totals[role_id] = role_hour_totals.get(role_id,0) + (time_out-time_in).total_seconds()
+        return role_hour_totals
+    def _get_formula_and_determine_percent_worked(total_time_dictionary, staff_list, totals_dictionary):
+
+        for staff in staff_list:
+            time_in = staff.time_in
+            time_out = staff.time_out
+            if time_in and time_out:
+                total_time_worked = (time_out - time_in).total_seconds()
+                role_id = staff.active_role_id.id
+                percent_worked = total_time_worked/total_time_dictionary[role_id]
+
+                tipout_received = totals_dictionary[role_id] * Decimal(percent_worked)
+                tipout_received = Decimal("{:.2f}".format(tipout_received))
+
+                staff.tipout_received = tipout_received
+                staff.save(update_fields=["tipout_received"])
+
+        updated_staff_list = ReadLimitedClockInSerializer(staff_list, many=True)
+        return updated_staff_list.data
+
+
+    am_support_staff = Employee_Clock_In.objects.filter(date=request.data["date"], is_am=True)
+    pm_support_staff = Employee_Clock_In.objects.filter(date=request.data["date"], is_am=False)
+
+
+    am_checkouts = Checkout.objects.filter(date=request.data["date"], is_am_shift=True).values("checkout_tipout_breakdown__role_id", "checkout_tipout_breakdown__total", "checkout_tipout_breakdown__id")
+    pm_checkouts = Checkout.objects.filter(date=request.data["date"], is_am_shift=False).values("checkout_tipout_breakdown__role_id", "checkout_tipout_breakdown__total", "checkout_tipout_breakdown__id")
+
+    am_totals = _calculate_totals(am_checkouts)
+    pm_totals = _calculate_totals(pm_checkouts)
+
+    am_hour_totals = _calculate_total_role_hours(am_support_staff)
+    pm_hour_totals = _calculate_total_role_hours(pm_support_staff)
+
+    am_list_of_employee_tipouts_received = _get_formula_and_determine_percent_worked(am_hour_totals, am_support_staff, am_totals)
+    pm_list_of_employee_tipouts_received = _get_formula_and_determine_percent_worked(pm_hour_totals, pm_support_staff, pm_totals)
+
+
+    return Response({"am":am_list_of_employee_tipouts_received, "pm":pm_list_of_employee_tipouts_received}, status = status.HTTP_200_OK)
