@@ -22,6 +22,8 @@ const SupportStaffForm = () => {
     const [date, setDate] = useState(dayjs());
     const [timeIn, setTimeIn] = useState(null);
     const [timeOut, setTimeOut] = useState(null);
+    const [isAMShift, setIsAMShift] = useState(theme.isAMShift);
+
 
     // we need this when formatting times in the request body 
     const convertTimeFromFrontend = (frontendTime) => {
@@ -95,7 +97,7 @@ const SupportStaffForm = () => {
             date: date.format('YYYY-MM-DD'),
             time_in: timeIn ? convertTimeFromFrontend(timeIn) : null,
             time_out: timeOut ? convertTimeFromFrontend(timeOut) : null,
-            is_am: theme.isAMShift
+            is_am: isAMShift
         };
 
         createSupportStaffClockIn(newClockIn);
@@ -123,9 +125,6 @@ const SupportStaffForm = () => {
     return (
         <div>
             <div className='support-staff-form-container'>
-                {/* <Typography variant="h5" align="center" mb='20px'>
-                    Add Support Staff Clock-In
-                </Typography> */}
                 {[...Array(1)].map((_, index) => (
                     <Paper elevation={2} style={{ padding: '20px', marginBottom: '10px', width: '600px', borderRadius: '8px' }} key={index}>
                         <Typography variant="h5" align="center" mb='20px'>
@@ -171,16 +170,6 @@ const SupportStaffForm = () => {
                                     />
                                 </Grid>
                                 <Grid item sm={3}>
-                                    {/* <TextField
-                                        fullWidth
-                                        id="time-in"
-                                        type='time'
-                                        variant="outlined"
-                                        InputLabelProps={{ shrink: true }}
-                                        label="Time In"
-                                        value={timeIn}
-                                        onChange={handleTimeIn}
-                                    /> */}
                                     <TimePicker
                                         label="Time In"
                                         value={timeIn}
@@ -188,32 +177,36 @@ const SupportStaffForm = () => {
                                     />
                                 </Grid>
                                 <Grid item sm={3}>
-                                    {/* <TextField
-                                        fullWidth
-                                        id="time-out"
-                                        type='time'
-                                        variant="outlined"
-                                        InputLabelProps={{ shrink: true }}
-                                        label="Time Out"
-                                        value={timeOut}
-                                        onChange={handleTimeOut}
-                                    /> */}
                                     <TimePicker
                                         label="Time Out"
                                         value={timeOut}
                                         onChange={handleTimeOut}
                                     />
                                 </Grid>
-                                {/* <Grid item sm={12}>
-                                    <FormControlLabel
-                                        control={<Checkbox color="primary" value={isDoubleShift} onChange={handleIsDoubleShift} />}
-                                        label="Is Double Shift?"
-                                    />
-                                </Grid> */}
-                                <Grid item sm={6}>
+                                <Grid item sm={4}>
                                     <Button variant='outlined' color='warning' onClick={handleResetFields}>Reset Fields</Button>
                                 </Grid>
-                                <Grid item sm={6} style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                                <Grid item sm={6} sx={{ display: 'flex' }}>
+                                    <FormControlLabel
+                                        control={
+                                            <Checkbox
+                                                checked={isAMShift}
+                                                onChange={(e) => setIsAMShift(e.target.checked)}
+                                            />
+                                        }
+                                        label="AM Shift"
+                                    />
+                                    <FormControlLabel
+                                        control={
+                                            <Checkbox
+                                                checked={!isAMShift}
+                                                onChange={(e) => setIsAMShift(!e.target.checked)}
+                                            />
+                                        }
+                                        label="PM Shift"
+                                    />
+                                </Grid>
+                                <Grid item sm={2} style={{ display: 'flex', justifyContent: 'flex-end' }}>
                                     <Button variant='contained' style={{ color: theme.palette.primary.contrastText }} type='submit'>Submit</Button>
                                 </Grid>
                             </Grid>
