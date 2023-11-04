@@ -3,7 +3,7 @@ import { indigo } from '@mui/material/colors';
 import React, { useState, useContext, createContext } from 'react';
 
 const dayTheme = createTheme({
-    shift: 'AM',
+    isAMShift: true,
     palette: {
         // in order from brightest to darkest
         primary: {
@@ -25,7 +25,7 @@ const dayTheme = createTheme({
 });
 
 const nightTheme = createTheme({
-    shift: 'PM',
+    isAMShift: false,
     palette: {
         // in order from darkest to brightest
         primary: {
@@ -49,8 +49,11 @@ const nightTheme = createTheme({
 
 const now = new Date();
 const currentHour = now.getHours();
-const isDaytime = currentHour < 16; // 4 PM in 24-hour format
-export const theme = isDaytime ? dayTheme : nightTheme;
+const currentMinutes = now.getMinutes();
+const isAMShift = currentHour < 15 || (currentHour === 15 && currentMinutes < 30);
+// AM Shift is before 3:30 PM, PM Shift is after 3:30 PM
+export const theme = isAMShift ? dayTheme : nightTheme;
+
 // export const theme = nightTheme
 
 

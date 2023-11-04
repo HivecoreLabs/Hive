@@ -1,20 +1,53 @@
-import React from 'react';
-import { List, ListItem, ListItemText } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { DatePicker, TimePicker } from '@mui/x-date-pickers';
+import {
+    Paper,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    TextField,
+    Button,
+    Select,
+    MenuItem,
+} from '@mui/material';
+import { useSupportStaffContext } from '../../contexts/SupportStaffContext';
+import './SupportStaffList.css';
+import SupportStaffListItem from './SupportStaffListItem.jsx';
 
-function SupportStaffList({ savedMembers }) {
+const SupportStaffList = () => {
+    const { supportStaff, fetchAllSupportStaffClockIns } = useSupportStaffContext();
+    const supportStaffList = supportStaff.length > 0 ? (
+        supportStaff.map((supportEntry) => {
+            return <SupportStaffListItem supportEntry={supportEntry} key={supportEntry.id} />
+        })
+    ) : null;
+
+    useEffect(() => {
+        fetchAllSupportStaffClockIns();
+    }, []);
+
     return (
-        <div>
-            <h2>Saved Support Staff Members</h2>
-            <List>
-                {savedMembers.map((member, i) => (
-                    <ListItem key={i}>
-                        <ListItemText
-                            primary={`${member.employee} - ${member.role}`}
-                            secondary={`Time In: ${member.timeIn}, Time Out: ${member.timeOut}, Double Shift: ${member.isDoubleShift ? 'Yes' : 'No'}`}
-                        />
-                    </ListItem>
-                ))}
-            </List>
+        <div className='support-staff-list-container'>
+            <TableContainer component={Paper} sx={{ borderRadius: '8px', padding: '5px' }}>
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell sx={{ width: '15%', fontWeight: 'bold' }} variant='head'>Employee</TableCell>
+                            <TableCell sx={{ width: '12%', fontWeight: 'bold' }} variant='head'>Role</TableCell>
+                            <TableCell sx={{ width: '20%', fontWeight: 'bold' }} variant='head'>Date</TableCell>
+                            <TableCell sx={{ width: '15%', fontWeight: 'bold' }} variant='head'>Time In</TableCell>
+                            <TableCell sx={{ width: '15%', fontWeight: 'bold' }} variant='head'>Time Out</TableCell>
+                            <TableCell sx={{ width: '15%', fontWeight: 'bold' }} variant='head'>Actions</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {supportStaffList}
+                    </TableBody>
+                </Table>
+            </TableContainer>
         </div>
     );
 }
