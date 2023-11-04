@@ -21,7 +21,9 @@ const dayTheme = createTheme({
         white: 'white',
         canvas: '#EDEDED', // off white
     },
-    navHover: '#00000008'
+    navHover: '#00000008',
+    AM: '#FFD07B',
+    PM: '#9fa8da',
 });
 
 const nightTheme = createTheme({
@@ -43,19 +45,20 @@ const nightTheme = createTheme({
         white: 'white',
         canvas: '#EDEDED', // off white
     },
-    navHover: '#00000008'
-
+    navHover: '#00000008',
+    AM: '#FFD07B',
+    PM: '#9fa8da',
 });
 
 const now = new Date();
 const currentHour = now.getHours();
 const currentMinutes = now.getMinutes();
-const isAMShift = currentHour < 15 || (currentHour === 15 && currentMinutes < 30);
-// AM Shift is before 3:30 PM, PM Shift is after 3:30 PM
-export const theme = isAMShift ? dayTheme : nightTheme;
+const isPMShift = (currentHour >= 16 || currentHour < 3);
+// PM Shift is from 4:00 PM to 3:00 AM the next day
+export const theme = isPMShift ? nightTheme : dayTheme;
+
 
 // export const theme = nightTheme
-
 
 // above is to be used by MUI's built-in ThemeProvider
 
