@@ -11,8 +11,9 @@
     outline: none;
 }
 
-.multi-select-container:focus {
-    border-color: #777;
+.multi-select-container:focus,
+.multi-select-container:hover {
+    border-color: #2c2c2c;
 }
 
 .multi-select-value {

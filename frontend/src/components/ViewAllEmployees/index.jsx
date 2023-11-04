@@ -30,36 +30,68 @@ function ViewAllEmployees() {
         return lastNameA < lastNameB ? -1 : lastNameA > lastNameB ? 1 : firstNameA < firstNameB ? -1 : firstNameA > firstNameB ? 1 : 0;
     });
 
+    console.log(sortedEmp)
+
     return (
         <div className='view-all-employees-container'>
-            Hello from View All Employees Page!
+            <div
+            className='view-all-employees-header'
+            >
+                <h1>
+                    View All Employees
+                </h1>
+            </div>
             <div className='view-all-employees-employees'>
-                <ul>
+                        <div
+                        className='view-all-employees-employee-last-name view-all-employees-employee-header'
+                        >
+                            Last Name
+                        </div>
+                        <div
+                        className='view-all-employees-employee-first-name view-all-employees-employee-header'
+                        >
+                            First Name
+                        </div>
+                        <div
+                        className='view-all-employees-employee-employee-id view-all-employees-employee-header'
+                        >
+                            Employee ID
+                        </div>
+                        <div
+                        className='view-all-employees-employee-action view-all-employees-employee-header'
+                        >
+                            Action
+                        </div>
                     {
                         sortedEmp
                         .map(e => (
-                            <li
-                            key={e.id}
-                            className='view-all-employees-employee'
-                            >
-                                <div>
+                            <>
+                                <div
+                                className='view-all-employees-employee-last-name'
+                                >
                                     {e.last_name}
                                 </div>
-                                <div>
+                                <div
+                                className='view-all-employees-employee-first-name'
+                                >
                                     {e.first_name}
                                 </div>
-                                <div>
-                                    {e.employee_id}
+                                <div
+                                className='view-all-employees-employee-employee-id'
+                                >
+                                    {e.restaurant_employee_id
+}
                                 </div>
-                                <div>
+                                <div
+                                className='view-all-employees-employee-action'
+                                >
                                     <NavLink to={`/employees/${e.id}`}>
                                         <Button>Edit</Button>
                                     </NavLink>
                                 </div>
-                            </li>
+                            </>
                         ))
                     }
-                </ul>
             </div>
         </div>
     );

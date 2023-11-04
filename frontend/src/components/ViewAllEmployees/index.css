@@ -1,5 +1,44 @@
-.view-all-employees-employees > ul > li {
+.view-all-employees-container {
     display: flex;
+    flex-direction: column;
+
+    width: 95%;
     align-items: center;
-    justify-content: space-around;
+
+    margin-left: 60px;
+    margin-top: 60px;
 }
+
+.view-all-employees-header {
+    margin: 20px;
+}
+
+.view-all-employees-employees {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: auto;
+    justify-items: center;
+    align-items: center;
+    overflow-y: auto;
+}
+
+.view-all-employees-employee-header {
+    font-weight: bolder;
+}
+
+/* .view-all-employees-employee-last-name {
+    
+}
+
+.view-all-employees-employee-first-name {
+    grid-area: b;
+}
+
+.view-all-employees-employee-employee-id {
+    grid-area: c;
+}
+
+.view-all-employees-employee-action {
+    grid-area: d;
+} */
