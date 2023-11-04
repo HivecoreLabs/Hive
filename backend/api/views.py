@@ -296,7 +296,24 @@ class RoleClockInViewSet(viewsets.ViewSet):
 class CheckOutViewSet(viewsets.ViewSet):
     serializer_class = CheckoutSerializer
     tipout_breakdown_serializer_class = TipoutBreakdownSerializer
-
+    # create a new checkout instance based on the passed in data
+    # {
+    # "net_sales": 5000,
+    # "cash_owed": 100,
+    # "tipout_day": "2023-11-03",
+    # "employee_id":1
+    # }
+    # instantiate total var = 0
+    # get all unique support roles for day and shift (am/pm)
+    # get all related formulas for each role
+    # get all related variables for each formula ^
+    # substitute each variable in the formula with its literal value (table + column/ row should be determined by day)
+    # eval(formula) -> feval (packkage)
+    # save instance of tipout breakdown
+    # add to running total
+    # save total_tipped_out
+    # return checkout object with updated total, and all of the tipout breakdowns
+    # {checkout info..., breakdowns: [{breakdown obj}...,]}
     def post_checkout_and_generate_breakdown(self, request):
 
         serializer = CheckoutSerializer(data=request.data)
@@ -357,7 +374,7 @@ class CheckOutViewSet(viewsets.ViewSet):
 
 @api_view(['POST'])
 def end_of_day(request):
-    
+
     def _calculate_totals(checkouts):
         role_totals = {}
         for checkout in checkouts:
