@@ -16,11 +16,14 @@ export default function EditEmployeeForm() {
     }, [useEmployees, id]);
 
 
+    if (!Object.values(employee)[0]) return null;
+    console.log(employee);
+
     const toEdit = {
         firstName: employee.first_name,
         lastName: employee.last_name,
         restaurantId: employee.restaurant_employee_id,
-        role: employee.roles,
+        role: employee.roles || [],
         foodPermitExp: employee.food_permit_exp,
         alcoholPermitExp: employee.alcohol_permit_exp,
         formerEmployee: employee.is_former_employee

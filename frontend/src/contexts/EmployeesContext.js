@@ -1,10 +1,10 @@
 import React, { createContext, useContext, useReducer } from "react";
-import { useNavigate } from "react-router-dom";
 
 const ADD_EMPLOYEE = 'employee/ADD_EMPLOYEE';
 const LOAD_EMPLOYEE = 'employee/LOAD_EMPLOYEE';
 const LOAD_EMPLOYEES = 'employee/LOAD_EMPLOYEES';
 const REMOVE_EMPLOYEE = 'employee/REMOVE_EMPLOYEE';
+const CLEAR_EMPLOYEE = 'employee/CLEAR_EMPLOYEE';
 
 export const useEmployees = () => useContext(EmployeesContext);
 const EmployeesContext = createContext();
@@ -29,6 +29,9 @@ function employeesReducer(state = initialState, action) {
         case REMOVE_EMPLOYEE:
             delete newState[action.payload];
             return newState;
+        case CLEAR_EMPLOYEE:
+            newState.employee = {};
+            return newState;
         default:
             return state;
     }
@@ -52,6 +55,10 @@ const loadEmployees = payload => ({
 const removeEmployee = payload => ({
     type: REMOVE_EMPLOYEE,
     payload
+});
+
+const clearEmployee = () => ({
+    type: CLEAR_EMPLOYEE
 });
 
 export const EmployeesProvider = ({ children }) => {
@@ -123,13 +130,18 @@ export const EmployeesProvider = ({ children }) => {
         }
     }
 
+    const resetEmployee = () => {
+        dispatch(clearEmployee());
+    }
+
     const value = {
         employee: state.employee,
         employees: state.employees,
         createEmployee,
         readSingleEmployee,
         readAllEmployees,
-        updateEmployee
+        updateEmployee,
+        resetEmployee
     };
 
     return (
