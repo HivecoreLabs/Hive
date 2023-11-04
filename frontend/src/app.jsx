@@ -6,6 +6,7 @@ import Dashboard from './components/Dashboard';
 import Employee from './components/Employees/index.jsx';
 import CreateEmployeeForm from './components/EmployeeForm/CreateEmployee.jsx'
 import ViewAllEmployees from './components/ViewAllEmployees/index.jsx';
+import SupportStaffPage from './components/SupportStaff/index.js'
 import { useAuth } from './contexts/AuthenticationContext';
 import { theme } from './contexts/ThemeContext';
 
