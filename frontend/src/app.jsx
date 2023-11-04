@@ -22,6 +22,8 @@ export default function App() {
                 <Route exact path="/" element={<Home />} />
                 <Route exact path="/dashboard" element={<Dashboard />} />
                 <Route exact path="/employees" element={<Employee />} />
+                <Route exact path="/support" element={<SupportStaffPage />} />
+                <Route exact path="/checkouts" element={<SupportStaffPage />} />
                 <Route path="/employees/new" element={<CreateEmployeeForm />} />
                 <Route path="/employees/all" element={<ViewAllEmployees />} />
             </Routes>
