@@ -240,7 +240,14 @@ class EmployeeViewSet(viewsets.ModelViewSet):
 
 
 class ClockInViewSet(viewsets.ModelViewSet):
-    queryset = Employee_Clock_In.objects.all()
+    def get_queryset(self):
+        queryset = Employee_Clock_In.objects.all()
+        params = self.request.query_params
+        date = params.get('date')
+        if date:
+            queryset = Employee_Clock_In.objects.filter(date=date)
+        return queryset
+
     def get_serializer_class(self, *args, **kwargs):
         if self.action == 'list' or self.action == 'retrieve':
             return Read_Clock_In_Serializer
@@ -269,8 +276,13 @@ class ClockInViewSet(viewsets.ModelViewSet):
 class EmployeeClockInViewSet(viewsets.ViewSet):
     serializer_class = Read_Clock_In_Serializer
 
-    def list(self, requeset, employee_pk=None):
-        queryset = Employee_Clock_In.objects.filter(employee_id=employee_pk)
+    def list(self, request, employee_pk=None):
+        params = request.query_params
+        date = params.get('date')
+        if date:
+            queryset = Employee_Clock_In.objects.filter(employee_id=employee_pk, date=date)
+        else:
+            queryset = Employee_Clock_In.objects.filter(employee_id=employee_pk)
         serializer = Read_Clock_In_Serializer(queryset, many=True)
         return Response(serializer.data)
 
@@ -278,7 +290,12 @@ class EmployeeClockInViewSet(viewsets.ViewSet):
 class RoleClockInViewSet(viewsets.ViewSet):
     serializer_class = Read_Clock_In_Serializer
 
-    def list(self, requeset, role_pk=None):
-        queryset = Employee_Clock_In.objects.filter(active_role_id=role_pk)
+    def list(self, request, role_pk=None):
+        params = request.query_params
+        date = params.get('date')
+        if date:
+            queryset = Employee_Clock_In.objects.filter(active_role_id=role_pk, date=date)
+        else:
+            queryset = Employee_Clock_In.objects.filter(active_role_id=role_pk)
         serializer = Read_Clock_In_Serializer(queryset, many=True)
         return Response(serializer.data)

@@ -399,6 +399,8 @@ Certainly, here's the complete API documentation in Markdown format:
 
 - **Route**: `GET /api/clock-ins/`
 - **Headers**:
+- **Available Query Parameters**:
+  - date
 - **Request Body (None)**:
 - **Expected Response (200 OK)**:
 
@@ -456,6 +458,8 @@ Certainly, here's the complete API documentation in Markdown format:
 
 - **Route**: `GET /api/employees/<int:employee_id>/clock-ins/`
 - **Headers**:
+- **Available Query Parameters**:
+  - date
 - **Request Body (None)**:
 - **Expected Response (200 OK)**:
 
@@ -486,6 +490,8 @@ Certainly, here's the complete API documentation in Markdown format:
 
 - **Route**: `GET /api/roles/<int:role_id>/clock-ins/`
 - **Headers**:
+- **Available Query Parameters**:
+  - date
 - **Request Body (None)**:
 - **Expected Response (200 OK)**:
 

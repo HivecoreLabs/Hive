@@ -19,7 +19,6 @@ import SupportStaffListItem from './SupportStaffListItem.jsx';
 
 const SupportStaffList = () => {
     const { supportStaff, fetchAllSupportStaffClockIns } = useSupportStaffContext();
-
     const sortedSupportStaff = [...supportStaff].sort((a, b) => {
         const timeA = new Date(a.time_in);
         const timeB = new Date(b.time_in);
