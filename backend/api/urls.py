@@ -9,7 +9,7 @@ router.register(r'formulas', views.FormulaViewSet, basename='formulas')
 router.register(r'variables', views.VariablesViewSet, basename='variables')
 router.register(r'clock-ins', views.ClockInViewSet, basename='clock-ins')
 router.register(r'employees', views.EmployeeViewSet, basename='employees')
-router.register(r'checkouts', views.CheckOutViewSet, basename='checkouts')
+# router.register(r'checkouts', views.CheckOutViewSet, basename='checkouts')
 employee_router = routers.NestedDefaultRouter(
     router, r'employees', lookup='employee')
 employee_router.register(
@@ -33,5 +33,6 @@ urlpatterns = [
     path(r'', include(router.urls)),
     path(r'', include(employee_router.urls)),
     path(r'', include(role_router.urls)),
-    path(r'', include(formula_router.urls))
+    path(r'', include(formula_router.urls)),
+    path("checkouts/", views.CheckOutViewSet.as_view({"POST":"post_checkout_and_generate_breakdown"}), name='checkouts')
 ]

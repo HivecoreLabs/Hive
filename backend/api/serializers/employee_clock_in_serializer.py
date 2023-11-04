@@ -28,3 +28,4 @@ class Write_Clock_In_Serializer(serializers.ModelSerializer):
     class Meta:
         model=Employee_Clock_In
         fields='__all__'
+
