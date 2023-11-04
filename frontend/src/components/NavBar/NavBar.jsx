@@ -1,31 +1,35 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { styled, useTheme, alpha } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import MuiDrawer from '@mui/material/Drawer';
-import MuiAppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Tooltip from '@mui/material/Tooltip';
-import List from '@mui/material/List';
-import CssBaseline from '@mui/material/CssBaseline';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import { Button } from '@mui/material';
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import GroupsIcon from '@mui/icons-material/Groups';
-import AssessmentIcon from '@mui/icons-material/Assessment';
-import SettingsIcon from '@mui/icons-material/Settings';
-import SearchIcon from '@mui/icons-material/Search';
-import InputBase from '@mui/material/InputBase';
-import AccountBoxIcon from '@mui/icons-material/AccountBox';
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import {
+    Box,
+    Drawer as MuiDrawer,
+    AppBar as MuiAppBar,
+    Toolbar,
+    Tooltip,
+    List,
+    CssBaseline,
+    Typography,
+    Divider,
+    IconButton,
+    Button,
+    ListItem,
+    ListItemButton,
+    ListItemIcon,
+    ListItemText,
+    InputBase,
+} from '@mui/material';
+import {
+    Menu as MenuIcon,
+    ChevronLeft as ChevronLeftIcon,
+    ChevronRight as ChevronRightIcon,
+    Dashboard as DashboardIcon,
+    Groups as GroupsIcon,
+    Assessment as AssessmentIcon,
+    Settings as SettingsIcon,
+    Search as SearchIcon,
+    AccountBox as AccountBoxIcon,
+} from '@mui/icons-material';
+import { NavLink, useLocation } from 'react-router-dom';
 import AccountMenu from './AccountMenu.jsx';
 import { useAuth } from '../../contexts/AuthenticationContext.js';
 
@@ -187,7 +191,7 @@ export default function MiniDrawer() {
                         <MenuIcon />
                     </IconButton>
                     <Box width={1} m={0} p={0} sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <Typography variant="h6" noWrap component="div" alignSelf='center'>
+                        <Typography variant="h5" fontWeight='bold' noWrap color={theme.palette.quaternary.main} component="div" alignSelf='center'>
                             {`${user.username}'s Dashboard`}
                         </Typography>
                         {/* <Search alignSelf='center' >
