@@ -89,7 +89,8 @@ function DashboardItem3() {
                     It is currently the
                 </Typography>
                 <Typography variant="h3" sx={textStyles}>
-                    {`${theme.shift}`}
+                    {/* {`${theme.shift}`} */}
+                    { theme.isAMShift ? 'AM' : 'PM' }
                 </Typography>
                 <Typography variant="h5" color="primary" component="span">
                     shift
@@ -99,7 +100,8 @@ function DashboardItem3() {
                 </Typography>
             </div>
             <div>
-                {theme.shift === 'AM' ? <WbSunnyIcon sx={sunIconStyles} /> : <ModeNightIcon sx={moonIconStyles} />}
+                {/* {theme.shift === 'AM' ? <WbSunnyIcon sx={sunIconStyles} /> : <ModeNightIcon sx={moonIconStyles} />} */}
+                {theme.isAMShift ? <WbSunnyIcon sx={sunIconStyles} /> : <ModeNightIcon sx={moonIconStyles} />}
             </div>
         </Box>
     );

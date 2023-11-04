@@ -67,13 +67,6 @@ export default function EmployeeForm({ employee, formType }) {
 
     };
 
-    useEffect(() => {
-        console.log(role);
-    }, [role])
-
-    let test = dayjs();
-    console.log(test)
-
     return (
         <div className='employee-form-container'>
             <div className='employee-form-header'>

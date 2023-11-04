@@ -17,7 +17,6 @@ export default function EditEmployeeForm() {
 
 
     if (!Object.values(employee)[0]) return null;
-    console.log(employee);
 
     const toEdit = {
         firstName: employee.first_name,

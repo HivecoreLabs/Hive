@@ -30,8 +30,6 @@ function ViewAllEmployees() {
         return lastNameA < lastNameB ? -1 : lastNameA > lastNameB ? 1 : firstNameA < firstNameB ? -1 : firstNameA > firstNameB ? 1 : 0;
     });
 
-    console.log(sortedEmp)
-
     return (
         <div className='view-all-employees-container'>
             <div
