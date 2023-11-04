@@ -8,6 +8,7 @@ import EmployeeForm from './components/EmployeeForm/index.jsx';
 import SupportStaffPage from './components/SupportStaff';
 import CheckoutsPage from './components/CheckoutsPage';
 import CreateEmployeeForm from './components/EmployeeForm/CreateEmployee.jsx'
+import EditEmployeeForm from './components/EmployeeForm/EditEmployee.jsx';
 import ViewAllEmployees from './components/ViewAllEmployees/index.jsx';
 import { useAuth } from './contexts/AuthenticationContext';
 import { theme } from './contexts/ThemeContext';
@@ -29,6 +30,7 @@ export default function App() {
                 <Route exact path="/checkouts" element={<CheckoutsPage />} />
                 <Route path="/employees/new" element={<CreateEmployeeForm />} />
                 <Route path="/employees/all" element={<ViewAllEmployees />} />
+                <Route exact path="/employees/:id" element={<EditEmployeeForm />} />
             </Routes>
         </>
     );

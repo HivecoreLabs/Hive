@@ -3,7 +3,10 @@ import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useEmployees } from '../../contexts/EmployeesContext';
 import { useRoles } from '../../contexts/RolesContext';
+import { useTheme } from '@emotion/react';
 import { Button, Input, TextField } from '@mui/material';
+import { DatePicker } from '@mui/x-date-pickers';
+import dayjs from 'dayjs';
 import MultiSelect from './MultiSelect.jsx';
 import './index.css';
 
@@ -17,6 +20,7 @@ export default function EmployeeForm({ employee, formType }) {
         roles,
         readAllRoles
     } = useRoles();
+    const theme = useTheme();
     const { id } = useParams();
     const navigate = useNavigate();
 
@@ -62,10 +66,6 @@ export default function EmployeeForm({ employee, formType }) {
         if (res) return navigate("/employees/all");
 
     };
-
-    useEffect(() => {
-        console.log(role);
-    }, [role])
 
     return (
         <div className='employee-form-container'>
@@ -168,7 +168,7 @@ export default function EmployeeForm({ employee, formType }) {
                             <label>
                                 Former Employee?
                             </label>
-                            <Input 
+                            <input 
                                 type='checkbox'
                                 margin='normal'
                                 value={formerEmployee}

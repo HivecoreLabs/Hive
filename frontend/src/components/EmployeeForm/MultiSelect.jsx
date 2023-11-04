@@ -15,7 +15,6 @@ export default function MultiSelect({ value, onChange, options }) {
     }
 
     const selectOption = (option) => {
-        console.log('functions runs')
         if (value.includes(option)) {
             onChange(value.filter(o => o !== option));
         } else {
