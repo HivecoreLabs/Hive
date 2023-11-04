@@ -1,5 +1,5 @@
 import './Home.css';
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useRef } from 'react';
 import { useTheme, Box, Typography, Button, Modal, TextField, FormControl, Input, InputLabel, FormHelperText } from '@mui/material';
 import HiveRoundedIcon from '@mui/icons-material/HiveRounded';
 import { css } from '@emotion/react'
@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 
 function Home() {
     const navigate = useNavigate()
+    const newUserButtonRef = useRef(null);
     const theme = useTheme();
     const { isAuthenticated, user, login, logout } = useAuth();
     const { error, errorMessage, clearError, errorDispatch } = useError();
@@ -83,13 +84,16 @@ function Home() {
                         LOG IN
                     </Button>
                 </form>
-                <Button color="secondary" onClick={handleModalOpen} sx={{
-                    marginTop: '10px',
-                    display: 'inline',
-                    '&:hover': {
-                        textDecoration: 'underline'
-                    }
-                }}>
+                <Button color="secondary" onClick={handleModalOpen}
+                    sx={{
+                        marginTop: '10px',
+                        display: 'inline',
+                        '&:hover': {
+                            textDecoration: 'underline'
+                        }
+                    }}
+                    ref={newUserButtonRef}
+                >
                     NEW USER?
                 </Button>
             </Box>
