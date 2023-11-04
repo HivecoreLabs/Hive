@@ -1,0 +1,5 @@
+.view-all-employees-employees > ul > li {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}

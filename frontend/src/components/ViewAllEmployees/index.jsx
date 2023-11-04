@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Box, Grid, Paper } from '@mui/material';
+import { Button } from '@mui/material';
 import { css } from '@emotion/react';
 import { useEmployees } from "../../contexts/EmployeesContext";
+import './index.css';
 
 function ViewAllEmployees() {
 
@@ -32,43 +33,34 @@ function ViewAllEmployees() {
     return (
         <div className='view-all-employees-container'>
             Hello from View All Employees Page!
-            <Box className='view-all-employees-employees'>
-                <Grid container columnSpacing={4}>
-                    <Grid item>
-                        Last Name
-                    </Grid>
-                    <Grid item>
-                        First Name
-                    </Grid>
-                    <Grid item>
-                        Employee ID
-                    </Grid>
-                    <Grid item>
-                        Action
-                    </Grid>
+            <div className='view-all-employees-employees'>
+                <ul>
                     {
                         sortedEmp
                         .map(e => (
-                            <>
-                                <Grid item>
+                            <li
+                            key={e.id}
+                            className='view-all-employees-employee'
+                            >
+                                <div>
                                     {e.last_name}
-                                </Grid>
-                                <Grid item>
+                                </div>
+                                <div>
                                     {e.first_name}
-                                </Grid>
-                                <Grid item>
+                                </div>
+                                <div>
                                     {e.employee_id}
-                                </Grid>
-                                <Grid item>
+                                </div>
+                                <div>
                                     <NavLink to={`/employees/${e.id}`}>
-                                        Edit
+                                        <Button>Edit</Button>
                                     </NavLink>
-                                </Grid>
-                            </>  
+                                </div>
+                            </li>
                         ))
                     }
-                </Grid>
-            </Box>
+                </ul>
+            </div>
         </div>
     );
 

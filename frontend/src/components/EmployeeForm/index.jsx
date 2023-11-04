@@ -148,8 +148,10 @@ export default function EmployeeForm({ employee, formType }) {
                         <label>
                             Food Permit Expiration
                         </label>
-                        <DatePicker 
+                        <Input 
                             label='Food Permit Expiration'
+                            type='date'
+                            margin='normal'
                             value={foodPermitExp}
                             onChange={e => setFoodPermitExp(e.target.value)}
                             tabIndex={4}
@@ -159,8 +161,10 @@ export default function EmployeeForm({ employee, formType }) {
                         <label>
                             Alcohol Permit Expiration
                         </label>
-                        <DatePicker 
+                        <Input 
                             label='Alcohol Permit Expiration'
+                            type='date'
+                            margin='normal'
                             value={alcoholPermitExp}
                             onChange={e => setAlcoholPermitExp(e.target.value)}
                             tabIndex={5}
