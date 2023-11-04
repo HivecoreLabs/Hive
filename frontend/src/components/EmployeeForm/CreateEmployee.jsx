@@ -8,8 +8,8 @@ export default function CreateEmployeeForm() {
         lastName: '',
         restaurantId: '',
         role: [],
-        foodPermitExp: '',
-        alcoholPermitExp: '',
+        foodPermitExp: null,
+        alcoholPermitExp: null,
         formerEmployee: false
     };
 

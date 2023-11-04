@@ -1,12 +1,9 @@
 div#root {
     display: flex;
     flex-direction: column;
-    width: 100vw;
-}
-
-#error {
-    color: red;
-    font-weight: bold;
+    width: 95vw;
+    margin-left: 65px;
+    margin-top: 65px;
 }
 
 .employee-form-container {
@@ -18,7 +15,6 @@ div#root {
 }
 
 .employee-form-header {
-    background-color: orange;
     
     padding: 5px;
     margin: 5px 0;
@@ -28,24 +24,25 @@ div#root {
 
 .employee-form {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
 
     padding: 10px;
 }
 
-.employee-form > div {
+.employee-form-prompts {
+    display: flex;
+    flex-direction: row;
+}
+
+.employee-form-role {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    
-    margin: 0px 5px;
+    justify-content: space-between;
+    margin-bottom: 8px;
 }
 
-.employee-form > div > label {
-    text-align: center;
-}
-
-.employee-form-action{
-    display: none;
+.employee-form-action {
+    display: flex;
+    align-self: flex-end;
 }
