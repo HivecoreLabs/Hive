@@ -1,17 +1,13 @@
-div#root {
-    display: flex;
-    flex-direction: column;
-    width: 95vw;
-    margin-left: 65px;
-    margin-top: 65px;
-}
 
 .employee-form-container {
     display: flex;
     flex-direction: column;
 
-    width: 100%;
+    width: 95%;
     align-items: center;
+
+    margin-left: 60px;
+    margin-top: 60px;
 }
 
 .employee-form-header {
