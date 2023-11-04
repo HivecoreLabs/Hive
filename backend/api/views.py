@@ -411,6 +411,7 @@ def end_of_day(request):
                     "tipout_received": tipout_received
                 })
             # if the formula IS NOT time dependant, then we just divide total for role by role count
+            # maybe we should add their clockin id here, this might make the last step easier
 
         return res
         # create a new array
@@ -444,6 +445,10 @@ def end_of_day(request):
     # print(am_hour_totals)
     # print(pm_hour_totals)
 
-    # divide the relative role totals among the support staff who worked that role based on time or equal   division depending on formula property
+    # divide the relative role totals among the support staff who worked that role based on time or equal   division depending on formula property -/
+
+    # iterate over that list and update each related entry on the employee clockins table
+    # after that, we should send a response with all the payouts each employee should recieve
+
 
     return Response({"testing":123}, status = status.HTTP_200_OK)
