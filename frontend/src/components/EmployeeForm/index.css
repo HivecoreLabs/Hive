@@ -42,6 +42,13 @@ div#root {
     margin-bottom: 8px;
 }
 
+.employee-form-is-former-employee {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
 .employee-form-action {
     display: flex;
     align-self: flex-end;

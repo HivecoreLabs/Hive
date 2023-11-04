@@ -2,17 +2,17 @@
     position: relative;
     width: 20em;
     min-height: 1.5em;
-    border: .05em solid #777;
+    border: .05em solid rgb(133, 133, 133);
     display: flex;
     align-items: center;
     gap: .5em;
-    padding: 16.5px 14px;
+    padding: 14px;
     border-radius: .25em;
     outline: none;
 }
 
 .multi-select-container:focus {
-    border-color: hsl(200, 100%, 50%);
+    border-color: #777;
 }
 
 .multi-select-value {
