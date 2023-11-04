@@ -15,11 +15,15 @@ import {
     MenuItem,
     Typography
 } from '@mui/material';
+import WbSunnyIcon from '@mui/icons-material/WbSunny';
+import BedtimeIcon from '@mui/icons-material/Bedtime';
 import { useRoles } from '../../contexts/RolesContext';
 import { useSupportStaffContext } from '../../contexts/SupportStaffContext';
+import { useTheme } from '@mui/material';
 
 const SupportStaffListItem = React.memo(({ supportEntry }) => {
-    const { id, employee, active_role } = supportEntry;
+    const theme = useTheme();
+    const { id, employee, active_role, is_am } = supportEntry;
     // const { roles } = useRoles();
     const { updateSupportStaffClockIn, deleteSupportStaffClockIn } = useSupportStaffContext();
 
@@ -157,10 +161,28 @@ const SupportStaffListItem = React.memo(({ supportEntry }) => {
         handleEditToggle();
     }
 
-
     return (
         <>
             <TableRow key={supportEntry.id}>
+                <TableCell>
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                        {is_am ? (
+                            <>
+                                <WbSunnyIcon fontSize="small" sx={{ color: theme.AM, marginLeft: '-3px', marginRight: '4px' }} /> {/* Sun icon */}
+                                <Typography variant='h7'>
+                                    AM
+                                </Typography>
+                            </>
+                        ) : (
+                            <>
+                                <BedtimeIcon fontSize="small" sx={{ color: theme.PM, marginLeft: '-3px', marginRight: '4px' }} /> {/* Moon icon */}
+                                <Typography variant='h7'>
+                                    PM
+                                </Typography>
+                            </>
+                        )}
+                    </div>
+                </TableCell>
                 <TableCell >
                     <Typography variant='h7'>
                         {employee.first_name} {employee.last_name}

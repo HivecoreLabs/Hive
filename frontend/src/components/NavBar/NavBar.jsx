@@ -19,22 +19,23 @@ import {
     InputBase,
 } from '@mui/material';
 import {
-    Menu as MenuIcon,
+    Menu,
     ChevronLeft as ChevronLeftIcon,
     ChevronRight as ChevronRightIcon,
-    Dashboard as DashboardIcon,
-    Groups as GroupsIcon,
-    Assessment as AssessmentIcon,
-    Settings as SettingsIcon,
+    Dashboard,
+    Groups,
+    Assessment,
+    Settings,
     Search as SearchIcon,
-    AccountBox as AccountBoxIcon,
+    AccountBox,
+    ShoppingCartCheckout,
+    Logout
 } from '@mui/icons-material';
 import { NavLink, useLocation } from 'react-router-dom';
 import AccountMenu from './AccountMenu.jsx';
 import { useAuth } from '../../contexts/AuthenticationContext.js';
 
 const drawerWidth = 180;
-
 const openedMixin = (theme) => ({
     width: drawerWidth,
     transition: theme.transitions.create('width', {
@@ -147,9 +148,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-export default function MiniDrawer() {
+const MiniDrawer = () => {
     const theme = useTheme();
-    const { user } = useAuth();
+    const { user, logout } = useAuth();
     const [open, setOpen] = useState(false);
     const ref = useRef(null);
     const location = useLocation();
@@ -157,12 +158,15 @@ export default function MiniDrawer() {
     const handleDrawerOpen = () => setOpen(true);
     const handleDrawerClose = () => setOpen(false);
 
+    const handleLogout = () => logout();
+
     const navItems = [
-        { text: 'Dashboard', icon: <DashboardIcon color='quaternary' />, path: '/dashboard' },
-        { text: 'Employees', icon: <AccountBoxIcon color='quaternary' />, path: '/employees' },
-        { text: 'Support Staff', icon: <GroupsIcon color='quaternary' />, path: '/support' },
-        { text: 'Reports', icon: <AssessmentIcon color='quaternary' />, path: '/reports' },
-        { text: 'Settings', icon: <SettingsIcon color='quaternary' />, path: '/settings' },
+        { text: 'Dashboard', icon: <Dashboard color='quaternary' fontSize='medium' />, path: '/dashboard' },
+        { text: 'Employees', icon: <AccountBox color='quaternary' fontSize='medium' />, path: '/employees' },
+        { text: 'Support Staff', icon: <Groups color='quaternary' fontSize='medium' />, path: '/support' },
+        { text: 'Checkouts', icon: <ShoppingCartCheckout color='quaternary' fontSize='medium' />, path: '/checkouts' },
+        { text: 'Reports', icon: <Assessment color='quaternary' fontSize='medium' />, path: '/reports' },
+        // { text: 'Settings', icon: <Settings color='quaternary' />, path: '/settings' },
     ];
 
     useEffect(() => {
@@ -188,7 +192,7 @@ export default function MiniDrawer() {
                             ...(open && { display: 'none' }),
                         }}
                     >
-                        <MenuIcon />
+                        <Menu fontSize='medium' />
                     </IconButton>
                     <Box width={1} m={0} p={0} sx={{ display: 'flex', justifyContent: 'space-between' }}>
                         <Typography variant="h5" fontWeight='bold' noWrap color={theme.palette.quaternary.main} component="div" alignSelf='center'>
@@ -242,60 +246,41 @@ export default function MiniDrawer() {
                                     >
                                         {item.icon}
                                     </ListItemIcon>
-                                    <ListItemText primary={item.text} sx={{ opacity: open ? 1 : 0 }} />
+                                    <ListItemText primary={item.text} sx={{ opacity: open ? 1 : 0, lineHeight: 1, position: 'relative', top: '1px' }} />
                                 </ListItemButton>
                             </NavLink>
                         </ListItem>
                     ))}
                 </List>
-                {/* <List>
-                    {['Dashboard', 'Employees', 'Reports', 'Settings'].map((text, index) => {
-                        let icon;
-                        let path;
-                        if (index === 0) {
-                            icon = <DashboardIcon color='quaternary' />;
-                            path = '/dashboard';
-                        } else if (index === 1) {
-                            icon = <GroupsIcon color='quaternary' />;
-                        } else if (index === 2) {
-                            icon = <AssessmentIcon color='quaternary' />;
-                        } else if (index === 3) {
-                            icon = <SettingsIcon color='quaternary' />;
-                        }
-
-                        return (
-
-                            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-                                <NavLink style={{ textDecoration: 'none', color: 'black', margin: 'none' }}
-                                    to={path}
-                                >
-                                    <ListItemButton
-                                        sx={{
-                                            minHeight: 48,
-                                            justifyContent: open ? 'initial' : 'center',
-                                            px: 2.5,
-                                        }}
-                                    >
-                                        <ListItemIcon
-                                            sx={{
-                                                minWidth: 0,
-                                                mr: open ? 3 : 'auto',
-                                                justifyContent: 'center',
-                                            }}
-                                        >
-                                            <Tooltip title={text}>
-                                                {icon}
-                                            </Tooltip>
-                                        </ListItemIcon>
-                                        <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-                                    </ListItemButton>
-                                </NavLink>
-                            </ListItem>
-                        );
-                    })}
-                </List> */}
                 <Divider />
+                <List>
+                    <ListItem
+                        disablePadding
+                        sx={{ display: 'block' }}
+                    >
+                        <ListItemButton
+                            sx={{
+                                minHeight: 48,
+                                justifyContent: open ? 'initial' : 'center',
+                                px: 2.5,
+                            }}
+                        >
+                            <ListItemIcon
+                                sx={{
+                                    minWidth: 0,
+                                    mr: open ? 3 : 'auto',
+                                    justifyContent: 'center',
+                                }}
+                            >
+                                <Logout color='quaternary' fontSize='medium' onClick={handleLogout} />
+                            </ListItemIcon>
+                            <ListItemText primary='Logout' sx={{ opacity: open ? 1 : 0, lineHeight: 1, position: 'relative', top: '1px' }} />
+                        </ListItemButton>
+                    </ListItem>
+                </List>
             </Drawer>
         </Box>
     );
-}
+};
+
+export default MiniDrawer;

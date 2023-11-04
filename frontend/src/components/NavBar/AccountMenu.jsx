@@ -25,6 +25,16 @@ export default function AccountMenu() {
     const handleClick = (e) => setAnchorEl(e.currentTarget);
     const handleClose = () => setAnchorEl(null);
 
+    const handleNewAccount = () => {
+        debugger
+        handleClose();
+        logout();
+        debugger
+        // if (newUserButtonRef.current) {
+        //     newUserButtonRef.current.click();
+        // }
+    }
+
     const handleLogout = () => {
         logout();
     }
@@ -89,18 +99,18 @@ export default function AccountMenu() {
                     <Avatar /> My Account
                 </MenuItem>
                 <Divider />
-                <MenuItem onClick={handleClose}>
+                <MenuItem onClick={handleNewAccount}>
                     <ListItemIcon>
                         <PersonAdd fontSize="small" />
                     </ListItemIcon>
                     Add another account
                 </MenuItem>
-                <MenuItem onClick={handleClose}>
+                {/* <MenuItem onClick={handleClose}>
                     <ListItemIcon>
                         <Settings fontSize="small" />
                     </ListItemIcon>
                     Settings
-                </MenuItem>
+                </MenuItem> */}
                 <MenuItem onClick={handleLogout} >
                     <ListItemIcon>
                         <Logout fontSize="small" />
