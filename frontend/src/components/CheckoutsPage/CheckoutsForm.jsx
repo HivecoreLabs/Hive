@@ -83,7 +83,7 @@ const CheckoutsForm = () => {
             <div className='checkouts-form-container'>
                 {[...Array(1)].map((_, index) => (
                     <Paper elevation={2} style={{ padding: '20px', marginBottom: '10px', width: '600px', borderRadius: '8px', }} key={index}>
-                        <Typography variant="h5" align="center" mb='20px'>
+                        <Typography variant="h5" align="center" fontWeight='bold' mb='20px'>
                             Add Server Checkout
                         </Typography>
                         <form onSubmit={handleSubmit}>
@@ -147,21 +147,21 @@ const CheckoutsForm = () => {
                                             name="shift-buttons-group"
                                             onChange={handleShift}
                                         >
-                                            <FormControlLabel value={true} control={<Radio size='xsmall' />} label="AM" />
-                                            <FormControlLabel value={false} control={<Radio size='xsmall' />} label="PM" />
+                                            <FormControlLabel value={true} control={<Radio size='small' />} label="AM" />
+                                            <FormControlLabel value={false} control={<Radio size='small' />} label="PM" />
                                         </RadioGroup>
                                     </FormControl>
                                 </Grid>
                                 <Grid item sm={1.5}  >
-                                    <FormControl>
+                                    <FormControl >
                                         <FormLabel id="patio-buttons-group">Patio</FormLabel>
                                         <RadioGroup
                                             value={patio}
                                             name="patio-buttons-group"
                                             onChange={handlePatio}
                                         >
-                                            <FormControlLabel value={false} control={<Radio size='xsmall' />} label="no" />
-                                            <FormControlLabel value={true} control={<Radio size='xsmall' />} label="yes" />
+                                            <FormControlLabel value={false} control={<Radio size='small' />} label="no" />
+                                            <FormControlLabel value={true} control={<Radio size='small' />} label="yes" />
                                         </RadioGroup>
                                     </FormControl>
                                 </Grid>
@@ -173,8 +173,8 @@ const CheckoutsForm = () => {
                                             name="bar-buttons-group"
                                             onChange={handleBar}
                                         >
-                                            <FormControlLabel value={false} control={<Radio size='xsmall' />} label="no" />
-                                            <FormControlLabel value={true} control={<Radio size='xsmall' />} label="yes" />
+                                            <FormControlLabel value={false} control={<Radio size='small' />} label="no" />
+                                            <FormControlLabel value={true} control={<Radio size='small' />} label="yes" />
                                         </RadioGroup>
                                     </FormControl>
                                 </Grid>

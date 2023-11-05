@@ -78,6 +78,7 @@ const checkoutsReducer = (state = initialState, action) => {
 };
 
 const CheckoutsContextProvider = ({ children }) => {
+    const [state, dispatch] = useReducer(checkoutsReducer, initialState);
 
     const fetchAllCheckouts = async () => {
         const response = await customFetch('http://localhost:8000/api/checkouts/');

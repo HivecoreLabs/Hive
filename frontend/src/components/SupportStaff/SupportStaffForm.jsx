@@ -133,7 +133,7 @@ const SupportStaffForm = () => {
             <div className='support-staff-form-container'>
                 {[...Array(1)].map((_, index) => (
                     <Paper elevation={2} style={{ padding: '20px', marginBottom: '10px', width: '600px', borderRadius: '8px' }} key={index}>
-                        <Typography variant="h5" align="center" mb='20px'>
+                        <Typography variant="h5" align="center" mb='20px' fontWeight='bold'>
                             Add Support Staff Clock-In
                         </Typography>
                         <form onSubmit={handleSubmit}>
