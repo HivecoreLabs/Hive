@@ -14,6 +14,7 @@ import { theme } from './contexts/ThemeContext';
 import { ErrorContextProvider } from './contexts/ErrorContext.js';
 import { SupportStaffContextProvider } from './contexts/SupportStaffContext.js';
 import CheckoutsContextProvider from './contexts/CheckoutsContext.js';
+import ShiftContextProvider from './contexts/ShiftContext.js';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -27,9 +28,11 @@ root.render(
                             <SupportStaffContextProvider>
                                 <CheckoutsContextProvider>
                                     <AuthenticationContextProvider>
-                                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                            <App />
-                                        </LocalizationProvider>
+                                        <ShiftContextProvider>
+                                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                                <App />
+                                            </LocalizationProvider>
+                                        </ShiftContextProvider>
                                     </AuthenticationContextProvider>
                                 </CheckoutsContextProvider>
                             </SupportStaffContextProvider>

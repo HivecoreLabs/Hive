@@ -10,7 +10,7 @@ const SupportStaffPage = () => {
         <div className='support-staff-page-container'>
             <SupportStaffForm />
             <SupportStaffList />
-            <Button sx={{ width: '200px', marginTop: '20px' }} component={Link} to='/checkouts' variant='contained'>Go To Checkouts</Button>
+            <Button sx={{ width: '200px', marginTop: '30px' }} component={Link} to='/checkouts' variant='contained'>Go To Checkouts</Button>
         </div>
     )
 }
