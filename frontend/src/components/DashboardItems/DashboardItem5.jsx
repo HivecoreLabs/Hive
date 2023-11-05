@@ -1,10 +1,18 @@
 import { Box } from "@mui/material";
 import React from "react";
 import { useTheme } from "@mui/material";
+import { PieChart } from '@mui/x-charts/PieChart';
 
-function DashboardItem5() {
+function DashboardItem5({ roles }) {
 
     const theme = useTheme();
+
+    const data = roles.map((role, idx) => ({
+        id: idx,
+        value: role.employees.length,
+        label: role.role
+    }));
+
     return (
         <Box
             sx={{
@@ -14,26 +22,17 @@ function DashboardItem5() {
                 // minWidth: 300,
             }}
         >
-            <Box sx={{ color: 'text.secondary' }}>Sessions</Box>
-            <Box sx={{ color: 'text.primary', fontSize: 34, fontWeight: 'medium' }}>
-                98.3 K
-            </Box>
-            <Box
-                theme={theme}
-
-                sx={{
-                    color: 'primary',
-                    display: 'inline',
-                    fontWeight: 'bold',
-                    mx: 0.5,
-                    fontSize: 14,
-                }}
-            >
-                +18.77%
-            </Box>
-            <Box sx={{ color: 'text.secondary', display: 'inline', fontSize: 14 }}>
-                vs. last week
-            </Box>
+            <PieChart 
+                series={[
+                    {
+                      data,
+                      cx: 150
+                    },
+                  ]}
+                  width={950}
+                  height={150}
+                 
+            /> 
         </Box>)
 }
 
