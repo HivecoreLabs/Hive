@@ -93,11 +93,13 @@ const CheckoutsContextProvider = ({ children }) => {
     };
 
     const createCheckout = async (newCheckout) => {
+        debugger
         const response = await customFetch(`http://localhost:8000/api/checkouts/`, {
             method: 'POST',
             body: newCheckout
         });
         if (response.ok) {
+            debugger
             const data = await response.json();
             dispatch(receiveOneCheckout(data));
         } else {

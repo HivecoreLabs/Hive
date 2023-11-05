@@ -6,6 +6,7 @@ import './CheckoutsForm.css';
 import { useEmployees } from '../../contexts/EmployeesContext';
 import { useRoles } from '../../contexts/RolesContext';
 import { useSupportStaffContext } from '../../contexts/SupportStaffContext';
+import { useCheckoutsContext } from '../../contexts/CheckoutsContext';
 import { useTheme } from '@mui/material';
 
 const CheckoutsForm = () => {
@@ -13,6 +14,7 @@ const CheckoutsForm = () => {
     const theme = useTheme();
     const { employees } = useEmployees();
     const { role, roles, readSingleRole } = useRoles();
+    const { createCheckout } = useCheckoutsContext();
 
     const servers = role.employees
     const serverList = servers?.length > 0 ? (
@@ -69,9 +71,12 @@ const CheckoutsForm = () => {
             net_sales: netSales,
             cash_owed: cashOwed,
             tipout_day: date.format('YYYY-MM-DD'),
-            is_am: isAMShift,
+            date: date.format('YYYY-MM-DD'),
+            is_am_shift: isAMShift,
             is_patio: patio
         };
+
+        createCheckout(newCheckout);
     };
 
     useEffect(() => {

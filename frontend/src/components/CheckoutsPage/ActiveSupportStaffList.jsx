@@ -39,7 +39,7 @@ const ActiveSupportStaffList = () => {
     return (
         <div>
             <Paper sx={{ borderRadius: '8px', padding: '5px', paddingTop: '10px', marginLeft: '30px' }}>
-                <Typography variant="h6" fontWeight='bold' textAlign='center' sx={{ position: 'sticky', marginBottom: '5px' }}>
+                <Typography variant="h6" fontWeight='bold' textAlign='center' sx={{ position: 'sticky', marginBottom: '10px' }}>
                     Active Support Staff
                 </Typography>
                 <TableContainer sx={{ maxHeight: '300px', overflowY: 'scroll' }} >
@@ -64,7 +64,7 @@ const ActiveSupportStaffList = () => {
                     color="primary"
                     size="medium"
                     sx={{
-                        marginTop: '12px', marginBottom: '8px', marginLeft: 'auto', marginRight: 'auto', display: 'block', width: 'fit-content',
+                        marginTop: '15px', marginBottom: '8px', marginLeft: 'auto', marginRight: 'auto', display: 'block', width: 'fit-content',
                     }}
                 >
                     Add Support Staff
