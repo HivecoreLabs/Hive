@@ -1,5 +1,5 @@
 import "./Dashboard.css";
-import React from "react";
+import React, { useEffect } from "react";
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import { useTheme } from "@mui/material";
@@ -15,6 +15,7 @@ import DashboardItem6 from "../DashboardItems/DashboardItem6.jsx";
 import DashboardItem7 from "../DashboardItems/DashboardItem7.jsx";
 import DashboardItem8 from "../DashboardItems/DashboardItem8.jsx";
 import DashboardItem9 from "../DashboardItems/DashboardItem9.jsx";
+import { useRoles } from "../../contexts/RolesContext.js";
 
 function Dashboard() {
     const theme = useTheme();
@@ -26,6 +27,18 @@ function Dashboard() {
         marginTop: '100px',
         marginLeft: '5px'
     })
+
+    const {
+        roles,
+        readAllRoles
+    } = useRoles();
+
+    useEffect(() => {
+        readAllRoles();
+    }, [useRoles]);
+    
+    if (!Object.values(roles)[0]) return null;
+    console.log(roles)
 
     return (
         <div className="dashboard-container">
@@ -54,14 +67,8 @@ function Dashboard() {
                     </Grid>
 
                     {/* second row */}
-                    <Grid item sx={{ width: '600px' }}>
-                        <Paper elevation={2}><DashboardItem5></DashboardItem5></Paper>
-                    </Grid>
-                    <Grid item sx={{ width: '300px' }}>
-                        <Paper elevation={2}><DashboardItem6></DashboardItem6></Paper>
-                    </Grid>
-                    <Grid item sx={{ width: '300px' }}>
-                        <Paper elevation={2}><DashboardItem7></DashboardItem7></Paper>
+                    <Grid item sx={{ width: '1000px' }}>
+                        <Paper elevation={2}><DashboardItem5 roles={roles}></DashboardItem5></Paper>
                     </Grid>
                     {/* third row */}
                     <Grid item sx={{ width: '600px' }}>
