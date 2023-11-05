@@ -8,8 +8,10 @@ import SupportStaffPage from './components/SupportStaff';
 import CheckoutsPage from './components/CheckoutsPage';
 import CreateEmployeeForm from './components/EmployeeForm/CreateEmployee.jsx'
 import EditEmployeeForm from './components/EmployeeForm/EditEmployee.jsx';
-import ViewAllEmployees from './components/ViewAllEmployees/index.jsx';
+import ViewAllEmployees from './components/ViewAllPages/ViewAllEmployees.jsx';
 import CreateRoleForm from './components/RoleForm/CreateRole.jsx';
+import EditRoleForm from './components/RoleForm/EditRole.jsx';
+import ViewAllRoles from './components/ViewAllPages/ViewAllRoles.jsx';
 import { useAuth } from './contexts/AuthenticationContext';
 import { theme } from './contexts/ThemeContext';
 
@@ -32,6 +34,8 @@ export default function App() {
                 <Route path="/employees/all" element={<ViewAllEmployees />} />
                 <Route exact path="/employees/:id" element={<EditEmployeeForm />} />
                 <Route path="/roles/new" element={<CreateRoleForm />}/>
+                <Route exact path="/roles/all" element={<ViewAllRoles />} />
+                <Route exact path="roles/:id" element={<EditRoleForm />} />
             </Routes>
         </>
     );
