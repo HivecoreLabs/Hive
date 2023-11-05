@@ -41,7 +41,7 @@ const ActiveSupportStaffList = () => {
                 <Typography variant="h6" fontWeight='bold' textAlign='center' sx={{ position: 'sticky', marginBottom: '10px' }}>
                     Active Support Staff
                 </Typography>
-                <TableContainer sx={{ maxHeight: '300px', overflowY: 'scroll' }} >
+                <TableContainer sx={{ maxHeight: '500px', overflowY: 'scroll' }} >
                     <Table >
                         <TableBody>
                             {supportStaffList.map((support) => (

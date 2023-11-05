@@ -63,7 +63,6 @@ const CheckoutsForm = () => {
     }
 
     const handleSubmit = (e) => {
-        debugger
         e.preventDefault();
 
         const newCheckout = {

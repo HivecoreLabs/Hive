@@ -169,6 +169,8 @@ const MiniDrawer = () => {
         // { text: 'Settings', icon: <Settings color='quaternary' />, path: '/settings' },
     ];
 
+    const currentPageTitle = navItems.find((item) => item.path === location.pathname)?.text || 'Unknown Page';
+
     useEffect(() => {
         const handleClickOutside = (e) => {
             if (ref.current) handleDrawerClose();
@@ -195,8 +197,8 @@ const MiniDrawer = () => {
                         <Menu fontSize='medium' />
                     </IconButton>
                     <Box width={1} m={0} p={0} sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <Typography variant="h5" fontWeight='bold' noWrap color={theme.palette.quaternary.main} component="div" alignSelf='center'>
-                            {`${user.username}'s Dashboard`}
+                        <Typography variant="h5" noWrap color={theme.palette.quaternary.main} component="div" alignSelf='center'>
+                            {currentPageTitle}
                         </Typography>
                         {/* <Search alignSelf='center' >
                             <SearchIconWrapper>
