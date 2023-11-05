@@ -356,7 +356,7 @@ class CheckOutViewSet(viewsets.ViewSet):
                     tipout_received = calculated_tipout
             return Decimal("{:.2f}".format(tipout_received))
 
-        support_employees = Employee_Clock_In.objects.filter(date=request.data["date"], is_am=request.data['is_am'])
+        support_employees = Employee_Clock_In.objects.filter(date=request.data["date"], is_am=request.data['is_am_shift'])
 
         grouped_by_role = _group_by_active_role(support_employees)
 
