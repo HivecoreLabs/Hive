@@ -234,7 +234,7 @@ const MiniDrawer = () => {
                                         minHeight: 48,
                                         justifyContent: open ? 'initial' : 'center',
                                         px: 2.5,
-                                        backgroundColor: item.path === location.pathname ? theme.navHover : 'inherit', // Add your selected style here
+                                        backgroundColor: item.path === location.pathname ? theme.navHover : 'inherit',
                                     }}
                                 >
                                     <ListItemIcon
@@ -257,6 +257,7 @@ const MiniDrawer = () => {
                     <ListItem
                         disablePadding
                         sx={{ display: 'block' }}
+                        onClick={handleLogout}
                     >
                         <ListItemButton
                             sx={{

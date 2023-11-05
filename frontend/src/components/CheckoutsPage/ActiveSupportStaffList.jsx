@@ -27,7 +27,6 @@ const ActiveSupportStaffList = () => {
         fetchAllSupportStaffClockIns();
     }, []);
 
-    console.log(supportStaff);
     useEffect(() => {
         debugger
         const filteredSupportStaff = supportStaff.filter(support => support.active_role.id !== 1);

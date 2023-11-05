@@ -37,7 +37,7 @@ const SupportStaffList = () => {
 
     return (
         <div className='support-staff-list-container'>
-            <TableContainer component={Paper} sx={{ borderRadius: '8px', padding: '5px', paddingBottom: '0' }}>
+            <TableContainer component={Paper} sx={{ borderRadius: '8px', padding: '5px', paddingBottom: '0', maxHeight: '600px' }}>
                 <Table>
                     <TableHead>
                         <TableRow>
