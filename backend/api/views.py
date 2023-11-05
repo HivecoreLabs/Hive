@@ -7,7 +7,7 @@ from rest_framework.authtoken.models import Token
 from django.db.models import Subquery, OuterRef
 from decimal import Decimal, getcontext, ROUND_05UP
 from datetime import datetime
-
+from sympy import sympify
 
 from django.contrib.auth.models import User
 from .models import (
@@ -34,6 +34,8 @@ from .serializers import (
     TipoutBreakdownSerializer,
     ReadLimitedClockInSerializer
 )
+
+from api.utils import (calculate_totals, calculate_total_role_hours, get_formula_and_determine_percent_worked)
 from backend.quickstart import generate
 from datetime import date
 
@@ -310,33 +312,83 @@ class RoleClockInViewSet(viewsets.ViewSet):
         serializer = Read_Clock_In_Serializer(queryset, many=True)
         return Response(serializer.data)
 
+
 class CheckOutViewSet(viewsets.ViewSet):
     serializer_class = CheckoutSerializer
+
+    def list(self, request, *args, **kwargs):
+        params = request.query_params
+        date = params.get('date')
+        if date:
+            queryset = Checkout.objects.filter(date=date)
+        else:
+            queryset = Checkout.objects.all()
+
+        serializer = CheckoutSerializer(queryset, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
     # tipout_breakdown_serializer_class = TipoutBreakdownSerializer
     # create a new checkout instance based on the passed in data
     # {
     # "net_sales": 5000,
     # "cash_owed": 100,
     # "tipout_day": "2023-11-03",
-    # "employee_id":1
+    # "employee_id":1,
+    # "is_am": True
     # }
-    # instantiate total var = 0
-    # get all unique support roles for day and shift (am/pm)
-    # get all related formulas for each role
-    # get all related variables for each formula ^
-    # substitute each variable in the formula with its literal value (table + column/ row should be determined by day)
-    # eval(formula) -> feval (packkage)
-    # save instance of tipout breakdown
-    # add to running total
-    # save total_tipped_out
-    # return checkout object with updated total, and all of the tipout breakdowns
-    # {checkout info..., breakdowns: [{breakdown obj}...,]}
 
     def create(self, request, *args, **kwargs):
         checkout_serializer = CheckoutSerializer(data=request.data)
         checkout_serializer.is_valid(raise_exception=True)
 
+        def _group_by_active_role(employee_clockins):
+            res = {}
+            for clock_in in employee_clockins:
+                if clock_in.active_role_id not in res:
+                    res[clock_in.active_role_id] = [clock_in]
+                else:
+                    res[clock_in.active_role_id].append(clock_in)
+            return res
+
+        def _calculate_tipout_received_from_net_sales(formula, employee_list, net_sales):
+            tipout_received = 0
+            formula, min_sales, max_tipout, is_time_based = formula.values()
+
+            if min_sales and min_sales <= net_sales:
+                expression = sympify(formula)
+                calculated_tipout = expression.evalf(subs={"net_sales": net_sales})
+                if max_tipout and is_time_based:
+                    tipout_received = min(max_tipout, calculated_tipout)
+                elif max_tipout and not is_time_based:
+                    # TODO: Figure out how max is calculated
+                    tipout_received = min(max_tipout * len(employee_list), calculated_tipout)
+                else:
+                    tipout_received = calculated_tipout
+            return Decimal("{:.2f}".format(tipout_received))
+
+        # get all unique support roles for day and shift (am/pm)
+        support_employees = Employee_Clock_In.objects.filter(date=request.data["date"], is_am=request.data['is_am'])
+
+        grouped_by_role = _group_by_active_role(support_employees)
+
+        total = 0
+        tipouts = []
+        for role in grouped_by_role:
+            formula = Tipout_Formula.objects.filter(role_id=role).values('formula', 'min_sales', 'max_tipout', 'is_time_based')
+            tipout_received = _calculate_tipout_received_from_net_sales(formula[0], grouped_by_role[role], request.data['net_sales'])
+            # serializer = TipoutBreakdownSerializer(data={})
+
+        # get all related formulas for each role
+        # TODO: get all related variables for each formula
         # create breakdowns here
+        # instantiate total var = 0
+        # substitute each variable in the formula with its literal value (table + column/ row should be determined by day)
+        # eval(formula) -> feval (packkage)
+        # save instance of tipout breakdown
+        # add to running total
+        # save total_tipped_out
+        # return checkout object with updated total, and all of the tipout breakdowns
+        # {checkout info..., breakdowns: [{breakdown obj}...,]}
 
         # checkout_serializer.save()
         return Response({"message": "Hello World"})

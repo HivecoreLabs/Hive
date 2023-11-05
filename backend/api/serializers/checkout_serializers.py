@@ -8,7 +8,8 @@ class TipoutBreakdownSerializer(serializers.ModelSerializer):
 
 class CheckoutSerializer(serializers.ModelSerializer):
 
-    # tipout_breakdowns = TipoutBreakdownSerializer(many=True)
+    # breakdowns = TipoutBreakdownSerializer(source='checkout_tipout_breakdown_set', many=True)
+
     class Meta:
         model = Checkout
         fields = ('__all__')
