@@ -319,7 +319,10 @@ class CheckOutViewSet(viewsets.ViewSet):
     def list(self, request, *args, **kwargs):
         params = request.query_params
         date = params.get('date')
-        if date:
+        is_am_shift = params.get('is_am_shift')
+        if date and is_am_shift:
+            queryset = Checkout.objects.filter(date=date, is_am_shift=is_am_shift)
+        elif date:
             queryset = Checkout.objects.filter(date=date)
         else:
             queryset = Checkout.objects.all()
