@@ -399,6 +399,8 @@ Certainly, here's the complete API documentation in Markdown format:
 
 - **Route**: `GET /api/clock-ins/`
 - **Headers**:
+- **Available Query Parameters**:
+  - date: YYYY-MM-DD
 - **Request Body (None)**:
 - **Expected Response (200 OK)**:
 
@@ -429,6 +431,8 @@ Certainly, here's the complete API documentation in Markdown format:
 
 - **Route**: `GET /api/clock-ins/<int:clockin_id>`
 - **Headers**:
+- **Available Query Parameters**:
+  - date: YYYY-MM-DD
 - **Request Body (None)**:
 - **Expected Response (200 OK)**:
 
@@ -456,6 +460,8 @@ Certainly, here's the complete API documentation in Markdown format:
 
 - **Route**: `GET /api/employees/<int:employee_id>/clock-ins/`
 - **Headers**:
+- **Available Query Parameters**:
+  - date: YYYY-MM-DD
 - **Request Body (None)**:
 - **Expected Response (200 OK)**:
 
@@ -486,6 +492,8 @@ Certainly, here's the complete API documentation in Markdown format:
 
 - **Route**: `GET /api/roles/<int:role_id>/clock-ins/`
 - **Headers**:
+- **Available Query Parameters**:
+  - date: YYYY-MM-DD
 - **Request Body (None)**:
 - **Expected Response (200 OK)**:
 
@@ -1163,6 +1171,172 @@ Certainly, here's the complete API documentation in Markdown format:
 ```json
 {
   "detail": "Not found."
+}
+```
+
+## Checkouts
+
+### 1. Get List of All Checkouts
+
+- **Route**: `GET /api/checkouts/`
+- **Headers**:
+- **Available Query Parameters**:
+  - date: YYYY-MM-DD
+  - is_am_shift: True or False
+- **Request Body (None)**:
+- **Expected Response (200 OK)**:
+
+```json
+[
+  {
+    "id": 1,
+    "date": "2023-11-05",
+    "net_sales": "500.00",
+    "cash_owed": "50.00",
+    "total_tipout": "25.00",
+    "is_am_shift": true,
+    "is_patio": false,
+    "is_bar": true,
+    "tipout_day": "2023-10-25T00:00:00Z",
+    "created_at": "2023-10-26T00:00:00Z",
+    "updated_at": "2023-10-26T00:00:00Z",
+    "sheet_cell": null,
+    "is_uploaded": false,
+    "employee_id": 1,
+    "support_roles": [
+      1,
+      2
+    ]
+  }
+  ...
+]
+```
+
+### 2. Get Details of Checkout
+
+**_TODO: Update Response to include breakdown_**
+
+- **Route**: `GET /api/variables/<int:variableId>/`
+- **Headers**:
+- **Request Body (None)**:
+- **Expected Response (200 OK)**:
+
+```json
+{
+  "id": 1,
+  "date": "2023-11-05",
+  "net_sales": "500.00",
+  "cash_owed": "50.00",
+  "total_tipout": "25.00",
+  "is_am_shift": true,
+  "is_patio": false,
+  "is_bar": true,
+  "tipout_day": "2023-10-25T00:00:00Z",
+  "created_at": "2023-10-26T00:00:00Z",
+  "updated_at": "2023-10-26T00:00:00Z",
+  "sheet_cell": null,
+  "is_uploaded": false,
+  "employee_id": 1,
+  "support_roles": [1, 2]
+}
+```
+
+### 3. Add a Checkout
+
+- **Route**: `POST /api/checkouts/`
+- **Headers**:
+  - Content-Type: application/json
+- **Request Body (Required Information)**:
+
+```json
+{
+  "net_sales": 5000,
+  "cash_owed": 100,
+  "is_am_shift": true,
+  "tipout_day": "2023-11-05",
+  "employee_id": 1
+}
+```
+
+- **Expected Response (201 Created)**:
+
+```json
+{
+  "checkout": {
+    "id": 12,
+    "date": "2023-10-25",
+    "net_sales": "500.00",
+    "cash_owed": "100.00",
+    "total_tipout": "12.50",
+    "is_am_shift": true,
+    "is_patio": false,
+    "is_bar": false,
+    "tipout_day": "2023-11-03T00:00:00Z",
+    "created_at": "2023-11-05T03:47:37.063014Z",
+    "updated_at": "2023-11-05T03:47:37.063026Z",
+    "sheet_cell": null,
+    "is_uploaded": false,
+    "employee_id": 1,
+    "support_roles": [1, 3, 5, 7, 9]
+  },
+  "breakdown": [
+    {
+      "id": 26,
+      "total": "7.50",
+      "checkout_id": 12,
+      "role_id": 1
+    },
+    {
+      "id": 27,
+      "total": "0.00",
+      "checkout_id": 12,
+      "role_id": 3
+    },
+    {
+      "id": 28,
+      "total": "0.00",
+      "checkout_id": 12,
+      "role_id": 5
+    },
+    {
+      "id": 29,
+      "total": "0.00",
+      "checkout_id": 12,
+      "role_id": 7
+    },
+    {
+      "id": 30,
+      "total": "5.00",
+      "checkout_id": 12,
+      "role_id": 9
+    }
+  ]
+}
+```
+
+- **Error Response (400 Bad Reqeust)**:
+
+```json
+{
+  "net_sales": [
+    "This field is required.",
+    "A valid number is required.",
+    "Ensure that there are no more than 2 decimal places."
+  ],
+  "cash_owed": [
+    "This field is required.",
+    "A valid number is required.",
+    "Ensure that there are no more than 2 decimal places."
+  ],
+  "is_am_shift": ["This field is required.", "Must be a valid boolean."],
+  "tipout_day": [
+    "This field is required.",
+    "Date has wrong format. Use one of these formats instead: YYYY-MM-DD."
+  ],
+  "employee_id": [
+    "This field is required.",
+    "Invalid pk \"<int>\" - object does not exist."
+  ]
 }
 ```
 
