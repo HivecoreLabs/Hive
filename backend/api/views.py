@@ -317,7 +317,7 @@ class RoleClockInViewSet(viewsets.ViewSet):
 class CheckOutViewSet(viewsets.ViewSet):
     serializer_class = CheckoutSerializer
 
-    def list(self, request, *args, **kwargs):
+    def list(self, request):
         params = request.query_params
         date = params.get('date')
         is_am_shift = params.get('is_am_shift')
@@ -331,7 +331,13 @@ class CheckOutViewSet(viewsets.ViewSet):
         serializer = ReadCheckoutSerializer(queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    def create(self, request, *args, **kwargs):
+    def retrieve(self, request, pk=None):
+        queryset = Checkout.objects.all()
+        checkout_instance = get_object_or_404(queryset, pk=pk)
+        serializer = ReadCheckoutSerializer(checkout_instance)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def create(self, request):
         checkout_serializer = CheckoutSerializer(data=request.data)
         checkout_serializer.is_valid(raise_exception=True)
 
