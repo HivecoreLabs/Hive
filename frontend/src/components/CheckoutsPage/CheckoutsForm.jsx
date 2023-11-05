@@ -8,6 +8,7 @@ import { useRoles } from '../../contexts/RolesContext';
 import { useSupportStaffContext } from '../../contexts/SupportStaffContext';
 import { useCheckoutsContext } from '../../contexts/CheckoutsContext';
 import { useTheme } from '@mui/material';
+import { useDateContext } from '../../contexts/DateContext';
 
 const CheckoutsForm = () => {
 
@@ -15,6 +16,7 @@ const CheckoutsForm = () => {
     const { employees } = useEmployees();
     const { role, roles, readSingleRole } = useRoles();
     const { createCheckout } = useCheckoutsContext();
+    const { stateDate, changeStateDate } = useDateContext();
 
     const servers = role.employees
     const serverList = servers?.length > 0 ? (
@@ -30,7 +32,7 @@ const CheckoutsForm = () => {
     const [server, setServer] = useState('');
     const [netSales, setNetSales] = useState('');
     const [cashOwed, setCashOwed] = useState('');
-    const [date, setDate] = useState(dayjs());
+    const [date, setDate] = useState(stateDate);
     const [isAMShift, setIsAMShift] = useState(theme.isAMShift)
     const [patio, setPatio] = useState(false);
     const [bar, setBar] = useState(false);
@@ -81,6 +83,10 @@ const CheckoutsForm = () => {
     useEffect(() => {
         readSingleRole(1);
     }, [])
+
+    useEffect(() => {
+        setDate(stateDate);
+    }, [stateDate])
 
     return (
         <div>
@@ -138,7 +144,7 @@ const CheckoutsForm = () => {
                                             sx={{ width: '100%' }}
                                             label="Date"
                                             onChange={handleDate}
-                                            value={dayjs(date)}
+                                            value={date}
                                         />
                                         {/* <Button sx={{ marginTop: '15px', width: '75%' }} variant='outlined' color='warning' onClick={handleResetFields}>Reset Fields</Button> */}
                                     </div>

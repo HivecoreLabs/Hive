@@ -16,7 +16,7 @@ const SupportStaffForm = () => {
     const { employees, readAllEmployees } = useEmployees();
     const { roles, readAllRoles } = useRoles();
     const { createSupportStaffClockIn } = useSupportStaffContext();
-    const { stateDate, changeStateDate } = useDateContext();
+    const { stateDate } = useDateContext();
 
     const [employee, setEmployee] = useState('');
     const [employeeSelected, setEmployeeSelected] = useState(false);

@@ -18,7 +18,6 @@ const initialState = {
 }
 
 const dateReducer = (state = initialState, action) => {
-    debugger
     switch (action.type) {
         case RECEIVE_DATE_CHANGE:
             return {
@@ -33,10 +32,8 @@ const dateReducer = (state = initialState, action) => {
 const DateContextProvider = ({ children }) => {
     const [state, dispatch] = useReducer(dateReducer, initialState);
 
-    const changeStateDate = async (date) => {
-        debugger
+    const changeStateDate = (date) => {
         dispatch(receiveDateChange(date));
-        return
     };
 
     const value = {

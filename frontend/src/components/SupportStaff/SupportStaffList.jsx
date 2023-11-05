@@ -16,7 +16,7 @@ import './SupportStaffList.css';
 import SupportStaffListItem from './SupportStaffListItem.jsx';
 
 const SupportStaffList = () => {
-    const { stateDate, changeStateDate } = useDateContext();
+    const { stateDate } = useDateContext();
     const { supportStaff, fetchAllSupportStaffClockIns, fetchAllSupportStaffClockInsByDate } = useSupportStaffContext();
     const sortedSupportStaff = [...supportStaff].sort((a, b) => {
         const timeA = new Date(a.time_in);

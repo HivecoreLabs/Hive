@@ -11,20 +11,15 @@ import { useDateContext } from '../../contexts/DateContext';
 
 const SupportStaffPage = () => {
     const { stateDate, changeStateDate } = useDateContext();
-    console.log(stateDate);
     const [date, setDate] = useState(stateDate);
     const formattedDate = date.format('dddd, MMM D YYYY');
     const [openModal, setOpenModal] = useState(false);
 
     const handleDate = (value) => {
-        debugger
-        // const formattedNewDate = dayjs(value);
-        // setDate(formattedNewDate);
         setDate(value);
     }
 
     const handleDateChange = () => {
-        debugger
         changeStateDate(date);
         handleCloseModal();
     };
