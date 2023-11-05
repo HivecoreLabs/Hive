@@ -9,6 +9,7 @@ import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
 import { Button, Box, Typography, Paper, IconButton, Modal } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+import CheckoutsList from './CheckoutsList.jsx';
 
 const CheckoutsPage = () => {
     const { supportStaff, fetchAllSupportStaffClockIns } = useSupportStaffContext();
@@ -43,7 +44,10 @@ const CheckoutsPage = () => {
                 </Button>
             </Typography>
             <div className='checkout-form-support-staff-container'>
-                <CheckoutsForm />
+                <div>
+                    <CheckoutsForm />
+                    <CheckoutsList />
+                </div>
                 <ActiveSupportStaffList />
             </div>
             <Modal

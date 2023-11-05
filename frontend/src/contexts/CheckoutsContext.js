@@ -80,17 +80,42 @@ const checkoutsReducer = (state = initialState, action) => {
 const CheckoutsContextProvider = ({ children }) => {
     const [state, dispatch] = useReducer(checkoutsReducer, initialState);
 
-    const fetchAllCheckouts = async () => {
-        const response = await customFetch('http://localhost:8000/api/checkouts/');
+    // const fetchAllCheckouts = async () => {
+    //     const response = await customFetch('http://localhost:8000/api/checkouts/');
+
+    //     if (response.ok) {
+    //         const data = await response.json();
+    //         dispatch(receiveAllCheckouts(data));
+    //     } else {
+    //         console.error('Could not fetch all checkouts', error);
+    //     };
+    //     return response;
+    // };
+
+    const fetchAllCheckouts = async (date, isAMShift) => {
+        debugger
+        let queryString = '';
+        if (date) {
+            queryString += `?date=${date}`;
+        }
+        if (isAMShift !== undefined) {
+            queryString += queryString.length ? '&' : '';
+            queryString += `?is_am_shift=${isAMShift ? 'True' : 'False'}`;
+        }
+
+        const apiUrl = `http://localhost:8000/api/checkouts/${queryString}`;
+        const response = await customFetch(apiUrl);
 
         if (response.ok) {
             const data = await response.json();
             dispatch(receiveAllCheckouts(data));
         } else {
-            console.error('Could not fetch all checkouts', error);
+            console.error('Could not fetch checkouts', error);
         };
+
         return response;
     };
+
 
     const createCheckout = async (newCheckout) => {
         debugger

@@ -18,26 +18,29 @@ import {
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useSupportStaffContext } from '../../contexts/SupportStaffContext';
+import { useDateContext } from '../../contexts/DateContext';
 
 const ActiveSupportStaffList = () => {
-    const { supportStaff, fetchAllSupportStaffClockIns } = useSupportStaffContext();
+    const { supportStaff, fetchAllSupportStaffClockInsByDate } = useSupportStaffContext();
     const [supportStaffList, setSupportStaffList] = useState([]);
+    const { stateDate, changeStateDate } = useDateContext();
 
     useEffect(() => {
-        fetchAllSupportStaffClockIns();
-    }, []);
+        const formattedDate = stateDate.format('YYYY-MM-DD');
+        fetchAllSupportStaffClockInsByDate(formattedDate);
+    }, [stateDate]);
 
     useEffect(() => {
-        debugger
-        const filteredSupportStaff = supportStaff.filter(support => support.active_role.id !== 1);
-        setSupportStaffList(filteredSupportStaff);
+        // const filteredSupportStaff = supportStaff.filter(support => support.active_role.id !== 1);
+        // setSupportStaffList(filteredSupportStaff);
+        setSupportStaffList(supportStaff);
     }, [supportStaff]);
 
     supportStaffList.sort((a, b) => a.active_role.role.localeCompare(b.active_role.role));
 
     return (
         <div>
-            <Paper sx={{ borderRadius: '8px', padding: '5px', paddingTop: '10px', marginLeft: '30px' }}>
+            <Paper sx={{ borderRadius: '8px', padding: '10px', paddingTop: '10px', marginLeft: '30px' }}>
                 <Typography variant="h6" fontWeight='bold' textAlign='center' sx={{ position: 'sticky', marginBottom: '10px' }}>
                     Active Support Staff
                 </Typography>
