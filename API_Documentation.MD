@@ -8,7 +8,7 @@ Certainly, here's the complete API documentation in Markdown format:
 
 ### 1. Signup New User
 
-- **Route**: `POST /api/auth/signup`
+- **Route**: `POST /api/auth/signup/`
 - **Headers**:
   - Content-Type: application/json
 - **Request Body (Required Information)**:
@@ -46,7 +46,7 @@ Certainly, here's the complete API documentation in Markdown format:
 
 ### 2. Login User
 
-- **Route**: `POST /api/auth/login`
+- **Route**: `POST /api/auth/login/`
 - **Headers**:
   - Content-Type: application/json
 - **Request Body (Required Information)**:
@@ -94,7 +94,7 @@ Certainly, here's the complete API documentation in Markdown format:
 
 ### 2. Get Details of Role
 
-- **Route**: `GET /api/roles/<int:RoleId>`
+- **Route**: `GET /api/roles/<int:RoleId>/`
 - **Request Body** (None)
 - **Expected Response(200 OK)**:
 
@@ -238,7 +238,7 @@ Certainly, here's the complete API documentation in Markdown format:
 
 ### 2. Get Details of Employee
 
-- **Route**: `GET /api/employees/<int:employeeId>`
+- **Route**: `GET /api/employees/<int:employeeId>/`
 - **Request Body (None)**:
 - **Expected Response (200 OK)**:
 
@@ -429,7 +429,7 @@ Certainly, here's the complete API documentation in Markdown format:
 
 ### 2. Get Detail of Single Clock-In
 
-- **Route**: `GET /api/clock-ins/<int:clockin_id>`
+- **Route**: `GET /api/clock-ins/<int:clockin_id>/`
 - **Headers**:
 - **Available Query Parameters**:
   - date: YYYY-MM-DD
@@ -898,7 +898,7 @@ Certainly, here's the complete API documentation in Markdown format:
 
 ### 4. Update Spreadsheet Formulas
 
-- **Route**: `PUT /api/formulas/<int:formulaId>`
+- **Route**: `PUT /api/formulas/<int:formulaId>/`
 - **Headers**:
   - Content-Type: application/json
 - **Request Body (Required Information)**:
@@ -1162,7 +1162,7 @@ Certainly, here's the complete API documentation in Markdown format:
 
 ### 5. Delete Spreadsheet Formula Variable
 
-- **Route**: `DELETE /api/variables/<int:formulaId>`
+- **Route**: `DELETE /api/variables/<int:formulaId>/`
 - **Headers**:
 - **Request Body (None)**:
 - **Expected Response (204 No Content)**:
