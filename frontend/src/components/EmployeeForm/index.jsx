@@ -69,7 +69,10 @@ export default function EmployeeForm({ employee, formType }) {
 
     return (
         <div className='employee-form-container'>
-            <div className='employee-form-header'>
+            <div 
+            className='employee-form-header'
+            style={{ backgroundColor: theme.palette.secondary.main }}
+            >
                 <h1>
                     {`${formType} Employee Form`}
                 </h1>
