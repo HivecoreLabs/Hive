@@ -1,0 +1,44 @@
+.role-form-container {
+    display: flex;
+    flex-direction: column;
+
+    width: 95%;
+    align-items: center;
+
+    margin-left: 60px;
+    margin-top: 70px;
+}
+
+.role-form-header {
+    margin: 0.6em;
+    border-radius: 0.2em;
+    padding: 0.5em;
+}
+
+.role-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+    padding: 2em;
+
+    border: 1px solid #777;
+    border-radius: 0.2em;
+    
+}
+
+.role-form-prompts {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.role-form-description > textarea {
+    padding: 16.5px 14px;
+    background-color: transparent;
+}
+
+.role-form-actions {
+    display: flex;
+    align-self: flex-end;
+}

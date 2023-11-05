@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Button, TextareaAutosize, TextField } from '@mui/material';
+import { Button, TextareaAutosize, TextField, useTheme } from '@mui/material';
 import { useRoles } from "../../contexts/RolesContext";
 import { useNavigate, useParams } from "react-router-dom";
+import './index.css';
 
 
 export default function RoleForm({ selRole, formType }) {
@@ -12,6 +13,7 @@ export default function RoleForm({ selRole, formType }) {
     } = useRoles();
     const { id } = useParams();
     const navigate = useNavigate();
+    const theme = useTheme();
 
     const [role, setRole] = useState(selRole.role);
     const [description, setDescription] = useState(selRole.description);
@@ -39,7 +41,9 @@ export default function RoleForm({ selRole, formType }) {
 
     return (
         <div className="role-form-container">
-            <div className="role-form-header">
+            <div className="role-form-header"
+            style={{ backgroundColor: theme.palette.secondary.main }}
+            >
                 <h1>
                     {`${formType} Role Form`}
                 </h1>
@@ -62,21 +66,17 @@ export default function RoleForm({ selRole, formType }) {
                         />
                     </div>
                     <div className="role-form-description">
-                        {/* Need a material ui component for text area */}
-                        <label>
-                            Description
-                        </label>
+                        
                         <textarea
                         id="description"
+                        placeholder="Description"
                         value={description}
                         onChange={e => setDescription(e.target.value)}
+                        rows={15}
+                        cols={30}
                         >
 
                         </textarea>
-                        {/* { attempt && validationErrors.description && (<div id="error">{validationErrors.description}</div>) } */}
-                        {/* <TextareaAutosize 
-                            lab
-                        /> */}
                     </div>
                 </div>
                 <div className="role-form-actions">
