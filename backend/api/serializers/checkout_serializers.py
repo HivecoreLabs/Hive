@@ -4,13 +4,13 @@ from api.models import Checkout, Checkout_Tipout_Breakdown
 class TipoutBreakdownSerializer(serializers.ModelSerializer):
     class Meta:
         model = Checkout_Tipout_Breakdown
-        fields = '__all__'
+        exclude = ('created_at', 'updated_at', 'sheet_cell', 'is_uploaded')
+
 
 class CheckoutSerializer(serializers.ModelSerializer):
     class Meta:
         model = Checkout
         exclude = ('created_at', 'updated_at', 'sheet_cell', 'is_uploaded')
-
 
 
 class ReadCheckoutSerializer(serializers.ModelSerializer):
