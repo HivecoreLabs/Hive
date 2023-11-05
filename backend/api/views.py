@@ -346,20 +346,23 @@ class CheckOutViewSet(viewsets.ViewSet):
         def _calculate_tipout_received_from_net_sales(formula, employee_list, net_sales):
             tipout_received = 0
             formula, min_sales, max_tipout, is_time_based = formula.values()
+            print(employee_list, is_time_based)
 
-            if min_sales and min_sales <= net_sales:
-                expression = sympify(formula)
-                calculated_tipout = expression.evalf(subs={"net_sales": net_sales})
-                if max_tipout and is_time_based:
-                    tipout_received = min(max_tipout, calculated_tipout)
-                elif max_tipout and not is_time_based:
-                    # TODO: Figure out how max is calculated
-                    tipout_received = min(max_tipout * len(employee_list), calculated_tipout)
-                else:
-                    tipout_received = calculated_tipout
+            if min_sales and min_sales > net_sales:
+                return Decimal("{:.2f}".format(tipout_received))
+
+            expression = sympify(formula)
+            calculated_tipout = expression.evalf(subs={"net_sales": net_sales})
+            if max_tipout and is_time_based:
+                tipout_received = min(max_tipout, calculated_tipout)
+            elif max_tipout and not is_time_based:
+                # TODO: Figure out how max is calculated
+                tipout_received = min(max_tipout * len(employee_list), calculated_tipout)
+            else:
+                tipout_received = calculated_tipout
             return Decimal("{:.2f}".format(tipout_received))
 
-        support_employees = Employee_Clock_In.objects.filter(date=request.data["date"], is_am=request.data['is_am_shift'])
+        support_employees = Employee_Clock_In.objects.filter(date=request.data["tipout_day"], is_am=request.data['is_am_shift'])
 
         grouped_by_role = _group_by_active_role(support_employees)
 
@@ -368,6 +371,7 @@ class CheckOutViewSet(viewsets.ViewSet):
         for role in grouped_by_role:
             formula = Tipout_Formula.objects.filter(role_id=role).values('formula', 'min_sales', 'max_tipout', 'is_time_based')
             tipout_received = _calculate_tipout_received_from_net_sales(formula[0], grouped_by_role[role], request.data['net_sales'])
+            print(role.role, tipout_received)
             total += tipout_received
             tipouts.append({"role_id": role.id, "total": tipout_received})
 
@@ -377,7 +381,6 @@ class CheckOutViewSet(viewsets.ViewSet):
         checkout_instance = checkout_serializer.save()
         for tipout in tipouts:
             tipout['checkout_id'] = checkout_instance.id
-            print(tipout)
         checkout_breakdown_serializer = TipoutBreakdownSerializer(data=tipouts, many=True)
         checkout_breakdown_serializer.is_valid(raise_exception=True)
         checkout_breakdown_serializer.save()

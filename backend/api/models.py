@@ -102,7 +102,7 @@ class Tipout_Formula(models.Model):
     max_tipout = models.DecimalField(decimal_places=2, max_digits=8, null=True)
     role_id = models.ForeignKey(Role, on_delete=models.CASCADE)
     is_am_formula = models.BooleanField(default=True)
-    is_time_based = models.BooleanField(default=False)
+    is_time_based = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     sheet_cell = models.CharField(default=None, null=True, max_length=10)
