@@ -98,6 +98,8 @@ class Employee_Clock_In(models.Model):
 class Tipout_Formula(models.Model):
     formula_name = models.CharField(max_length=50)
     formula = models.CharField(max_length=255)
+    min_sales = models.DecimalField(decimal_places=2, max_digits=8, null=True)
+    max_tipout = models.DecimalField(decimal_places=2, max_digits=8, null=True)
     role_id = models.ForeignKey(Role, on_delete=models.CASCADE)
     is_am_formula = models.BooleanField(default=True)
     is_time_based = models.BooleanField(default=False)
