@@ -52,6 +52,7 @@ class Checkout(models.Model):
     date = models.DateField(gettext('Date'), default=datetime.date.today)
     net_sales = models.DecimalField(decimal_places=2, max_digits=8)
     cash_owed = models.DecimalField(decimal_places=2, max_digits=8)
+    total_owed = models.DecimalField(decimal_places=2, max_digits=8, null=True)
     employee_id = models.ForeignKey(Employee, on_delete=models.PROTECT)
     total_tipout = models.DecimalField(decimal_places=2, max_digits=8, null=True)
     is_am_shift = models.BooleanField()
@@ -74,6 +75,10 @@ class Checkout_Tipout_Breakdown(models.Model):
     checkout_id = models.ForeignKey(Checkout, on_delete=models.PROTECT)
     role_id = models.ForeignKey(Role, on_delete=models.PROTECT)
     total = models.DecimalField(decimal_places=2, max_digits=8)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    sheet_cell = models.CharField(default=None, null=True, max_length=10)
+    is_uploaded = models.BooleanField(default=False)
 
 
 class Employee_Clock_In(models.Model):

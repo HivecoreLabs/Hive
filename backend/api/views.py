@@ -373,6 +373,9 @@ class CheckOutViewSet(viewsets.ViewSet):
             total += tipout_received
             tipouts.append({"role_id": role.id, "total": tipout_received})
 
+        total_owed = request.data['cash_owed'] + total
+
+        request.data['total_owed'] = total_owed
         request.data['total_tipout'] = total
         checkout_serializer = CheckoutSerializer(data=request.data)
         checkout_serializer.is_valid(raise_exception=True)
