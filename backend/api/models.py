@@ -57,7 +57,6 @@ class Checkout(models.Model):
     is_am_shift = models.BooleanField()
     is_patio = models.BooleanField(default=False)
     is_bar = models.BooleanField(default=False)
-    tipout_day = models.DateTimeField()
     support_roles = models.ManyToManyField(Role, related_name='checkouts', through='Checkout_Tipout_Breakdown')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -68,7 +67,7 @@ class Checkout(models.Model):
         time = 'AM' if self.is_am_shift else 'PM'
         patio = ' patio' if self.is_patio else ''
         bar = ' bar' if self.is_bar else ''
-        return f'{self.tipout_day} {time}{patio}{bar}'
+        return f'{self.date} {time}{patio}{bar}'
 
 
 class Checkout_Tipout_Breakdown(models.Model):
