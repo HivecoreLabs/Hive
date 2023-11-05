@@ -7,26 +7,26 @@ import SupportStaffList from './SupportStaffList.jsx';
 import { useEmployees } from '../../contexts/EmployeesContext';
 import { useRoles } from '../../contexts/RolesContext';
 import { useSupportStaffContext } from '../../contexts/SupportStaffContext';
-import { useShiftContext } from '../../contexts/ShiftContext';
+import { useDateContext } from '../../contexts/DateContext';
 import { useTheme } from '@mui/material';
 
 const SupportStaffForm = () => {
+    debugger
     const theme = useTheme();
     const { employees, readAllEmployees } = useEmployees();
     const { roles, readAllRoles } = useRoles();
     const { createSupportStaffClockIn } = useSupportStaffContext();
-    const { shiftDate, setShiftDate, firstClockInMade, setFirstClockInMade, generatedReportForDay, setGeneratedReportForDay, resetState } = useShiftContext();
+    const { stateDate, changeStateDate } = useDateContext();
 
     const [employee, setEmployee] = useState('');
     const [employeeSelected, setEmployeeSelected] = useState(false);
     const [role, setRole] = useState('');
     const [employeeRoleList, setEmployeeRoleList] = useState(null);
-    const [date, setDate] = useState(shiftDate);
+    const [date, setDate] = useState(stateDate);
     const [timeIn, setTimeIn] = useState(null);
     const [timeOut, setTimeOut] = useState(null);
     const [isAMShift, setIsAMShift] = useState(theme.isAMShift);
-
-
+    debugger
     // we need this when formatting times in the request body 
     const convertTimeFromFrontend = (frontendTime) => {
         const date = new Date(frontendTime);
@@ -99,7 +99,6 @@ const SupportStaffForm = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (!firstClockInMade) setFirstClockInMade(true);
 
         const newClockIn = {
             employee_id: employee.id,
@@ -131,6 +130,10 @@ const SupportStaffForm = () => {
         readAllEmployees();
         readAllRoles();
     }, [])
+
+    useEffect(() => {
+        setDate(stateDate);
+    }, [stateDate])
 
     return (
         <div>
@@ -176,7 +179,8 @@ const SupportStaffForm = () => {
                                         sx={{ width: '100%' }}
                                         label="Date"
                                         onChange={handleDate}
-                                        value={dayjs(date)}
+                                        // value={dayjs(date)}
+                                        value={date}
                                     />
                                 </Grid>
                                 <Grid item sm={3}>

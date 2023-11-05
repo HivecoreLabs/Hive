@@ -11,14 +11,12 @@ import {
 } from '@mui/material';
 import dayjs from 'dayjs';
 import { useSupportStaffContext } from '../../contexts/SupportStaffContext';
-import { useShiftContext } from '../../contexts/ShiftContext';
+import { useDateContext } from '../../contexts/DateContext';
 import './SupportStaffList.css';
 import SupportStaffListItem from './SupportStaffListItem.jsx';
 
 const SupportStaffList = () => {
-    const { shiftDate, setShiftDate, firstClockInMade, setFirstClockInMade, generatedReportForDay, setGeneratedReportForDay, resetState } = useShiftContext();
-    console.log(shiftDate);
-    console.log(shiftDate.format('YYYY-MM-DD'));
+    const { stateDate, changeStateDate } = useDateContext();
     const { supportStaff, fetchAllSupportStaffClockIns, fetchAllSupportStaffClockInsByDate } = useSupportStaffContext();
     const sortedSupportStaff = [...supportStaff].sort((a, b) => {
         const timeA = new Date(a.time_in);
@@ -33,9 +31,9 @@ const SupportStaffList = () => {
     ) : null;
 
     useEffect(() => {
-        const formattedDate = shiftDate.format('YYYY-MM-DD');
+        const formattedDate = stateDate.format('YYYY-MM-DD');
         fetchAllSupportStaffClockInsByDate(formattedDate);
-    }, []);
+    }, [stateDate]);
 
     return (
         <div className='support-staff-list-container'>
