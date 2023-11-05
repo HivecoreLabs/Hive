@@ -327,16 +327,6 @@ class CheckOutViewSet(viewsets.ViewSet):
         serializer = CheckoutSerializer(queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    # tipout_breakdown_serializer_class = TipoutBreakdownSerializer
-    # create a new checkout instance based on the passed in data
-    # {
-    # "net_sales": 5000,
-    # "cash_owed": 100,
-    # "tipout_day": "2023-11-03",
-    # "employee_id":1,
-    # "is_am": True
-    # }
-
     def create(self, request, *args, **kwargs):
         checkout_serializer = CheckoutSerializer(data=request.data)
         checkout_serializer.is_valid(raise_exception=True)
@@ -366,7 +356,6 @@ class CheckOutViewSet(viewsets.ViewSet):
                     tipout_received = calculated_tipout
             return Decimal("{:.2f}".format(tipout_received))
 
-        # get all unique support roles for day and shift (am/pm)
         support_employees = Employee_Clock_In.objects.filter(date=request.data["date"], is_am=request.data['is_am'])
 
         grouped_by_role = _group_by_active_role(support_employees)
@@ -376,83 +365,22 @@ class CheckOutViewSet(viewsets.ViewSet):
         for role in grouped_by_role:
             formula = Tipout_Formula.objects.filter(role_id=role).values('formula', 'min_sales', 'max_tipout', 'is_time_based')
             tipout_received = _calculate_tipout_received_from_net_sales(formula[0], grouped_by_role[role], request.data['net_sales'])
-            # serializer = TipoutBreakdownSerializer(data={})
+            total += tipout_received
+            tipouts.append({"role_id": role.id, "total": tipout_received})
 
-        # get all related formulas for each role
-        # TODO: get all related variables for each formula
-        # create breakdowns here
-        # instantiate total var = 0
-        # substitute each variable in the formula with its literal value (table + column/ row should be determined by day)
-        # eval(formula) -> feval (packkage)
-        # save instance of tipout breakdown
-        # add to running total
-        # save total_tipped_out
-        # return checkout object with updated total, and all of the tipout breakdowns
-        # {checkout info..., breakdowns: [{breakdown obj}...,]}
+        request.data['total_tipout'] = total
+        checkout_serializer = CheckoutSerializer(data=request.data)
+        checkout_serializer.is_valid(raise_exception=True)
+        checkout_instance = checkout_serializer.save()
+        for tipout in tipouts:
+            tipout['checkout_id'] = checkout_instance.id
+            print(tipout)
+        checkout_breakdown_serializer = TipoutBreakdownSerializer(data=tipouts, many=True)
+        checkout_breakdown_serializer.is_valid(raise_exception=True)
+        checkout_breakdown_serializer.save()
 
-        # checkout_serializer.save()
-        return Response({"message": "Hello World"})
+        return Response({"checkout": checkout_serializer.data, "breakdown": checkout_breakdown_serializer.data}, status=status.HTTP_201_CREATED)
 
-
-        pass
-
-    # def post_checkout_and_generate_breakdown(self, request):
-
-    #     serializer = CheckoutSerializer(data=request.data)
-
-    #     if serializer.is_valid():
-    #         # Create the checkout
-    #         checkout = serializer.save()
-    #         current_date = request.data['tipout_day']
-    #         # looks like
-    #         # [{'active_role_id': 1}, {'active_role_id': 3}, {'active_role_id': 4}, {'active_role_id': 5}, {'active_role_id': 7}, {'active_role_id': 9}]
-    #         support_staff_on_day = Employee_Clock_In.objects.filter(
-    #             date=current_date
-    #         ).values('active_role_id', 'active_role_id__tipout_formula').distinct()
-    #         total_tipped_out = Decimal(0)
-    #         for role in support_staff_on_day:
-    #             # {'active_role_id': 9, 'active_role_id__tipout_formula': 9}
-    #             # print(role)
-    #             formula_instance = Tipout_Formula.objects.get(id=role['active_role_id__tipout_formula'])
-    #             variable_instances = Tipout_Variable.objects.filter(tipout_formula_id=role['active_role_id__tipout_formula'])
-    #             print(variable_instances)
-    #             # calculate
-    #             # save each calc
-    #             # add to running total
-    #         # update checkout instance tipout_total to total tipped out
-    #         # return serialized response with all related checkout tipout bd instances
-
-
-    #         # get a list of unique roles clocked in for support staff -/
-    #         # we want to get all the formulas related to those roles -/
-    #         # we want to iterate over each of the formulas, and calculate them -!!
-    #         # at each iteration, we should create a new ckouttobd instance and save it
-    #         # then we update the checkout instances tipout_total with the total amount from that
-    #         # return response including the checkout, and all related co tipout bd instances
-
-    #         # clock_in_serializer = Read_Clock_In_Serializer_No_Role(support_staff_on_day, many=True)
-    #         response_data = {
-    #             # 'roles' : clock_in_serializer.data,
-    #             # 'formulas': None,
-    #             'checkout': serializer.data
-    #         }
-    #         return Response(response_data, status=status.HTTP_201_CREATED)
-    #         # for support_staff in support
-    #         # print()
-    #         # for breakdown_data in tipout_breakdowns:
-    #         #     breakdown_serializer = TipoutBreakdownSerializer(data=breakdown_data)
-    #         #     if breakdown_serializer.is_valid():
-    #         #         breakdown = breakdown_serializer.save(checkout=checkout)
-    #         #         tipout_breakdowns.append(breakdown)
-
-    #         # response_data = {
-    #         #     'checkout': CheckoutSerializer(checkout).data,
-    #         #     'tipout_breakdowns': [CheckoutTipoutBreakdownSerializer(b).data for b in tipout_breakdowns]
-    #         # }
-
-    #         return Response(response_data, status=status.HTTP_201_CREATED)
-
-    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
 def end_of_day(request):
