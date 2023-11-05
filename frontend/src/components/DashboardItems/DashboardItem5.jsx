@@ -1,12 +1,10 @@
 import { Box } from "@mui/material";
 import React from "react";
-import { useTheme } from "@mui/material";
 import { PieChart } from '@mui/x-charts/PieChart';
 
 function DashboardItem5({ roles }) {
 
-    const theme = useTheme();
-
+    // FUTURE IMPLEMENTATION: have backend include is_former_employee data so employees who are former employee will not be included in pie chart
     const data = roles.map((role, idx) => ({
         id: idx,
         value: role.employees.length,
@@ -29,7 +27,7 @@ function DashboardItem5({ roles }) {
                       cx: 150
                     },
                   ]}
-                  width={950}
+                  width={1000}
                   height={150}
                  
             /> 

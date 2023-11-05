@@ -16,6 +16,7 @@ import DashboardItem7 from "../DashboardItems/DashboardItem7.jsx";
 import DashboardItem8 from "../DashboardItems/DashboardItem8.jsx";
 import DashboardItem9 from "../DashboardItems/DashboardItem9.jsx";
 import { useRoles } from "../../contexts/RolesContext.js";
+import { useSupportStaffContext } from "../../contexts/SupportStaffContext.js";
 
 function Dashboard() {
     const theme = useTheme();
@@ -32,13 +33,20 @@ function Dashboard() {
         roles,
         readAllRoles
     } = useRoles();
+    const {
+        supportStaff,
+        fetchAllSupportStaffClockIns
+    } = useSupportStaffContext();
 
     useEffect(() => {
         readAllRoles();
-    }, [useRoles]);
+        fetchAllSupportStaffClockIns();
+    }, [useRoles, useSupportStaffContext]);
+
+    let check = !Object.values(roles)[0] || !Object.values(supportStaff)[0]
     
-    if (!Object.values(roles)[0]) return null;
-    console.log(roles)
+    if (check) return null;
+    console.log(supportStaff)
 
     return (
         <div className="dashboard-container">
@@ -47,7 +55,7 @@ function Dashboard() {
                     {/* first row */}
                     <Grid item sx={{ width: '300px' }}>
                         <Paper elevation={2} sx={{ borderRadius: 2, bgcolor: theme.palette.canvas }}>
-                            <DashboardItem1></DashboardItem1>
+                            <DashboardItem1 supportStaff={supportStaff}></DashboardItem1>
                         </Paper>
                     </Grid>
                     <Grid item sx={{ width: '300px' }}>

@@ -2,9 +2,16 @@ import { Box } from "@mui/material";
 import React from "react";
 import { Theme, useTheme } from "@mui/material";
 
-function DashboardItem1() {
+function DashboardItem1({ supportStaff }) {
 
     const theme = useTheme();
+    const numActiveEmployees = supportStaff
+                                .filter(s => {
+                                    let date = new Date();
+                                    let today = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+                                    return Date.parse(today) === Date.parse(s.date) && !s.time_out;
+                                })
+                                .length;
 
     return (
         <Box
@@ -16,23 +23,9 @@ function DashboardItem1() {
                 // minWidth: 300,
             }}
         >
-            <Box sx={{ color: 'text.secondary' }}>Sessions</Box>
+            <Box sx={{ color: 'text.secondary' }}>Active Employees</Box>
             <Box sx={{ color: 'text.primary', fontSize: 34, fontWeight: 'medium' }}>
-                98.3 K
-            </Box>
-            <Box
-                sx={{
-                    color: 'tertiary',
-                    display: 'inline',
-                    fontWeight: 'bold',
-                    mx: 0.5,
-                    fontSize: 14,
-                }}
-            >
-                +18.77%
-            </Box>
-            <Box sx={{ color: 'text.secondary', display: 'inline', fontSize: 14 }}>
-                vs. last week
+                {numActiveEmployees}
             </Box>
         </Box>)
 }
