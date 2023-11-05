@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { Button } from '@mui/material';
 import { css } from '@emotion/react';
 import { useEmployees } from "../../contexts/EmployeesContext";
+import EmployeeCard from './EmployeeCard.jsx';
 import './index.css';
 
 function ViewAllEmployees() {
@@ -39,58 +40,37 @@ function ViewAllEmployees() {
                     View All Employees
                 </h1>
             </div>
-            <div className='view-all-employees-employees'>
-                        <div
-                        className='view-all-employees-employee-last-name view-all-employees-employee-header'
-                        >
-                            Last Name
+            <ul className='view-all-employees-employees'>
+                <li>
+                    <div className='view-all-employees-employees-header'>
+                        <div className='employee-card-last-name'>
+                            <p>
+                                Last Name
+                            </p>
                         </div>
-                        <div
-                        className='view-all-employees-employee-first-name view-all-employees-employee-header'
-                        >
-                            First Name
+                        <div className='employee-card-first-name'>
+                            <p>
+                                First Name
+                            </p>
                         </div>
-                        <div
-                        className='view-all-employees-employee-employee-id view-all-employees-employee-header'
-                        >
-                            Employee ID
+                        <div className='employee-card-employee-id'>
+                            <p>
+                                Employee ID
+                            </p>
                         </div>
-                        <div
-                        className='view-all-employees-employee-action view-all-employees-employee-header'
-                        >
-                            Action
+                        <div className='employee-card-action'>
+                            <p>
+                                Action
+                            </p>
                         </div>
-                    {
-                        sortedEmp
-                        .map(e => (
-                            <>
-                                <div
-                                className='view-all-employees-employee-last-name'
-                                >
-                                    {e.last_name}
-                                </div>
-                                <div
-                                className='view-all-employees-employee-first-name'
-                                >
-                                    {e.first_name}
-                                </div>
-                                <div
-                                className='view-all-employees-employee-employee-id'
-                                >
-                                    {e.restaurant_employee_id
-}
-                                </div>
-                                <div
-                                className='view-all-employees-employee-action'
-                                >
-                                    <NavLink to={`/employees/${e.id}`}>
-                                        <Button>Edit</Button>
-                                    </NavLink>
-                                </div>
-                            </>
-                        ))
-                    }
-            </div>
+                    </div>
+                </li>
+                {
+                    sortedEmp.map(e => (
+                        <EmployeeCard employee={e} />
+                    ))
+                }
+            </ul>
         </div>
     );
 

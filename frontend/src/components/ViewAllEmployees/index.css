@@ -14,31 +14,19 @@
 }
 
 .view-all-employees-employees {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-auto-rows: auto;
-    justify-items: center;
-    align-items: center;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
     overflow-y: auto;
+    list-style: none;
 }
 
-.view-all-employees-employee-header {
+.view-all-employees-employees-header {
     font-weight: bolder;
+    display: flex;
+    justify-content: space-around;
 }
 
-/* .view-all-employees-employee-last-name {
-    
+.view-all-employees-employees-header > div {
+    width: 95px;
 }
-
-.view-all-employees-employee-first-name {
-    grid-area: b;
-}
-
-.view-all-employees-employee-employee-id {
-    grid-area: c;
-}
-
-.view-all-employees-employee-action {
-    grid-area: d;
-} */
