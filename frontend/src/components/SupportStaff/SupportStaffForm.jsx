@@ -7,6 +7,7 @@ import SupportStaffList from './SupportStaffList.jsx';
 import { useEmployees } from '../../contexts/EmployeesContext';
 import { useRoles } from '../../contexts/RolesContext';
 import { useSupportStaffContext } from '../../contexts/SupportStaffContext';
+import { useShiftContext } from '../../contexts/ShiftContext';
 import { useTheme } from '@mui/material';
 
 const SupportStaffForm = () => {
@@ -14,12 +15,13 @@ const SupportStaffForm = () => {
     const { employees, readAllEmployees } = useEmployees();
     const { roles, readAllRoles } = useRoles();
     const { createSupportStaffClockIn } = useSupportStaffContext();
+    const { shiftDate, setShiftDate, firstClockInMade, setFirstClockInMade, generatedReportForDay, setGeneratedReportForDay, resetState } = useShiftContext();
 
     const [employee, setEmployee] = useState('');
     const [employeeSelected, setEmployeeSelected] = useState(false);
     const [role, setRole] = useState('');
     const [employeeRoleList, setEmployeeRoleList] = useState(null);
-    const [date, setDate] = useState(dayjs());
+    const [date, setDate] = useState(shiftDate);
     const [timeIn, setTimeIn] = useState(null);
     const [timeOut, setTimeOut] = useState(null);
     const [isAMShift, setIsAMShift] = useState(theme.isAMShift);
@@ -97,6 +99,8 @@ const SupportStaffForm = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        if (!firstClockInMade) setFirstClockInMade(true);
+
         const newClockIn = {
             employee_id: employee.id,
             active_role_id: role.id,

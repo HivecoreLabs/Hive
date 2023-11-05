@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useReducer } from 'react';
 import customFetch from '../utils/customFetch';
 import { useNavigate } from 'react-router-dom';
+import dayjs from 'dayjs';
 
 const SupportStaffContext = createContext();
 const SupportStaffDispatch = createContext();
@@ -94,6 +95,18 @@ export const SupportStaffContextProvider = ({ children }) => {
         return response;
     };
 
+    const fetchAllSupportStaffClockInsByDate = async (date) => {
+        debugger
+        const response = await customFetch(`http://localhost:8000/api/clock-ins/?date=${date}`);
+        if (response.ok) {
+            const data = await response.json();
+            dispatch(receiveAllSupportStaff(data));
+        } else {
+            console.error('Could not fetch all clock-ins by date', error);
+        };
+        return response;
+    };
+
     const createSupportStaffClockIn = async (newClockIn) => {
         const response = await customFetch(`http://localhost:8000/api/clock-ins/`, {
             method: 'POST',
@@ -140,6 +153,7 @@ export const SupportStaffContextProvider = ({ children }) => {
     const value = {
         supportStaff: state.supportStaff,
         fetchAllSupportStaffClockIns,
+        fetchAllSupportStaffClockInsByDate,
         createSupportStaffClockIn,
         updateSupportStaffClockIn,
         deleteSupportStaffClockIn

@@ -9,12 +9,17 @@ import {
     TableHead,
     TableRow,
 } from '@mui/material';
+import dayjs from 'dayjs';
 import { useSupportStaffContext } from '../../contexts/SupportStaffContext';
+import { useShiftContext } from '../../contexts/ShiftContext';
 import './SupportStaffList.css';
 import SupportStaffListItem from './SupportStaffListItem.jsx';
 
 const SupportStaffList = () => {
-    const { supportStaff, fetchAllSupportStaffClockIns } = useSupportStaffContext();
+    const { shiftDate, setShiftDate, firstClockInMade, setFirstClockInMade, generatedReportForDay, setGeneratedReportForDay, resetState } = useShiftContext();
+    console.log(shiftDate);
+    console.log(shiftDate.format('YYYY-MM-DD'));
+    const { supportStaff, fetchAllSupportStaffClockIns, fetchAllSupportStaffClockInsByDate } = useSupportStaffContext();
     const sortedSupportStaff = [...supportStaff].sort((a, b) => {
         const timeA = new Date(a.time_in);
         const timeB = new Date(b.time_in);
@@ -28,7 +33,8 @@ const SupportStaffList = () => {
     ) : null;
 
     useEffect(() => {
-        fetchAllSupportStaffClockIns();
+        const formattedDate = shiftDate.format('YYYY-MM-DD');
+        fetchAllSupportStaffClockInsByDate(formattedDate);
     }, []);
 
     return (
