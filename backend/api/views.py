@@ -346,7 +346,6 @@ class CheckOutViewSet(viewsets.ViewSet):
         def _calculate_tipout_received_from_net_sales(formula, employee_list, net_sales):
             tipout_received = 0
             formula, min_sales, max_tipout, is_time_based = formula.values()
-            print(employee_list, is_time_based)
 
             if min_sales and min_sales > net_sales:
                 return Decimal("{:.2f}".format(tipout_received))
@@ -371,7 +370,6 @@ class CheckOutViewSet(viewsets.ViewSet):
         for role in grouped_by_role:
             formula = Tipout_Formula.objects.filter(role_id=role).values('formula', 'min_sales', 'max_tipout', 'is_time_based')
             tipout_received = _calculate_tipout_received_from_net_sales(formula[0], grouped_by_role[role], request.data['net_sales'])
-            print(role.role, tipout_received)
             total += tipout_received
             tipouts.append({"role_id": role.id, "total": tipout_received})
 
