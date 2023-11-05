@@ -178,7 +178,7 @@ const CheckoutsForm = () => {
                                         </RadioGroup>
                                     </FormControl>
                                 </Grid>
-                                <Grid item sm={3} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }} >
+                                <Grid item sm={3.1} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }} >
                                     <Button sx={{ marginBottom: '14px' }} variant='outlined' color='warning' onClick={handleResetFields}>Reset Fields</Button>
                                     <Button sx={{ width: '75%' }} variant='contained' style={{ color: theme.palette.primary.contrastText }} type='submit'>Submit</Button>
                                 </Grid>
