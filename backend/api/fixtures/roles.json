@@ -3,7 +3,7 @@
         "model": "api.role",
         "pk": 1,
         "fields": {
-            "role": "Server",
+            "role": "Busser",
             "description": "Description for role 0",
             "created_at": "2023-10-26T00:00:00Z",
             "updated_at": "2023-10-26T00:00:00Z",
@@ -15,7 +15,7 @@
         "model": "api.role",
         "pk": 2,
         "fields": {
-            "role": "Bartender",
+            "role": "Brunch Busser",
             "description": "Description for role 1",
             "created_at": "2023-10-26T00:00:00Z",
             "updated_at": "2023-10-26T00:00:00Z",
@@ -27,7 +27,7 @@
         "model": "api.role",
         "pk": 3,
         "fields": {
-            "role": "Chef",
+            "role": "Bar Busser",
             "description": "Description for role 2",
             "created_at": "2023-10-26T00:00:00Z",
             "updated_at": "2023-10-26T00:00:00Z",
@@ -39,7 +39,7 @@
         "model": "api.role",
         "pk": 4,
         "fields": {
-            "role": "Hostess",
+            "role": "Food Runner",
             "description": "Description for role 3",
             "created_at": "2023-10-26T00:00:00Z",
             "updated_at": "2023-10-26T00:00:00Z",
@@ -51,7 +51,7 @@
         "model": "api.role",
         "pk": 5,
         "fields": {
-            "role": "Manager",
+            "role": "Bar Food Runner",
             "description": "Description for role 4",
             "created_at": "2023-10-26T00:00:00Z",
             "updated_at": "2023-10-26T00:00:00Z",
@@ -63,7 +63,7 @@
         "model": "api.role",
         "pk": 6,
         "fields": {
-            "role": "Busser",
+            "role": "Drink Runner",
             "description": "Description for role 5",
             "created_at": "2023-10-26T00:00:00Z",
             "updated_at": "2023-10-26T00:00:00Z",
@@ -75,7 +75,7 @@
         "model": "api.role",
         "pk": 7,
         "fields": {
-            "role": "Waiter",
+            "role": "Bar Drink Runner",
             "description": "Description for role 6",
             "created_at": "2023-10-26T00:00:00Z",
             "updated_at": "2023-10-26T00:00:00Z",
@@ -87,7 +87,7 @@
         "model": "api.role",
         "pk": 8,
         "fields": {
-            "role": "Dishwasher",
+            "role": "Bar Tips",
             "description": "Description for role 7",
             "created_at": "2023-10-26T00:00:00Z",
             "updated_at": "2023-10-26T00:00:00Z",
@@ -99,7 +99,7 @@
         "model": "api.role",
         "pk": 9,
         "fields": {
-            "role": "Caterer",
+            "role": "Brunch Bar Tips",
             "description": "Description for role 8",
             "created_at": "2023-10-26T00:00:00Z",
             "updated_at": "2023-10-26T00:00:00Z",
@@ -111,7 +111,19 @@
         "model": "api.role",
         "pk": 10,
         "fields": {
-            "role": "Doorman",
+            "role": "AM Silverware",
+            "description": "Description for role 9",
+            "created_at": "2023-10-26T00:00:00Z",
+            "updated_at": "2023-10-26T00:00:00Z",
+            "sheet_cell": null,
+            "is_uploaded": false
+        }
+    },
+    {
+        "model": "api.role",
+        "pk": 11,
+        "fields": {
+            "role": "PM Silverware",
             "description": "Description for role 9",
             "created_at": "2023-10-26T00:00:00Z",
             "updated_at": "2023-10-26T00:00:00Z",

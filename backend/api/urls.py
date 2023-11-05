@@ -9,7 +9,7 @@ router.register(r'formulas', views.FormulaViewSet, basename='formulas')
 router.register(r'variables', views.VariablesViewSet, basename='variables')
 router.register(r'clock-ins', views.ClockInViewSet, basename='clock-ins')
 router.register(r'employees', views.EmployeeViewSet, basename='employees')
-
+router.register(r'checkouts', views.CheckOutViewSet, basename='checkouts')
 employee_router = routers.NestedDefaultRouter(
     router, r'employees', lookup='employee')
 employee_router.register(
@@ -23,13 +23,15 @@ formula_router = routers.NestedDefaultRouter(router, r'formulas', lookup='formul
 formula_router.register(r'variables', views.VariablesViewSet, basename='formula-variables')
 
 
+
 urlpatterns = [
     path("auth/login/", views.login, name='login'),
     path("auth/signup/", views.signup, name='signup'),
     path("spreadsheets/", views.generate_sheet_database, name='spreadsheets'),
+    path("end-of-day/", views.end_of_day, name='end-of-day'),
     path("tables/", views.get_tables_columns,name='tables'),
     path(r'', include(router.urls)),
     path(r'', include(employee_router.urls)),
     path(r'', include(role_router.urls)),
-    path(r'', include(formula_router.urls))
+    path(r'', include(formula_router.urls)),
 ]
