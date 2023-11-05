@@ -59,7 +59,7 @@ const ActiveSupportStaffList = () => {
                 <Button
                     component={Link}
                     to="/support"
-                    variant="outlined"
+                    variant="contained"
                     color="primary"
                     size="medium"
                     sx={{
