@@ -1383,3 +1383,135 @@ Certainly, here's the complete API documentation in Markdown format:
   ]
 }
 ```
+
+## End Of Day
+
+- **Route**: `POST /api/end-of-day/`
+- **Headers**:
+- **Request Body (Required)**:
+
+```json
+{
+  "date": "2023-10-25"
+}
+```
+
+- **Expected Response (200 OK)**:
+
+```json
+{
+  "am": [
+    {
+      "id": 1,
+      "active_role_id": 1,
+      "employee_id": 1,
+      "tipout_received": "151.21",
+      "date": "2023-10-25",
+      "time_in": "2023-10-25T12:00:00Z",
+      "time_out": "2023-10-25T16:00:00Z",
+      "is_am": true
+    },
+    {
+      "id": 2,
+      "active_role_id": 3,
+      "employee_id": 2,
+      "tipout_received": "357.32",
+      "date": "2023-10-25",
+      "time_in": "2023-10-25T11:00:00Z",
+      "time_out": "2023-10-25T15:00:00Z",
+      "is_am": true
+    },
+    {
+      "id": 3,
+      "active_role_id": 5,
+      "employee_id": 3,
+      "tipout_received": "124.10",
+      "date": "2023-10-25",
+      "time_in": "2023-10-25T10:00:00Z",
+      "time_out": "2023-10-25T14:00:00Z",
+      "is_am": true
+    },
+    {
+      "id": 4,
+      "active_role_id": 7,
+      "employee_id": 4,
+      "tipout_received": "98.92",
+      "date": "2023-10-25",
+      "time_in": "2023-10-25T09:00:00Z",
+      "time_out": "2023-10-25T13:00:00Z",
+      "is_am": true
+    },
+    {
+      "id": 5,
+      "active_role_id": 9,
+      "employee_id": 5,
+      "tipout_received": "219.77",
+      "date": "2023-10-25",
+      "time_in": "2023-10-25T08:00:00Z",
+      "time_out": "2023-10-25T12:00:00Z",
+      "is_am": true
+    },
+    {
+      "id": 6,
+      "active_role_id": 1,
+      "employee_id": 6,
+      "tipout_received": "151.21",
+      "date": "2023-10-25",
+      "time_in": "2023-10-25T07:00:00Z",
+      "time_out": "2023-10-25T11:00:00Z",
+      "is_am": true
+    },
+    {
+      "id": 7,
+      "active_role_id": 3,
+      "employee_id": 7,
+      "tipout_received": "357.32",
+      "date": "2023-10-25",
+      "time_in": "2023-10-25T06:00:00Z",
+      "time_out": "2023-10-25T10:00:00Z",
+      "is_am": true
+    },
+    {
+      "id": 8,
+      "active_role_id": 5,
+      "employee_id": 8,
+      "tipout_received": "124.10",
+      "date": "2023-10-25",
+      "time_in": "2023-10-25T05:00:00Z",
+      "time_out": "2023-10-25T09:00:00Z",
+      "is_am": true
+    },
+    {
+      "id": 9,
+      "active_role_id": 7,
+      "employee_id": 9,
+      "tipout_received": "98.92",
+      "date": "2023-10-25",
+      "time_in": "2023-10-25T04:00:00Z",
+      "time_out": "2023-10-25T08:00:00Z",
+      "is_am": true
+    },
+    {
+      "id": 10,
+      "active_role_id": 9,
+      "employee_id": 10,
+      "tipout_received": "219.77",
+      "date": "2023-10-25",
+      "time_in": "2023-10-25T03:00:00Z",
+      "time_out": "2023-10-25T07:00:00Z",
+      "is_am": true
+    },
+    {
+      "id": 11,
+      "active_role_id": 10,
+      "employee_id": 11,
+      "tipout_received": "191.73",
+      "date": "2023-10-25",
+      "time_in": "2023-10-25T03:00:00Z",
+      "time_out": "2023-10-25T07:00:00Z",
+      "is_am": true
+    }
+  ],
+  "pm": []
+}
+```
