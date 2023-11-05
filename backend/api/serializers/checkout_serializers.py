@@ -7,9 +7,15 @@ class TipoutBreakdownSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class CheckoutSerializer(serializers.ModelSerializer):
-
-    # breakdowns = TipoutBreakdownSerializer(source='checkout_tipout_breakdown_set', many=True)
-
     class Meta:
         model = Checkout
-        fields = ('__all__')
+        exclude = ('created_at', 'updated_at', 'sheet_cell', 'is_uploaded')
+
+
+
+class ReadCheckoutSerializer(serializers.ModelSerializer):
+    checkout_tipout_breakdowns = TipoutBreakdownSerializer(source='checkout_tipout_breakdown_set', many=True, read_only=True)
+
+    class Meta:
+        model= Checkout
+        exclude = ('created_at', 'updated_at', 'sheet_cell', 'is_uploaded')
