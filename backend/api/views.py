@@ -35,9 +35,20 @@ from .serializers import (
     ReadLimitedClockInSerializer,
     ReadCheckoutSerializer
 )
+from .serializers.upload_serializers import (
+    UploadCheckoutSerializer,
+    UploadCheckoutTipoutBreakdownSerializer,
+    UploadEmployeeClockInSerializer,
+    UploadEmployeeRoleSerializer,
+    UploadEmployeeSerializer,
+    UploadRoleSerializer,
+    UploadTipoutFormulaSerializer,
+    UploadTipoutVariableSerializer
+)
 
 from api.utils.views import *
 from backend.quickstart import generate
+from backend.upload import add_records_to_spreadsheet
 from datetime import date
 
 @api_view(['GET'])
@@ -389,3 +400,47 @@ def end_of_day(request):
 
 
     return Response({"am":am_list_of_employee_tipouts_received, "pm":pm_list_of_employee_tipouts_received}, status = status.HTTP_200_OK)
+
+@api_view(['POST'])
+def upload_db(request):
+    pass
+    # Role,
+    # Employee,
+    # SpreadSheet,
+    # Tipout_Formula,
+    # Tipout_Variable,
+    # Employee_Clock_In,
+    # Checkout_Tipout_Breakdown,
+    # Checkout
+    role_queryset = Role.objects.filter(is_uploaded=False)
+    employee_queryset = Employee.objects.filter(is_uploaded=False)
+    formula_queryset = Tipout_Formula.objects.filter(is_uploaded=False)
+    clock_in_queryset = Employee_Clock_In.objects.filter(is_uploaded=False)
+    checkout_queryset = Checkout.objects.filter(is_uploaded=False)
+    breakdown_queryset = Checkout_Tipout_Breakdown.objects.filter(is_uploaded=False)
+
+    serialized_roles = UploadRoleSerializer(role_queryset, many=True).data
+    serialized_employees = UploadEmployeeSerializer(employee_queryset, many=True).data
+    serialized_formulas = UploadTipoutFormulaSerializer(formula_queryset, many=True).data
+    serialized_clock_ins = UploadEmployeeClockInSerializer(clock_in_queryset, many=True).data
+    serialized_checkouts = UploadCheckoutSerializer(checkout_queryset, many=True).data
+    serialized_breakdown = UploadCheckoutTipoutBreakdownSerializer(breakdown_queryset, many=True).data
+
+    spreadsheet_id = SpreadSheetSerializer(SpreadSheet.objects.last()).data["database_google_id"]
+    # print(spreadsheet_id)
+    print("serialized roles: ",serialized_roles)
+    add_records_to_spreadsheet('Role', serialized_roles, spreadsheet_id)
+    add_records_to_spreadsheet('Employee', serialized_employees, spreadsheet_id)
+    add_records_to_spreadsheet('Tipout_Formula', serialized_formulas, spreadsheet_id)
+    add_records_to_spreadsheet('Employee_Clock_In', serialized_clock_ins, spreadsheet_id)
+    add_records_to_spreadsheet('Checkout', serialized_checkouts, spreadsheet_id)
+    add_records_to_spreadsheet('Checkout_Tipout_Breakdown', serialized_breakdown, spreadsheet_id)
+
+    return Response({
+        "roles": serialized_roles,
+        "employees": serialized_employees,
+        "formulas": serialized_formulas,
+        "clock_ins": serialized_clock_ins,
+        "checkouts": serialized_checkouts,
+        "breakdowns": serialized_breakdown
+                     })
