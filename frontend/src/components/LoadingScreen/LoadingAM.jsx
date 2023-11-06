@@ -3,7 +3,6 @@ import './LoadingAM.css';
 import HiveRoundedIcon from '@mui/icons-material/HiveRounded';
 
 const LoadingAM = () => {
-    debugger
 
     return (
         <div className="loading-page">

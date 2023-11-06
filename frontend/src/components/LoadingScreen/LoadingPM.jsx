@@ -3,7 +3,6 @@ import './LoadingPM.css';
 import HiveRoundedIcon from '@mui/icons-material/HiveRounded';
 
 const LoadingPM = () => {
-    debugger
 
     return (
         <div className="loading-page">

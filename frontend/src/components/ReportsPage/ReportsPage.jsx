@@ -1,8 +1,9 @@
 import React from "react";
+import './ReportsPage.css';
 
 const ReportsPage = () => {
     return (
-        <div>Reports Page</div>
+        <div className="reports-page-container">Reports Page</div>
     )
 };
 
