@@ -17,19 +17,24 @@ import dayjs from 'dayjs';
 import { useEmployees } from '../../contexts/EmployeesContext';
 import { useCheckoutsContext } from '../../contexts/CheckoutsContext';
 import { useTheme } from "@mui/material";
+import { useRoles } from '../../contexts/RolesContext';
 
 const CheckoutsListItem = ({ checkout }) => {
     const theme = useTheme();
+    const { rolesOptions, readAllRoles } = useRoles();
     const { checkoutObject, id, firstName, lastName } = checkout;
     const date = checkoutObject.date;
-    const checkoutBreakdowns = checkoutObject.checkout_tipout_breakdowns;
-    const { employee, readAllEmployees, readSingleEmployee } = useEmployees();
+    const checkoutBreakdowns = checkoutObject?.checkout_tipout_breakdowns;
     const [expanded, setExpanded] = useState(null);
 
     const handleExpand = (panel) => (e, isExpanded) => {
         setExpanded(isExpanded ? panel : null);
     };
 
+    useEffect(() => {
+        readAllRoles()
+    }, [])
+    debugger
     return (
         <Accordion
             key={id}
@@ -41,7 +46,7 @@ const CheckoutsListItem = ({ checkout }) => {
                 expandIcon={<ExpandMoreIcon />}
             >
                 <div style={{ display: 'flex', justifyContent: 'space-around', width: '100%' }}>
-                    <Typography sx={{ width: '40%' }} >{firstName} {lastName}</Typography>
+                    <Typography sx={{ width: '40%', color: expanded === `panel-${id}` ? theme.palette.secondary.dark : 'normal', }} >{firstName} {lastName}</Typography>
                     <Typography sx={{ width: '40%' }}>
                         {dayjs(date).format('dddd, MMM D')}
                     </Typography>
@@ -52,7 +57,7 @@ const CheckoutsListItem = ({ checkout }) => {
             </AccordionSummary>
             <AccordionDetails>
                 <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-                    <TableContainer elevation={4} component={Paper} style={{ width: '48%' }}>
+                    <TableContainer elevation={4} component={Paper} style={{ width: '40%' }}>
                         <Table>
                             <TableHead>
                                 <TableRow>
@@ -68,20 +73,26 @@ const CheckoutsListItem = ({ checkout }) => {
                             </TableBody>
                         </Table>
                     </TableContainer>
-                    <TableContainer elevation={4} component={Paper} style={{ width: '48%' }}>
+                    <TableContainer elevation={4} component={Paper} style={{ width: '55%' }}>
                         <Table>
-                            <TableHead>
+                            {/* <TableHead >
                                 <TableRow>
-                                    <TableCell sx={{ width: '100%' }}>Tipout Breakdowns</TableCell>
+                                    <TableCell>Tipout Breakdowns</TableCell>
                                 </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {checkoutBreakdowns.map((breakdown) => (
-                                    <TableRow key={breakdown.id}>
-                                        <TableCell>{breakdown.total}</TableCell>
-                                        <TableCell>{breakdown.role_id}</TableCell>
-                                    </TableRow>
-                                ))}
+                            </TableHead> */}
+                            <TableBody >
+                                <TableRow>
+                                    <TableCell>Tipout Breakdowns</TableCell>
+                                </TableRow>
+                                {checkoutBreakdowns?.map((breakdown) => {
+                                    const roleName = rolesOptions[breakdown.role_id];
+                                    return (
+                                        <TableRow key={breakdown.id}>
+                                            <TableCell>{breakdown.total}</TableCell>
+                                            <TableCell>{roleName}</TableCell>
+                                        </TableRow>
+                                    )
+                                })}
                             </TableBody>
                         </Table>
                     </TableContainer>

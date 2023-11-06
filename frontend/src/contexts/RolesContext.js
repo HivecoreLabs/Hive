@@ -11,11 +11,12 @@ const RolesContext = createContext();
 
 const initialState = {
     role: {},
-    roles: {}
+    roles: {},
+    rolesOptions: {}
 }
 
 function rolesReducer(state = initialState, action) {
-    let newState = {...state};
+    let newState = { ...state };
     switch (action.type) {
         case ADD_ROLE:
             newState.roles[action.payload.id] = action.payload;
@@ -25,6 +26,13 @@ function rolesReducer(state = initialState, action) {
             return newState;
         case LOAD_ROLES:
             newState.roles = action.payload;
+
+            // create role options map to use if needed
+            const roleOptions = {};
+            action.payload.forEach((role) => {
+                roleOptions[role.id] = role.role;
+            });
+            newState.rolesOptions = roleOptions;
             return newState;
         case REMOVE_ROLE:
             delete newState[action.payload];
@@ -59,14 +67,14 @@ export const RolesProvider = ({ children }) => {
         rolesReducer,
         initialState
     );
-    
+
     const createRole = async (role) => {
         const response = await fetch(`http://localhost:8000/api/roles/`, {
             method: 'POST',
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(role)
         });
-    
+
         if (response.ok) {
             const data = await response.json();
             dispatch(addRole(data));
@@ -98,7 +106,7 @@ export const RolesProvider = ({ children }) => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(role)
         });
-    
+
         if (response.ok) {
             const data = await response.json();
             dispatch(addRole(data));
@@ -112,7 +120,7 @@ export const RolesProvider = ({ children }) => {
             method: 'DELETE',
             headers: { "Content-Type": "application/json" }
         });
-    
+
         if (response.ok) {
             const data = await response.json();
             dispatch(removeRole(id));
@@ -123,6 +131,7 @@ export const RolesProvider = ({ children }) => {
     const value = {
         role: state.role,
         roles: state.roles,
+        rolesOptions: state.rolesOptions,
         createRole,
         readSingleRole,
         readAllRoles,
@@ -132,7 +141,7 @@ export const RolesProvider = ({ children }) => {
 
     return (
         <RolesContext.Provider value={value}>
-                {children}
+            {children}
         </RolesContext.Provider>
     );
 }

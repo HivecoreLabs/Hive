@@ -14,7 +14,7 @@ const CheckoutsForm = () => {
 
     const theme = useTheme();
     const { employees } = useEmployees();
-    const { role, roles, readSingleRole } = useRoles();
+    const { role, readSingleRole } = useRoles();
     const { createCheckout } = useCheckoutsContext();
     const { stateDate, changeStateDate } = useDateContext();
 
@@ -47,8 +47,8 @@ const CheckoutsForm = () => {
     const handleDate = (value) => {
         setDate(value);
     }
-    const handleShift = (e) => {
-        setIsAMShift(e.target.value);
+    const handleShift = () => {
+        setIsAMShift(prevState => !prevState);
     }
     const handlePatio = (e) => {
         setPatio(e.target.value);
@@ -66,7 +66,7 @@ const CheckoutsForm = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
+        debugger
         const newCheckout = {
             employee_id: server.id,
             net_sales: netSales,
