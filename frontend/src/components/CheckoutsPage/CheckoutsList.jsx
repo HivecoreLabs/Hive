@@ -24,7 +24,7 @@ export const CheckoutsList = () => {
     const checkoutsPM = checkoutsList.length > 0 ? checkoutsList.filter((checkout) => !checkout.is_am_shift) : null;
 
     const checkoutsAMList = checkoutsAM ? checkoutsAM?.map((checkout) => {
-        const employee = employees.find((employee) => checkout.employee_id === employee.id);
+        const employee = employees?.find((employee) => checkout.employee_id === employee.id);
         const value = {
             checkoutObject: checkout,
             id: employee.id,
@@ -37,7 +37,7 @@ export const CheckoutsList = () => {
     }) : <Typography variant='h9' sx={{ textAlign: 'center', display: 'inline-block', width: '100%' }} color={theme.palette.primary.light}>no AM servers have checked out yet</Typography>
 
     const checkoutsPMList = checkoutsPM ? checkoutsPM?.map((checkout) => {
-        const employee = employees.find((employee) => checkout.employee_id === employee.id);
+        const employee = employees?.find((employee) => checkout.employee_id === employee.id);
         const value = {
             checkoutObject: checkout,
             id: employee.id,
