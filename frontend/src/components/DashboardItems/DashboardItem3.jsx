@@ -47,7 +47,7 @@ function DashboardItem3() {
     };
 
     const textStyles = {
-        color: theme.palette.primary.main,
+        color: theme.palette.primary.dark,
         fontSize: 34,
         fontWeight: 'medium',
         display: 'inline',
@@ -83,15 +83,12 @@ function DashboardItem3() {
 
     return (
         <Box sx={containerStyles} p={3}>
-            <div style={{ marginRight: '0.3em' }}>
+            <div style={{ marginRight: '1.75em' }}>
                 <Typography variant="body2" color="text.primary">
                     It is currently the
                 </Typography>
                 <Typography variant="h3" sx={textStyles}>
                     { theme.isAMShift ? 'AM' : 'PM' }
-                </Typography>
-                <Typography variant="h5" color="primary" component="span">
-                    shift
                 </Typography>
                 <Typography ml='7px' variant="h5" color="quaternary" component="span">
                     {`${hours}:${minutes}:${seconds}`}

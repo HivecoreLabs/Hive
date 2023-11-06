@@ -44,7 +44,7 @@ const CheckoutsListItem = ({ checkout }) => {
             <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
             >
-                <div style={{ display: 'flex', justifyContent: 'space-around', width: '100%' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-around', width: '110%' }}>
                     <Typography sx={{ width: '40%', color: expanded === `panel-${id}` ? theme.palette.secondary.dark : '', }} >{firstName} {lastName}</Typography>
                     <Typography sx={{ width: '40%' }}>
                         {dayjs(date).format('dddd, MMM D')}
@@ -56,7 +56,7 @@ const CheckoutsListItem = ({ checkout }) => {
             </AccordionSummary>
             <AccordionDetails>
                 <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-                    <TableContainer elevation={4} component={Paper} style={{ width: '40%' }}>
+                    <TableContainer elevation={4} component={Paper} style={{ width: '43%' }}>
                         <Table>
                             <TableHead>
                                 <TableRow>
@@ -66,29 +66,31 @@ const CheckoutsListItem = ({ checkout }) => {
                             </TableHead>
                             <TableBody>
                                 <TableRow>
-                                    <TableCell>{checkoutObject.net_sales}</TableCell>
-                                    <TableCell>{checkoutObject.cash_owed}</TableCell>
+                                    <TableCell>$ {checkoutObject.net_sales}</TableCell>
+                                    <TableCell>$ {checkoutObject.cash_owed}</TableCell>
                                 </TableRow>
                             </TableBody>
                         </Table>
                     </TableContainer>
                     <TableContainer elevation={4} component={Paper} style={{ width: '55%' }}>
                         <Table>
-                            {/* <TableHead >
+                            <TableHead >
                                 <TableRow>
                                     <TableCell>Tipout Breakdowns</TableCell>
+                                    <TableCell></TableCell>
                                 </TableRow>
-                            </TableHead> */}
+                            </TableHead>
                             <TableBody >
-                                <TableRow>
+                                {/* <TableRow>
                                     <TableCell>Tipout Breakdowns</TableCell>
-                                </TableRow>
+                                    <TableCell></TableCell>
+                                </TableRow> */}
                                 {checkoutBreakdowns?.map((breakdown) => {
                                     const roleName = rolesOptions[breakdown.role_id];
                                     return (
                                         <TableRow key={breakdown.id}>
-                                            <TableCell>{breakdown.total}</TableCell>
-                                            <TableCell>{roleName}</TableCell>
+                                            <TableCell sx={{ width: '53%' }}>$ {breakdown.total}</TableCell>
+                                            <TableCell sx={{ width: '47%' }}>{roleName}</TableCell>
                                         </TableRow>
                                     )
                                 })}

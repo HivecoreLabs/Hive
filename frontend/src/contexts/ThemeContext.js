@@ -58,7 +58,6 @@ const isPMShift = (currentHour >= 16 || currentHour < 3);
 export const theme = isPMShift ? nightTheme : dayTheme;
 // export const theme = dayTheme;
 
-
 // export const theme = nightTheme
 
 // above is to be used by MUI's built-in ThemeProvider
@@ -68,11 +67,11 @@ export const theme = isPMShift ? nightTheme : dayTheme;
 // const ThemeContext = createContext();
 // export const useThemeContext = () => useContext(ThemeContext);
 
-// export const ThemeContextProvider = ({ children }) => {
-//     const [theme, setTheme] = useState(isDaytime ? dayTheme : nightTheme);
+// const ThemeContextProvider = ({ children }) => {
+//     const [themeToggle, setThemeToggle] = useState(theme);
 
 //     const toggleTheme = () => {
-//         setTheme((prevTheme) => (prevTheme === dayTheme ? nightTheme : dayTheme));
+//         setThemeToggle((prevTheme) => (prevTheme === dayTheme ? nightTheme : dayTheme));
 //     };
 
 //     return (
@@ -80,4 +79,6 @@ export const theme = isPMShift ? nightTheme : dayTheme;
 //             {children}
 //         </ThemeContext.Provider>
 //     );
-// }
+// };
+
+// export default ThemeContextProvider;

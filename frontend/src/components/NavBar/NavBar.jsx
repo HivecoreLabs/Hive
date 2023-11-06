@@ -169,7 +169,7 @@ const MiniDrawer = () => {
         // { text: 'Settings', icon: <Settings color='quaternary' />, path: '/settings' },
     ];
 
-    const currentPageTitle = navItems.find((item) => item.path === location.pathname)?.text || 'Unknown Page';
+    const currentPageTitle = navItems.find((item) => item.path === location.pathname)?.text || 'Employees';
 
     useEffect(() => {
         const handleClickOutside = (e) => {
