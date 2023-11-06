@@ -58,6 +58,10 @@ Hive is a desktop resturant management application. Hive is made to solve disorg
 
 ## Screenshots
 
+
+![hive_demo](https://github.com/aA-Hackathon-Team-9/hackathon_team9/assets/109548330/e435ba0f-fe13-4b03-a46c-791402758b31)
+
+
 ## Future Implementation Goals
 
 - Tip-Out Formulas
