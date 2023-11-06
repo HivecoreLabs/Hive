@@ -22,25 +22,28 @@
     flex-direction: column;
     align-items: center;
 
-    padding: 10px;
+    padding: 2em 4em;
 }
 
 .employee-form-prompts {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    align-items: center;
 }
 
-.employee-form-role {
+.employee-form-first-name, .employee-form-last-name, .employee-form-restaurant-id, .employee-form-food-permit-exp, .employee-form-alcohol-permit-exp, .employee-form-role {
     display: flex;
     flex-direction: column;
+    width: 350px;
+    margin-bottom: 0.75em;
     justify-content: space-between;
-    margin-bottom: 8px;
 }
 
 .employee-form-is-former-employee {
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    flex-direction: row;
+    width: 350px;
+    justify-content: space-around;
     margin-bottom: 30px;
 }
 

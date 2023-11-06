@@ -58,12 +58,12 @@
     display: none;
     max-height: 15em;
     overflow-y: auto;
-    border: .05em solid transparent;
+    border: .05em solid white;
     border-radius: .25em;
     width: 100%;
     left: 0;
     top: calc(100% + .25em);
-    background-color: transparent;
+    background-color: white;
     z-index: 100;
 }
 
