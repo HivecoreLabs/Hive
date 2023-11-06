@@ -7,6 +7,7 @@ import Employee from './components/Employees/index.jsx';
 import EmployeeForm from './components/EmployeeForm/index.jsx';
 import SupportStaffPage from './components/SupportStaff';
 import CheckoutsPage from './components/CheckoutsPage';
+import ReportsPage from './components/ReportsPage';
 import CreateEmployeeForm from './components/EmployeeForm/CreateEmployee.jsx'
 import EditEmployeeForm from './components/EmployeeForm/EditEmployee.jsx';
 import ViewAllEmployees from './components/ViewAllEmployees/index.jsx';
@@ -28,6 +29,7 @@ export default function App() {
                 <Route exact path="/employees" element={<Employee />} />
                 <Route exact path="/support" element={<SupportStaffPage />} />
                 <Route exact path="/checkouts" element={<CheckoutsPage />} />
+                <Route exact path="/reports" element={<ReportsPage />} />
                 <Route path="/employees/new" element={<CreateEmployeeForm />} />
                 <Route path="/employees/all" element={<ViewAllEmployees />} />
                 <Route exact path="/employees/:id" element={<EditEmployeeForm />} />
