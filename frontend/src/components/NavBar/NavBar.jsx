@@ -169,6 +169,8 @@ const MiniDrawer = () => {
         // { text: 'Settings', icon: <Settings color='quaternary' />, path: '/settings' },
     ];
 
+    const currentPageTitle = navItems.find((item) => item.path === location.pathname)?.text || 'Unknown Page';
+
     useEffect(() => {
         const handleClickOutside = (e) => {
             if (ref.current) handleDrawerClose();
@@ -195,8 +197,8 @@ const MiniDrawer = () => {
                         <Menu fontSize='medium' />
                     </IconButton>
                     <Box width={1} m={0} p={0} sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <Typography variant="h5" fontWeight='bold' noWrap color={theme.palette.quaternary.main} component="div" alignSelf='center'>
-                            {`${user.username}'s Dashboard`}
+                        <Typography variant="h5" noWrap color={theme.palette.quaternary.main} component="div" alignSelf='center'>
+                            {currentPageTitle}
                         </Typography>
                         {/* <Search alignSelf='center' >
                             <SearchIconWrapper>
@@ -234,7 +236,7 @@ const MiniDrawer = () => {
                                         minHeight: 48,
                                         justifyContent: open ? 'initial' : 'center',
                                         px: 2.5,
-                                        backgroundColor: item.path === location.pathname ? theme.navHover : 'inherit', // Add your selected style here
+                                        backgroundColor: item.path === location.pathname ? theme.navHover : 'inherit',
                                     }}
                                 >
                                     <ListItemIcon
@@ -257,6 +259,7 @@ const MiniDrawer = () => {
                     <ListItem
                         disablePadding
                         sx={{ display: 'block' }}
+                        onClick={handleLogout}
                     >
                         <ListItemButton
                             sx={{

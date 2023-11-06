@@ -7,6 +7,7 @@ import SupportStaffList from './SupportStaffList.jsx';
 import { useEmployees } from '../../contexts/EmployeesContext';
 import { useRoles } from '../../contexts/RolesContext';
 import { useSupportStaffContext } from '../../contexts/SupportStaffContext';
+import { useDateContext } from '../../contexts/DateContext';
 import { useTheme } from '@mui/material';
 
 const SupportStaffForm = () => {
@@ -14,16 +15,16 @@ const SupportStaffForm = () => {
     const { employees, readAllEmployees } = useEmployees();
     const { roles, readAllRoles } = useRoles();
     const { createSupportStaffClockIn } = useSupportStaffContext();
+    const { stateDate } = useDateContext();
 
     const [employee, setEmployee] = useState('');
     const [employeeSelected, setEmployeeSelected] = useState(false);
     const [role, setRole] = useState('');
     const [employeeRoleList, setEmployeeRoleList] = useState(null);
-    const [date, setDate] = useState(dayjs());
+    const [date, setDate] = useState(stateDate);
     const [timeIn, setTimeIn] = useState(null);
     const [timeOut, setTimeOut] = useState(null);
     const [isAMShift, setIsAMShift] = useState(theme.isAMShift);
-
 
     // we need this when formatting times in the request body 
     const convertTimeFromFrontend = (frontendTime) => {
@@ -97,6 +98,7 @@ const SupportStaffForm = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
         const newClockIn = {
             employee_id: employee.id,
             active_role_id: role.id,
@@ -128,12 +130,16 @@ const SupportStaffForm = () => {
         readAllRoles();
     }, [])
 
+    useEffect(() => {
+        setDate(stateDate);
+    }, [stateDate])
+
     return (
         <div>
             <div className='support-staff-form-container'>
                 {[...Array(1)].map((_, index) => (
                     <Paper elevation={2} style={{ padding: '20px', marginBottom: '10px', width: '600px', borderRadius: '8px' }} key={index}>
-                        <Typography variant="h5" align="center" mb='20px'>
+                        <Typography variant="h5" align="center" mb='20px' fontWeight='bold'>
                             Add Support Staff Clock-In
                         </Typography>
                         <form onSubmit={handleSubmit}>
@@ -172,7 +178,8 @@ const SupportStaffForm = () => {
                                         sx={{ width: '100%' }}
                                         label="Date"
                                         onChange={handleDate}
-                                        value={dayjs(date)}
+                                        // value={dayjs(date)}
+                                        value={date}
                                     />
                                 </Grid>
                                 <Grid item sm={3}>

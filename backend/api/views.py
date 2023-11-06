@@ -4,6 +4,10 @@ from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
+from django.db.models import Subquery, OuterRef
+from decimal import Decimal, getcontext, ROUND_05UP
+from datetime import datetime
+from sympy import sympify
 
 from django.contrib.auth.models import User
 from .models import (
@@ -12,7 +16,9 @@ from .models import (
     SpreadSheet,
     Tipout_Formula,
     Tipout_Variable,
-    Employee_Clock_In
+    Employee_Clock_In,
+    Checkout_Tipout_Breakdown,
+    Checkout
 )
 from .serializers import (
     UserSerializer,
@@ -23,9 +29,16 @@ from .serializers import (
     WriteFormulaSerializer,
     Read_Clock_In_Serializer,
     Write_Clock_In_Serializer,
-    FormulaVariableSerializer
+    FormulaVariableSerializer,
+    CheckoutSerializer,
+    TipoutBreakdownSerializer,
+    ReadLimitedClockInSerializer,
+    ReadCheckoutSerializer
 )
+
+from api.utils.views import *
 from backend.quickstart import generate
+from datetime import date
 
 @api_view(['GET'])
 def get_tables_columns(request):
@@ -299,3 +312,80 @@ class RoleClockInViewSet(viewsets.ViewSet):
             queryset = Employee_Clock_In.objects.filter(active_role_id=role_pk)
         serializer = Read_Clock_In_Serializer(queryset, many=True)
         return Response(serializer.data)
+
+
+class CheckOutViewSet(viewsets.ViewSet):
+    serializer_class = CheckoutSerializer
+
+    def list(self, request):
+        params = request.query_params
+        date = params.get('date')
+        is_am_shift = params.get('is_am_shift')
+        if date and is_am_shift:
+            queryset = Checkout.objects.filter(date=date, is_am_shift=is_am_shift)
+        elif date:
+            queryset = Checkout.objects.filter(date=date)
+        else:
+            queryset = Checkout.objects.all()
+
+        serializer = ReadCheckoutSerializer(queryset, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def retrieve(self, request, pk=None):
+        queryset = Checkout.objects.all()
+        checkout_instance = get_object_or_404(queryset, pk=pk)
+        serializer = ReadCheckoutSerializer(checkout_instance)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def create(self, request):
+        checkout_serializer = CheckoutSerializer(data=request.data)
+        checkout_serializer.is_valid(raise_exception=True)
+
+        support_employees = Employee_Clock_In.objects.filter(date=request.data["date"], is_am=request.data['is_am_shift'])
+
+        grouped_by_role = group_by_active_role(support_employees)
+
+        total = 0
+        tipouts = []
+        for role in grouped_by_role:
+            formula = Tipout_Formula.objects.filter(role_id=role).values('formula', 'min_sales', 'max_tipout', 'is_time_based')
+            tipout_received = calculate_tipout_received_from_net_sales(formula[0], grouped_by_role[role], request.data['net_sales'])
+            total += tipout_received
+            tipouts.append({"role_id": role.id, "total": tipout_received})
+
+        total_owed = request.data['cash_owed'] + total
+
+        request.data['total_owed'] = total_owed
+        request.data['total_tipout'] = total
+        checkout_serializer = CheckoutSerializer(data=request.data)
+        checkout_serializer.is_valid(raise_exception=True)
+        checkout_instance = checkout_serializer.save()
+        for tipout in tipouts:
+            tipout['checkout_id'] = checkout_instance.id
+        checkout_breakdown_serializer = TipoutBreakdownSerializer(data=tipouts, many=True)
+        checkout_breakdown_serializer.is_valid(raise_exception=True)
+        checkout_breakdown_serializer.save()
+
+        return Response({"checkout": checkout_serializer.data, "breakdown": checkout_breakdown_serializer.data}, status=status.HTTP_201_CREATED)
+
+
+@api_view(['POST'])
+def end_of_day(request):
+    am_support_staff = Employee_Clock_In.objects.filter(date=request.data["date"], is_am=True)
+    pm_support_staff = Employee_Clock_In.objects.filter(date=request.data["date"], is_am=False)
+
+
+    am_checkouts = Checkout.objects.filter(date=request.data["date"], is_am_shift=True).values("checkout_tipout_breakdown__role_id", "checkout_tipout_breakdown__total", "checkout_tipout_breakdown__id")
+    pm_checkouts = Checkout.objects.filter(date=request.data["date"], is_am_shift=False).values("checkout_tipout_breakdown__role_id", "checkout_tipout_breakdown__total", "checkout_tipout_breakdown__id")
+
+    am_totals = calculate_totals(am_checkouts)
+    pm_totals = calculate_totals(pm_checkouts)
+
+    am_hour_totals = calculate_total_role_hours(am_support_staff)
+    pm_hour_totals = calculate_total_role_hours(pm_support_staff)
+
+    am_list_of_employee_tipouts_received = get_formula_and_determine_percent_worked(am_hour_totals, am_support_staff, am_totals)
+    pm_list_of_employee_tipouts_received = get_formula_and_determine_percent_worked(pm_hour_totals, pm_support_staff, pm_totals)
+
+
+    return Response({"am":am_list_of_employee_tipouts_received, "pm":pm_list_of_employee_tipouts_received}, status = status.HTTP_200_OK)

@@ -13,6 +13,8 @@ import { RolesProvider } from './contexts/RolesContext.js';
 import { theme } from './contexts/ThemeContext';
 import { ErrorContextProvider } from './contexts/ErrorContext.js';
 import { SupportStaffContextProvider } from './contexts/SupportStaffContext.js';
+import CheckoutsContextProvider from './contexts/CheckoutsContext.js';
+import DateContextProvider from './contexts/DateContext.js';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -24,11 +26,15 @@ root.render(
                     <RolesProvider>
                         <EmployeesProvider>
                             <SupportStaffContextProvider>
-                                <AuthenticationContextProvider>
-                                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                        <App />
-                                    </LocalizationProvider>
-                                </AuthenticationContextProvider>
+                                <CheckoutsContextProvider>
+                                    <AuthenticationContextProvider>
+                                        <DateContextProvider>
+                                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                                <App />
+                                            </LocalizationProvider>
+                                        </DateContextProvider>
+                                    </AuthenticationContextProvider>
+                                </CheckoutsContextProvider>
                             </SupportStaffContextProvider>
                         </EmployeesProvider>
                     </RolesProvider>

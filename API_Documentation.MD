@@ -8,7 +8,7 @@ Certainly, here's the complete API documentation in Markdown format:
 
 ### 1. Signup New User
 
-- **Route**: `POST /api/auth/signup`
+- **Route**: `POST /api/auth/signup/`
 - **Headers**:
   - Content-Type: application/json
 - **Request Body (Required Information)**:
@@ -46,7 +46,7 @@ Certainly, here's the complete API documentation in Markdown format:
 
 ### 2. Login User
 
-- **Route**: `POST /api/auth/login`
+- **Route**: `POST /api/auth/login/`
 - **Headers**:
   - Content-Type: application/json
 - **Request Body (Required Information)**:
@@ -94,7 +94,7 @@ Certainly, here's the complete API documentation in Markdown format:
 
 ### 2. Get Details of Role
 
-- **Route**: `GET /api/roles/<int:RoleId>`
+- **Route**: `GET /api/roles/<int:RoleId>/`
 - **Request Body** (None)
 - **Expected Response(200 OK)**:
 
@@ -238,7 +238,7 @@ Certainly, here's the complete API documentation in Markdown format:
 
 ### 2. Get Details of Employee
 
-- **Route**: `GET /api/employees/<int:employeeId>`
+- **Route**: `GET /api/employees/<int:employeeId>/`
 - **Request Body (None)**:
 - **Expected Response (200 OK)**:
 
@@ -400,7 +400,7 @@ Certainly, here's the complete API documentation in Markdown format:
 - **Route**: `GET /api/clock-ins/`
 - **Headers**:
 - **Available Query Parameters**:
-  - date
+  - date: YYYY-MM-DD
 - **Request Body (None)**:
 - **Expected Response (200 OK)**:
 
@@ -429,8 +429,10 @@ Certainly, here's the complete API documentation in Markdown format:
 
 ### 2. Get Detail of Single Clock-In
 
-- **Route**: `GET /api/clock-ins/<int:clockin_id>`
+- **Route**: `GET /api/clock-ins/<int:clockin_id>/`
 - **Headers**:
+- **Available Query Parameters**:
+  - date: YYYY-MM-DD
 - **Request Body (None)**:
 - **Expected Response (200 OK)**:
 
@@ -459,7 +461,7 @@ Certainly, here's the complete API documentation in Markdown format:
 - **Route**: `GET /api/employees/<int:employee_id>/clock-ins/`
 - **Headers**:
 - **Available Query Parameters**:
-  - date
+  - date: YYYY-MM-DD
 - **Request Body (None)**:
 - **Expected Response (200 OK)**:
 
@@ -491,7 +493,7 @@ Certainly, here's the complete API documentation in Markdown format:
 - **Route**: `GET /api/roles/<int:role_id>/clock-ins/`
 - **Headers**:
 - **Available Query Parameters**:
-  - date
+  - date: YYYY-MM-DD
 - **Request Body (None)**:
 - **Expected Response (200 OK)**:
 
@@ -896,7 +898,7 @@ Certainly, here's the complete API documentation in Markdown format:
 
 ### 4. Update Spreadsheet Formulas
 
-- **Route**: `PUT /api/formulas/<int:formulaId>`
+- **Route**: `PUT /api/formulas/<int:formulaId>/`
 - **Headers**:
   - Content-Type: application/json
 - **Request Body (Required Information)**:
@@ -1160,7 +1162,7 @@ Certainly, here's the complete API documentation in Markdown format:
 
 ### 5. Delete Spreadsheet Formula Variable
 
-- **Route**: `DELETE /api/variables/<int:formulaId>`
+- **Route**: `DELETE /api/variables/<int:formulaId>/`
 - **Headers**:
 - **Request Body (None)**:
 - **Expected Response (204 No Content)**:
@@ -1172,23 +1174,129 @@ Certainly, here's the complete API documentation in Markdown format:
 }
 ```
 
-# TODO:
+## Checkouts
 
-## Daily Checkouts
+### 1. Get List of All Checkouts
 
-### 5. Log Net Sales and Cash Owed for a Specific Day, Shift, and Server
+- **Route**: `GET /api/checkouts/`
+- **Headers**:
+- **Available Query Parameters**:
+  - date: YYYY-MM-DD
+  - is_am_shift: True or False
+- **Request Body (None)**:
+- **Expected Response (200 OK)**:
 
-- **Route**: `POST /checkouts`
+```json
+[
+  {
+    "id": 1,
+    "checkout_tipout_breakdowns": [
+        {
+            "id": 2,
+            "total": "127.42",
+            "checkout_id": 1,
+            "role_id": 1
+        },
+        {
+            "id": 12,
+            "total": "156.73",
+            "checkout_id": 1,
+            "role_id": 2
+        }
+    ],
+    "date": "2023-10-25",
+    "net_sales": "500.00",
+    "cash_owed": "50.00",
+    "total_owed": null,
+    "total_tipout": "25.00",
+    "is_am_shift": true,
+    "is_patio": false,
+    "is_bar": true,
+    "employee_id": 1,
+    "support_roles": [
+        1,
+        2
+    ]
+  },
+  ...
+]
+```
+
+### 2. Get Details of Checkout
+
+- **Route**: `GET /api/checkouts/<int:checkoutId>/`
+- **Headers**:
+- **Request Body (None)**:
+- **Expected Response (200 OK)**:
+
+```json
+{
+  "id": 11,
+  "checkout_tipout_breakdowns": [
+    {
+      "id": 21,
+      "total": "25.00",
+      "checkout_id": 11,
+      "role_id": 1
+    },
+    {
+      "id": 22,
+      "total": "75.00",
+      "checkout_id": 11,
+      "role_id": 3
+    },
+    {
+      "id": 23,
+      "total": "10.00",
+      "checkout_id": 11,
+      "role_id": 5
+    },
+    {
+      "id": 24,
+      "total": "5.00",
+      "checkout_id": 11,
+      "role_id": 7
+    },
+    {
+      "id": 25,
+      "total": "35.00",
+      "checkout_id": 11,
+      "role_id": 9
+    },
+    {
+      "id": 26,
+      "total": "3.00",
+      "checkout_id": 11,
+      "role_id": 10
+    }
+  ],
+  "date": "2023-10-25",
+  "net_sales": "5000.00",
+  "cash_owed": "100.00",
+  "total_owed": "253.00",
+  "total_tipout": "153.00",
+  "is_am_shift": true,
+  "is_patio": false,
+  "is_bar": false,
+  "employee_id": 1,
+  "support_roles": [1, 3, 5, 7, 9, 10]
+}
+```
+
+### 3. Add a Checkout
+
+- **Route**: `POST /api/checkouts/`
+- **Headers**:
+  - Content-Type: application/json
 - **Request Body (Required Information)**:
 
 ```json
 {
-  "net_sales": 100.5,
-  "cash_owed": 50.25,
-  "employee_id": 1,
+  "net_sales": 5000,
+  "cash_owed": 100,
   "is_am_shift": true,
-  "is_patio": false,
-  "tipout_day": "2023-10-18"
+  "tipout_day": "2023-11-05",
+  "employee_id": 1
 }
 ```
 
@@ -1196,110 +1304,95 @@ Certainly, here's the complete API documentation in Markdown format:
 
 ```json
 {
-  "id": 1,
-  "net_sales": 100.5,
-  "cash_owed": 50.25,
-  "employee_id": 1,
-  "is_am_shift": true,
-  "is_patio": false,
-  "created_at": "timestamp",
-  "tipout_day": "2023-10-18",
-  "is_uploaded": false
-}
-```
-
-- **Error Response (e.g., if all errors were triggered)**:
-
-```json
-{
-  "errors": [
-    { "error": "Missing Field", "details": "Net sales amount is required." },
-    { "error": "Missing Field", "details": "Cash owed amount is required." },
-    { "error": "Missing Field", "details": "Employee ID is required." },
-    { "error": "Missing Field", "details": "Tipout day is required." }
+  "checkout": {
+    "id": 11,
+    "date": "2023-10-25",
+    "net_sales": "5000.00",
+    "cash_owed": "100.00",
+    "total_owed": "253.00",
+    "total_tipout": "153.00",
+    "is_am_shift": true,
+    "is_patio": false,
+    "is_bar": false,
+    "employee_id": 1,
+    "support_roles": [1, 3, 5, 7, 9, 10]
+  },
+  "breakdown": [
+    {
+      "id": 57,
+      "total": "25.00",
+      "checkout_id": 17,
+      "role_id": 1
+    },
+    {
+      "id": 58,
+      "total": "75.00",
+      "checkout_id": 17,
+      "role_id": 3
+    },
+    {
+      "id": 59,
+      "total": "10.00",
+      "checkout_id": 17,
+      "role_id": 5
+    },
+    {
+      "id": 60,
+      "total": "5.00",
+      "checkout_id": 17,
+      "role_id": 7
+    },
+    {
+      "id": 61,
+      "total": "35.00",
+      "checkout_id": 17,
+      "role_id": 9
+    },
+    {
+      "id": 62,
+      "total": "3.00",
+      "checkout_id": 17,
+      "role_id": 10
+    }
   ]
 }
 ```
 
-### 6. View a List of All Daily Checkouts for a Specific Day and Shift
-
-- **Route**: `GET /checkouts?day={day}&shift={shift}`
-- **Expected Response (200 OK)**:
-
-```json
-[
-  {
-    "id": 1,
-    "net_sales": 100.5,
-    "cash_owed": 50.25,
-    "employee_id": 1,
-    "is_am_shift": true,
-    "is_patio": false,
-    "created_at": "timestamp",
-    "tipout_day": "2023-10-18",
-    "is_uploaded": false
-  }
-  // Other checkout objects
-]
-```
-
-(Note: Update the query parameters `{day}` and `{shift}` as needed.)
-
-### 7. Define a New Tip Out Formula for a Specific Role
-
-- **Route**: `POST /tipout-formulas`
-- **Request Body (Required Information)**:
+- **Error Response (400 Bad Reqeust)**:
 
 ```json
 {
-  "is_am_formula": true,
-  "formula_name": "Formula Name",
-  "formula": "Formula Expression",
-  "role": "server"
+  "net_sales": [
+    "This field is required.",
+    "A valid number is required.",
+    "Ensure that there are no more than 2 decimal places."
+  ],
+  "cash_owed": [
+    "This field is required.",
+    "A valid number is required.",
+    "Ensure that there are no more than 2 decimal places."
+  ],
+  "is_am_shift": ["This field is required.", "Must be a valid boolean."],
+  "date": [
+    "This field is required.",
+    "Date has wrong format. Use one of these formats instead: YYYY-MM-DD."
+  ],
+  "employee_id": [
+    "This field is required.",
+    "Invalid pk \"<int>\" - object does not exist."
+  ]
 }
 ```
 
-- **Expected Response (201 Created)**:
+## End Of Day
+
+- **Route**: `POST /api/end-of-day/`
+- **Headers**:
+- **Request Body (Required)**:
 
 ```json
 {
-  "id": 1,
-  "is_am_formula": true,
-  "formula_name": "Formula Name",
-  "formula": "Formula Expression",
-  "role": "server",
-  "is_uploaded": false
-}
-```
-
-### 8. View a List of All Tip Out Formulas and Their Associated Roles
-
-- **Route**: `GET /tipout-formulas`
-- **Expected Response (200 OK)**:
-
-```json
-[
-  {
-    "id": 1,
-    "is_am_formula": true,
-    "formula_name": "Formula Name",
-    "formula": "Formula Expression",
-    "role": "server",
-    "is_uploaded": false
-  }
-  // Other formula objects
-]
-```
-
-### 9. Edit an Existing Tip Out Formula for a Specific Role
-
-- **Route**: `PUT /tipout-formulas/{id}`
-- **Request Body (Required Information)**:
-
-```json
-{
-  "formula_name": "New Formula Name",
-  "formula": "New Formula Expression"
+  "date": "2023-10-25"
 }
 ```
 
@@ -1307,46 +1400,118 @@ Certainly, here's the complete API documentation in Markdown format:
 
 ```json
 {
-  "id": 1,
-  "is_am_formula": true,
-  "formula_name": "New Formula Name",
-  "formula": "New Formula Expression",
-  "role": "server",
-  "is_uploaded": false
-}
-```
-
-### 10. Delete a Tip Out Formula for a Specific Role
-
-- **Route**: `DELETE /tipout-formulas/{id}`
-- **Expected Response (204 No Content)**
-
-## Toggle for View by Day/Shift
-
-### 15. Toggle the View to Display Support Staff for a Specific Day
-
-- **Route**: `GET /support-clock-ins?day={day}`
-- **Expected Response (200 OK)**:
-
-```json
-[
-  {
-    "id": 1,
-    "employee_id": 1,
-    "time_in": "timestamp",
-    "time_out": "timestamp",
-    "active_role": "server",
-    "is_uploaded": false
-  }
-  // Other support staff time entries
-]
-```
-
-- **Error Response (e.g., if day not found) 404**:
-
-```json
-{
-  "error": "Day not found",
-  "details": "The requested day does not exist."
+  "am": [
+    {
+      "id": 1,
+      "active_role_id": 1,
+      "employee_id": 1,
+      "tipout_received": "151.21",
+      "date": "2023-10-25",
+      "time_in": "2023-10-25T12:00:00Z",
+      "time_out": "2023-10-25T16:00:00Z",
+      "is_am": true
+    },
+    {
+      "id": 2,
+      "active_role_id": 3,
+      "employee_id": 2,
+      "tipout_received": "357.32",
+      "date": "2023-10-25",
+      "time_in": "2023-10-25T11:00:00Z",
+      "time_out": "2023-10-25T15:00:00Z",
+      "is_am": true
+    },
+    {
+      "id": 3,
+      "active_role_id": 5,
+      "employee_id": 3,
+      "tipout_received": "124.10",
+      "date": "2023-10-25",
+      "time_in": "2023-10-25T10:00:00Z",
+      "time_out": "2023-10-25T14:00:00Z",
+      "is_am": true
+    },
+    {
+      "id": 4,
+      "active_role_id": 7,
+      "employee_id": 4,
+      "tipout_received": "98.92",
+      "date": "2023-10-25",
+      "time_in": "2023-10-25T09:00:00Z",
+      "time_out": "2023-10-25T13:00:00Z",
+      "is_am": true
+    },
+    {
+      "id": 5,
+      "active_role_id": 9,
+      "employee_id": 5,
+      "tipout_received": "219.77",
+      "date": "2023-10-25",
+      "time_in": "2023-10-25T08:00:00Z",
+      "time_out": "2023-10-25T12:00:00Z",
+      "is_am": true
+    },
+    {
+      "id": 6,
+      "active_role_id": 1,
+      "employee_id": 6,
+      "tipout_received": "151.21",
+      "date": "2023-10-25",
+      "time_in": "2023-10-25T07:00:00Z",
+      "time_out": "2023-10-25T11:00:00Z",
+      "is_am": true
+    },
+    {
+      "id": 7,
+      "active_role_id": 3,
+      "employee_id": 7,
+      "tipout_received": "357.32",
+      "date": "2023-10-25",
+      "time_in": "2023-10-25T06:00:00Z",
+      "time_out": "2023-10-25T10:00:00Z",
+      "is_am": true
+    },
+    {
+      "id": 8,
+      "active_role_id": 5,
+      "employee_id": 8,
+      "tipout_received": "124.10",
+      "date": "2023-10-25",
+      "time_in": "2023-10-25T05:00:00Z",
+      "time_out": "2023-10-25T09:00:00Z",
+      "is_am": true
+    },
+    {
+      "id": 9,
+      "active_role_id": 7,
+      "employee_id": 9,
+      "tipout_received": "98.92",
+      "date": "2023-10-25",
+      "time_in": "2023-10-25T04:00:00Z",
+      "time_out": "2023-10-25T08:00:00Z",
+      "is_am": true
+    },
+    {
+      "id": 10,
+      "active_role_id": 9,
+      "employee_id": 10,
+      "tipout_received": "219.77",
+      "date": "2023-10-25",
+      "time_in": "2023-10-25T03:00:00Z",
+      "time_out": "2023-10-25T07:00:00Z",
+      "is_am": true
+    },
+    {
+      "id": 11,
+      "active_role_id": 10,
+      "employee_id": 11,
+      "tipout_received": "191.73",
+      "date": "2023-10-25",
+      "time_in": "2023-10-25T03:00:00Z",
+      "time_out": "2023-10-25T07:00:00Z",
+      "is_am": true
+    }
+  ],
+  "pm": []
 }
 ```

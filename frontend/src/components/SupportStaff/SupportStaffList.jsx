@@ -8,17 +8,16 @@ import {
     TableContainer,
     TableHead,
     TableRow,
-    TextField,
-    Button,
-    Select,
-    MenuItem,
 } from '@mui/material';
+import dayjs from 'dayjs';
 import { useSupportStaffContext } from '../../contexts/SupportStaffContext';
+import { useDateContext } from '../../contexts/DateContext';
 import './SupportStaffList.css';
 import SupportStaffListItem from './SupportStaffListItem.jsx';
 
 const SupportStaffList = () => {
-    const { supportStaff, fetchAllSupportStaffClockIns } = useSupportStaffContext();
+    const { stateDate } = useDateContext();
+    const { supportStaff, fetchAllSupportStaffClockIns, fetchAllSupportStaffClockInsByDate } = useSupportStaffContext();
     const sortedSupportStaff = [...supportStaff].sort((a, b) => {
         const timeA = new Date(a.time_in);
         const timeB = new Date(b.time_in);
@@ -32,12 +31,13 @@ const SupportStaffList = () => {
     ) : null;
 
     useEffect(() => {
-        fetchAllSupportStaffClockIns();
-    }, []);
+        const formattedDate = stateDate.format('YYYY-MM-DD');
+        fetchAllSupportStaffClockInsByDate(formattedDate);
+    }, [stateDate]);
 
     return (
         <div className='support-staff-list-container'>
-            <TableContainer component={Paper} sx={{ borderRadius: '8px', padding: '5px', paddingBottom: '0' }}>
+            <TableContainer component={Paper} sx={{ borderRadius: '8px', padding: '5px', paddingBottom: '0', maxHeight: '600px' }}>
                 <Table>
                     <TableHead>
                         <TableRow>

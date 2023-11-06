@@ -15,6 +15,7 @@ def main():
         "employee_clock_ins.json",
         "tipout_formulas.json",
         "tipout_variables.json",
+        "checkout_tipout_breakdowns.json"
     ]
 
     for fixture in fixtures:
@@ -22,4 +23,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
