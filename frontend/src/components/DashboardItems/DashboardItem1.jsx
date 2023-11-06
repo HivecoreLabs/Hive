@@ -19,7 +19,7 @@ function DashboardItem1({ supportStaff }) {
                 // bgcolor: 'canvas',
                 // boxShadow: 1,
                 // borderRadius: 2,
-                p: 2,
+                p: 3,
                 // minWidth: 300,
             }}
         >

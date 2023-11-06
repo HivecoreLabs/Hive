@@ -44,7 +44,6 @@ function DashboardItem3() {
     const containerStyles = {
         display: 'flex',
         alignItems: 'center',
-        padding: '2em 0.75em 2em 0.75em'
     };
 
     const textStyles = {
@@ -59,6 +58,7 @@ function DashboardItem3() {
     const sunIconStyles = {
         fontSize: 50,
         color: theme.palette.primary.main,
+        screenLeft: 2
     };
     const moonIconStyles = {
         fontSize: 50,
@@ -83,7 +83,7 @@ function DashboardItem3() {
 
     return (
         <Box sx={containerStyles} p={3}>
-            <div style={{ marginRight: '0.75em' }}>
+            <div style={{ marginRight: '0.3em' }}>
                 <Typography variant="body2" color="text.primary">
                     It is currently the
                 </Typography>

@@ -23,7 +23,7 @@ function DashboardItem4({ checkouts, date }) {
             sx={{
                 // bgcolor: theme.palette.tertiary.main,
                 // boxShadow: 1,
-                p: 2,
+                p: 3,
                 // minWidth: 300,
             }}
         >

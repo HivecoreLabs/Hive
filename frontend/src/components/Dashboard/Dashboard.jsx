@@ -80,7 +80,7 @@ function Dashboard() {
                         </Paper>
                     </Grid>
                     <Grid item sx={{ width: '300px' }}>
-                        <Paper elevation={2} sx={{ borderRadius: 2, bgcolor: theme.palette.quaternary.main }}>
+                        <Paper elevation={2} sx={{ borderRadius: 2, bgcolor: theme.palette.tertiary.main }}>
                             <DashboardItem4 checkouts={checkouts} date={stateDate}></DashboardItem4>
                         </Paper>
                     </Grid>
