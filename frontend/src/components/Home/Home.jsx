@@ -40,6 +40,7 @@ function Home() {
     };
 
     const handleLogin = (e) => {
+        navigate('/loading');
         e.preventDefault();
         if (error) errorDispatch(clearError());
         login(username, password);

@@ -47,7 +47,7 @@ export const AuthenticationContextProvider = ({ children }) => {
                 };
                 sessionStorage.setItem('authData', JSON.stringify(authData));
                 dispatch({ type: 'LOGIN', payload: data.user });
-                navigate('/dashboard');
+                // navigate('/dashboard');
             } else {
                 errorDispatch(errorOccurred('Login failed. Check your username and PIN.'))
             };
@@ -84,7 +84,7 @@ export const AuthenticationContextProvider = ({ children }) => {
     const logout = () => {
         sessionStorage.clear();
         dispatch({ type: "LOGOUT" });
-        navigate("/");
+        navigate("/logout");
     };
 
     const value = {

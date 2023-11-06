@@ -45,7 +45,7 @@ const CheckoutsListItem = ({ checkout }) => {
                 expandIcon={<ExpandMoreIcon />}
             >
                 <div style={{ display: 'flex', justifyContent: 'space-around', width: '100%' }}>
-                    <Typography sx={{ width: '40%', color: expanded === `panel-${id}` ? theme.palette.secondary.dark : 'normal', }} >{firstName} {lastName}</Typography>
+                    <Typography sx={{ width: '40%', color: expanded === `panel-${id}` ? theme.palette.secondary.dark : '', }} >{firstName} {lastName}</Typography>
                     <Typography sx={{ width: '40%' }}>
                         {dayjs(date).format('dddd, MMM D')}
                     </Typography>
