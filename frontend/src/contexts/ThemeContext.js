@@ -55,9 +55,8 @@ const currentHour = now.getHours();
 const currentMinutes = now.getMinutes();
 const isPMShift = (currentHour >= 16 || currentHour < 3);
 // PM Shift is from 4:00 PM to 3:00 AM the next day
-// export const theme = isPMShift ? nightTheme : dayTheme;
-export const theme = dayTheme;
-
+export const theme = isPMShift ? nightTheme : dayTheme;
+// export const theme = dayTheme;
 
 // export const theme = nightTheme
 
@@ -68,11 +67,11 @@ export const theme = dayTheme;
 // const ThemeContext = createContext();
 // export const useThemeContext = () => useContext(ThemeContext);
 
-// export const ThemeContextProvider = ({ children }) => {
-//     const [theme, setTheme] = useState(isDaytime ? dayTheme : nightTheme);
+// const ThemeContextProvider = ({ children }) => {
+//     const [themeToggle, setThemeToggle] = useState(theme);
 
 //     const toggleTheme = () => {
-//         setTheme((prevTheme) => (prevTheme === dayTheme ? nightTheme : dayTheme));
+//         setThemeToggle((prevTheme) => (prevTheme === dayTheme ? nightTheme : dayTheme));
 //     };
 
 //     return (
@@ -80,4 +79,6 @@ export const theme = dayTheme;
 //             {children}
 //         </ThemeContext.Provider>
 //     );
-// }
+// };
+
+// export default ThemeContextProvider;

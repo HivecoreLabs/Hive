@@ -71,7 +71,6 @@ const ReportsPage = () => {
     };
 
     const areAllClockedOut = supportStaffList?.length > 0 ? supportStaffList.every((support) => support.time_out !== null) : null;
-    console.log(areAllClockedOut);
     useEffect(() => {
         if (areAllClockedOut) {
             setAllClockedOut(true);
@@ -82,12 +81,14 @@ const ReportsPage = () => {
         <div className="reports-page-container">
             <Typography variant="h6" mb='20px'>
                 Report for: {formattedDate}
-                <Button component={Link} onClick={handleOpenDateModal} style={{ marginLeft: '10px', fontSize: '16px', textDecoration: 'underline', cursor: 'pointer' }}>
-                    Change Date?
+                <Button component={Link} variant='outlined' onClick={handleOpenDateModal} style={{ marginLeft: '10px', fontSize: '16px', textDecoration: 'underline', cursor: 'pointer' }}>
+                    <Typography color={theme.palette.secondary.dark}>Change Date?</Typography>
                 </Button>
             </Typography>
             <div className='checkouts-support-staff-list'>
-                <CheckoutsList />
+                <div className='checkouts-on-report-page'>
+                    <CheckoutsList />
+                </div>
                 {/* <ActiveSupportStaffList /> */}
                 <Paper sx={{ borderRadius: '8px', padding: '10px', marginLeft: '30px', marginTop: '15px', maxHeight: '500px', overflowY: 'scroll', marginBottom: '10px' }}>
                     <Typography variant="h6" textAlign='center' sx={{ marginBottom: '10px', width: '100%', display: 'inline-block' }}>

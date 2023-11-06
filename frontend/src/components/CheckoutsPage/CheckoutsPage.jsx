@@ -10,8 +10,10 @@ import { Link } from 'react-router-dom';
 import { Button, Box, Typography, Paper, IconButton, Modal } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import CheckoutsList from './CheckoutsList.jsx';
+import { useTheme } from '@mui/material';
 
 const CheckoutsPage = () => {
+    const theme = useTheme();
     const { supportStaff, fetchAllSupportStaffClockIns } = useSupportStaffContext();
     const { stateDate, changeStateDate } = useDateContext();
     const [date, setDate] = useState(stateDate);
@@ -39,8 +41,8 @@ const CheckoutsPage = () => {
         <div className='checkouts-page-container'>
             <Typography variant="h6" mb='20px'>
                 Checking Out for: {formattedDate}
-                <Button component={Link} onClick={handleOpenModal} style={{ marginLeft: '10px', fontSize: '16px', textDecoration: 'underline', cursor: 'pointer' }}>
-                    Change Date?
+                <Button component={Link} variant='outlined' onClick={handleOpenModal} style={{ marginLeft: '10px', fontSize: '16px', textDecoration: 'underline', cursor: 'pointer' }}>
+                    <Typography color={theme.palette.secondary.dark}>Change Date?</Typography>
                 </Button>
             </Typography>
             <div className='checkout-form-support-staff-container'>
