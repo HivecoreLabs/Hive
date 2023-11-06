@@ -1,0 +1,27 @@
+.reports-page-container {
+    margin-top: 100px;
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    /* height: 500px; */
+
+}
+
+.finalize-day-generate-report-buttons {
+    display: flex;
+    width: 500px;
+    justify-content: space-around;
+    align-items: flex-end;
+}
+
+.checkouts-support-staff-list {
+    display: flex;
+}
+
+.checkouts-on-report-page {
+    width: 60%;
+}

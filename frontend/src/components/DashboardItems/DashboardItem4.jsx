@@ -5,7 +5,6 @@ import { useTheme } from "@mui/material";
 function DashboardItem4({ checkouts, date }) {
 
     const theme = useTheme();
-    console.log(checkouts)
 
     const isTodayorYesterday = (d) => {
         let yesterday = new Date();
@@ -28,8 +27,8 @@ function DashboardItem4({ checkouts, date }) {
             }}
         >
             <Box sx={{ color: theme.isAMShift ? 'text.secondary' : 'white' }}>Net Sales since Yesterday</Box>
-            <Box sx={{ color: theme.isAMShift ? 'text.secondary' : 'white' , fontSize: 34, fontWeight: 'medium' }}>
-               
+            <Box sx={{ color: theme.isAMShift ? 'text.secondary' : 'white', fontSize: 34, fontWeight: 'medium' }}>
+
             </Box>
             <Box
                 theme={theme}

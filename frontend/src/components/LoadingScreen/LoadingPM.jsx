@@ -1,14 +1,8 @@
 import React from "react";
 import './LoadingPM.css';
 import HiveRoundedIcon from '@mui/icons-material/HiveRounded';
-import { useNavigate, useLocation } from 'react-router-dom';
 
 const LoadingPM = () => {
-    // const navigate = useNavigate()
-
-    // setTimeout(() => {
-    //     navigate('/dashboard')
-    // }, 2000);
 
     return (
         <div className="loading-page">

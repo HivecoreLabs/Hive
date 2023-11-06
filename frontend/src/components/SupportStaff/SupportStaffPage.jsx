@@ -8,8 +8,10 @@ import { Link } from 'react-router-dom';
 import { DatePicker, TimePicker } from '@mui/x-date-pickers';
 import dayjs from 'dayjs';
 import { useDateContext } from '../../contexts/DateContext';
+import { useTheme } from '@mui/material';
 
 const SupportStaffPage = () => {
+    const theme = useTheme();
     const { stateDate, changeStateDate } = useDateContext();
     const [date, setDate] = useState(stateDate);
     const formattedDate = date.format('dddd, MMM D YYYY');
@@ -36,8 +38,8 @@ const SupportStaffPage = () => {
         <div className='support-staff-page-container'>
             <Typography variant="h6" mb='20px'>
                 Clocking In/Out for: {formattedDate}
-                <Button component={Link} onClick={handleOpenModal} style={{ marginLeft: '10px', fontSize: '16px', textDecoration: 'underline', cursor: 'pointer' }}>
-                    Change Date?
+                <Button component={Link} variant='outlined' onClick={handleOpenModal} style={{ marginLeft: '10px', fontSize: '16px', textDecoration: 'underline', cursor: 'pointer' }}>
+                    <Typography color={theme.palette.secondary.dark}>Change Date?</Typography>
                 </Button>
             </Typography>
             <SupportStaffForm />

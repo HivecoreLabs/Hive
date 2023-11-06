@@ -38,7 +38,9 @@ function SignupModal({ open, closeModal }) {
             return;
         }
         signup(username, password);
-        closeModal();
+        setTimeout(() => {
+            closeModal();
+        }, 500);
     };
 
     const handleUsername = (e) => setUsername(e.target.value);
