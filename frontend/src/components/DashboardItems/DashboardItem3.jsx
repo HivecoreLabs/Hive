@@ -58,12 +58,11 @@ function DashboardItem3() {
     const sunIconStyles = {
         fontSize: 50,
         color: theme.palette.primary.main,
-        marginLeft: theme.spacing(1), // Add some margin between the text and the icon
+        screenLeft: 2
     };
     const moonIconStyles = {
         fontSize: 50,
         color: theme.palette.quaternary.main,
-        marginLeft: theme.spacing(3), // Add some margin between the text and the icon
     };
 
     const [time, setTime] = useState(new Date());
@@ -84,12 +83,11 @@ function DashboardItem3() {
 
     return (
         <Box sx={containerStyles} p={3}>
-            <div>
+            <div style={{ marginRight: '0.3em' }}>
                 <Typography variant="body2" color="text.primary">
                     It is currently the
                 </Typography>
                 <Typography variant="h3" sx={textStyles}>
-                    {/* {`${theme.shift}`} */}
                     { theme.isAMShift ? 'AM' : 'PM' }
                 </Typography>
                 <Typography variant="h5" color="primary" component="span">
@@ -100,7 +98,6 @@ function DashboardItem3() {
                 </Typography>
             </div>
             <div>
-                {/* {theme.shift === 'AM' ? <WbSunnyIcon sx={sunIconStyles} /> : <ModeNightIcon sx={moonIconStyles} />} */}
                 {theme.isAMShift ? <WbSunnyIcon sx={sunIconStyles} /> : <ModeNightIcon sx={moonIconStyles} />}
             </div>
         </Box>

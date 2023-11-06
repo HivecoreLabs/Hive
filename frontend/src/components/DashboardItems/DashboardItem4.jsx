@@ -2,37 +2,47 @@ import { Box } from "@mui/material";
 import React from "react";
 import { useTheme } from "@mui/material";
 
-function DashboardItem4() {
+function DashboardItem4({ checkouts, date }) {
 
     const theme = useTheme();
+    console.log(checkouts)
+
+    const isTodayorYesterday = (d) => {
+        let yesterday = new Date();
+        yesterday.setDate(yesterday.getDate() - 1);
+
+        return Date.parse(d) === Date.parse(date) || Date.parse(d) === Date.parse(yesterday);
+    }
+
+    const netTotal = checkouts.reduce(
+        (acc, curr) => isTodayorYesterday(curr.date) ? acc + +curr.net_sales : acc, 0
+    );
+
     return (
         <Box
             sx={{
                 // bgcolor: theme.palette.tertiary.main,
                 // boxShadow: 1,
-                p: 2,
+                p: 3,
                 // minWidth: 300,
             }}
         >
-            <Box sx={{ color: 'text.secondary' }}>Sessions</Box>
-            <Box sx={{ color: 'text.primary', fontSize: 34, fontWeight: 'medium' }}>
-                98.3 K
+            <Box sx={{ color: theme.isAMShift ? 'text.secondary' : 'white' }}>Net Sales since Yesterday</Box>
+            <Box sx={{ color: theme.isAMShift ? 'text.secondary' : 'white' , fontSize: 34, fontWeight: 'medium' }}>
+               
             </Box>
             <Box
                 theme={theme}
 
                 sx={{
-                    color: 'primary',
+                    color: theme.isAMShift ? 'primary' : 'white',
                     display: 'inline',
                     fontWeight: 'bold',
                     mx: 0.5,
-                    fontSize: 14,
+                    fontSize: 34,
                 }}
             >
-                +18.77%
-            </Box>
-            <Box sx={{ color: 'text.secondary', display: 'inline', fontSize: 14 }}>
-                vs. last week
+                {netTotal}
             </Box>
         </Box>)
 }
