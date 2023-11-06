@@ -53,15 +53,15 @@ function Dashboard() {
         fetchAllCheckouts();
     }, [useRoles, useSupportStaffContext, useCheckoutsContext]);
 
-    let check = !Object.values(roles)[0] 
-                || !Object.values(supportStaff)[0]
-                || !Object.values(checkouts)[0];
-    
+    let check = !Object.values(roles)[0]
+        || !Object.values(supportStaff)[0]
+        || !Object.values(checkouts)[0];
+
     if (check) return null;
 
     return (
         <div className="dashboard-container">
-            <Box sx={{ display: 'flex', flexDirection: 'column', marginLeft: '40px', width: '1200px' }} >
+            <Box sx={{ display: 'flex', flexDirection: 'column', marginLeft: 'auto', marginRight: 'auto', width: '1200px' }} >
                 <Grid container rowSpacing={4} columnSpacing={3} sx={gridStyle} >
                     {/* first row */}
                     <Grid item sx={{ width: '300px' }}>
@@ -75,7 +75,7 @@ function Dashboard() {
                         </Paper>
                     </Grid>
                     <Grid item sx={{ width: '300px' }}>
-                        <Paper elevation={2} sx={{ borderRadius: 2, bgcolor: theme.palette.secondary.main }}>
+                        <Paper elevation={2} sx={{ borderRadius: 2, bgcolor: theme.palette.secondary.main, padding: '5px' }}>
                             <DashboardItem3></DashboardItem3>
                         </Paper>
                     </Grid>
