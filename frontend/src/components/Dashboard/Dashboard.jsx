@@ -43,14 +43,15 @@ function Dashboard() {
         fetchAllSupportStaffClockIns();
     }, [useRoles, useSupportStaffContext]);
 
-    let check = !Object.values(roles)[0] || !Object.values(supportStaff)[0]
+    let check = !Object.values(roles)[0] 
+                || !Object.values(supportStaff)[0];
     
     if (check) return null;
     console.log(supportStaff)
 
     return (
         <div className="dashboard-container">
-            <Box sx={{ display: 'flex', flexDirection: 'column' }} >
+            <Box sx={{ display: 'flex', flexDirection: 'column', marginLeft: '20px' }} >
                 <Grid container rowSpacing={4} columnSpacing={3} sx={gridStyle} >
                     {/* first row */}
                     <Grid item sx={{ width: '300px' }}>
@@ -60,7 +61,7 @@ function Dashboard() {
                     </Grid>
                     <Grid item sx={{ width: '300px' }}>
                         <Paper elevation={2} sx={{ borderRadius: 2, bgcolor: theme.palette.tertiary.main }}>
-                            <DashboardItem2></DashboardItem2>
+                            <DashboardItem2 supportStaff={supportStaff}></DashboardItem2>
                         </Paper>
                     </Grid>
                     <Grid item sx={{ width: '300px' }}>
