@@ -1,12 +1,22 @@
-# (Team 9 Hackathon Project)
+# Hive
 
 ## Project Description
+
+Hive is a desktop resturant management application. Hive is made to solve disorganized and error prone data management for locally owned restaurants.
 
 ## Technologies/Frameworks Used
 
 - [Electron](https://www.electronjs.org/)
 
 - [React](https://reactjs.org/)
+
+- [MatrialUI](https://mui.com/material-ui/)
+
+- [Django](https://www.django-rest-framework.org/)
+
+- [SQLite3](https://www.sqlite.org/index.html)
+
+- [Google Developer Console and Sheets API](https://console.cloud.google.com/apis/)
 
 ## MVP Core Features
 
@@ -17,8 +27,6 @@
   - Read list of all employees and their roles
 
   - Edit employee details
-
-  - Delete employee from system
 
 - Checkouts
 
@@ -31,16 +39,6 @@
   - Edit net sales and cash owed for a specific day, shift, and server
 
   - Delete a daily checkout for a specific day, shift, and server
-
-- Tip Out Formulas
-
-  - Define a new tip out formula for a specific role
-
-  - View a list of all tip out formulas and their associated roles
-
-  - Edit an existing tip out formula for a specific role
-
-  - Delete a tip out formula for a specific role
 
 - Daily Support Staff Time In/Out
 
@@ -61,6 +59,28 @@
 ## Screenshots
 
 ## Future Implementation Goals
+
+- Tip-Out Formulas
+
+  - Add new tip-out formula
+
+  - View a list of all tip-out formulas
+
+  - Edit the tip-out formula
+
+  - Delete the tip-out formula
+
+- Customizable dashboard
+
+  - User will be able to customize their dashboard elements
+
+- Add front end test using Jest
+
+- Convert front end components into TypeScript
+
+- Add a viewer client
+
+  - Other clients will be able to read from the synched database simultaneously
 
 ## Getting Started
 
@@ -87,6 +107,22 @@ python manage.py migrate
 python manage.py runserver
 ```
 
+### Running Electron
+
+- cd into frontend directory
+
+- Install node dependencies
+
+```
+npm install
+```
+
+- Start application
+
+```
+npm start
+```
+
 ## Contributing
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are greatly appreciated.
@@ -101,6 +137,14 @@ If you have a suggestion that would make this better, please fork the repo and c
 
 ## Contact
 
+- Nick Arakaki - [Github](https://github.com/NickArakaki)
+
+- Brandon Choi - [Github](https://github.com/bchoi28)
+
+- Steven Taylor Cornwall - [Github](https://github.com/taylorcornwall766)
+
+- Nygil Nettles - [Github](https://github.com/NygilNet)
+
 ## Fonts/Themes
 
 [Open Sans](https://fonts.google.com/specimen/Open+Sans)
@@ -108,7 +152,3 @@ If you have a suggestion that would make this better, please fork the repo and c
 [Work Sans](https://fonts.google.com/specimen/Work+Sans)
 
 Helvetica
-
-[First color scheme](https://i.imgur.com/Z6DMgFR.jpg)
-
-## Acknowledgments
