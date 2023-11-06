@@ -34,7 +34,7 @@ export const CheckoutsList = () => {
         return (
             <CheckoutsListItem key={checkout.id} checkout={value} />
         )
-    }) : <Typography variant='h7' sx={{ textAlign: 'center', display: 'inline-block', width: '100%' }} color={theme.palette.primary.light}>no AM servers have checked out yet</Typography>
+    }) : <Typography variant='h9' sx={{ textAlign: 'center', display: 'inline-block', width: '100%' }} color={theme.palette.primary.light}>no AM servers have checked out yet</Typography>
 
     const checkoutsPMList = checkoutsPM ? checkoutsPM?.map((checkout) => {
         const employee = employees.find((employee) => checkout.employee_id === employee.id);
@@ -47,7 +47,7 @@ export const CheckoutsList = () => {
         return (
             <CheckoutsListItem key={checkout.id} checkout={value} />
         )
-    }) : <Typography variant='h7' sx={{ textAlign: 'center', display: 'inline-block', width: '100%' }} color={theme.palette.primary.light}>no PM servers have checked out yet</Typography>
+    }) : <Typography variant='h9' sx={{ textAlign: 'center', display: 'inline-block', width: '100%' }} color={theme.palette.primary.light}>no PM servers have checked out yet</Typography>
 
     useEffect(() => {
         const formattedDate = stateDate.format('YYYY-MM-DD');
@@ -65,11 +65,11 @@ export const CheckoutsList = () => {
     return (
         <div style={{ display: 'flex', flexDirection: 'column', marginTop: '15px' }}>
             <Paper sx={{ borderRadius: '8px', padding: '10px', paddingBottom: '15px', paddingTop: '10px', marginBottom: '25px' }}>
-                <Typography sx={{ paddingBottom: '10px' }} variant="h6" fontWeight='bold' textAlign='center'>AM Shift Checkouts</Typography>
+                <Typography sx={{ paddingBottom: '10px' }} variant="h6" textAlign='center'>AM Shift Checkouts</Typography>
                 {checkoutsAMList}
             </Paper>
             <Paper sx={{ borderRadius: '8px', padding: '10px', paddingBottom: '15px', paddingTop: '10px', marginBottom: '10px' }}>
-                <Typography sx={{ paddingBottom: '10px' }} variant="h6" fontWeight='bold' textAlign='center'>PM Shift Checkouts</Typography>
+                <Typography sx={{ paddingBottom: '10px' }} variant="h6" textAlign='center'>PM Shift Checkouts</Typography>
                 {checkoutsPMList}
             </Paper>
         </div>
