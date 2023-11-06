@@ -18,6 +18,7 @@ function DashboardItem5({ roles }) {
                 // boxShadow: 1,
                 p: 8,
                 // minWidth: 300,
+                overflowX: 'auto'
             }}
         >
             <PieChart 
