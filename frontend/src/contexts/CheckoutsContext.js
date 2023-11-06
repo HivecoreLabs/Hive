@@ -44,7 +44,6 @@ const initialState = {
 };
 
 const checkoutsReducer = (state = initialState, action) => {
-    debugger
 
     switch (action.type) {
         case RECEIVE_ONE_CHECKOUT:

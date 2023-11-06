@@ -1,0 +1,15 @@
+.employee-card-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    border: 1px solid #777;
+    border-radius: 0.2em;
+
+    margin: 0.3em;
+
+}
+
+.employee-card-container > div {
+    width: 95px;
+}

@@ -66,7 +66,6 @@ const CheckoutsForm = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        debugger
         const newCheckout = {
             employee_id: server.id,
             net_sales: netSales,

@@ -34,7 +34,6 @@ const CheckoutsListItem = ({ checkout }) => {
     useEffect(() => {
         readAllRoles()
     }, [])
-    debugger
     return (
         <Accordion
             key={id}

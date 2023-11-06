@@ -24,7 +24,6 @@ import { useDateContext } from '../../contexts/DateContext';
 import { useTheme } from '@mui/material';
 
 const ActiveSupportStaffList = () => {
-    debugger
     const theme = useTheme();
     const { supportStaff, fetchAllSupportStaffClockInsByDate } = useSupportStaffContext();
     const [supportStaffList, setSupportStaffList] = useState([]);
