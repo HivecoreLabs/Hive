@@ -40,19 +40,6 @@ const SupportStaffListItem = React.memo(({ supportEntry }) => {
         return formattedTime;
     }
 
-    // const [employee, setEmployee] = useState('');
-
-    // const transformRolesForSelect = (roles) => {
-    //     return roles.map((role) => ({
-    //         id: role.id,
-    //         role: role.role,
-    //     }));
-    // }
-    // const transformedRoles = transformRolesForSelect(roles);
-
-    // const [role, setRole] = useState(
-    //     transformedRoles.find((role) => supportEntry.active_role.id === role.id)
-    // );
     const [role, setRole] = useState(active_role);
     const [date, setDate] = useState(dayjs(supportEntry.date));
     const [timeIn, setTimeIn] = useState(dayjs(supportEntry.time_in));
@@ -75,56 +62,6 @@ const SupportStaffListItem = React.memo(({ supportEntry }) => {
     const handleTimeOut = (value) => {
         setTimeOut(value);
     }
-
-    // const transformedRoles = transformRolesForSelect(roles);
-
-    // const newRoles = transformRolesForSelect(roles);
-    // const rolesList = roles.length > 0 ? (
-    //     transformRolesForSelect(roles).map((role, idx) => (
-    //         <MenuItem key={idx} value={role}>
-    //             {role.role}
-    //         </MenuItem>
-    //     ))
-    // ) : null;
-
-    // const rolesList = isEditing ? (
-    //     <TextField
-    //         select
-    //         fullWidth
-    //         label="Role"
-    //         variant="outlined"
-    //         value={role}
-    //         onChange={handleRole}
-    //     >
-    //         {transformedRoles.map((role) => (
-    //             <MenuItem key={role.id} value={role.id}>
-    //                 {role.role}
-    //             </MenuItem>
-    //         ))}
-    //     </TextField>
-    // ) : (
-    //     <TextField
-    //         select
-    //         fullWidth
-    //         label="Role"
-    //         variant="outlined"
-    //         value={role}
-    //         onChange={handleRole}
-    //         disabled
-    //     >
-    //         {transformedRoles.map((role) => (
-    //             <MenuItem key={role.id} value={role.id}>
-    //                 {role.role}
-    //             </MenuItem>
-    //         ))}
-    //     </TextField>
-    // );
-
-    // creating a map for roles to their id's for handleUpdate
-    // const roleMap = {};
-    // roles.forEach((role) => {
-    //     roleMap[role.role] = role.id;
-    // });
 
     const handleEditToggle = () => {
         setIsEditing(prevState => !prevState);
@@ -168,14 +105,14 @@ const SupportStaffListItem = React.memo(({ supportEntry }) => {
                     <div style={{ display: 'flex', alignItems: 'center' }}>
                         {is_am ? (
                             <>
-                                <WbSunnyIcon fontSize="small" sx={{ color: theme.AM, marginLeft: '-3px', marginRight: '4px' }} /> {/* Sun icon */}
+                                <WbSunnyIcon fontSize="small" sx={{ color: theme.AM, marginLeft: '-3px', marginRight: '4px' }} />
                                 <Typography variant='h7'>
                                     AM
                                 </Typography>
                             </>
                         ) : (
                             <>
-                                <BedtimeIcon fontSize="small" sx={{ color: theme.PM, marginLeft: '-3px', marginRight: '4px' }} /> {/* Moon icon */}
+                                <BedtimeIcon fontSize="small" sx={{ color: theme.PM, marginLeft: '-3px', marginRight: '4px' }} />
                                 <Typography variant='h7'>
                                     PM
                                 </Typography>
