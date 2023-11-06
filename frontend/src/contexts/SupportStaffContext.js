@@ -96,7 +96,6 @@ export const SupportStaffContextProvider = ({ children }) => {
     };
 
     const fetchAllSupportStaffClockInsByDate = async (date) => {
-        debugger
         const response = await customFetch(`http://localhost:8000/api/clock-ins/?date=${date}`);
         if (response.ok) {
             const data = await response.json();

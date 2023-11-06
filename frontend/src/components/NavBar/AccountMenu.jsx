@@ -26,10 +26,8 @@ export default function AccountMenu() {
     const handleClose = () => setAnchorEl(null);
 
     const handleNewAccount = () => {
-        debugger
         handleClose();
         logout();
-        debugger
         // if (newUserButtonRef.current) {
         //     newUserButtonRef.current.click();
         // }

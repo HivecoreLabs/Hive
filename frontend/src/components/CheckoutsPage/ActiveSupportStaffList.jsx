@@ -41,7 +41,7 @@ const ActiveSupportStaffList = () => {
     return (
         <div>
             <Paper sx={{ borderRadius: '8px', padding: '10px', paddingTop: '10px', marginLeft: '30px' }}>
-                <Typography variant="h6" fontWeight='bold' textAlign='center' sx={{ position: 'sticky', marginBottom: '10px' }}>
+                <Typography variant="h7" fontWeight='bold' textAlign='center' sx={{ marginBottom: '10px', width: '100%', display: 'inline-block' }}>
                     Active Support Staff
                 </Typography>
                 <TableContainer sx={{ maxHeight: '500px', overflowY: 'scroll' }} >
@@ -64,7 +64,7 @@ const ActiveSupportStaffList = () => {
                     to="/support"
                     variant="contained"
                     color="primary"
-                    size="medium"
+                    size="small"
                     sx={{
                         marginTop: '15px', marginBottom: '8px', marginLeft: 'auto', marginRight: 'auto', display: 'block', width: 'fit-content',
                     }}

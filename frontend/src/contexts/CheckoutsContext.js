@@ -40,7 +40,7 @@ const deleteCheckout = (checkoutId) => {
 };
 
 const initialState = {
-    checkouts: []
+    checkouts: [],
 };
 
 const checkoutsReducer = (state = initialState, action) => {
@@ -93,18 +93,17 @@ const CheckoutsContextProvider = ({ children }) => {
     // };
 
     const fetchAllCheckouts = async (date, isAMShift) => {
-        debugger
         let queryString = '';
         if (date) {
             queryString += `?date=${date}`;
         }
         if (isAMShift !== undefined) {
-            queryString += queryString.length ? '&' : '';
-            queryString += `?is_am_shift=${isAMShift ? 'True' : 'False'}`;
+            queryString += queryString.length ? '&' : '?';
+            queryString += `is_am_shift=${isAMShift ? 'True' : 'False'}`;
         }
 
-        const apiUrl = `http://localhost:8000/api/checkouts/${queryString}`;
-        const response = await customFetch(apiUrl);
+        const url = `http://localhost:8000/api/checkouts/${queryString}`;
+        const response = await customFetch(url);
 
         if (response.ok) {
             const data = await response.json();
@@ -118,13 +117,11 @@ const CheckoutsContextProvider = ({ children }) => {
 
 
     const createCheckout = async (newCheckout) => {
-        debugger
         const response = await customFetch(`http://localhost:8000/api/checkouts/`, {
             method: 'POST',
             body: newCheckout
         });
         if (response.ok) {
-            debugger
             const data = await response.json();
             dispatch(receiveOneCheckout(data));
         } else {

@@ -1,112 +1,6 @@
-// import React, { useContext, useEffect } from 'react';
-// import { Accordion, AccordionSummary, AccordionDetails, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
-// import dayjs from 'dayjs';
-// import { useDateContext } from '../../contexts/DateContext';
-// import { useCheckoutsContext } from '../../contexts/CheckoutsContext';
-// import './SupportStaffList.css';
-
-// const CheckoutsList = () => {
-//     const { stateDate } = useDateContext();
-//     const {checkouts, fetchAllCheckouts} = useCheckoutsContext();
-
-//     const [checkoutsList, setCheckoutsList] = useState(checkouts);
-
-//     useEffect(() => {
-//         const formattedDate = stateDate.format('YYYY-MM-DD');
-//         fetchAllCheckouts(formattedDate);
-//     }, [stateDate]);
-
-//     useEffect(() => {
-//         setCheckoutsList(checkouts)
-//     }, [checkouts])
-
-//     return (
-//         <div className='checkouts-list-container'>
-//             {checkoutsList.length > 0 ? (
-//                 checkoutsList.map((checkout) => (
-//                     <Accordion key={checkout.id}>
-//                         <AccordionSummary>
-//                             <Typography>Server: {checkout.employee_id}</Typography>
-//                             <Typography>Checkout Time: {dayjs(checkout.created_at).format('YYYY-MM-DD HH:mm:ss')}</Typography>
-//                         </AccordionSummary>
-//                         <AccordionDetails>
-//                             {/* Additional details about the checkout */}
-//                             {/* You can expand this section to include more information */}
-//                         </AccordionDetails>
-//                     </Accordion>
-//                 ))
-//             ) : (
-//                 <Typography>No checkouts available for this date.</Typography>
-//             )}
-//         </div>
-//     );
-// }
-
-// export default CheckoutsList;
-
-
-// import React, { useContext, useEffect, useState } from 'react';
-// import { Accordion, AccordionSummary, AccordionDetails, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
-// import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-// import dayjs from 'dayjs';
-// import { useDateContext } from '../../contexts/DateContext';
-// import { useCheckoutsContext } from '../../contexts/CheckoutsContext';
-
-// const CheckoutsList = () => {
-//     const { stateDate } = useDateContext();
-//     const { checkouts, fetchAllCheckouts } = useCheckoutsContext();
-
-//     const [checkoutsList, setCheckoutsList] = useState(checkouts);
-
-//     useEffect(() => {
-//         const formattedDate = stateDate.format('YYYY-MM-DD');
-//         fetchAllCheckouts(formattedDate);
-//     }, [stateDate]);
-
-//     useEffect(() => {
-//         setCheckoutsList(checkouts);
-//     }, [checkouts]);
-
-//     return (
-//         <div className='checkouts-list-container'>
-//             {checkoutsList.length > 0 ? (
-//                 <TableContainer component={Paper}>
-//                     <Table>
-//                         <TableHead>
-//                             <TableRow>
-//                                 <TableCell>Server</TableCell>
-//                                 <TableCell>Checkout Date</TableCell>
-//                                 <TableCell>Checkout Time</TableCell>
-//                             </TableRow>
-//                         </TableHead>
-//                         <TableBody>
-//                             {checkoutsList.map((checkout) => (
-//                                 <Accordion key={checkout.id}>
-//                                     <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-//                                         <TableCell>{checkout.employee_id}</TableCell>
-//                                         <TableCell>{dayjs(checkout.date).format('dddd, MMM D')}</TableCell>
-//                                         <TableCell>{dayjs(checkout.created_at).format('HH:mm:ss')}</TableCell>
-//                                     </AccordionSummary>
-//                                     <AccordionDetails>
-//                                         {/* Additional details about the checkout */}
-//                                         {/* You can expand this section to include more information */}
-//                                     </AccordionDetails>
-//                                 </Accordion>
-//                             ))}
-//                         </TableBody>
-//                     </Table>
-//                 </TableContainer>
-//             ) : (
-//                 <Typography>No checkouts available for this date.</Typography>
-//             )}
-//         </div>
-//     );
-// }
-
-// export default CheckoutsList;
-
 import React, { useEffect, useState } from 'react';
 import Accordion from '@mui/material/Accordion';
+import { Paper } from '@mui/material';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import Typography from '@mui/material/Typography';
@@ -114,20 +8,42 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import dayjs from 'dayjs';
 import { useDateContext } from '../../contexts/DateContext';
 import { useCheckoutsContext } from '../../contexts/CheckoutsContext';
+import { useEmployees } from '../../contexts/EmployeesContext';
+import CheckoutsListItem from './CheckoutsListItem.jsx';
+import { theme } from '../../contexts/ThemeContext';
 
-export default function CheckoutsList() {
+export const CheckoutsList = () => {
     const { stateDate } = useDateContext();
     const { checkouts, fetchAllCheckouts } = useCheckoutsContext();
-    debugger
+    const { employees, readAllEmployees } = useEmployees();
 
     const [checkoutsList, setCheckoutsList] = useState(checkouts);
-
-    const [expanded, setExpanded] = useState(null);
-
-    const handleChange = (panel) => (event, isExpanded) => {
-        setExpanded(isExpanded ? panel : null);
-    };
-
+    const checkoutsAM = checkoutsList.length > 0 ? checkoutsList.filter((checkout) => checkout.is_am_shift) : null;
+    const checkoutsPM = checkoutsList.length > 0 ? checkoutsList.filter((checkout) => !checkout.is_am_shift) : null;
+    const checkoutsAMList = checkoutsAM ? checkoutsAM?.map((checkout) => {
+        const employee = employees.find((employee) => checkout.employee_id === employee.id);
+        const value = {
+            checkoutObject: checkout,
+            id: employee.id,
+            firstName: employee.first_name,
+            lastName: employee.last_name
+        }
+        return (
+            <CheckoutsListItem checkout={value} />
+        )
+    }) : <Typography variant='h7' sx={{ textAlign: 'center', display: 'inline-block', width: '100%' }} color={theme.palette.primary.light}>no AM servers have checked out yet</Typography>
+    const checkoutsPMList = checkoutsPM ? checkoutsPM?.map((checkout) => {
+        const employee = employees.find((employee) => checkout.employee_id === employee.id);
+        const value = {
+            checkoutObject: checkout,
+            id: employee.id,
+            firstName: employee.first_name,
+            lastName: employee.last_name
+        }
+        return (
+            <CheckoutsListItem checkout={value} />
+        )
+    }) : <Typography variant='h7' sx={{ textAlign: 'center', display: 'inline-block', width: '100%' }} color={theme.palette.primary.light}>no PM servers have checked out yet</Typography>
     useEffect(() => {
         const formattedDate = stateDate.format('YYYY-MM-DD');
         fetchAllCheckouts(formattedDate);
@@ -137,35 +53,22 @@ export default function CheckoutsList() {
         setCheckoutsList(checkouts)
     }, [checkouts])
 
-    console.log(checkouts);
+    useEffect(() => {
+        readAllEmployees();
+    }, [])
 
     return (
-        <div>
-            {checkouts.map((checkout) => (
-                <Accordion
-                    key={checkout.checkout.id}
-                    expanded={expanded === `panel-${checkout.checkout.id}`}
-                    onChange={handleChange(`panel-${checkout.checkout.id}`)}
-                >
-                    <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                    >
-                        <div style={{ display: 'flex', justifyContent: 'space-around', width: '100%' }}>
-                            <Typography sx={{ width: '50px' }}>{checkout.checkout.employee_id}</Typography>
-                            <Typography>
-                                {dayjs(checkout.checkout.date).format('dddd, MMM D')}
-                            </Typography>
-                            <Typography>
-                                {dayjs(checkout.checkout.created_at).format('h:mm A')}
-                            </Typography>
-                        </div>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                        {/* Additional details about the checkout */}
-                        {/* You can expand this section to include more information */}
-                    </AccordionDetails>
-                </Accordion>
-            ))}
+        <div style={{ display: 'flex', flexDirection: 'column', marginTop: '15px' }}>
+            <Paper sx={{ borderRadius: '8px', padding: '10px', paddingBottom: '15px', paddingTop: '10px', marginBottom: '10px' }}>
+                <Typography sx={{ paddingBottom: '10px' }} variant="h6" fontWeight='bold' textAlign='center'>AM Shift Checkouts</Typography>
+                {checkoutsAMList}
+            </Paper>
+            <Paper sx={{ borderRadius: '8px', padding: '10px', paddingBottom: '15px', paddingTop: '10px', marginBottom: '10px' }}>
+                <Typography sx={{ paddingBottom: '10px' }} variant="h6" fontWeight='bold' textAlign='center'>PM Shift Checkouts</Typography>
+                {checkoutsPMList}
+            </Paper>
         </div>
     );
-}
+};
+
+export default CheckoutsList;

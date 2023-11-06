@@ -11,7 +11,6 @@ import { useDateContext } from '../../contexts/DateContext';
 import { useTheme } from '@mui/material';
 
 const SupportStaffForm = () => {
-    debugger
     const theme = useTheme();
     const { employees, readAllEmployees } = useEmployees();
     const { roles, readAllRoles } = useRoles();
@@ -26,7 +25,7 @@ const SupportStaffForm = () => {
     const [timeIn, setTimeIn] = useState(null);
     const [timeOut, setTimeOut] = useState(null);
     const [isAMShift, setIsAMShift] = useState(theme.isAMShift);
-    debugger
+
     // we need this when formatting times in the request body 
     const convertTimeFromFrontend = (frontendTime) => {
         const date = new Date(frontendTime);
