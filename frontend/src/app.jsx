@@ -4,7 +4,6 @@ import Home from './components/Home';
 import NavBar from './components/NavBar';
 import Dashboard from './components/Dashboard';
 import Employee from './components/Employees/index.jsx';
-import EmployeeForm from './components/EmployeeForm/index.jsx';
 import SupportStaffPage from './components/SupportStaff';
 import CheckoutsPage from './components/CheckoutsPage';
 import CreateEmployeeForm from './components/EmployeeForm/CreateEmployee.jsx'

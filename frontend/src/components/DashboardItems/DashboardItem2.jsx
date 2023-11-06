@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import React from "react";
 import { useTheme } from "@mui/material";
 
-function DashboardItem2({ supportStaff }) {
+function DashboardItem2({ checkouts }) {
 
     const theme = useTheme();
     return (
@@ -15,9 +15,9 @@ function DashboardItem2({ supportStaff }) {
                 // minWidth: 300,
             }}
         >
-            <Box sx={{ color: 'text.secondary' }}>Total Checkouts</Box>
-            <Box sx={{ color: 'text.primary', fontSize: 34, fontWeight: 'medium' }}>
-                {supportStaff.length}
+            <Box sx={{ color: theme.isAMShift ? 'text.secondary' : 'white'  }}>Total Checkouts</Box>
+            <Box sx={{ color: theme.isAMShift ? 'text.secondary' : 'white' , fontSize: 34, fontWeight: 'medium' }}>
+                {checkouts.length}
             </Box>
         </Box>)
 }

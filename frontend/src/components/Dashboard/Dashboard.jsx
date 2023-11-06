@@ -17,6 +17,8 @@ import DashboardItem8 from "../DashboardItems/DashboardItem8.jsx";
 import DashboardItem9 from "../DashboardItems/DashboardItem9.jsx";
 import { useRoles } from "../../contexts/RolesContext.js";
 import { useSupportStaffContext } from "../../contexts/SupportStaffContext.js";
+import { useCheckoutsContext } from "../../contexts/CheckoutsContext.js";
+import { useDateContext } from "../../contexts/DateContext.js";
 
 function Dashboard() {
     const theme = useTheme();
@@ -37,17 +39,25 @@ function Dashboard() {
         supportStaff,
         fetchAllSupportStaffClockIns
     } = useSupportStaffContext();
+    const {
+        checkouts,
+        fetchAllCheckouts
+    } = useCheckoutsContext();
+    const {
+        stateDate
+    } = useDateContext();
 
     useEffect(() => {
         readAllRoles();
         fetchAllSupportStaffClockIns();
-    }, [useRoles, useSupportStaffContext]);
+        fetchAllCheckouts();
+    }, [useRoles, useSupportStaffContext, useCheckoutsContext]);
 
     let check = !Object.values(roles)[0] 
-                || !Object.values(supportStaff)[0];
+                || !Object.values(supportStaff)[0]
+                || !Object.values(checkouts)[0];
     
     if (check) return null;
-    console.log(supportStaff)
 
     return (
         <div className="dashboard-container">
@@ -61,7 +71,7 @@ function Dashboard() {
                     </Grid>
                     <Grid item sx={{ width: '300px' }}>
                         <Paper elevation={2} sx={{ borderRadius: 2, bgcolor: theme.palette.tertiary.main }}>
-                            <DashboardItem2 supportStaff={supportStaff}></DashboardItem2>
+                            <DashboardItem2 checkouts={checkouts}></DashboardItem2>
                         </Paper>
                     </Grid>
                     <Grid item sx={{ width: '300px' }}>
@@ -71,7 +81,7 @@ function Dashboard() {
                     </Grid>
                     <Grid item sx={{ width: '300px' }}>
                         <Paper elevation={2} sx={{ borderRadius: 2, bgcolor: theme.palette.quaternary.main }}>
-                            <DashboardItem4></DashboardItem4>
+                            <DashboardItem4 checkouts={checkouts} date={stateDate}></DashboardItem4>
                         </Paper>
                     </Grid>
 
@@ -80,16 +90,7 @@ function Dashboard() {
                         <Paper elevation={2}><DashboardItem5 roles={roles}></DashboardItem5></Paper>
                     </Grid>
                     {/* third row */}
-                    <Grid item sx={{ width: '600px' }}>
-                        <Paper elevation={2}><DashboardItem8></DashboardItem8></Paper>
-                    </Grid>
-                    <Grid item sx={{ width: '600px' }}>
-                        <Paper elevation={2}><DashboardItem9></DashboardItem9></Paper>
-                    </Grid>
                 </Grid>
-                <NavLink to='/' style={{ width: '100px', margin: 'auto' }}>
-                    <Button variant="contained">Home</Button>
-                </NavLink>
             </Box >
         </div>
     )
