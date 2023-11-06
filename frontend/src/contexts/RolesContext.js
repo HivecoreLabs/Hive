@@ -5,6 +5,7 @@ const ADD_ROLE = 'role/ADD_ROLE';
 const LOAD_ROLE = 'role/LOAD_ROLE';
 const LOAD_ROLES = 'role/LOAD_ROLES';
 const REMOVE_ROLE = 'role/REMOVE_ROLE';
+const CLEAR_ROLE = 'role/CLEAR_ROLE';
 
 export const useRoles = () => useContext(RolesContext);
 const RolesContext = createContext();
@@ -29,6 +30,9 @@ function rolesReducer(state = initialState, action) {
         case REMOVE_ROLE:
             delete newState[action.payload];
             return newState;
+        case CLEAR_ROLE:
+            newState.role = {};
+            return newState;
         default:
             return state;
     }
@@ -52,6 +56,10 @@ const loadRoles = payload => ({
 const removeRole = payload => ({
     type: REMOVE_ROLE,
     payload
+});
+
+const clearRole = () => ({
+    type: CLEAR_ROLE
 });
 
 export const RolesProvider = ({ children }) => {
@@ -120,6 +128,10 @@ export const RolesProvider = ({ children }) => {
         }
     }
 
+    const resetRole = () => {
+        dispatch(clearRole());
+    }
+
     const value = {
         role: state.role,
         roles: state.roles,
@@ -127,7 +139,8 @@ export const RolesProvider = ({ children }) => {
         readSingleRole,
         readAllRoles,
         updateRole,
-        deleteRole
+        deleteRole,
+        resetRole
     };
 
     return (

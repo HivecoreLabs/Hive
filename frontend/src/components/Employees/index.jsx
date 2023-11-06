@@ -46,7 +46,38 @@ function Employee() {
                             </Paper>
                         </NavLink>
                     </Grid>
-                </Grid>
+                    </Grid>
+                    <Grid container rowSpacing={1} columnSpacing={2} sx={gridStyle}>
+                        <Grid item sx={{width: '300px'}}>
+                            <NavLink
+                            to="/roles/all"
+                            >
+                                <Paper 
+                                elevation={2} 
+                                sx={{ borderRadius: 2, bgcolor: 'gray', display: 'flex', flexDirection: 'column', alignItems: 'center', textDecoration: 'none' }}
+                                >
+                                    <p style={{ textDecoration: 'none' }}>
+                                        View/Edit Roles
+                                    </p>
+                                </Paper>
+                            </NavLink>
+                        </Grid>
+                        <Grid item sx={{width: '300px'}}>
+                            <NavLink
+                            to="/roles/new"
+                            >
+                                <Paper 
+                                elevation={2} 
+                                sx={{ borderRadius: 2, bgcolor: 'gray', display: 'flex', flexDirection: 'column', alignItems: 'center', textDecoration: 'none' }}
+                                >
+                                    <p style={{ textDecoration: 'none' }}>
+                                        Create New Role
+                                    </p>
+                                </Paper>
+                            </NavLink>
+                        </Grid>
+
+                    </Grid>
             </Box>
         </div>
     );

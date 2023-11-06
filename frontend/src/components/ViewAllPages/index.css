@@ -1,0 +1,32 @@
+.view-all-container {
+    display: flex;
+    flex-direction: column;
+
+    width: 95%;
+    align-items: center;
+
+    margin-left: 60px;
+    margin-top: 60px;
+}
+
+.view-all-header {
+    margin: 20px;
+}
+
+.view-all-items {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    list-style: none;
+}
+
+.view-all-items-header {
+    font-weight: bolder;
+    display: flex;
+    justify-content: space-around;
+}
+
+.view-all-items-header > div {
+    width: 95px;
+}
