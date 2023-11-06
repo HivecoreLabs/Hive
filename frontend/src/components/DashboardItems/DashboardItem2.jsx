@@ -15,7 +15,7 @@ function DashboardItem2({ checkouts }) {
                 // minWidth: 300,
             }}
         >
-            <Box sx={{ color: theme.isAMShift ? 'text.secondary' : 'white'  }}>Total Checkouts</Box>
+            <Box sx={{ color: theme.isAMShift ? 'text.secondary' : 'white'  }}>Total Checkouts (All Time)</Box>
             <Box sx={{ color: theme.isAMShift ? 'text.secondary' : 'white' , fontSize: 34, fontWeight: 'medium' }}>
                 {checkouts.length}
             </Box>

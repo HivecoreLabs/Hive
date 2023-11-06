@@ -18,9 +18,15 @@ function DashboardItem5({ roles }) {
                 // boxShadow: 1,
                 p: 8,
                 // minWidth: 300,
-                overflowX: 'auto'
             }}
         >
+            <Box sx={{ 
+                color: 'text.secondary', 
+                display: 'inline',
+                fontWeight: 'bold',
+                mx: 0.5,
+                fontSize: 24,
+                }}>Employees for Each Role</Box>
             <PieChart 
                 series={[
                     {
@@ -28,7 +34,7 @@ function DashboardItem5({ roles }) {
                       cx: 150
                     },
                   ]}
-                  width={1000}
+                  width={850}
                   height={150}
                  
             /> 
