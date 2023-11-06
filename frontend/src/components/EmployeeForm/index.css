@@ -1,0 +1,53 @@
+
+.employee-form-container {
+    display: flex;
+    flex-direction: column;
+
+    width: 95%;
+    align-items: center;
+
+    margin-left: 60px;
+    margin-top: 70px;
+}
+
+.employee-form-header {
+    
+    margin: 0.6em;
+    border-radius: 0.2em;
+    padding: 0.5em;
+}
+
+.employee-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 2em 4em;
+}
+
+.employee-form-prompts {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.employee-form-first-name, .employee-form-last-name, .employee-form-restaurant-id, .employee-form-food-permit-exp, .employee-form-alcohol-permit-exp, .employee-form-role {
+    display: flex;
+    flex-direction: column;
+    width: 350px;
+    margin-bottom: 0.75em;
+    justify-content: space-between;
+}
+
+.employee-form-is-former-employee {
+    display: flex;
+    flex-direction: row;
+    width: 350px;
+    justify-content: space-around;
+    margin-bottom: 30px;
+}
+
+.employee-form-action {
+    display: flex;
+    align-self: flex-end;
+}

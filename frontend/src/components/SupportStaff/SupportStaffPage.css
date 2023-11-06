@@ -1,0 +1,9 @@
+.support-staff-page-container {
+    margin-top: 100px;
+    margin-left: 100px;
+    margin-right: 50px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

@@ -9,7 +9,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -18,21 +17,21 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - name: Install Dependencies
-    - run: |
-        cd frontend
-        npm install
-    - name: Run Linter
-    - run: |
-        cd frontend
-        npm run lint
-    - name: Run Tests
-    - run: |
-        cd frontend
-        npm run test:ci
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+      - name: Install Dependencies
+      - run: |
+          cd frontend
+          npm install
+      - name: Run Linter
+      - run: |
+          cd frontend
+          npm run lint
+      - name: Run Tests
+      - run: |
+          cd frontend
+          npm run test:ci

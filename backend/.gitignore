@@ -1,0 +1,11 @@
+*.coverage
+.env
+__pycache__/
+*.py[cod]
+.venv
+.DS_Store
+.vscode/
+*.db
+*.sqlite3
+credentials.json
+token.json

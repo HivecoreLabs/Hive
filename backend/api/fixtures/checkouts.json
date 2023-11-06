@@ -1,0 +1,182 @@
+[
+    {
+        "model": "api.checkout",
+        "pk": 1,
+        "fields": {
+            "net_sales": 500,
+            "cash_owed": 50,
+            "employee_id": 1,
+            "total_tipout": 25,
+            "is_am_shift": true,
+            "is_patio": false,
+            "is_bar": true,
+            "date": "2023-10-25",
+            "created_at": "2023-10-26T00:00:00Z",
+            "updated_at": "2023-10-26T00:00:00Z",
+            "sheet_cell": null,
+            "is_uploaded": false
+        }
+    },
+    {
+        "model": "api.checkout",
+        "pk": 2,
+        "fields": {
+            "net_sales": 300,
+            "cash_owed": 30,
+            "employee_id": 2,
+            "total_tipout": 15,
+            "is_am_shift": false,
+            "is_patio": true,
+            "is_bar": false,
+            "date": "2023-10-25",
+            "created_at": "2023-10-26T00:00:00Z",
+            "updated_at": "2023-10-26T00:00:00Z",
+            "sheet_cell": null,
+            "is_uploaded": false
+        }
+    },
+    {
+        "model": "api.checkout",
+        "pk": 3,
+        "fields": {
+            "net_sales": 750,
+            "cash_owed": 75,
+            "employee_id": 3,
+            "total_tipout": 37.5,
+            "is_am_shift": true,
+            "is_patio": true,
+            "is_bar": false,
+            "date": "2023-10-25",
+            "created_at": "2023-10-26T00:00:00Z",
+            "updated_at": "2023-10-26T00:00:00Z",
+            "sheet_cell": null,
+            "is_uploaded": false
+        }
+    },
+    {
+        "model": "api.checkout",
+        "pk": 4,
+        "fields": {
+            "net_sales": 600,
+            "cash_owed": 60,
+            "employee_id": 4,
+            "total_tipout": 30,
+            "is_am_shift": false,
+            "is_patio": false,
+            "is_bar": true,
+            "date": "2023-10-25",
+            "created_at": "2023-10-26T00:00:00Z",
+            "updated_at": "2023-10-26T00:00:00Z",
+            "sheet_cell": null,
+            "is_uploaded": false
+        }
+    },
+    {
+        "model": "api.checkout",
+        "pk": 5,
+        "fields": {
+            "net_sales": 450,
+            "cash_owed": 45,
+            "employee_id": 5,
+            "total_tipout": 22.5,
+            "is_am_shift": true,
+            "is_patio": false,
+            "is_bar": true,
+            "date": "2023-10-25",
+            "created_at": "2023-10-26T00:00:00Z",
+            "updated_at": "2023-10-26T00:00:00Z",
+            "sheet_cell": null,
+            "is_uploaded": false
+        }
+    },
+    {
+        "model": "api.checkout",
+        "pk": 6,
+        "fields": {
+            "net_sales": 550,
+            "cash_owed": 55,
+            "employee_id": 6,
+            "total_tipout": 27.5,
+            "is_am_shift": false,
+            "is_patio": true,
+            "is_bar": false,
+            "date": "2023-10-25",
+            "created_at": "2023-10-26T00:00:00Z",
+            "updated_at": "2023-10-26T00:00:00Z",
+            "sheet_cell": null,
+            "is_uploaded": false
+        }
+    },
+    {
+        "model": "api.checkout",
+        "pk": 7,
+        "fields": {
+            "net_sales": 650,
+            "cash_owed": 65,
+            "employee_id": 7,
+            "total_tipout": 32.5,
+            "is_am_shift": true,
+            "is_patio": true,
+            "is_bar": false,
+            "date": "2023-10-25",
+            "created_at": "2023-10-26T00:00:00Z",
+            "updated_at": "2023-10-26T00:00:00Z",
+            "sheet_cell": null,
+            "is_uploaded": false
+        }
+    },
+    {
+        "model": "api.checkout",
+        "pk": 8,
+        "fields": {
+            "net_sales": 700,
+            "cash_owed": 70,
+            "employee_id": 8,
+            "total_tipout": 35,
+            "is_am_shift": false,
+            "is_patio": false,
+            "is_bar": true,
+            "date": "2023-10-25",
+            "created_at": "2023-10-26T00:00:00Z",
+            "updated_at": "2023-10-26T00:00:00Z",
+            "sheet_cell": null,
+            "is_uploaded": false
+        }
+    },
+    {
+        "model": "api.checkout",
+        "pk": 9,
+        "fields": {
+            "net_sales": 800,
+            "cash_owed": 80,
+            "employee_id": 9,
+            "total_tipout": 40,
+            "is_am_shift": true,
+            "is_patio": false,
+            "is_bar": true,
+            "date": "2023-10-25",
+            "created_at": "2023-10-26T00:00:00Z",
+            "updated_at": "2023-10-26T00:00:00Z",
+            "sheet_cell": null,
+            "is_uploaded": false
+        }
+    },
+    {
+        "model": "api.checkout",
+        "pk": 10,
+        "fields": {
+            "net_sales": 900,
+            "cash_owed": 90,
+            "employee_id": 10,
+            "total_tipout": 45,
+            "is_am_shift": false,
+            "is_patio": true,
+            "is_bar": false,
+            "date": "2023-10-25",
+            "created_at": "2023-10-26T00:00:00Z",
+            "updated_at": "2023-10-26T00:00:00Z",
+            "sheet_cell": null,
+            "is_uploaded": false
+        }
+    }
+]
