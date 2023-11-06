@@ -11,6 +11,7 @@ import { useCheckoutsContext } from '../../contexts/CheckoutsContext';
 import { useEmployees } from '../../contexts/EmployeesContext';
 import CheckoutsListItem from './CheckoutsListItem.jsx';
 import { theme } from '../../contexts/ThemeContext';
+import { useRoles } from '../../contexts/RolesContext';
 
 export const CheckoutsList = () => {
     const { stateDate } = useDateContext();
@@ -18,8 +19,10 @@ export const CheckoutsList = () => {
     const { employees, readAllEmployees } = useEmployees();
 
     const [checkoutsList, setCheckoutsList] = useState(checkouts);
+
     const checkoutsAM = checkoutsList.length > 0 ? checkoutsList.filter((checkout) => checkout.is_am_shift) : null;
     const checkoutsPM = checkoutsList.length > 0 ? checkoutsList.filter((checkout) => !checkout.is_am_shift) : null;
+
     const checkoutsAMList = checkoutsAM ? checkoutsAM?.map((checkout) => {
         const employee = employees.find((employee) => checkout.employee_id === employee.id);
         const value = {
@@ -29,9 +32,10 @@ export const CheckoutsList = () => {
             lastName: employee.last_name
         }
         return (
-            <CheckoutsListItem checkout={value} />
+            <CheckoutsListItem key={checkout.id} checkout={value} />
         )
     }) : <Typography variant='h7' sx={{ textAlign: 'center', display: 'inline-block', width: '100%' }} color={theme.palette.primary.light}>no AM servers have checked out yet</Typography>
+
     const checkoutsPMList = checkoutsPM ? checkoutsPM?.map((checkout) => {
         const employee = employees.find((employee) => checkout.employee_id === employee.id);
         const value = {
@@ -41,9 +45,10 @@ export const CheckoutsList = () => {
             lastName: employee.last_name
         }
         return (
-            <CheckoutsListItem checkout={value} />
+            <CheckoutsListItem key={checkout.id} checkout={value} />
         )
     }) : <Typography variant='h7' sx={{ textAlign: 'center', display: 'inline-block', width: '100%' }} color={theme.palette.primary.light}>no PM servers have checked out yet</Typography>
+
     useEffect(() => {
         const formattedDate = stateDate.format('YYYY-MM-DD');
         fetchAllCheckouts(formattedDate);
@@ -59,7 +64,7 @@ export const CheckoutsList = () => {
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column', marginTop: '15px' }}>
-            <Paper sx={{ borderRadius: '8px', padding: '10px', paddingBottom: '15px', paddingTop: '10px', marginBottom: '10px' }}>
+            <Paper sx={{ borderRadius: '8px', padding: '10px', paddingBottom: '15px', paddingTop: '10px', marginBottom: '25px' }}>
                 <Typography sx={{ paddingBottom: '10px' }} variant="h6" fontWeight='bold' textAlign='center'>AM Shift Checkouts</Typography>
                 {checkoutsAMList}
             </Paper>

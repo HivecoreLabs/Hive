@@ -44,11 +44,20 @@ const initialState = {
 };
 
 const checkoutsReducer = (state = initialState, action) => {
+
     switch (action.type) {
         case RECEIVE_ONE_CHECKOUT:
+            const newCheckout = action.payload.checkout;
+            const breakdownsKey = 'checkout_tipout_breakdowns';
+
+            const correctedCheckoutObject = {
+                ...newCheckout,
+                [breakdownsKey]: action.payload.breakdown
+            };
+
             return {
                 ...state,
-                checkouts: [...state.checkouts, action.payload]
+                checkouts: [...state.checkouts, correctedCheckoutObject]
             };
         case RECEIVE_ALL_CHECKOUTS:
             return {
@@ -80,18 +89,6 @@ const checkoutsReducer = (state = initialState, action) => {
 const CheckoutsContextProvider = ({ children }) => {
     const [state, dispatch] = useReducer(checkoutsReducer, initialState);
 
-    // const fetchAllCheckouts = async () => {
-    //     const response = await customFetch('http://localhost:8000/api/checkouts/');
-
-    //     if (response.ok) {
-    //         const data = await response.json();
-    //         dispatch(receiveAllCheckouts(data));
-    //     } else {
-    //         console.error('Could not fetch all checkouts', error);
-    //     };
-    //     return response;
-    // };
-
     const fetchAllCheckouts = async (date, isAMShift) => {
         let queryString = '';
         if (date) {
@@ -121,6 +118,7 @@ const CheckoutsContextProvider = ({ children }) => {
             method: 'POST',
             body: newCheckout
         });
+
         if (response.ok) {
             const data = await response.json();
             dispatch(receiveOneCheckout(data));

@@ -16,11 +16,15 @@ import {
     ListItem,
     ListItemText
 } from '@mui/material';
+import WbSunnyIcon from '@mui/icons-material/WbSunny';
+import BedtimeIcon from '@mui/icons-material/Bedtime';
 import { Link } from 'react-router-dom';
 import { useSupportStaffContext } from '../../contexts/SupportStaffContext';
 import { useDateContext } from '../../contexts/DateContext';
+import { useTheme } from '@mui/material';
 
 const ActiveSupportStaffList = () => {
+    const theme = useTheme();
     const { supportStaff, fetchAllSupportStaffClockInsByDate } = useSupportStaffContext();
     const [supportStaffList, setSupportStaffList] = useState([]);
     const { stateDate, changeStateDate } = useDateContext();
@@ -49,6 +53,25 @@ const ActiveSupportStaffList = () => {
                         <TableBody>
                             {supportStaffList.map((support) => (
                                 <TableRow key={support.id}>
+                                    <TableCell>
+                                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                                            {support.is_am ? (
+                                                <>
+                                                    <WbSunnyIcon fontSize="small" sx={{ color: theme.AM }} /> {/* Sun icon */}
+                                                    <Typography variant='h7' sx={{ marginLeft: '4px' }}>
+                                                        AM
+                                                    </Typography>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <BedtimeIcon fontSize="small" sx={{ color: theme.PM }} /> {/* Moon icon */}
+                                                    <Typography variant='h7' sx={{ marginLeft: '4px' }}>
+                                                        PM
+                                                    </Typography>
+                                                </>
+                                            )}
+                                        </div>
+                                    </TableCell>
                                     <TableCell>
                                         {support.employee.first_name} {support.employee.last_name}
                                     </TableCell>

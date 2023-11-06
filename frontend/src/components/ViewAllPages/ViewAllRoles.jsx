@@ -15,10 +15,9 @@ export default function ViewAllRoles() {
         resetRole();
     }, [useRoles]);
 
-    if(!roles[0]) return null;
-    console.log(roles)
+    if (!roles[0]) return null;
 
-    return(
+    return (
         <ViewAllPages formType={'Roles'} items={roles} />
     );
 
