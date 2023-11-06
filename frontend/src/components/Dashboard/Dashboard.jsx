@@ -61,7 +61,7 @@ function Dashboard() {
 
     return (
         <div className="dashboard-container">
-            <Box sx={{ display: 'flex', flexDirection: 'column', marginLeft: '20px' }} >
+            <Box sx={{ display: 'flex', flexDirection: 'column', marginLeft: '40px', width: '1200px' }} >
                 <Grid container rowSpacing={4} columnSpacing={3} sx={gridStyle} >
                     {/* first row */}
                     <Grid item sx={{ width: '300px' }}>
