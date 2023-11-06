@@ -22,16 +22,16 @@
     /* margin-top: -100px; */
 }
 
-.hex-brick {
-    background: #ABF8FF;
+.hex-brick-day {
+    background: #FFD07B;
     width: 30px;
     height: 17px;
     position: absolute;
     top: 5px;
-    animation-name: fade;
+    animation-name: fadeDay;
     animation-duration: 2s;
     animation-iteration-count: infinite;
-    -webkit-animation-name: fade;
+    -webkit-animation-name: fadeDay;
     -webkit-animation-duration: 2s;
     -webkit-animation-iteration-count: infinite;
 }
@@ -286,34 +286,34 @@
     -webkit-animation-delay: .6s;
 }
 
-.r1>.hex-brick {
-    animation-name: fade;
+.r1>.hex-brick-day {
+    animation-name: fadeDay;
     animation-duration: 2s;
     animation-iteration-count: infinite;
     animation-delay: .2s;
-    -webkit-animation-name: fade;
+    -webkit-animation-name: fadeDay;
     -webkit-animation-duration: 2s;
     -webkit-animation-iteration-count: infinite;
     -webkit-animation-delay: .2s;
 }
 
-.r2>.hex-brick {
-    animation-name: fade;
+.r2>.hex-brick-day {
+    animation-name: fadeDay;
     animation-duration: 2s;
     animation-iteration-count: infinite;
     animation-delay: .4s;
-    -webkit-animation-name: fade;
+    -webkit-animation-name: fadeDay;
     -webkit-animation-duration: 2s;
     -webkit-animation-iteration-count: infinite;
     -webkit-animation-delay: .4s;
 }
 
-.r3>.hex-brick {
-    animation-name: fade;
+.r3>.hex-brick-day {
+    animation-name: fadeDay;
     animation-duration: 2s;
     animation-iteration-count: infinite;
     animation-delay: .6s;
-    -webkit-animation-name: fade;
+    -webkit-animation-name: fadeDay;
     -webkit-animation-duration: 2s;
     -webkit-animation-iteration-count: infinite;
     -webkit-animation-delay: .6s;
@@ -337,7 +337,7 @@
     }
 }
 
-@keyframes fade {
+@keyframes fadeDay {
     0% {
         background: #FFD07B;
     }

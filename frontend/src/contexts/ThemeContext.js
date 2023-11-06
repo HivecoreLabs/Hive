@@ -55,8 +55,8 @@ const currentHour = now.getHours();
 const currentMinutes = now.getMinutes();
 const isPMShift = (currentHour >= 16 || currentHour < 3);
 // PM Shift is from 4:00 PM to 3:00 AM the next day
-export const theme = isPMShift ? nightTheme : dayTheme;
-// export const theme = dayTheme;
+// export const theme = isPMShift ? nightTheme : dayTheme;
+export const theme = dayTheme;
 
 
 // export const theme = nightTheme
