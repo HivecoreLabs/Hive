@@ -412,12 +412,12 @@ def upload_db(request):
     # Employee_Clock_In,
     # Checkout_Tipout_Breakdown,
     # Checkout
-    role_queryset = Role.objects.filter(is_uploaded=False)
-    employee_queryset = Employee.objects.filter(is_uploaded=False)
-    formula_queryset = Tipout_Formula.objects.filter(is_uploaded=False)
-    clock_in_queryset = Employee_Clock_In.objects.filter(is_uploaded=False)
-    checkout_queryset = Checkout.objects.filter(is_uploaded=False)
-    breakdown_queryset = Checkout_Tipout_Breakdown.objects.filter(is_uploaded=False)
+    role_queryset = Role.objects.filter(is_uploaded=False, sheet_cell=None)
+    employee_queryset = Employee.objects.filter(is_uploaded=False, sheet_cell=None)
+    formula_queryset = Tipout_Formula.objects.filter(is_uploaded=False, sheet_cell=None)
+    clock_in_queryset = Employee_Clock_In.objects.filter(is_uploaded=False, sheet_cell=None)
+    checkout_queryset = Checkout.objects.filter(is_uploaded=False, sheet_cell=None)
+    breakdown_queryset = Checkout_Tipout_Breakdown.objects.filter(is_uploaded=False, sheet_cell=None)
 
     serialized_roles = UploadRoleSerializer(role_queryset, many=True).data
     serialized_employees = UploadEmployeeSerializer(employee_queryset, many=True).data
@@ -425,10 +425,8 @@ def upload_db(request):
     serialized_clock_ins = UploadEmployeeClockInSerializer(clock_in_queryset, many=True).data
     serialized_checkouts = UploadCheckoutSerializer(checkout_queryset, many=True).data
     serialized_breakdown = UploadCheckoutTipoutBreakdownSerializer(breakdown_queryset, many=True).data
-
     spreadsheet_id = SpreadSheetSerializer(SpreadSheet.objects.last()).data["database_google_id"]
     # print(spreadsheet_id)
-    print("serialized roles: ",serialized_roles)
     add_records_to_spreadsheet('Role', serialized_roles, spreadsheet_id)
     add_records_to_spreadsheet('Employee', serialized_employees, spreadsheet_id)
     add_records_to_spreadsheet('Tipout_Formula', serialized_formulas, spreadsheet_id)
