@@ -14,6 +14,7 @@ import BedtimeIcon from '@mui/icons-material/Bedtime';
 import { useTheme } from '@mui/material';
 
 const ReportsPage = () => {
+    debugger
     const theme = useTheme();
     const { stateDate, changeStateDate } = useDateContext();
     const { supportStaff, fetchAllSupportStaffClockInsByDate } = useSupportStaffContext();
@@ -69,11 +70,13 @@ const ReportsPage = () => {
 
         handleCloseReportModal();
     };
-
+    debugger
     const areAllClockedOut = supportStaffList?.length > 0 ? supportStaffList.every((support) => support.time_out !== null) : null;
     useEffect(() => {
         if (areAllClockedOut) {
             setAllClockedOut(true);
+        } else {
+            setAllClockedOut(false);
         }
     }, [supportStaffList])
 
