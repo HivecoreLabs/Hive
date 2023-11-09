@@ -8,6 +8,7 @@ import { Button, Box, Typography, Paper, IconButton, Modal, Tooltip, Grid, Table
 import { DatePicker, TimePicker } from '@mui/x-date-pickers';
 import { useDateContext } from '../../contexts/DateContext';
 import CheckoutsList from '../CheckoutsPage/CheckoutsList.jsx';
+import { useCheckoutsContext } from '../../contexts/CheckoutsContext';
 import { useSupportStaffContext } from '../../contexts/SupportStaffContext';
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import BedtimeIcon from '@mui/icons-material/Bedtime';
@@ -18,6 +19,7 @@ const ReportsPage = () => {
     const theme = useTheme();
     const { stateDate, changeStateDate } = useDateContext();
     const { supportStaff, fetchAllSupportStaffClockInsByDate } = useSupportStaffContext();
+    const { checkouts } = useCheckoutsContext();
     const [supportStaffList, setSupportStaffList] = useState([]);
     const [date, setDate] = useState(stateDate);
     const formattedDate = date.format('dddd, MMM D YYYY');
@@ -71,7 +73,7 @@ const ReportsPage = () => {
         handleCloseReportModal();
     };
     debugger
-    const areAllClockedOut = supportStaffList?.length > 0 ? supportStaffList.every((support) => support.time_out !== null) : null;
+    const areAllClockedOut = checkouts.length && supportStaffList?.length > 0 ? supportStaffList.every((support) => support.time_out !== null) : null;
     useEffect(() => {
         if (areAllClockedOut) {
             setAllClockedOut(true);
