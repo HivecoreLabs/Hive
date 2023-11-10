@@ -44,8 +44,8 @@ const ModalContextProvider = ({ children }) => {
     const [state, modalDispatch] = useReducer(modalReducer, initialState);
 
     const value = {
-        modalType,
-        modalProps,
+        modalType: state.modalType,
+        modalProps: state.modalProps,
         modalDispatch
     };
 
