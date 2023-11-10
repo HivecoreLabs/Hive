@@ -48,6 +48,7 @@ export const AuthenticationContextProvider = ({ children }) => {
                 sessionStorage.setItem('authData', JSON.stringify(authData));
                 dispatch({ type: 'LOGIN', payload: data.user });
                 // navigate('/dashboard');
+                dispatch(clearError());
                 navigate('/loading');
             } else {
                 errorDispatch(errorOccurred('Login failed. Check your username and PIN.'))
@@ -72,6 +73,7 @@ export const AuthenticationContextProvider = ({ children }) => {
                 };
                 sessionStorage.setItem('authData', JSON.stringify(authData));
                 dispatch({ type: 'LOGIN', payload: data.user });
+                dispatch(clearError());
                 navigate('/loading');
             } else {
                 console.error('Signup failed:', response.statusText);

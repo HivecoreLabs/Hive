@@ -15,14 +15,19 @@ import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import BedtimeIcon from '@mui/icons-material/Bedtime';
 import { useTheme } from '@mui/material';
 import ModalRoot from '../Modals/ModalRoot.jsx';
+import { useEmployees } from '../../contexts/EmployeesContext';
+import { useRoles } from '../../contexts/RolesContext';
+import { useSummaryContext } from '../../contexts/SummaryContext';
 
 const ReportsPage = () => {
-    debugger
     const theme = useTheme();
     const { stateDate, changeStateDate } = useDateContext();
     const { supportStaff, fetchAllSupportStaffClockInsByDate } = useSupportStaffContext();
     const { checkouts } = useCheckoutsContext();
     const { openModal, closeModal, modalDispatch } = useModalContext();
+    const { employees, readAllEmployees } = useEmployees();
+    const { roles, readAllRoles } = useRoles();
+    const { summary } = useSummaryContext();
     const [supportStaffList, setSupportStaffList] = useState([]);
     const [date, setDate] = useState(stateDate);
     const formattedDate = date.format('dddd, MMM D YYYY');
@@ -30,15 +35,43 @@ const ReportsPage = () => {
     const [showReportModal, setShowReportModal] = useState(false);
     const [dayFinalized, setDayFinalized] = useState(false);
     const [allClockedOut, setAllClockedOut] = useState(false);
+    debugger
+    console.log(roles);
+    const findEmployeeNameById = (employeeId) => {
+        const employee = employees.find((emp) => emp.id === employeeId);
+        return employee ? `${employee.first_name} ${employee.last_name}` : '';
+    };
 
-    useEffect(() => {
-        const formattedDate = stateDate.format('YYYY-MM-DD');
-        fetchAllSupportStaffClockInsByDate(formattedDate);
-    }, [stateDate]);
+    const findRoleNameById = (roleId) => {
+        const role = roles.find((r) => r.id === roleId);
+        return role ? role.role : '';
+    };
 
-    useEffect(() => {
-        setSupportStaffList(supportStaff);
-    }, [supportStaff]);
+    const summaryTable = summary && summary.am.length > 0 ?
+        (
+            <TableContainer>
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Shift</TableCell>
+                            <TableCell>Employee</TableCell>
+                            <TableCell>Role</TableCell>
+                            <TableCell>Tipout Received</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {summary.am.map((item) => (
+                            <TableRow key={item.id}>
+                                <TableCell>{item.is_am ? 'AM' : 'PM'}</TableCell>
+                                <TableCell>{findEmployeeNameById(item.employee_id)}</TableCell>
+                                <TableCell>{findRoleNameById(item.active_role_id)}</TableCell>
+                                <TableCell>{item.tipout_received}</TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        ) : null;
 
     const handleDate = (value) => {
         setDate(value);
@@ -67,25 +100,36 @@ const ReportsPage = () => {
     }
 
     const handleFinalizeDay = () => {
-        debugger
         modalDispatch(openModal('FinalizeDayModal', { dayFinalized, setDayFinalized }));
-        // setDayFinalized(true);
-
     }
 
     const handleGenerateReport = () => {
-
         handleCloseReportModal();
     };
-    debugger
-    const areAllClockedOut = checkouts.length && supportStaffList?.length > 0 ? supportStaffList.every((support) => support.time_out !== null) : null;
+
     useEffect(() => {
+        const formattedDate = stateDate.format('YYYY-MM-DD');
+        fetchAllSupportStaffClockInsByDate(formattedDate);
+    }, [stateDate]);
+
+    useEffect(() => {
+        setSupportStaffList(supportStaff);
+    }, [supportStaff]);
+
+    useEffect(() => {
+        const areAllClockedOut = checkouts.length && supportStaffList?.length > 0 ? supportStaffList.every((support) => support.time_out !== null) : null;
+
         if (areAllClockedOut) {
             setAllClockedOut(true);
         } else {
             setAllClockedOut(false);
         }
-    }, [supportStaffList])
+    }, [supportStaffList, date])
+
+    useEffect(() => {
+        readAllEmployees();
+        readAllRoles();
+    }, [])
 
     return (
         <div className="reports-page-container">
@@ -148,6 +192,9 @@ const ReportsPage = () => {
                     </TableContainer>
                 </Paper>
 
+            </div>
+            <div>
+                {summaryTable}
             </div>
             <div className='finalize-day-generate-report-buttons'>
                 {!allClockedOut ?

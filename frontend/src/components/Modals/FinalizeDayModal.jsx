@@ -6,35 +6,51 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useModalContext } from '../../contexts/ModalContext';
+import { useSummaryContext } from '../../contexts/SummaryContext';
 import { Fade } from '@mui/material';
+import { useDateContext } from '../../contexts/DateContext';
 
 const FinalizeDayModal = ({ dayFinalized, setDayFinalized }) => {
     debugger
+    const { stateDate } = useDateContext();
     const [open, setOpen] = useState(true);
     const { openModal, closeModal, modalDispatch } = useModalContext();
+    const { summary, fetchEndOfDaySummary } = useSummaryContext();
 
     const handleClose = () => {
         modalDispatch(closeModal());
     }
 
+    const handleSubmitFinalizeDay = () => {
+        setDayFinalized(true);
+        const body = {
+            date: stateDate.format('YYYY-MM-DD')
+        }
+        fetchEndOfDaySummary(body);
+        modalDispatch(closeModal());
+    }
+
+    console.log(summary);
     return (
         <Dialog
             open={open}
             onClose={handleClose}
         >
             <DialogTitle >
-                {"Use Google's location service?"}
+                Are you sure you want to finalize today's work day?
             </DialogTitle>
-            <DialogContent>
+            <DialogContent style={{ paddingBottom: '0' }}>
                 <DialogContentText >
-                    Let Google help apps determine location. This means sending anonymous
-                    location data to Google, even when no apps are running.
+                    All support staff clocked out?
+                </DialogContentText>
+                <DialogContentText >
+                    All servers checked out?
                 </DialogContentText>
             </DialogContent>
             <DialogActions>
-                <Button onClick={handleClose}>Disagree</Button>
-                <Button onClick={handleClose} autoFocus>
-                    Agree
+                <Button color='warning' onClick={handleClose}>Cancel</Button>
+                <Button onClick={handleSubmitFinalizeDay} autoFocus>
+                    Finalize Day
                 </Button>
             </DialogActions>
         </Dialog>

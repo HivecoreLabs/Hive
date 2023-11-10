@@ -3,7 +3,6 @@ import { useModalContext } from "../../contexts/ModalContext";
 import FinalizeDayModal from "./FinalizeDayModal.jsx";
 
 const ModalRoot = () => {
-    debugger
 
     const { modalType, modalProps } = useModalContext();
 

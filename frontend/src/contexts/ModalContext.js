@@ -26,7 +26,6 @@ const initialState = {
 };
 
 const modalReducer = (state = initialState, action) => {
-    debugger
     switch (action.type) {
         case 'OPEN_MODAL':
             return {

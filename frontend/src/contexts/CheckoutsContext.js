@@ -123,7 +123,7 @@ const CheckoutsContextProvider = ({ children }) => {
             const data = await response.json();
             dispatch(receiveOneCheckout(data));
         } else {
-            console.error('Could not create checkout', error);
+            console.error('Could not create checkout', response.statusText);
         };
         return response;
     };

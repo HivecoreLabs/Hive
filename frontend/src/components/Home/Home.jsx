@@ -8,7 +8,7 @@ import { useAuth } from '../../contexts/AuthenticationContext';
 import { useError } from '../../contexts/ErrorContext';
 import { useNavigate } from 'react-router-dom';
 
-function Home() {
+const Home = () => {
     const navigate = useNavigate()
     const newUserButtonRef = useRef(null);
     const theme = useTheme();
@@ -26,8 +26,14 @@ function Home() {
         marginBottom: '10px',
     })
 
-    const handleModalOpen = () => setIsModalOpen(true);
-    const handleModalClose = () => setIsModalOpen(false);
+    const handleModalOpen = () => {
+        if (error) errorDispatch(clearError());
+        setIsModalOpen(true);
+    }
+    const handleModalClose = () => {
+        if (error) errorDispatch(clearError());
+        setIsModalOpen(false);
+    }
 
     const handleUsername = (e) => {
         if (error) errorDispatch(clearError());
