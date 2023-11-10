@@ -1295,6 +1295,7 @@ Certainly, here's the complete API documentation in Markdown format:
   "net_sales": 5000,
   "cash_owed": 100,
   "is_am_shift": true,
+  "is_bar": true,
   "tipout_day": "2023-11-05",
   "employee_id": 1
 }
@@ -1373,6 +1374,7 @@ Certainly, here's the complete API documentation in Markdown format:
     "Ensure that there are no more than 2 decimal places."
   ],
   "is_am_shift": ["This field is required.", "Must be a valid boolean."],
+  "is_bar": ["This field is required.", "Must be a valid boolean."],
   "date": [
     "This field is required.",
     "Date has wrong format. Use one of these formats instead: YYYY-MM-DD."
