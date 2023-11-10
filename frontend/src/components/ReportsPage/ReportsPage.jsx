@@ -10,9 +10,11 @@ import { useDateContext } from '../../contexts/DateContext';
 import CheckoutsList from '../CheckoutsPage/CheckoutsList.jsx';
 import { useCheckoutsContext } from '../../contexts/CheckoutsContext';
 import { useSupportStaffContext } from '../../contexts/SupportStaffContext';
+import { useModalContext } from '../../contexts/ModalContext';
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import BedtimeIcon from '@mui/icons-material/Bedtime';
 import { useTheme } from '@mui/material';
+import ModalRoot from '../Modals/ModalRoot.jsx';
 
 const ReportsPage = () => {
     debugger
@@ -20,6 +22,7 @@ const ReportsPage = () => {
     const { stateDate, changeStateDate } = useDateContext();
     const { supportStaff, fetchAllSupportStaffClockInsByDate } = useSupportStaffContext();
     const { checkouts } = useCheckoutsContext();
+    const { openModal, closeModal, modalDispatch } = useModalContext();
     const [supportStaffList, setSupportStaffList] = useState([]);
     const [date, setDate] = useState(stateDate);
     const formattedDate = date.format('dddd, MMM D YYYY');
@@ -64,7 +67,9 @@ const ReportsPage = () => {
     }
 
     const handleFinalizeDay = () => {
-        setDayFinalized(true);
+        debugger
+        modalDispatch(openModal('FinalizeDayModal', { dayFinalized, setDayFinalized }));
+        // setDayFinalized(true);
 
     }
 
@@ -254,7 +259,7 @@ const ReportsPage = () => {
                     </Button>
                 </Paper>
             </Modal>
-
+            <ModalRoot />
         </div>
     )
 };

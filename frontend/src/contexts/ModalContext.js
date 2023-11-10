@@ -26,7 +26,7 @@ const initialState = {
 };
 
 const modalReducer = (state = initialState, action) => {
-
+    debugger
     switch (action.type) {
         case 'OPEN_MODAL':
             return {
@@ -46,7 +46,9 @@ const ModalContextProvider = ({ children }) => {
     const value = {
         modalType: state.modalType,
         modalProps: state.modalProps,
-        modalDispatch
+        modalDispatch,
+        openModal,
+        closeModal
     };
 
     return (
