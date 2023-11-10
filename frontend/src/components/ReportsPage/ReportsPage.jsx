@@ -152,7 +152,6 @@ const ReportsPage = () => {
                                 <Button
                                     variant="contained"
                                     color="primary"
-                                    onClick={handleFinalizeDay}
                                     style={{ marginTop: '20px' }}
                                     disabled={!allClockedOut}
                                 >
@@ -178,7 +177,6 @@ const ReportsPage = () => {
                                 <Button
                                     variant="contained"
                                     color="primary"
-                                    onClick={handleOpenReportModal}
                                     style={{ marginTop: '20px' }}
                                     disabled={!dayFinalized}
                                 >
