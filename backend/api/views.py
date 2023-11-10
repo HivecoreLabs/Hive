@@ -352,7 +352,7 @@ class CheckOutViewSet(viewsets.ViewSet):
         checkout_serializer = CheckoutSerializer(data=request.data)
         checkout_serializer.is_valid(raise_exception=True)
 
-        support_employees = Employee_Clock_In.objects.filter(date=request.data["date"], is_am=request.data['is_am_shift'])
+        support_employees = Employee_Clock_In.objects.filter(date=request.data["date"], is_am=request.data['is_am_shift'], active_role_id__is_bar=request.data['is_bar'])
 
         grouped_by_role = group_by_active_role(support_employees)
 
