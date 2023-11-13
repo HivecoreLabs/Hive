@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import LoadingAM from "./LoadingAM.jsx";
 import LoadingPM from "./LoadingPM.jsx";
 import { useNavigate } from 'react-router-dom';
@@ -10,9 +10,13 @@ const Loading = () => {
 
     const loadingScreen = theme.isAMShift ? <LoadingAM /> : <LoadingPM />
 
-    setTimeout(() => {
-        navigate('/dashboard')
-    }, 2000);
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            navigate('/dashboard');
+        }, 2000);
+
+        return () => clearTimeout(timer);
+    }, []);
 
     return (
         <>

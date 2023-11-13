@@ -7,14 +7,19 @@ import SignupModal from '../Modals/SignupModal.jsx';
 import { useAuth } from '../../contexts/AuthenticationContext';
 import { useError } from '../../contexts/ErrorContext';
 import { useNavigate } from 'react-router-dom';
+import { useEmployees } from '../../contexts/EmployeesContext';
+import { useRoles } from '../../contexts/RolesContext';
+import { useCheckoutsContext } from '../../contexts/CheckoutsContext';
 
-function Home() {
+const Home = () => {
     const navigate = useNavigate()
     const newUserButtonRef = useRef(null);
     const theme = useTheme();
     const { isAuthenticated, user, login, logout } = useAuth();
     const { error, errorMessage, clearError, errorDispatch } = useError();
-
+    const { employees } = useEmployees();
+    const { roles } = useRoles();
+    const { checkouts } = useCheckoutsContext();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -26,8 +31,14 @@ function Home() {
         marginBottom: '10px',
     })
 
-    const handleModalOpen = () => setIsModalOpen(true);
-    const handleModalClose = () => setIsModalOpen(false);
+    const handleModalOpen = () => {
+        if (error) errorDispatch(clearError());
+        setIsModalOpen(true);
+    }
+    const handleModalClose = () => {
+        if (error) errorDispatch(clearError());
+        setIsModalOpen(false);
+    }
 
     const handleUsername = (e) => {
         if (error) errorDispatch(clearError());

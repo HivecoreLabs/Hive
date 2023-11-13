@@ -2,6 +2,10 @@ import React, { createContext, useContext, useState, useEffect, useReducer } fro
 import customFetch from '../utils/customFetch';
 import { useNavigate } from 'react-router-dom';
 import { useError } from './ErrorContext';
+import { useRoles } from './RolesContext';
+import { useEmployees } from './EmployeesContext';
+import { useSupportStaffContext } from './SupportStaffContext';
+import { useCheckoutsContext } from './CheckoutsContext';
 
 const AuthenticationContext = createContext();
 export const useAuth = () => useContext(AuthenticationContext);
@@ -30,6 +34,11 @@ const authReducer = (state = initialState, action) => {
 
 export const AuthenticationContextProvider = ({ children }) => {
     const { error, errorOccurred, clearError, errorDispatch } = useError();
+    const { clearRolesState } = useRoles();
+    const { resetEmployee } = useEmployees();
+    const { clearSupportStaff } = useSupportStaffContext();
+    const { clearCheckouts } = useCheckoutsContext();
+
     const navigate = useNavigate();
     const [state, dispatch] = useReducer(authReducer, initialState);
 
@@ -48,6 +57,7 @@ export const AuthenticationContextProvider = ({ children }) => {
                 sessionStorage.setItem('authData', JSON.stringify(authData));
                 dispatch({ type: 'LOGIN', payload: data.user });
                 // navigate('/dashboard');
+                dispatch(clearError());
                 navigate('/loading');
             } else {
                 errorDispatch(errorOccurred('Login failed. Check your username and PIN.'))
@@ -72,6 +82,7 @@ export const AuthenticationContextProvider = ({ children }) => {
                 };
                 sessionStorage.setItem('authData', JSON.stringify(authData));
                 dispatch({ type: 'LOGIN', payload: data.user });
+                dispatch(clearError());
                 navigate('/loading');
             } else {
                 console.error('Signup failed:', response.statusText);
@@ -85,6 +96,10 @@ export const AuthenticationContextProvider = ({ children }) => {
     const logout = () => {
         sessionStorage.clear();
         dispatch({ type: "LOGOUT" });
+        clearRolesState();
+        resetEmployee();
+        clearSupportStaff();
+        clearCheckouts();
         navigate("/logout");
     };
 
