@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { DatePicker, TimePicker } from '@mui/x-date-pickers';
 import {
     Paper,
@@ -17,6 +17,7 @@ import SupportStaffListItem from './SupportStaffListItem.jsx';
 
 const SupportStaffList = () => {
     const { stateDate } = useDateContext();
+    const { clearSupportStaff } = useSupportStaffContext();
     const { supportStaff, fetchAllSupportStaffClockIns, fetchAllSupportStaffClockInsByDate } = useSupportStaffContext();
     const sortedSupportStaff = [...supportStaff].sort((a, b) => {
         const timeA = new Date(a.time_in);
@@ -29,6 +30,10 @@ const SupportStaffList = () => {
             return <SupportStaffListItem supportEntry={supportEntry} key={supportEntry.id} />
         })
     ) : null;
+
+    useLayoutEffect(() => {
+        clearSupportStaff();
+    }, [])
 
     useEffect(() => {
         const formattedDate = stateDate.format('YYYY-MM-DD');

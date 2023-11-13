@@ -158,7 +158,9 @@ const MiniDrawer = () => {
     const handleDrawerOpen = () => setOpen(true);
     const handleDrawerClose = () => setOpen(false);
 
-    const handleLogout = () => logout();
+    const handleLogout = () => {
+        logout();
+    }
 
     const navItems = [
         { text: 'Dashboard', icon: <Dashboard color='quaternary' fontSize='medium' />, path: '/dashboard' },

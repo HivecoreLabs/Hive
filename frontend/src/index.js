@@ -15,6 +15,8 @@ import { ErrorContextProvider } from './contexts/ErrorContext.js';
 import { SupportStaffContextProvider } from './contexts/SupportStaffContext.js';
 import CheckoutsContextProvider from './contexts/CheckoutsContext.js';
 import DateContextProvider from './contexts/DateContext.js';
+import ModalContextProvider from './contexts/ModalContext.js';
+import SummaryContextProvider from './contexts/SummaryContext.js';
 // import ThemeContextProvider from './contexts/ThemeContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -29,13 +31,17 @@ root.render(
                         <EmployeesProvider>
                             <SupportStaffContextProvider>
                                 <CheckoutsContextProvider>
-                                    <AuthenticationContextProvider>
-                                        <DateContextProvider>
-                                            <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                                <App />
-                                            </LocalizationProvider>
-                                        </DateContextProvider>
-                                    </AuthenticationContextProvider>
+                                    <SummaryContextProvider>
+                                        <AuthenticationContextProvider>
+                                            <DateContextProvider>
+                                                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                                    <ModalContextProvider>
+                                                        <App />
+                                                    </ModalContextProvider>
+                                                </LocalizationProvider>
+                                            </DateContextProvider>
+                                        </AuthenticationContextProvider>
+                                    </SummaryContextProvider>
                                 </CheckoutsContextProvider>
                             </SupportStaffContextProvider>
                         </EmployeesProvider>
