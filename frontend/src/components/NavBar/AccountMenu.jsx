@@ -18,10 +18,10 @@ import { useTheme } from '@emotion/react';
 // import { useThemeContext } from '../../contexts/ThemeContext';
 
 const AccountMenu = () => {
+    const navigate = useNavigate();
     const { user, logout } = useAuth();
     // const { toggleTheme } = useThemeContext();
     const theme = useTheme()
-    const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
 
@@ -38,6 +38,7 @@ const AccountMenu = () => {
 
     const handleLogout = () => {
         logout();
+        // navigate('/logout');
     }
 
     return (

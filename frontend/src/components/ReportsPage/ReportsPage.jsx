@@ -35,8 +35,7 @@ const ReportsPage = () => {
     const [showReportModal, setShowReportModal] = useState(false);
     const [dayFinalized, setDayFinalized] = useState(false);
     const [allClockedOut, setAllClockedOut] = useState(false);
-    debugger
-    console.log(roles);
+
     const findEmployeeNameById = (employeeId) => {
         const employee = employees.find((emp) => emp.id === employeeId);
         return employee ? `${employee.first_name} ${employee.last_name}` : '';

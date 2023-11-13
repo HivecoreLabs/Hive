@@ -7,6 +7,9 @@ import SignupModal from '../Modals/SignupModal.jsx';
 import { useAuth } from '../../contexts/AuthenticationContext';
 import { useError } from '../../contexts/ErrorContext';
 import { useNavigate } from 'react-router-dom';
+import { useEmployees } from '../../contexts/EmployeesContext';
+import { useRoles } from '../../contexts/RolesContext';
+import { useCheckoutsContext } from '../../contexts/CheckoutsContext';
 
 const Home = () => {
     const navigate = useNavigate()
@@ -14,7 +17,9 @@ const Home = () => {
     const theme = useTheme();
     const { isAuthenticated, user, login, logout } = useAuth();
     const { error, errorMessage, clearError, errorDispatch } = useError();
-
+    const { employees } = useEmployees();
+    const { roles } = useRoles();
+    const { checkouts } = useCheckoutsContext();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');

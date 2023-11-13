@@ -11,7 +11,6 @@ import { Fade } from '@mui/material';
 import { useDateContext } from '../../contexts/DateContext';
 
 const FinalizeDayModal = ({ dayFinalized, setDayFinalized }) => {
-    debugger
     const { stateDate } = useDateContext();
     const [open, setOpen] = useState(true);
     const { openModal, closeModal, modalDispatch } = useModalContext();
@@ -30,7 +29,6 @@ const FinalizeDayModal = ({ dayFinalized, setDayFinalized }) => {
         modalDispatch(closeModal());
     }
 
-    console.log(summary);
     return (
         <Dialog
             open={open}

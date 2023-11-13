@@ -21,7 +21,6 @@ const initialState = {
 };
 
 const errorReducer = (state = initialState, action) => {
-    debugger
     switch (action.type) {
         case ERROR_OCCURRED:
             return {

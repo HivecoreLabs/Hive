@@ -33,7 +33,6 @@ const SummaryContextProvider = ({ children }) => {
     const [state, dispatch] = useReducer(summaryReducer, initialState);
 
     const fetchEndOfDaySummary = async (date) => {
-        debugger
         const response = await customFetch('http://localhost:8000/api/end-of-day/', {
             method: 'POST',
             body: date
