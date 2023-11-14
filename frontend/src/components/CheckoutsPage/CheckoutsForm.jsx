@@ -35,7 +35,7 @@ const CheckoutsForm = () => {
     const [date, setDate] = useState(stateDate);
     const [isAMShift, setIsAMShift] = useState(theme.isAMShift)
     const [patio, setPatio] = useState(false);
-    const [bar, setBar] = useState(false);
+    // const [bar, setBar] = useState(false);
 
     const handleServer = (e) => setServer(e.target.value);
     const handleNetSales = (e) => {
@@ -53,9 +53,9 @@ const CheckoutsForm = () => {
     const handlePatio = (e) => {
         setPatio(e.target.value);
     }
-    const handleBar = (e) => {
-        setBar(e.target.value);
-    }
+    // const handleBar = (e) => {
+    //     setBar(e.target.value);
+    // }
 
     const handleResetFields = () => {
         setServer('');
@@ -63,7 +63,7 @@ const CheckoutsForm = () => {
         setCashOwed('');
         setDate(stateDate);
         setPatio(false);
-        setBar(false);
+        // setBar(false);
         setIsAMShift(theme.isAMShift);
     }
 
@@ -141,18 +141,19 @@ const CheckoutsForm = () => {
                                         />
                                     </FormControl>
                                 </Grid>
-                                <Grid item sm={4}>
+                                <Grid item sm={5}>
                                     <div style={{ display: 'flex', flexDirection: 'column' }}>
                                         <DatePicker
-                                            sx={{ width: '100%' }}
+                                            // sx={{ width: '100%' }}
                                             label="Date"
                                             onChange={handleDate}
                                             value={date}
+                                            disableFuture={true}
                                         />
                                         {/* <Button sx={{ marginTop: '15px', width: '75%' }} variant='outlined' color='warning' onClick={handleResetFields}>Reset Fields</Button> */}
                                     </div>
                                 </Grid>
-                                <Grid item sm={1.5} sx={{ marginLeft: '20px' }} >
+                                <Grid item sm={4} sx={{ display: 'flex', justifyContent: 'space-around' }}>
                                     <FormControl>
                                         <FormLabel id="shift-buttons-group">Shift</FormLabel>
                                         <RadioGroup
@@ -164,8 +165,6 @@ const CheckoutsForm = () => {
                                             <FormControlLabel value={false} control={<Radio size='small' />} label="PM" />
                                         </RadioGroup>
                                     </FormControl>
-                                </Grid>
-                                <Grid item sm={1.5}  >
                                     <FormControl >
                                         <FormLabel id="patio-buttons-group">Patio</FormLabel>
                                         <RadioGroup
@@ -178,7 +177,20 @@ const CheckoutsForm = () => {
                                         </RadioGroup>
                                     </FormControl>
                                 </Grid>
-                                <Grid item sm={1.5} >
+                                {/* <Grid item sm={2} >
+                                    <FormControl >
+                                        <FormLabel id="patio-buttons-group">Patio</FormLabel>
+                                        <RadioGroup
+                                            value={patio}
+                                            name="patio-buttons-group"
+                                            onChange={handlePatio}
+                                        >
+                                            <FormControlLabel value={false} control={<Radio size='small' />} label="no" />
+                                            <FormControlLabel value={true} control={<Radio size='small' />} label="yes" />
+                                        </RadioGroup>
+                                    </FormControl>
+                                </Grid> */}
+                                {/* <Grid item sm={1.5} >
                                     <FormControl>
                                         <FormLabel id="bar-buttons-group">Bar</FormLabel>
                                         <RadioGroup
@@ -190,8 +202,8 @@ const CheckoutsForm = () => {
                                             <FormControlLabel value={true} control={<Radio size='small' />} label="yes" />
                                         </RadioGroup>
                                     </FormControl>
-                                </Grid>
-                                <Grid item sm={3.1} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }} >
+                                </Grid> */}
+                                <Grid item sm={3} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }} >
                                     <Button sx={{ marginBottom: '14px' }} variant='outlined' color='warning' onClick={handleResetFields}>Reset Fields</Button>
                                     <Button sx={{ width: '75%' }} variant='contained' style={{ color: theme.palette.primary.contrastText }} type='submit'>Submit</Button>
                                 </Grid>
