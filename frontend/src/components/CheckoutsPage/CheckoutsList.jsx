@@ -57,19 +57,6 @@ export const CheckoutsList = () => {
         };
     }) : <Typography variant='h9' sx={{ textAlign: 'center', display: 'inline-block', width: '100%' }} color={theme.palette.primary.light}>no PM servers have checked out yet</Typography>
 
-    // const checkoutsPMList = checkoutsPM?.map((checkout) => {
-    //     const employee = employees.length > 0 ? employees.find((employee) => checkout.employee_id === employee.id) : null;
-    //     const value = {
-    //         checkoutObject: checkout,
-    //         id: employee.id,
-    //         firstName: employee.first_name,
-    //         lastName: employee.last_name
-    //     }
-    //     return (
-    //         <CheckoutsListItem key={checkout.id} checkout={value} />
-    //     )
-    // }) : <Typography variant='h9' sx={{ textAlign: 'center', display: 'inline-block', width: '100%' }} color={theme.palette.primary.light}>no PM servers have checked out yet</Typography>
-
     useEffect(() => {
         const formattedDate = stateDate.format('YYYY-MM-DD');
         fetchAllCheckouts(formattedDate);

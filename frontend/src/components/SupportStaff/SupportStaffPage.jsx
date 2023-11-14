@@ -22,15 +22,20 @@ const SupportStaffPage = () => {
 
     return (
         <div className='support-staff-page-container'>
-            <Typography variant="h6" mb='20px'>
-                Clocking In/Out for: {formattedDate}
-                <Button variant='outlined' onClick={handleOpenDateModal} style={{ marginLeft: '10px', fontSize: '16px', textDecoration: 'underline', cursor: 'pointer' }}>
-                    <Typography color={theme.palette.secondary.dark}>Change Date?</Typography>
+            <div style={{ display: 'flex' }}>
+                <Typography variant="h6" mb='20px'>
+                    Clocking In/Out for: {formattedDate}
+                    <Button variant='outlined' onClick={handleOpenDateModal} style={{ marginLeft: '10px', fontSize: '16px', textDecoration: 'underline', cursor: 'pointer' }}>
+                        Change Date?
+                    </Button>
+                </Typography>
+                <Button sx={{ position: 'absolute', right: '0', top: '0', width: '180px', }} component={Link} to='/checkouts' variant='contained'>
+                    Go To Checkouts
                 </Button>
-            </Typography>
+            </div>
             <SupportStaffForm />
             <SupportStaffList />
-            <Button sx={{ width: '200px', marginTop: '30px' }} component={Link} to='/checkouts' variant='contained'>Go To Checkouts</Button>
+            {/* <Button sx={{ width: '200px', marginTop: '30px' }} component={Link} to='/checkouts' variant='contained'>Go To Checkouts</Button> */}
             <ModalRoot />
         </div>
     )
