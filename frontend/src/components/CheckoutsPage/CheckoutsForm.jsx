@@ -61,6 +61,9 @@ const CheckoutsForm = () => {
         setServer('');
         setNetSales('');
         setCashOwed('');
+        setDate(stateDate);
+        setPatio(false);
+        setBar(false);
         setIsAMShift(theme.isAMShift);
     }
 
@@ -76,11 +79,12 @@ const CheckoutsForm = () => {
             is_patio: patio
         };
 
+        handleResetFields();
         createCheckout(newCheckout);
     };
 
     useEffect(() => {
-        readSingleRole(1);
+        readSingleRole(12);
     }, [])
 
     useEffect(() => {

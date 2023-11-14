@@ -9,6 +9,7 @@ const RECEIVE_ONE_CHECKOUT = 'checkouts/RECEIVE_ONE_CHECKOUT';
 const RECEIVE_ALL_CHECKOUTS = 'checkouts/RECEIVE_ALL_CHECKOUTS';
 const UPDATE_CHECKOUT = 'checkouts/UPDATE_CHECKOUT';
 const DELETE_CHECKOUT = 'checkouts/DELETE_CHECKOUT';
+const RESET_CHECKOUTS = 'checkouts/RESET_CHECKOUTS';
 
 const receiveOneCheckout = (payload) => {
     return {
@@ -38,6 +39,12 @@ const deleteCheckout = (checkoutId) => {
         checkoutId
     };
 };
+
+const resetCheckouts = () => {
+    return {
+        type: RESET_CHECKOUTS
+    }
+}
 
 const initialState = {
     checkouts: [],
@@ -81,6 +88,8 @@ const checkoutsReducer = (state = initialState, action) => {
                 ...state,
                 checkouts: updatedcheckouts
             };
+        case RESET_CHECKOUTS:
+            return state;
         default:
             return state;
     };
@@ -123,7 +132,7 @@ const CheckoutsContextProvider = ({ children }) => {
             const data = await response.json();
             dispatch(receiveOneCheckout(data));
         } else {
-            console.error('Could not create checkout', error);
+            console.error('Could not create checkout', response.statusText);
         };
         return response;
     };
@@ -157,12 +166,17 @@ const CheckoutsContextProvider = ({ children }) => {
         return response;
     };
 
+    const clearCheckouts = () => {
+        dispatch(resetCheckouts());
+    }
+
     const value = {
         checkouts: state.checkouts,
         fetchAllCheckouts,
         createCheckout,
         updateCheckoutFetch,
-        deleteCheckoutFetch
+        deleteCheckoutFetch,
+        clearCheckouts
     };
 
     return (

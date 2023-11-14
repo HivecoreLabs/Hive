@@ -12,6 +12,7 @@ const RECEIVE_ONE_SUPPORT_STAFF = 'support/RECEIVE_ONE_SUPPORT_STAFF';
 const RECEIVE_ALL_SUPPORT_STAFF = 'support/RECEIVE_ALL_SUPPORT_STAFF';
 const UPDATE_SUPPORT_STAFF = 'support/UPDATE_SUPPORT_STAFF';
 const DELETE_SUPPORT_STAFF = 'support/DELETE_SUPPORT_STAFF';
+const RESET_SUPPORT_STAFF = 'support/RESET_SUPPORT_STAFF';
 
 const receiveOneSupportStaff = (payload) => {
     return {
@@ -41,6 +42,12 @@ const deleteSupportStaff = (clockInId) => {
         clockInId
     };
 };
+
+const resetSupportStaff = () => {
+    return {
+        type: RESET_SUPPORT_STAFF,
+    }
+}
 
 
 const initialState = {
@@ -76,6 +83,8 @@ const supportStaffReducer = (state = initialState, action) => {
                 ...state,
                 supportStaff: updatedSupportStaff
             };
+        case RESET_SUPPORT_STAFF:
+            return state;
         default:
             return state;
     };
@@ -149,13 +158,18 @@ export const SupportStaffContextProvider = ({ children }) => {
         return response;
     };
 
+    const clearSupportStaff = () => {
+        dispatch(resetSupportStaff());
+    }
+
     const value = {
         supportStaff: state.supportStaff,
         fetchAllSupportStaffClockIns,
         fetchAllSupportStaffClockInsByDate,
         createSupportStaffClockIn,
         updateSupportStaffClockIn,
-        deleteSupportStaffClockIn
+        deleteSupportStaffClockIn,
+        clearSupportStaff
     };
 
     return (

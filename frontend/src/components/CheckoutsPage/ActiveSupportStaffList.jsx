@@ -80,7 +80,6 @@ const ActiveSupportStaffList = () => {
                             ))}
                         </TableBody>
                     </Table>
-
                 </TableContainer>
                 <Button
                     component={Link}

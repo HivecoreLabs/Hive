@@ -13,10 +13,12 @@ import TextField from '@mui/material/TextField';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { useAuth } from '../../contexts/AuthenticationContext';
+import { useError } from '../../contexts/ErrorContext';
 import './SignupModal.css';
 
 function SignupModal({ open, closeModal }) {
     const { signup } = useAuth();
+    const { error, errorMessage, clearError, errorDispatch } = useError();
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -38,7 +40,9 @@ function SignupModal({ open, closeModal }) {
             return;
         }
         signup(username, password);
-        closeModal();
+        setTimeout(() => {
+            closeModal();
+        }, 500);
     };
 
     const handleUsername = (e) => setUsername(e.target.value);

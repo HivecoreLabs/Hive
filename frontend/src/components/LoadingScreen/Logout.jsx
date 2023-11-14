@@ -1,27 +1,52 @@
+// import React from "react";
+// import LoadingAM from "./LoadingAM.jsx";
+// import LoadingPM from "./LoadingPM.jsx";
+// import { useNavigate } from 'react-router-dom';
+// import { useTheme } from "@emotion/react";
+
+// const Logout = () => {
+//     const navigate = useNavigate()
+//     const theme = useTheme();
+
+//     const loadingScreen = theme.isAMShift ? <LoadingAM></LoadingAM> : <LoadingPM></LoadingPM>
+
+//     setTimeout(() => {
+//         navigate('/')
+//     }, 2000);
+
+//     return (
+//         <>
+//             {loadingScreen}
+//         </>
+//     )
+// };
+
+// export default Logout;
 import React, { useEffect } from "react";
 import LoadingAM from "./LoadingAM.jsx";
 import LoadingPM from "./LoadingPM.jsx";
-import HiveRoundedIcon from '@mui/icons-material/HiveRounded';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useTheme } from "@emotion/react";
-import { useAuth } from "../../contexts/AuthenticationContext";
 
 const Logout = () => {
-    const { isAuthenticated } = useAuth();
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const theme = useTheme();
 
-    const loadingScreen = theme.isAmShift ? <LoadingAM></LoadingAM> : <LoadingPM></LoadingPM>
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            navigate('/');
+        }, 2000);
 
-    setTimeout(() => {
-        navigate('/')
-    }, 2000);
+        return () => clearTimeout(timer);
+    }, []);
+
+    const loadingScreen = theme.isAMShift ? <LoadingAM /> : <LoadingPM />;
 
     return (
         <>
             {loadingScreen}
         </>
-    )
+    );
 };
 
 export default Logout;

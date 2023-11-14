@@ -6,6 +6,7 @@ import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Typography from '@mui/material/Typography';
 import Tooltip from '@mui/material/Tooltip';
 import PersonAdd from '@mui/icons-material/PersonAdd';
@@ -14,11 +15,13 @@ import Logout from '@mui/icons-material/Logout';
 import { useAuth } from '../../contexts/AuthenticationContext';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '@emotion/react';
+// import { useThemeContext } from '../../contexts/ThemeContext';
 
-export default function AccountMenu() {
-    const { user, logout } = useAuth();
-    const theme = useTheme()
+const AccountMenu = () => {
     const navigate = useNavigate();
+    const { user, logout } = useAuth();
+    // const { toggleTheme } = useThemeContext();
+    const theme = useTheme()
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
 
@@ -35,6 +38,7 @@ export default function AccountMenu() {
 
     const handleLogout = () => {
         logout();
+        // navigate('/logout');
     }
 
     return (
@@ -103,6 +107,12 @@ export default function AccountMenu() {
                     </ListItemIcon>
                     Add another account
                 </MenuItem>
+                <MenuItem >
+                    <ListItemIcon>
+                        <Brightness4Icon fontSize='small' />
+                    </ListItemIcon>
+                    Toggle Theme
+                </MenuItem>
                 {/* <MenuItem onClick={handleClose}>
                     <ListItemIcon>
                         <Settings fontSize="small" />
@@ -118,4 +128,6 @@ export default function AccountMenu() {
             </Menu>
         </>
     );
-}
+};
+
+export default AccountMenu;

@@ -158,7 +158,9 @@ const MiniDrawer = () => {
     const handleDrawerOpen = () => setOpen(true);
     const handleDrawerClose = () => setOpen(false);
 
-    const handleLogout = () => logout();
+    const handleLogout = () => {
+        logout();
+    }
 
     const navItems = [
         { text: 'Dashboard', icon: <Dashboard color='quaternary' fontSize='medium' />, path: '/dashboard' },
@@ -169,7 +171,7 @@ const MiniDrawer = () => {
         // { text: 'Settings', icon: <Settings color='quaternary' />, path: '/settings' },
     ];
 
-    const currentPageTitle = navItems.find((item) => item.path === location.pathname)?.text || 'Unknown Page';
+    const currentPageTitle = navItems.find((item) => item.path === location.pathname)?.text || 'Employees';
 
     useEffect(() => {
         const handleClickOutside = (e) => {

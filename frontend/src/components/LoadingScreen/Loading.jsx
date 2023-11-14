@@ -1,21 +1,22 @@
 import React, { useEffect } from "react";
 import LoadingAM from "./LoadingAM.jsx";
 import LoadingPM from "./LoadingPM.jsx";
-import HiveRoundedIcon from '@mui/icons-material/HiveRounded';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useTheme } from "@emotion/react";
-import { useAuth } from "../../contexts/AuthenticationContext";
 
 const Loading = () => {
-    const { isAuthenticated } = useAuth();
-    const navigate = useNavigate()
     const theme = useTheme();
+    const navigate = useNavigate()
 
-    const loadingScreen = theme.isAmShift ? <LoadingAM></LoadingAM> : <LoadingPM></LoadingPM>
+    const loadingScreen = theme.isAMShift ? <LoadingAM /> : <LoadingPM />
 
-    setTimeout(() => {
-        navigate('/dashboard')
-    }, 2000);
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            navigate('/dashboard');
+        }, 2000);
+
+        return () => clearTimeout(timer);
+    }, []);
 
     return (
         <>
