@@ -42,13 +42,13 @@ const ChangeDateModal = () => {
                         <IconButton
                             color='inherit'
                             onClick={handleClose}
-                            sx={{ float: 'right', position: 'relative', left: '13px' }}
+                            sx={{ position: 'relative', left: '13px' }}
                         >
                             <CloseIcon />
                         </IconButton>
                     </Typography>
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
                     <DatePicker
                         value={date}
                         onChange={handleDate}
@@ -56,11 +56,11 @@ const ChangeDateModal = () => {
                     // slotProps={{ textField: { size: 'small' } }}
 
                     />
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginLeft: '20px' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'space-between', marginLeft: '20px' }}>
                         <Button
                             variant='outlined'
                             onClick={handleChangeToday}
-                            style={{ marginRight: '10px', height: '100%' }}
+                            style={{ height: '100%', marginBottom: '10px' }}
                         >
                             Set to Today
                         </Button>
@@ -68,9 +68,8 @@ const ChangeDateModal = () => {
                             variant='contained'
                             onClick={handleChangeDate}
                             style={{ height: '100%' }}
-                        // style={{ marginTop: '17px' }}
                         >
-                            Change Date
+                            Confirm
                         </Button>
                     </div>
                 </div>
