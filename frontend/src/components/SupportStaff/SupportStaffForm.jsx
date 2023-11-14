@@ -74,28 +74,6 @@ const SupportStaffForm = () => {
         ))
     ) : null;
 
-    // const transformRolesForSelect = (roles) => {
-    //     return roles.map((role) => ({
-    //         id: role.id,
-    //         role: role.role,
-    //     }));
-    // }
-    // const rolesList = roles.length > 0 ? (
-    //     transformRolesForSelect(roles).map((role, idx) => (
-    //         <MenuItem key={idx} value={role}>
-    //             {role.role}
-    //         </MenuItem>
-    //     ))
-    // ) : null;
-
-    // const rolesList = roles.length > 0 ? (
-    //     roles.map((role, idx) => (
-    //         <MenuItem key={idx} value={role}>
-    //             {role.role}
-    //         </MenuItem>
-    //     ))
-    // ) : null;
-
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -137,95 +115,93 @@ const SupportStaffForm = () => {
     return (
         <div>
             <div className='support-staff-form-container'>
-                {[...Array(1)].map((_, index) => (
-                    <Paper elevation={2} style={{ padding: '20px', marginBottom: '10px', width: '600px', borderRadius: '8px' }} key={index}>
-                        <Typography variant="h5" align="center" mb='20px' fontWeight='bold'>
-                            Add Support Staff Clock-In
-                        </Typography>
-                        <form onSubmit={handleSubmit}>
-                            <Grid container spacing={2}>
-                                <Grid item sm={6}>
-                                    <TextField
-                                        select
-                                        fullWidth
-                                        label="Employee"
-                                        variant="outlined"
-                                        value={employee}
-                                        onChange={handleEmployee}
-                                        required
-                                    >
-                                        <div></div>
-                                        {employeesList}
-                                    </TextField>
-                                </Grid>
-                                <Grid item sm={6}>
-                                    <TextField
-                                        select
-                                        fullWidth
-                                        label="Current Role"
-                                        variant="outlined"
-                                        value={role}
-                                        onChange={handleRole}
-                                        disabled={employeeSelected ? false : true}
-                                        required
-                                    >
-                                        <div></div>
-                                        {employeeRoleList}
-                                    </TextField>
-                                </Grid>
-                                <Grid item sm={6}>
-                                    <DatePicker
-                                        sx={{ width: '100%' }}
-                                        label="Date"
-                                        onChange={handleDate}
-                                        // value={dayjs(date)}
-                                        value={date}
-                                    />
-                                </Grid>
-                                <Grid item sm={3}>
-                                    <TimePicker
-                                        label="Time In"
-                                        value={timeIn}
-                                        onChange={handleTimeIn}
-                                    />
-                                </Grid>
-                                <Grid item sm={3}>
-                                    <TimePicker
-                                        label="Time Out"
-                                        value={timeOut}
-                                        onChange={handleTimeOut}
-                                    />
-                                </Grid>
-                                <Grid item sm={4}>
-                                    <Button variant='outlined' color='warning' onClick={handleResetFields}>Reset Fields</Button>
-                                </Grid>
-                                <Grid item sm={6} sx={{ display: 'flex' }}>
-                                    <FormControlLabel
-                                        control={
-                                            <Checkbox
-                                                checked={isAMShift}
-                                                onChange={handleAMShift}
-                                            />
-                                        }
-                                        label="AM Shift"
-                                    />
-                                    <FormControlLabel
-                                        control={
-                                            <Checkbox
-                                                checked={!isAMShift}
-                                                onChange={handlePMShift}
-                                            />
-                                        }
-                                        label="PM Shift"
-                                    />
-                                </Grid>
-                                <Grid item sm={2} style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                                    <Button variant='contained' style={{ color: theme.palette.primary.contrastText }} type='submit'>Submit</Button>
-                                </Grid>
+                <Paper elevation={2} style={{ padding: '20px', marginBottom: '10px', width: '600px', borderRadius: '8px' }} >
+                    <Typography variant="h5" align="center" mb='20px' fontWeight='bold'>
+                        Add Support Staff Clock-In
+                    </Typography>
+                    <form onSubmit={handleSubmit}>
+                        <Grid container spacing={2}>
+                            <Grid item sm={6}>
+                                <TextField
+                                    select
+                                    fullWidth
+                                    label="Employee"
+                                    variant="outlined"
+                                    value={employee}
+                                    onChange={handleEmployee}
+                                    required
+                                >
+                                    <div></div>
+                                    {employeesList}
+                                </TextField>
                             </Grid>
-                        </form>
-                    </Paper>
-                ))}
+                            <Grid item sm={6}>
+                                <TextField
+                                    select
+                                    fullWidth
+                                    label="Current Role"
+                                    variant="outlined"
+                                    value={role}
+                                    onChange={handleRole}
+                                    disabled={employeeSelected ? false : true}
+                                    required
+                                >
+                                    <div></div>
+                                    {employeeRoleList}
+                                </TextField>
+                            </Grid>
+                            <Grid item sm={6}>
+                                <DatePicker
+                                    sx={{ width: '100%' }}
+                                    label="Date"
+                                    onChange={handleDate}
+                                    value={date}
+                                    disableFuture={true}
+                                />
+                            </Grid>
+                            <Grid item sm={3}>
+                                <TimePicker
+                                    label="Time In"
+                                    value={timeIn}
+                                    onChange={handleTimeIn}
+                                />
+                            </Grid>
+                            <Grid item sm={3}>
+                                <TimePicker
+                                    label="Time Out"
+                                    value={timeOut}
+                                    onChange={handleTimeOut}
+                                />
+                            </Grid>
+                            <Grid item sm={4}>
+                                <Button variant='outlined' color='warning' onClick={handleResetFields}>Reset Fields</Button>
+                            </Grid>
+                            <Grid item sm={6} sx={{ display: 'flex' }}>
+                                <FormControlLabel
+                                    control={
+                                        <Checkbox
+                                            checked={isAMShift}
+                                            onChange={handleAMShift}
+                                        />
+                                    }
+                                    label="AM Shift"
+                                />
+                                <FormControlLabel
+                                    control={
+                                        <Checkbox
+                                            checked={!isAMShift}
+                                            onChange={handlePMShift}
+                                        />
+                                    }
+                                    label="PM Shift"
+                                />
+                            </Grid>
+                            <Grid item sm={2}>
+                                <Button variant='contained' style={{ color: theme.palette.primary.contrastText }} type='submit'>Submit</Button>
+                            </Grid>
+                        </Grid>
+                    </form>
+                </Paper>
             </div>
         </div>
     );
