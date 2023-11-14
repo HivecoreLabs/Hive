@@ -7,12 +7,10 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useModalContext } from '../../contexts/ModalContext';
 import { useSummaryContext } from '../../contexts/SummaryContext';
-import { Fade } from '@mui/material';
 import { useDateContext } from '../../contexts/DateContext';
 
 const FinalizeDayModal = ({ dayFinalized, setDayFinalized }) => {
     const { stateDate } = useDateContext();
-    const [open, setOpen] = useState(true);
     const { openModal, closeModal, modalDispatch } = useModalContext();
     const { summary, fetchEndOfDaySummary } = useSummaryContext();
 
@@ -31,7 +29,7 @@ const FinalizeDayModal = ({ dayFinalized, setDayFinalized }) => {
 
     return (
         <Dialog
-            open={open}
+            open={true}
             onClose={handleClose}
         >
             <DialogTitle >
