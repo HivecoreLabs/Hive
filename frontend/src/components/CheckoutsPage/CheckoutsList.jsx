@@ -23,7 +23,7 @@ export const CheckoutsList = () => {
     const checkoutsAM = checkoutsList.length > 0 ? checkoutsList.filter((checkout) => checkout.is_am_shift) : null;
     const checkoutsPM = checkoutsList.length > 0 ? checkoutsList.filter((checkout) => !checkout.is_am_shift) : null;
 
-    const checkoutsAMList = checkoutsAM?.map((checkout) => {
+    const checkoutsAMList = checkoutsAM ? checkoutsAM.map((checkout) => {
         // const employee = employees.length > 0 ? employees.find((employee) => checkout.employee_id === employee.id) : null;
         if (employeesList.length > 0) {
             const employee = employees.find((employee) => checkout.employee_id === employee.id);
@@ -37,11 +37,10 @@ export const CheckoutsList = () => {
             return (
                 <CheckoutsListItem key={checkout.id} checkout={value} />
             )
-        } else {
-            return <Typography key={checkout.id} variant='h9' sx={{ textAlign: 'center', display: 'inline-block', width: '100%' }} color={theme.palette.primary.light}>no AM servers have checked out yet</Typography>
-        }
-    });
-    const checkoutsPMList = checkoutsPM?.map((checkout) => {
+        };
+    }) : <Typography variant='h9' sx={{ textAlign: 'center', display: 'inline-block', width: '100%' }} color={theme.palette.primary.light}>no AM servers have checked out yet</Typography>
+
+    const checkoutsPMList = checkoutsPM ? checkoutsPM.map((checkout) => {
         // const employee = employees.length > 0 ? employees.find((employee) => checkout.employee_id === employee.id) : null;
         if (employeesList.length > 0) {
             const employee = employees.find((employee) => checkout.employee_id === employee.id);
@@ -55,11 +54,8 @@ export const CheckoutsList = () => {
             return (
                 <CheckoutsListItem key={checkout.id} checkout={value} />
             )
-        } else {
-            return <Typography key={checkout.id} variant='h9' sx={{ textAlign: 'center', display: 'inline-block', width: '100%' }} color={theme.palette.primary.light}>no AM servers have checked out yet</Typography>
-        }
-    });
-    // }) : <Typography variant='h9' sx={{ textAlign: 'center', display: 'inline-block', width: '100%' }} color={theme.palette.primary.light}>no AM servers have checked out yet</Typography>
+        };
+    }) : <Typography variant='h9' sx={{ textAlign: 'center', display: 'inline-block', width: '100%' }} color={theme.palette.primary.light}>no PM servers have checked out yet</Typography>
 
     // const checkoutsPMList = checkoutsPM?.map((checkout) => {
     //     const employee = employees.length > 0 ? employees.find((employee) => checkout.employee_id === employee.id) : null;
