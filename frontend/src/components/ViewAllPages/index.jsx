@@ -12,9 +12,20 @@ function ViewAllPages({ formType, items }) {
 
     const navigate = useNavigate();
 
+
     const handleEmployeesBtn = (e) => {
         e.preventDefault();
         return navigate("/employees/all");
+    }
+
+    const handleCreateNewEmployee = (e) => {
+        e.preventDefault();
+        return navigate("/employees/new");
+    }
+
+    const handleCreateNewRole = (e) => {
+        e.preventDefault();
+        return navigate("/roles/new");
     }
 
     const handleRolesBtn = (e) => {
@@ -28,37 +39,19 @@ function ViewAllPages({ formType, items }) {
             <div
                 className='view-all-nav'
             >
-                {
-                    formType === "Employees" ? (
-                        <>
-                            <Button
-                                disabled={true}
-                            >
-                                Employees
-                            </Button>
-                            |
-                            <Button
-                                onClick={handleRolesBtn}
-                            >
-                                Roles
-                            </Button>
-                        </>
-                    ) : (
-                        <>
-                            <Button
-                                onClick={handleEmployeesBtn}
-                            >
-                                Employees
-                            </Button>
-                            |
-                            <Button
-                                disabled={true}
-                            >
-                                Roles
-                            </Button>
-                        </>
-                    )
-                }
+                <Button
+                    disabled={formType === "Employees" ? true : false}
+                    onClick={handleEmployeesBtn}
+                >
+                    Employees
+                </Button>
+                |
+                <Button
+                    disabled={formType === "Roles" ? true : false}
+                    onClick={handleRolesBtn}
+                >
+                    Roles
+                </Button>
             </div>
             <div
                 className='view-all-header'
@@ -67,8 +60,15 @@ function ViewAllPages({ formType, items }) {
                     View All {formType}
                 </h1>
             </div>
+            <Button
+                onClick={formType ==="Employees" ? handleCreateNewEmployee : handleCreateNewRole }
+            >
+                +   Create New { formType === "Employees" ? "Employee" : "Role" }
+            </Button>
             <ul className='view-all-items'>
-                <li>
+                <li
+                    key='view-all-table-header'
+                >
                     <div className='view-all-items-header'>
                         {
                             formType === 'Employees' ? (

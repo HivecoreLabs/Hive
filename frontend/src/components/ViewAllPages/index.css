@@ -9,6 +9,11 @@
     margin-top: 60px;
 }
 
+.view-all-container > button {
+    align-self: flex-end;
+    margin-right: 40px;
+}
+
 .view-all-header {
     margin: 20px;
 }

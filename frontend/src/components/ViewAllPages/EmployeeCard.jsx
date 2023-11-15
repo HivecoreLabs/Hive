@@ -9,7 +9,7 @@ export default function EmployeeCard({ employee }){
     const [hover, setHover] = useState(false);
 
     return (
-        <div key={employee.id} className='employee-card-container'
+        <div key={`view-all-employees-${employee.id}`} className='employee-card-container'
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
         style={hover ? { borderColor: theme.palette.secondary.main,
