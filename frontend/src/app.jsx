@@ -35,7 +35,7 @@ export default function App() {
             <Routes>
                 <Route exact path="/" element={<Home />} />
                 <Route exact path="/dashboard" element={<Dashboard />} />
-                <Route exact path="/employees" element={<Employee />} />
+                {/* <Route exact path="/employees" element={<Employee />} /> */}
                 <Route exact path="/support" element={<SupportStaffPage />} />
                 <Route exact path="/checkouts" element={<CheckoutsPage />} />
                 <Route exact path="/reports" element={<ReportsPage />} />

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 import { Button } from '@mui/material';
 import { css } from '@emotion/react';
@@ -9,11 +10,58 @@ import './index.css';
 
 function ViewAllPages({ formType, items }) {
 
+    const navigate = useNavigate();
+
+    const handleEmployeesBtn = (e) => {
+        e.preventDefault();
+        return navigate("/employees/all");
+    }
+
+    const handleRolesBtn = (e) => {
+        e.preventDefault();
+        return navigate("/roles/all");
+    }
+
 
     return (
         <div className='view-all-container'>
             <div
-            className='view-all-header'
+                className='view-all-nav'
+            >
+                {
+                    formType === "Employees" ? (
+                        <>
+                            <Button
+                                disabled={true}
+                            >
+                                Employees
+                            </Button>
+                            |
+                            <Button
+                                onClick={handleRolesBtn}
+                            >
+                                Roles
+                            </Button>
+                        </>
+                    ) : (
+                        <>
+                            <Button
+                                onClick={handleEmployeesBtn}
+                            >
+                                Employees
+                            </Button>
+                            |
+                            <Button
+                                disabled={true}
+                            >
+                                Roles
+                            </Button>
+                        </>
+                    )
+                }
+            </div>
+            <div
+                className='view-all-header'
             >
                 <h1>
                     View All {formType}
