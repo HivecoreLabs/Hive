@@ -14,7 +14,6 @@ import { theme } from '../../contexts/ThemeContext';
 import { useRoles } from '../../contexts/RolesContext';
 
 const CheckoutsList = () => {
-    debugger
     const { stateDate } = useDateContext();
     const { checkouts, fetchAllCheckouts } = useCheckoutsContext();
     const { employees, readAllEmployees } = useEmployees();

@@ -25,7 +25,6 @@ const initialState = {
 }
 
 const dateReducer = (state = initialState, action) => {
-    debugger
     switch (action.type) {
         case RECEIVE_DATE_CHANGE:
             return {
