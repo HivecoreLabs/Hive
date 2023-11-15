@@ -9,12 +9,14 @@ export default function EmployeeCard({ employee, date }){
     const [hover, setHover] = useState(false);
 
     const isMonthFromExpiring = (d) => {
+        if (!d) return;
         let oneMonthFromExpire = new Date(d);
         oneMonthFromExpire.setMonth(oneMonthFromExpire.getMonth() - 1);
         return Date.parse(oneMonthFromExpire) < Date.parse(date);
     }
 
     const isExpired = (d) => {
+        if (!d) return;
         return Date.parse(d) < Date.parse(date);
     }
 
@@ -46,14 +48,14 @@ export default function EmployeeCard({ employee, date }){
                 <p
                     id={ isExpired(employee.food_permit_exp) ? "expired" : isMonthFromExpiring(employee.food_permit_exp) ? "expiring" : "null" }
                 >
-                    {employee.food_permit_exp}
+                    {employee.food_permit_exp || "N/A"}
                 </p>
             </div>
             <div className='employee-card-alcohol-permit'>
                 <p
                     id={ isExpired(employee.alcohol_permit_exp) ? "expired" : isMonthFromExpiring(employee.alcohol_permit_exp) ? "expiring" : "null" }
                 >
-                    {employee.alcohol_permit_exp}
+                    {employee.alcohol_permit_exp || "N/A"}
                 </p>   
             </div>
             <div className='employee-card-action'>
