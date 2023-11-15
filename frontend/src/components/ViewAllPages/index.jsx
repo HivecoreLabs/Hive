@@ -12,6 +12,7 @@ function ViewAllPages({ formType, items }) {
 
     const navigate = useNavigate();
 
+    const date = new Date();
 
     const handleEmployeesBtn = (e) => {
         e.preventDefault();
@@ -67,6 +68,7 @@ function ViewAllPages({ formType, items }) {
             </Button>
             <ul className='view-all-items'>
                 <li
+                    id='view-all-table-header'
                     key='view-all-table-header'
                 >
                     <div className='view-all-items-header'>
@@ -87,6 +89,16 @@ function ViewAllPages({ formType, items }) {
                                     <div className='employee-card-employee-id'>
                                         <p>
                                             Employee ID
+                                        </p>
+                                    </div>
+                                    <div className='employee-card-food-permit'>
+                                        <p>
+                                            Food Permit Expiration
+                                        </p>
+                                    </div>
+                                    <div className='employee-card-alcohol-permit'>
+                                        <p>
+                                            Alcohol Permit Expiration
                                         </p>
                                     </div>
                                     <div className='employee-card-action'>
@@ -114,7 +126,7 @@ function ViewAllPages({ formType, items }) {
                 </li>
                 {
                     items.map(i => {
-                        if (formType === "Employees") return (<EmployeeCard employee={i} />);
+                        if (formType === "Employees") return (<EmployeeCard employee={i} date={date} />);
                         if (formType === "Roles") return (<RoleCard role={i} />)
                     })
                 }

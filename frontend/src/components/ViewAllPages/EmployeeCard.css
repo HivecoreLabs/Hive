@@ -13,3 +13,11 @@
 .employee-card-container > div {
     width: 95px;
 }
+
+#expired {
+    color: red;
+}
+
+#expiring {
+    color: orange
+}
