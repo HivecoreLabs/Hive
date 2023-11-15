@@ -20,6 +20,7 @@ const CheckoutsList = () => {
 
     const checkoutsAM = checkouts.length > 0 ? checkouts.filter((checkout) => checkout.is_am_shift) : null;
     const checkoutsPM = checkouts.length > 0 ? checkouts.filter((checkout) => !checkout.is_am_shift) : null;
+  
     const checkoutsAMList = checkoutsAM ? checkoutsAM.map((checkout) => {
         if (employees.length > 0) {
             const employee = employees.find((employee) => checkout.employee_id === employee.id);
@@ -51,6 +52,7 @@ const CheckoutsList = () => {
             )
         };
     }) : <Typography variant='h9' sx={{ textAlign: 'center', display: 'inline-block', width: '100%' }} color={theme.palette.primary.light}>no PM servers have checked out yet</Typography>
+
 
     useEffect(() => {
         const formattedDate = stateDate.format('YYYY-MM-DD');

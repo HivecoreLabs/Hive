@@ -18,6 +18,7 @@ const Home = () => {
     const theme = useTheme();
     const { isAuthenticated, user, login, logout } = useAuth();
     const { error, errorMessage, clearError, errorDispatch } = useError();
+
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');

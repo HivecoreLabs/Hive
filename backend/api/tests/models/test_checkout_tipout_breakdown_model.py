@@ -12,14 +12,15 @@ class ModelTestCase(TestCase):
             cash_owed=50.25,
             employee_id=self.employee,
             total_tipout=25.75,
-            tipout_day=timezone.now(),
-            is_uploaded=True
+            date=timezone.now(),
+            is_uploaded=True,
+            is_am_shift=True
         )
 
         self.checkout_breakdown = Checkout_Tipout_Breakdown.objects.create(checkout_id=self.checkout, role_id=self.role, total=50.00)
 
     def test_checkout_str(self):
-        self.assertEqual(str(self.checkout), f'{self.checkout.tipout_day} AM')
+        self.assertEqual(str(self.checkout), f'{self.checkout.date} AM')
 
     def test_checkout_tipout_breakdown(self):
         breakdown = Checkout_Tipout_Breakdown.objects.create(

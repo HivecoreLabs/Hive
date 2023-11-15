@@ -11,6 +11,7 @@ import { useDateContext } from '../../contexts/DateContext';
 
 const FinalizeDayModal = ({ dayFinalized, setDayFinalized }) => {
     const { stateDate } = useDateContext();
+
     const { openModal, closeModal, modalDispatch } = useModalContext();
     const { summary, fetchEndOfDaySummary } = useSummaryContext();
 
@@ -30,6 +31,7 @@ const FinalizeDayModal = ({ dayFinalized, setDayFinalized }) => {
     return (
         <Dialog
             open={true}
+
             onClose={handleClose}
         >
             <DialogTitle >
