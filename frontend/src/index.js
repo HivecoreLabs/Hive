@@ -32,15 +32,15 @@ root.render(
                             <SupportStaffContextProvider>
                                 <CheckoutsContextProvider>
                                     <SummaryContextProvider>
-                                        <AuthenticationContextProvider>
-                                            <DateContextProvider>
+                                        <DateContextProvider>
+                                            <AuthenticationContextProvider>
                                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                                                     <ModalContextProvider>
                                                         <App />
                                                     </ModalContextProvider>
                                                 </LocalizationProvider>
-                                            </DateContextProvider>
-                                        </AuthenticationContextProvider>
+                                            </AuthenticationContextProvider>
+                                        </DateContextProvider>
                                     </SummaryContextProvider>
                                 </CheckoutsContextProvider>
                             </SupportStaffContextProvider>

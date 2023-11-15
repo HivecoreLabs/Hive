@@ -43,7 +43,7 @@ function rolesReducer(state = initialState, action) {
             newState.role = {};
             return newState;
         case RESET_ROLES_STATE:
-            return state;
+            return initialState;
         default:
             return state;
     }

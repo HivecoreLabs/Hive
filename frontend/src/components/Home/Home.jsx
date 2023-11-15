@@ -10,8 +10,10 @@ import { useNavigate } from 'react-router-dom';
 import { useEmployees } from '../../contexts/EmployeesContext';
 import { useRoles } from '../../contexts/RolesContext';
 import { useCheckoutsContext } from '../../contexts/CheckoutsContext';
+import { useDateContext } from '../../contexts/DateContext';
 
 const Home = () => {
+    debugger
     const navigate = useNavigate()
     const newUserButtonRef = useRef(null);
     const theme = useTheme();
@@ -20,6 +22,7 @@ const Home = () => {
     const { employees } = useEmployees();
     const { roles } = useRoles();
     const { checkouts } = useCheckoutsContext();
+    const { stateDate } = useDateContext();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -55,6 +58,8 @@ const Home = () => {
         if (error) errorDispatch(clearError());
         login(username, password);
     };
+    console.log(stateDate);
+    console.log(checkouts);
 
     return (
         <div className='home-container'>

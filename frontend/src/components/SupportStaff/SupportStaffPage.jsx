@@ -29,7 +29,14 @@ const SupportStaffPage = () => {
                         Change Date?
                     </Button>
                 </Typography>
-                <Button sx={{ position: 'absolute', right: '0', top: '0', width: '180px', }} component={Link} to='/checkouts' variant='contained'>
+                <Button
+                    sx={{
+                        position: 'absolute',
+                        right: '0',
+                        top: '0',
+                        width: '180px',
+                    }}
+                    component={Link} to='/checkouts' variant='contained'>
                     Go To Checkouts
                 </Button>
             </div>
