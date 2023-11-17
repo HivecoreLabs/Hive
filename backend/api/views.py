@@ -332,7 +332,7 @@ class CheckOutViewSet(viewsets.ViewSet):
         params = request.query_params
         date = params.get('date')
         is_am_shift = params.get('is_am_shift')
-        if date and (is_am_shift == True or is_am_shift == False):
+        if date and 'is_am_shift' in params:
             queryset = Checkout.objects.filter(date=date, is_am_shift=is_am_shift)
         elif date:
             queryset = Checkout.objects.filter(date=date)
