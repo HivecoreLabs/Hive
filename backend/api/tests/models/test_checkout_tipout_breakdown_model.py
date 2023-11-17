@@ -15,9 +15,6 @@ class ModelTestCase(TestCase):
             date=timezone.now(),
             is_uploaded=True,
             is_am_shift=True
-            date=timezone.now(),
-            is_uploaded=True,
-            is_am_shift = True
         )
 
         self.checkout_breakdown = Checkout_Tipout_Breakdown.objects.create(checkout_id=self.checkout, role_id=self.role, total=50.00)
