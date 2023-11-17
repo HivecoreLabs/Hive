@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 import './SupportStaffPage.css';
 import SupportStaffForm from './SupportStaffForm.jsx';
 import SupportStaffList from './SupportStaffList.jsx';

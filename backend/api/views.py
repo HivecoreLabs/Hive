@@ -332,7 +332,7 @@ class CheckOutViewSet(viewsets.ViewSet):
         params = request.query_params
         date = params.get('date')
         is_am_shift = params.get('is_am_shift')
-        if date and is_am_shift:
+        if date and (is_am_shift == True or is_am_shift == False):
             queryset = Checkout.objects.filter(date=date, is_am_shift=is_am_shift)
         elif date:
             queryset = Checkout.objects.filter(date=date)
@@ -377,7 +377,7 @@ class CheckOutViewSet(viewsets.ViewSet):
         checkout_breakdown_serializer.is_valid(raise_exception=True)
         checkout_breakdown_serializer.save()
 
-        return Response({"checkout": checkout_serializer.data, "breakdown": checkout_breakdown_serializer.data}, status=status.HTTP_201_CREATED)
+        return Response(ReadCheckoutSerializer(checkout_instance).data, status=status.HTTP_201_CREATED)
 
 
 @api_view(['POST'])

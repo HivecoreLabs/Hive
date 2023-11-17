@@ -14,7 +14,7 @@ import { useTheme } from '@mui/material';
 
 const CheckoutsPage = () => {
     const theme = useTheme();
-    const { supportStaff, fetchAllSupportStaffClockIns } = useSupportStaffContext();
+    // const { supportStaff, fetchAllSupportStaffClockIns } = useSupportStaffContext();
     const { stateDate, changeStateDate } = useDateContext();
     const [date, setDate] = useState(stateDate);
     const formattedDate = date.format('dddd, MMM D YYYY');

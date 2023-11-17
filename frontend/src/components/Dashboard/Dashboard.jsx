@@ -20,7 +20,7 @@ import { useSupportStaffContext } from "../../contexts/SupportStaffContext.js";
 import { useCheckoutsContext } from "../../contexts/CheckoutsContext.js";
 import { useDateContext } from "../../contexts/DateContext.js";
 
-function Dashboard() {
+const Dashboard = () => {
     const theme = useTheme();
 
     const gridStyle = css({
@@ -33,15 +33,18 @@ function Dashboard() {
 
     const {
         roles,
-        readAllRoles
+        readAllRoles,
+        clearRolesState
     } = useRoles();
     const {
         supportStaff,
-        fetchAllSupportStaffClockIns
+        fetchAllSupportStaffClockIns,
+        clearSupportStaff
     } = useSupportStaffContext();
     const {
         checkouts,
-        fetchAllCheckouts
+        fetchAllCheckouts,
+        clearCheckouts
     } = useCheckoutsContext();
     const {
         stateDate
@@ -58,6 +61,7 @@ function Dashboard() {
         || !Object.values(checkouts)[0];
 
     if (check) return null;
+
 
     return (
         <div className="dashboard-container">

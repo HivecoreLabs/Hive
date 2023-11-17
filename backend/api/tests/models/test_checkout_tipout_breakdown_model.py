@@ -21,6 +21,7 @@ class ModelTestCase(TestCase):
 
     def test_checkout_str(self):
         self.assertEqual(str(self.checkout), f'{self.checkout.date} AM')
+        self.assertEqual(str(self.checkout), f'{self.checkout.date} AM')
 
     def test_checkout_tipout_breakdown(self):
         breakdown = Checkout_Tipout_Breakdown.objects.create(
