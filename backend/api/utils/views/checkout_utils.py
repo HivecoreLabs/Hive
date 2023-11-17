@@ -1,5 +1,4 @@
 from decimal import Decimal, ROUND_HALF_UP
-from math import ceil
 from sympy import sympify
 
 def group_by_active_role(employee_clockins):
@@ -10,7 +9,6 @@ def group_by_active_role(employee_clockins):
         else:
             res[clock_in.active_role_id].append(clock_in)
     return res
-
 
 def calculate_tipout_received_from_net_sales(formula, employee_list, net_sales):
     tipout_received = 0
