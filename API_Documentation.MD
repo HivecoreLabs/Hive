@@ -1190,7 +1190,7 @@ Certainly, here's the complete API documentation in Markdown format:
 [
   {
     "id": 1,
-    "checkout_tipout_breakdowns": [
+    "breakdown": [
         {
             "id": 2,
             "total": "127.42",
@@ -1232,7 +1232,7 @@ Certainly, here's the complete API documentation in Markdown format:
 ```json
 {
   "id": 11,
-  "checkout_tipout_breakdowns": [
+  "breakdown": [
     {
       "id": 21,
       "total": "25.00",
@@ -1307,6 +1307,44 @@ Certainly, here's the complete API documentation in Markdown format:
 {
   "checkout": {
     "id": 11,
+    "breakdown": [
+      {
+        "id": 57,
+        "total": "25.00",
+        "checkout_id": 17,
+        "role_id": 1
+      },
+      {
+        "id": 58,
+        "total": "75.00",
+        "checkout_id": 17,
+        "role_id": 3
+      },
+      {
+        "id": 59,
+        "total": "10.00",
+        "checkout_id": 17,
+        "role_id": 5
+      },
+      {
+        "id": 60,
+        "total": "5.00",
+        "checkout_id": 17,
+        "role_id": 7
+      },
+      {
+        "id": 61,
+        "total": "35.00",
+        "checkout_id": 17,
+        "role_id": 9
+      },
+      {
+        "id": 62,
+        "total": "3.00",
+        "checkout_id": 17,
+        "role_id": 10
+      }
+    ],
     "date": "2023-10-25",
     "net_sales": "5000.00",
     "cash_owed": "100.00",
@@ -1317,45 +1355,7 @@ Certainly, here's the complete API documentation in Markdown format:
     "is_bar": false,
     "employee_id": 1,
     "support_roles": [1, 3, 5, 7, 9, 10]
-  },
-  "breakdown": [
-    {
-      "id": 57,
-      "total": "25.00",
-      "checkout_id": 17,
-      "role_id": 1
-    },
-    {
-      "id": 58,
-      "total": "75.00",
-      "checkout_id": 17,
-      "role_id": 3
-    },
-    {
-      "id": 59,
-      "total": "10.00",
-      "checkout_id": 17,
-      "role_id": 5
-    },
-    {
-      "id": 60,
-      "total": "5.00",
-      "checkout_id": 17,
-      "role_id": 7
-    },
-    {
-      "id": 61,
-      "total": "35.00",
-      "checkout_id": 17,
-      "role_id": 9
-    },
-    {
-      "id": 62,
-      "total": "3.00",
-      "checkout_id": 17,
-      "role_id": 10
-    }
-  ]
+  }
 }
 ```
 
