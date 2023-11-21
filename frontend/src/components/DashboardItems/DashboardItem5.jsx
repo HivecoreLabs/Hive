@@ -1,23 +1,21 @@
 import { Box } from "@mui/material";
 import React from "react";
-import { PieChart } from '@mui/x-charts/PieChart';
+import { Chart } from 'react-google-charts';
 
 function DashboardItem5({ roles }) {
 
     // FUTURE IMPLEMENTATION: have backend include is_former_employee data so employees who are former employee will not be included in pie chart
-    const data = roles.map((role, idx) => ({
-        id: idx,
-        value: role.employees.length,
-        label: role.role
-    }));
+    const data = roles.map(role => [role.role, role.employees.length]);
+    data.unshift(["Employee Role", "Number of Employees"]);
+
+    const options = {
+        title: "Employees for Each Role"
+    }
 
     return (
         <Box
             sx={{
-                // bgcolor: theme.palette.tertiary.main,
-                // boxShadow: 1,
                 p: 8,
-                // minWidth: 300,
             }}
         >
             <Box sx={{ 
@@ -26,18 +24,16 @@ function DashboardItem5({ roles }) {
                 fontWeight: 'bold',
                 mx: 0.5,
                 fontSize: 24,
-                }}>Employees for Each Role</Box>
-            <PieChart 
-                series={[
-                    {
-                      data,
-                      cx: 150
-                    },
-                  ]}
-                  width={850}
-                  height={150}
-                 
-            /> 
+                }}
+            >
+                Employees for Each Role
+            </Box>
+            <Chart 
+                chartType="PieChart"
+                data={data}
+                width={"850px"}
+                height={"250px"}
+            />
         </Box>)
 }
 

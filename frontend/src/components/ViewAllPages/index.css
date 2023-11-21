@@ -9,6 +9,11 @@
     margin-top: 60px;
 }
 
+.view-all-container > button {
+    align-self: flex-end;
+    margin-right: 40px;
+}
+
 .view-all-header {
     margin: 20px;
 }
@@ -25,6 +30,8 @@
     font-weight: bolder;
     display: flex;
     justify-content: space-around;
+    font-size: small;
+    align-items: center;
 }
 
 .view-all-items-header > div {

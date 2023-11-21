@@ -89,7 +89,7 @@ const checkoutsReducer = (state = initialState, action) => {
                 checkouts: updatedcheckouts
             };
         case RESET_CHECKOUTS:
-            return state;
+            return initialState;
         default:
             return state;
     };

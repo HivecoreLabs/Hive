@@ -6,6 +6,7 @@ import { useRoles } from './RolesContext';
 import { useEmployees } from './EmployeesContext';
 import { useSupportStaffContext } from './SupportStaffContext';
 import { useCheckoutsContext } from './CheckoutsContext';
+import { useDateContext } from './DateContext';
 
 const AuthenticationContext = createContext();
 export const useAuth = () => useContext(AuthenticationContext);
@@ -38,6 +39,7 @@ export const AuthenticationContextProvider = ({ children }) => {
     const { resetEmployee } = useEmployees();
     const { clearSupportStaff } = useSupportStaffContext();
     const { clearCheckouts } = useCheckoutsContext();
+    const { clearStateDate } = useDateContext();
 
     const navigate = useNavigate();
     const [state, dispatch] = useReducer(authReducer, initialState);
@@ -100,6 +102,7 @@ export const AuthenticationContextProvider = ({ children }) => {
         resetEmployee();
         clearSupportStaff();
         clearCheckouts();
+        clearStateDate();
         navigate("/logout");
     };
 

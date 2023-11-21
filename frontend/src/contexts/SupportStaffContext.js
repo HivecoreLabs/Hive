@@ -84,7 +84,7 @@ const supportStaffReducer = (state = initialState, action) => {
                 supportStaff: updatedSupportStaff
             };
         case RESET_SUPPORT_STAFF:
-            return state;
+            return initialState;
         default:
             return state;
     };
