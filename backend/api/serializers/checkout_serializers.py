@@ -14,7 +14,7 @@ class CheckoutSerializer(serializers.ModelSerializer):
 
 
 class ReadCheckoutSerializer(serializers.ModelSerializer):
-    checkout_tipout_breakdowns = TipoutBreakdownSerializer(source='checkout_tipout_breakdown_set', many=True, read_only=True)
+    breakdown = TipoutBreakdownSerializer(source='checkout_tipout_breakdown_set', many=True, read_only=True)
 
     class Meta:
         model= Checkout

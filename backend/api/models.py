@@ -12,6 +12,7 @@ class SpreadSheet(models.Model):
 class Role(models.Model):
     role = models.CharField(max_length=50, unique=True)
     description = models.TextField(max_length=500, null=True)
+    is_bar = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     sheet_cell = models.CharField(default=None, null=True, max_length=10)
@@ -57,7 +58,7 @@ class Checkout(models.Model):
     total_tipout = models.DecimalField(decimal_places=2, max_digits=8, null=True)
     is_am_shift = models.BooleanField()
     is_patio = models.BooleanField(default=False)
-    is_bar = models.BooleanField(default=False)
+    is_bar = models.BooleanField()
     support_roles = models.ManyToManyField(Role, related_name='checkouts', through='Checkout_Tipout_Breakdown')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
