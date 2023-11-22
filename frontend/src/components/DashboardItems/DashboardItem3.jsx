@@ -80,15 +80,16 @@ function DashboardItem3() {
     const hours = time.getHours() < 10 ? '0' + time.getHours() : time.getHours();
     const minutes = time.getMinutes() < 10 ? '0' + time.getMinutes() : time.getMinutes();
     const seconds = time.getSeconds() < 10 ? '0' + time.getSeconds() : time.getSeconds();
+    const isAM = time.getHours() > 11 ? false : true;
 
     return (
         <Box sx={containerStyles} p={3}>
             <div style={{ marginRight: '1.75em' }}>
                 <Typography variant="body2" color="text.primary">
-                    It is currently the
+                    It is currently
                 </Typography>
                 <Typography variant="h3" sx={textStyles}>
-                    { theme.isAMShift ? 'AM' : 'PM' }
+                    { isAM ? 'AM' : 'PM' }
                 </Typography>
                 <Typography ml='7px' variant="h5" color="quaternary" component="span">
                     {`${hours}:${minutes}:${seconds}`}
