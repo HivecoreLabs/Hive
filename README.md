@@ -2,7 +2,7 @@
 
 ## Project Description
 
-Hive is a desktop resturant management application. Hive is made to solve disorganized and error prone data management for locally owned restaurants.
+Hive is a desktop restaurant management application. Hive is made to solve disorganized and error prone data management for locally owned restaurants.
 
 ## Technologies/Frameworks Used
 
