@@ -23,7 +23,7 @@ const CheckoutsForm = () => {
         role.employees.map((server) => {
             return (
                 <MenuItem key={server.id} value={server}>
-                    {server.first_name} {server.last_name}
+                    {server.first_name} {server.last_name ? server.last_name : ''}
                 </MenuItem>
             )
         })
@@ -76,7 +76,10 @@ const CheckoutsForm = () => {
             tipout_day: date.format('YYYY-MM-DD'),
             date: date.format('YYYY-MM-DD'),
             is_am_shift: isAMShift,
-            is_patio: patio
+            is_patio: patio,
+
+            // this will be based on whether BAR is selected
+            is_bar: false
         };
 
         handleResetFields();

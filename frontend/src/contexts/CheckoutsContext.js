@@ -55,16 +55,10 @@ const checkoutsReducer = (state = initialState, action) => {
     switch (action.type) {
         case RECEIVE_ONE_CHECKOUT:
             const newCheckout = action.payload.checkout;
-            const breakdownsKey = 'checkout_tipout_breakdowns';
-
-            const correctedCheckoutObject = {
-                ...newCheckout,
-                [breakdownsKey]: action.payload.breakdown
-            };
 
             return {
                 ...state,
-                checkouts: [...state.checkouts, correctedCheckoutObject]
+                checkouts: [...state.checkouts, newCheckout]
             };
         case RECEIVE_ALL_CHECKOUTS:
             return {
@@ -123,6 +117,7 @@ const CheckoutsContextProvider = ({ children }) => {
 
 
     const createCheckout = async (newCheckout) => {
+        debugger
         const response = await customFetch(`http://localhost:8000/api/checkouts/`, {
             method: 'POST',
             body: newCheckout
