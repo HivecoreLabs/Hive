@@ -381,6 +381,40 @@ class CheckOutViewSet(viewsets.ViewSet):
 
 
 class EndOfDayViewSet(viewsets.ViewSet):
+    def list(self, request):
+        params = request.query_params
+        date = params.get('date')
+
+        if not date:
+            return Response({"error": "date query parameter required."}, status=status.HTTP_400_BAD_REQUEST)
+
+        am_support_staff = Employee_Clock_In.objects.filter(date=date, is_am=True).values("employee_id", "tipout_received", "active_role_id", "date", "time_in", "time_out", "is_am")
+        pm_support_staff = Employee_Clock_In.objects.filter(date=date, is_am=False).values("employee_id", "tipout_received", "active_role_id", "date", "time_in", "time_out", "is_am")
+
+        am_checkouts = Checkout.objects.filter(date=date, is_am_shift=True).values("checkout_tipout_breakdown__role_id", "checkout_tipout_breakdown__total", "checkout_tipout_breakdown__id", "net_sales", "total_owed")
+        pm_checkouts = Checkout.objects.filter(date=date, is_am_shift=False).values("checkout_tipout_breakdown__role_id", "checkout_tipout_breakdown__total", "checkout_tipout_breakdown__id", "net_sales", "total_owed")
+
+        am_net_sales = sum([checkout['net_sales'] for checkout in am_checkouts])
+        pm_net_sales = sum([checkout['net_sales'] for checkout in pm_checkouts])
+
+        am_cash_owed = sum([checkout['total_owed'] for checkout in am_checkouts])
+        pm_cash_owed = sum([checkout['total_owed'] for checkout in pm_checkouts])
+
+        return Response({
+            "total_net_sales": am_net_sales + pm_net_sales,
+            "total_cash_owed": am_cash_owed + pm_cash_owed,
+            "am": {
+                "net_sales": am_net_sales,
+                "cash_owed": am_cash_owed,
+                "tipouts": am_support_staff,
+            },
+            "pm": {
+                "net_sales": pm_net_sales,
+                "cash_owed": pm_cash_owed,
+                "tipouts": pm_support_staff
+            }
+        }, status = status.HTTP_200_OK)
+
     def create(self, request):
         am_support_staff = Employee_Clock_In.objects.filter(date=request.data["date"], is_am=True)
         pm_support_staff = Employee_Clock_In.objects.filter(date=request.data["date"], is_am=False)
@@ -419,49 +453,6 @@ class EndOfDayViewSet(viewsets.ViewSet):
                 "tipouts": pm_list_of_employee_tipouts_received
             }
                 }, status = status.HTTP_200_OK)
-
-
-# @api_view(['POST'])
-# def end_of_day(request):
-#     am_support_staff = Employee_Clock_In.objects.filter(date=request.data["date"], is_am=True)
-#     pm_support_staff = Employee_Clock_In.objects.filter(date=request.data["date"], is_am=False)
-
-
-#     am_checkouts = Checkout.objects.filter(date=request.data["date"], is_am_shift=True).values("checkout_tipout_breakdown__role_id", "checkout_tipout_breakdown__total", "checkout_tipout_breakdown__id", "net_sales", "total_owed")
-#     pm_checkouts = Checkout.objects.filter(date=request.data["date"], is_am_shift=False).values("checkout_tipout_breakdown__role_id", "checkout_tipout_breakdown__total", "checkout_tipout_breakdown__id", "net_sales", "total_owed")
-
-#     am_totals = calculate_totals(am_checkouts)
-#     pm_totals = calculate_totals(pm_checkouts)
-
-#     am_net_sales = sum([checkout['net_sales'] for checkout in am_checkouts])
-#     pm_net_sales = sum([checkout['net_sales'] for checkout in pm_checkouts])
-#     total_net_sales = am_net_sales + pm_net_sales
-
-#     # use this if we want total owed sum
-#     am_cash_owed = sum([checkout['total_owed'] for checkout in am_checkouts])
-#     pm_cash_owed = sum([checkout['total_owed'] for checkout in pm_checkouts])
-#     total_cash_owed = am_cash_owed + pm_cash_owed
-
-#     am_hour_totals = calculate_total_role_hours(am_support_staff)
-#     pm_hour_totals = calculate_total_role_hours(pm_support_staff)
-
-#     am_list_of_employee_tipouts_received = get_formula_and_determine_percent_worked(am_hour_totals, am_support_staff, am_totals)
-#     pm_list_of_employee_tipouts_received = get_formula_and_determine_percent_worked(pm_hour_totals, pm_support_staff, pm_totals)
-
-#     return Response({
-#         "total_net_sales": total_net_sales,
-#         "total_cash_owed": total_cash_owed,
-#         "am": {
-#             "net_sales": am_net_sales,
-#             "cash_owed": am_cash_owed,
-#             "tipouts": am_list_of_employee_tipouts_received,
-#         },
-#         "pm": {
-#             "net_sales": pm_net_sales,
-#             "cash_owed": pm_cash_owed,
-#             "tipouts": pm_list_of_employee_tipouts_received
-#         }
-#             }, status = status.HTTP_200_OK)
 
 @api_view(['POST'])
 def upload_db(request):
