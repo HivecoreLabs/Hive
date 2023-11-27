@@ -29,7 +29,6 @@ urlpatterns = [
     path("auth/login/", views.login, name='login'),
     path("auth/signup/", views.signup, name='signup'),
     path("spreadsheets/", views.generate_sheet_database, name='spreadsheets'),
-    # path("end-of-day/", views.end_of_day, name='end-of-day'),
     path("tables/", views.get_tables_columns,name='tables'),
     path("upload/", views.upload_db, name='upload'),
     path(r'', include(router.urls)),
