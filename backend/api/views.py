@@ -388,8 +388,8 @@ class EndOfDayViewSet(viewsets.ViewSet):
         if not date:
             return Response({"error": "date query parameter required."}, status=status.HTTP_400_BAD_REQUEST)
 
-        am_support_staff = Employee_Clock_In.objects.filter(date=date, is_am=True).values("employee_id", "tipout_received", "active_role_id", "date", "time_in", "time_out", "is_am")
-        pm_support_staff = Employee_Clock_In.objects.filter(date=date, is_am=False).values("employee_id", "tipout_received", "active_role_id", "date", "time_in", "time_out", "is_am")
+        am_support_staff = Employee_Clock_In.objects.filter(date=date, is_am=True).values("id", "employee_id", "tipout_received", "active_role_id", "date", "time_in", "time_out", "is_am")
+        pm_support_staff = Employee_Clock_In.objects.filter(date=date, is_am=False).values("id", "employee_id", "tipout_received", "active_role_id", "date", "time_in", "time_out", "is_am")
 
         am_checkouts = Checkout.objects.filter(date=date, is_am_shift=True).values("checkout_tipout_breakdown__role_id", "checkout_tipout_breakdown__total", "checkout_tipout_breakdown__id", "net_sales", "total_owed")
         pm_checkouts = Checkout.objects.filter(date=date, is_am_shift=False).values("checkout_tipout_breakdown__role_id", "checkout_tipout_breakdown__total", "checkout_tipout_breakdown__id", "net_sales", "total_owed")
