@@ -29,7 +29,8 @@ import {
     Search as SearchIcon,
     AccountBox,
     ShoppingCartCheckout,
-    Logout
+    Logout,
+    LocalBar
 } from '@mui/icons-material';
 import { NavLink, useLocation } from 'react-router-dom';
 import AccountMenu from './AccountMenu.jsx';
@@ -167,8 +168,8 @@ const MiniDrawer = () => {
         { text: 'Employees', icon: <AccountBox color='quaternary' fontSize='medium' />, path: '/employees/all' },
         { text: 'Support Staff', icon: <Groups color='quaternary' fontSize='medium' />, path: '/support' },
         { text: 'Checkouts', icon: <ShoppingCartCheckout color='quaternary' fontSize='medium' />, path: '/checkouts' },
+        { text: 'Bartender', icon: <LocalBar color='quaternary' />, path: '/bartender' },
         { text: 'Reports', icon: <Assessment color='quaternary' fontSize='medium' />, path: '/reports' },
-        // { text: 'Settings', icon: <Settings color='quaternary' />, path: '/settings' },
     ];
 
     const currentPageTitle = navItems.find((item) => item.path === location.pathname)?.text || 'Employees';

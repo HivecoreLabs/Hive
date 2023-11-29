@@ -54,7 +54,7 @@ const checkoutsReducer = (state = initialState, action) => {
 
     switch (action.type) {
         case RECEIVE_ONE_CHECKOUT:
-            const newCheckout = action.payload.checkout;
+            const newCheckout = action.payload;
 
             return {
                 ...state,

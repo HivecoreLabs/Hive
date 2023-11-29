@@ -24,7 +24,7 @@ const CheckoutsListItem = ({ checkout }) => {
     const { rolesOptions, readAllRoles } = useRoles();
     const { checkoutObject, id, firstName, lastName } = checkout;
     const date = checkoutObject.date;
-    const checkoutBreakdowns = checkoutObject?.checkout_tipout_breakdowns;
+    const checkoutBreakdown = checkoutObject?.breakdown;
     const [expanded, setExpanded] = useState(null);
 
     const handleExpand = (panel) => (e, isExpanded) => {
@@ -85,7 +85,7 @@ const CheckoutsListItem = ({ checkout }) => {
                                     <TableCell>Tipout Breakdowns</TableCell>
                                     <TableCell></TableCell>
                                 </TableRow> */}
-                                {checkoutBreakdowns?.map((breakdown) => {
+                                {checkoutBreakdown?.map((breakdown) => {
                                     const roleName = rolesOptions[breakdown.role_id];
                                     return (
                                         <TableRow key={breakdown.id}>

@@ -19,6 +19,13 @@ const CheckoutsForm = () => {
     const { stateDate, changeStateDate } = useDateContext();
 
     const servers = role.employees
+    const bar = {
+        first_name: 'BAR',
+
+        // change this once backend updates the BAR role
+        employee_id: 13
+    };
+
     const serverList = servers?.length > 0 ? (
         role.employees.map((server) => {
             return (

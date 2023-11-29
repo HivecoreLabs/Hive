@@ -20,7 +20,7 @@ const CheckoutsList = () => {
 
     const checkoutsAM = checkouts.length > 0 ? checkouts.filter((checkout) => checkout.is_am_shift) : null;
     const checkoutsPM = checkouts.length > 0 ? checkouts.filter((checkout) => !checkout.is_am_shift) : null;
-  
+
     const checkoutsAMList = checkoutsAM ? checkoutsAM.map((checkout) => {
         if (employees.length > 0) {
             const employee = employees.find((employee) => checkout.employee_id === employee.id);
