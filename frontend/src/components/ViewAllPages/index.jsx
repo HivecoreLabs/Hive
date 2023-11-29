@@ -7,8 +7,11 @@ import { useEmployees } from "../../contexts/EmployeesContext.js";
 import EmployeeCard from './EmployeeCard.jsx';
 import RoleCard from './RoleCard.jsx';
 import './index.css';
+import { useTheme } from '@mui/material';
 
 function ViewAllPages({ formType, items }) {
+    debugger
+    const theme = useTheme();
 
     const navigate = useNavigate();
 
@@ -41,15 +44,18 @@ function ViewAllPages({ formType, items }) {
                 className='view-all-nav'
             >
                 <Button
-                    disabled={formType === "Employees" ? true : false}
+                    disabled={formType === "Employees"}
                     onClick={handleEmployeesBtn}
+                    style={{ color: formType === "Employees" ? theme.palette.primary.main : 'gray' }}
                 >
                     Employees
                 </Button>
                 |
                 <Button
-                    disabled={formType === "Roles" ? true : false}
+                    disabled={formType === "Roles"}
                     onClick={handleRolesBtn}
+                    style={{ color: formType === "Roles" ? theme.palette.primary.main : 'gray' }}
+
                 >
                     Roles
                 </Button>
@@ -62,9 +68,9 @@ function ViewAllPages({ formType, items }) {
                 </h1>
             </div>
             <Button
-                onClick={formType ==="Employees" ? handleCreateNewEmployee : handleCreateNewRole }
+                onClick={formType === "Employees" ? handleCreateNewEmployee : handleCreateNewRole}
             >
-                +   Create New { formType === "Employees" ? "Employee" : "Role" }
+                +   Create New {formType === "Employees" ? "Employee" : "Role"}
             </Button>
             <ul className='view-all-items'>
                 <li
@@ -75,7 +81,7 @@ function ViewAllPages({ formType, items }) {
                         {
                             formType === 'Employees' ? (
                                 <>
-                                
+
                                     <div className='employee-card-last-name'>
                                         <p>
                                             Last Name
@@ -131,7 +137,7 @@ function ViewAllPages({ formType, items }) {
                     })
                 }
             </ul>
-        </div>
+        </div >
     );
 
 }
