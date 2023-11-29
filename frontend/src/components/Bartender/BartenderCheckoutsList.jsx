@@ -35,7 +35,7 @@ const BartenderCheckoutsList = () => {
                 <BartenderCheckoutsListItem key={checkout.id} checkout={value} />
             )
         };
-    }) : <Typography variant='h9' sx={{ textAlign: 'center', display: 'inline-block', width: '100%' }} color={theme.palette.primary.light}>no AM servers have checked out yet</Typography>
+    }) : <Typography variant='h9' sx={{ textAlign: 'center', display: 'inline-block', width: '100%' }} color={theme.palette.primary.light}>no AM bartenders have checked out yet</Typography>
 
     const checkoutsPMList = checkoutsPM ? checkoutsPM.map((checkout) => {
         if (employees.length > 0) {
@@ -51,7 +51,7 @@ const BartenderCheckoutsList = () => {
                 <BartenderCheckoutsListItem key={checkout.id} checkout={value} />
             )
         };
-    }) : <Typography variant='h9' sx={{ textAlign: 'center', display: 'inline-block', width: '100%' }} color={theme.palette.primary.light}>no PM servers have checked out yet</Typography>
+    }) : <Typography variant='h9' sx={{ textAlign: 'center', display: 'inline-block', width: '100%' }} color={theme.palette.primary.light}>no PM bartender have checked out yet</Typography>
 
 
     useEffect(() => {

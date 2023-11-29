@@ -106,7 +106,7 @@ const BartenderCheckoutsForm = () => {
             <div className='bartender-checkouts-form-container'>
                 <Paper elevation={2} style={{ padding: '20px', marginBottom: '10px', width: '600px', borderRadius: '8px', }} >
                     <Typography variant="h5" align="center" fontWeight='bold' mb='20px'>
-                        Add Server Checkout
+                        Add Bartender Checkout
                     </Typography>
                     <form onSubmit={handleSubmit}>
                         <Grid container spacing={2}>

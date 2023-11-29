@@ -30,7 +30,8 @@ import {
     AccountBox,
     ShoppingCartCheckout,
     Logout,
-    LocalBar
+    LocalBar,
+    LocalDining
 } from '@mui/icons-material';
 import { NavLink, useLocation } from 'react-router-dom';
 import AccountMenu from './AccountMenu.jsx';
@@ -167,8 +168,9 @@ const MiniDrawer = () => {
         { text: 'Dashboard', icon: <Dashboard color='quaternary' fontSize='medium' />, path: '/dashboard' },
         { text: 'Employees', icon: <AccountBox color='quaternary' fontSize='medium' />, path: '/employees/all' },
         { text: 'Support Staff', icon: <Groups color='quaternary' fontSize='medium' />, path: '/support' },
-        { text: 'Checkouts', icon: <ShoppingCartCheckout color='quaternary' fontSize='medium' />, path: '/checkouts' },
-        { text: 'Bartender', icon: <LocalBar color='quaternary' />, path: '/bartender' },
+        // { text: 'Checkouts', icon: <ShoppingCartCheckout color='quaternary' fontSize='medium' />, path: '/checkouts' },
+        { text: 'Servers', icon: <LocalDining color='quaternary' fontSize='medium' />, path: '/checkouts' },
+        { text: 'Bartenders', icon: <LocalBar color='quaternary' />, path: '/bartender' },
         { text: 'Reports', icon: <Assessment color='quaternary' fontSize='medium' />, path: '/reports' },
     ];
 
