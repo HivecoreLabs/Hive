@@ -10,7 +10,7 @@ import { useCheckoutsContext } from '../../contexts/CheckoutsContext';
 import { useTheme } from '@mui/material';
 import { useDateContext } from '../../contexts/DateContext';
 
-const CheckoutsForm = () => {
+const BartenderCheckoutsForm = () => {
 
     const theme = useTheme();
     const { employees } = useEmployees();
@@ -198,4 +198,4 @@ const CheckoutsForm = () => {
     )
 };
 
-export default CheckoutsForm;
+export default BartenderCheckoutsForm;
