@@ -46,7 +46,11 @@ function ViewAllPages({ formType, items }) {
                 <Button
                     disabled={formType === "Employees"}
                     onClick={handleEmployeesBtn}
-                    style={{ color: formType === "Employees" ? theme.palette.primary.main : 'gray' }}
+                    style={{
+                        color: formType === "Employees" ? theme.palette.primary.main : '#CCCCCC',
+                        fontWeight: formType === "Employees" ? 'bold' : 'normal'
+                    }}
+
                 >
                     Employees
                 </Button>
@@ -54,7 +58,11 @@ function ViewAllPages({ formType, items }) {
                 <Button
                     disabled={formType === "Roles"}
                     onClick={handleRolesBtn}
-                    style={{ color: formType === "Roles" ? theme.palette.primary.main : 'gray' }}
+                    style={{
+                        color: formType === "Roles" ? theme.palette.primary.main : '#CCCCCC',
+                        fontWeight: formType === "Roles" ? 'bold' : 'normal'
+
+                    }}
 
                 >
                     Roles
