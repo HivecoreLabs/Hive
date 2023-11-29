@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './BartenderCheckoutsPage.css';
-import CheckoutsForm from './CheckoutsForm.jsx';
+import BartenderCheckoutsForm from './BartenderCheckoutsForm.jsx';
 import ActiveSupportStaffList from './ActiveSupportStaffList.jsx';
 import { useSupportStaffContext } from '../../contexts/SupportStaffContext';
 import { useDateContext } from '../../contexts/DateContext';
@@ -26,14 +26,14 @@ const BartenderCheckoutsPage = () => {
     }
 
     return (
-        <div className='checkouts-page-container'>
+        <div className='bartender-checkouts-page-container'>
             <Typography variant="h6" mb='20px'>
                 Checking Out for: {formattedDate}
                 <Button variant='outlined' onClick={handleOpenDateModal} style={{ marginLeft: '10px', fontSize: '16px', textDecoration: 'underline', cursor: 'pointer' }}>
                     <Typography color={theme.palette.secondary.dark}>Change Date?</Typography>
                 </Button>
             </Typography>
-            <div className='checkout-form-support-staff-container'>
+            <div className='bartender-checkout-form-support-staff-container'>
                 <div>
                     <CheckoutsForm />
                     <CheckoutsList />
