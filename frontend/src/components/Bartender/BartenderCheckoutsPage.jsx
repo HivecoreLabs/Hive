@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './BartenderCheckoutsPage.css';
 import BartenderCheckoutsForm from './BartenderCheckoutsForm.jsx';
-import ActiveSupportStaffList from './ActiveSupportStaffList.jsx';
+import ActiveSupportStaffList from '../CheckoutsPage/ActiveSupportStaffList.jsx';
 import { useSupportStaffContext } from '../../contexts/SupportStaffContext';
 import { useDateContext } from '../../contexts/DateContext';
 import { DatePicker, TimePicker } from '@mui/x-date-pickers';
@@ -9,7 +9,7 @@ import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
 import { Button, Box, Typography, Paper, IconButton, Modal } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import CheckoutsList from './CheckoutsList.jsx';
+import BartenderCheckoutsList from './BartenderCheckoutsList.jsx';
 import { useTheme } from '@mui/material';
 import ModalRoot from '../Modals/ModalRoot.jsx';
 import { useModalContext } from '../../contexts/ModalContext';
@@ -35,8 +35,8 @@ const BartenderCheckoutsPage = () => {
             </Typography>
             <div className='bartender-checkout-form-support-staff-container'>
                 <div>
-                    <CheckoutsForm />
-                    <CheckoutsList />
+                    <BartenderCheckoutsForm />
+                    <BartenderCheckoutsList />
                 </div>
                 <ActiveSupportStaffList />
             </div>

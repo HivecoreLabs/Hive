@@ -6,6 +6,7 @@ import Dashboard from './components/Dashboard';
 import Employee from './components/Employees/index.jsx';
 import SupportStaffPage from './components/SupportStaff';
 import CheckoutsPage from './components/CheckoutsPage';
+import BartenderCheckoutsPage from './components/Bartender';
 import ReportsPage from './components/ReportsPage';
 import Loading from './components/LoadingScreen/Loading.jsx';
 import Logout from './components/LoadingScreen/Logout.jsx';
@@ -37,6 +38,7 @@ export default function App() {
                 <Route exact path="/dashboard" element={<Dashboard />} />
                 <Route exact path="/support" element={<SupportStaffPage />} />
                 <Route exact path="/checkouts" element={<CheckoutsPage />} />
+                <Route exact path="/bartender" element={<BartenderCheckoutsPage />} />
                 <Route exact path="/reports" element={<ReportsPage />} />
                 <Route exact path="/loading" element={<Loading />} />
                 <Route exact path="/logout" element={<Logout />} />

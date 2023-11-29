@@ -9,11 +9,11 @@ import dayjs from 'dayjs';
 import { useDateContext } from '../../contexts/DateContext';
 import { useCheckoutsContext } from '../../contexts/CheckoutsContext';
 import { useEmployees } from '../../contexts/EmployeesContext';
-import CheckoutsListItem from './CheckoutsListItem.jsx';
+import BartenderCheckoutsListItem from './BartenderCheckoutsListItem.jsx';
 import { theme } from '../../contexts/ThemeContext';
 import { useRoles } from '../../contexts/RolesContext';
 
-const CheckoutsList = () => {
+const BartenderCheckoutsList = () => {
     const { stateDate } = useDateContext();
     const { checkouts, fetchAllCheckouts } = useCheckoutsContext();
     const { employees, readAllEmployees } = useEmployees();
@@ -32,7 +32,7 @@ const CheckoutsList = () => {
                 lastName: employee.last_name
             }
             return (
-                <CheckoutsListItem key={checkout.id} checkout={value} />
+                <BartenderCheckoutsListItem key={checkout.id} checkout={value} />
             )
         };
     }) : <Typography variant='h9' sx={{ textAlign: 'center', display: 'inline-block', width: '100%' }} color={theme.palette.primary.light}>no AM servers have checked out yet</Typography>
@@ -48,7 +48,7 @@ const CheckoutsList = () => {
                 lastName: employee.last_name
             }
             return (
-                <CheckoutsListItem key={checkout.id} checkout={value} />
+                <BartenderCheckoutsListItem key={checkout.id} checkout={value} />
             )
         };
     }) : <Typography variant='h9' sx={{ textAlign: 'center', display: 'inline-block', width: '100%' }} color={theme.palette.primary.light}>no PM servers have checked out yet</Typography>
@@ -81,4 +81,4 @@ const CheckoutsList = () => {
     );
 };
 
-export default CheckoutsList;
+export default BartenderCheckoutsList;
