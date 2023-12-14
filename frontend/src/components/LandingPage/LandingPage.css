@@ -17,3 +17,19 @@
     justify-content: space-around;
     
 }
+
+.sun-icon {
+    animation-name: rotate;
+    animation-duration: 10000ms;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
