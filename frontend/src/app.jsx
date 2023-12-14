@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import Home from './components/Home';
 import NavBar from './components/NavBar';
-import Dashboard from './components/Dashboard';
-import Employee from './components/Employees/index.jsx';
+// import Dashboard from './components/Dashboard';
+import LandingPage from './components/LandingPage/LandingPage.jsx';
 import SupportStaffPage from './components/SupportStaff';
 import CheckoutsPage from './components/CheckoutsPage';
 import ReportsPage from './components/ReportsPage';
@@ -34,7 +34,7 @@ export default function App() {
             {isAuthenticated && !isReportsRoute && <NavBar toggleTheme={toggleTheme} />}
             <Routes>
                 <Route exact path="/" element={<Home />} />
-                <Route exact path="/dashboard" element={<Dashboard />} />
+                <Route exact path="/dashboard" element={<LandingPage />} />
                 <Route exact path="/support" element={<SupportStaffPage />} />
                 <Route exact path="/checkouts" element={<CheckoutsPage />} />
                 <Route exact path="/reports" element={<ReportsPage />} />

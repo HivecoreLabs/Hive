@@ -1,0 +1,19 @@
+.landing-page-container {
+    display: flex;
+    flex-direction: column;
+
+    width: 95%;
+    align-items: center;
+
+    margin-left: 60px;
+    margin-top: 60px;
+}
+
+.landing-page-time {
+    display: flex;
+    flex-direction: row;
+
+    width: 90%;
+    justify-content: space-around;
+    
+}
